@@ -8,7 +8,7 @@ import { AxiosCategoryRepository } from '@infrastructure/adapters/AxiosCategoryR
 import { Course } from '@domain/entities/Course';
 import { Category } from '@domain/entities/Category';
 import { useAuthStore } from '../store/useAuthStore';
-import { Pencil, Trash2, Plus, ArrowLeft, Search, Eye, ShieldAlert, CheckCircle, ListPlus } from 'lucide-react';
+import { Pencil, Trash2, Plus, ArrowLeft, Search, ShieldAlert, CheckCircle, ListPlus } from 'lucide-react';
 import { Loader } from '../components/Loader';
 
 const categoryRepository = new AxiosCategoryRepository();

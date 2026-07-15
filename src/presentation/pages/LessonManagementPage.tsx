@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Layout } from '../components/Layout';
 import { Button } from '../components/Button';
@@ -10,7 +10,7 @@ import { Course } from '@domain/entities/Course';
 import { Module } from '@domain/entities/Module';
 import { Lesson } from '@domain/entities/Lesson';
 import { useAuthStore } from '../store/useAuthStore';
-import { ArrowLeft, Pencil, Trash2, Plus, Search, Eye, CheckCircle, ShieldAlert, FileText, ChevronDown, ListPlus } from 'lucide-react';
+import { ArrowLeft, Pencil, Trash2, Plus, CheckCircle, ShieldAlert, FileText } from 'lucide-react';
 import { Loader } from '../components/Loader';
 
 const moduleRepository = new AxiosModuleRepository();
@@ -50,11 +50,7 @@ export const LessonManagementPage: React.FC = () => {
 
   const isAdmin = user?.role === 'admin';
 
-  useEffect(() => {
-    loadCourseDetails();
-  }, [idCourse]);
-
-  const loadCourseDetails = async () => {
+  const loadCourseDetails = useCallback(async () => {
     setIsLoading(true);
     try {
       const courseData = await getCourseByIdUseCase.execute(idCourse);
@@ -81,7 +77,11 @@ export const LessonManagementPage: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [idCourse, selectedModuleId]);
+
+  useEffect(() => {
+    loadCourseDetails();
+  }, [idCourse, loadCourseDetails]);
 
   const handleCreateModule = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { Layout } from '../components/Layout';
 import { Button } from '../components/Button';
 import { Input } from '../components/Input';
-import { getCoursesUseCase, courseRepositoryInstance } from '@infrastructure/factories/CourseFactory';
+import { getCoursesUseCase } from '@infrastructure/factories/CourseFactory';
 import { AxiosCategoryRepository } from '@infrastructure/adapters/AxiosCategoryRepository';
 import { Course } from '@domain/entities/Course';
 import { Category } from '@domain/entities/Category';
@@ -30,7 +30,7 @@ export const CatalogPage: React.FC = () => {
       .catch((err) => console.error('Failed to load categories', err));
   }, []);
 
-  const fetchCourses = () => {
+  const fetchCourses = useCallback(() => {
     setIsLoading(true);
     const filters: any = {
       is_active: true,
@@ -50,7 +50,7 @@ export const CatalogPage: React.FC = () => {
         console.error(err);
         setIsLoading(false);
       });
-  };
+  }, [search, selectedCategory, minPrice, maxPrice]);
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
@@ -58,7 +58,7 @@ export const CatalogPage: React.FC = () => {
     }, 400);
 
     return () => clearTimeout(delayDebounceFn);
-  }, [search, selectedCategory]);
+  }, [search, selectedCategory, fetchCourses]);
 
   const handleApplyFilters = (e: React.FormEvent) => {
     e.preventDefault();

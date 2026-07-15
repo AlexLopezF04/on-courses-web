@@ -6,7 +6,7 @@ import { getCourseByIdUseCase } from '@infrastructure/factories/CourseFactory';
 import { AxiosEnrollmentRepository } from '@infrastructure/adapters/AxiosEnrollmentRepository';
 import { Course } from '@domain/entities/Course';
 import { useAuthStore } from '../store/useAuthStore';
-import { BookOpen, Calendar, Clock, Award, ShieldAlert, CheckCircle, ArrowLeft, Play } from 'lucide-react';
+import { BookOpen, Clock, Award, ShieldAlert, CheckCircle, ArrowLeft, Play } from 'lucide-react';
 import { Loader } from '../components/Loader';
 
 const enrollmentRepository = new AxiosEnrollmentRepository();

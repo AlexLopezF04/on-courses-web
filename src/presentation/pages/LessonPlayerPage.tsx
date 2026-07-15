@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { useAuthStore } from '../store/useAuthStore';
 import { getCourseByIdUseCase } from '@infrastructure/factories/CourseFactory';
 import { axiosClient } from '@infrastructure/http/axios-client';
 import { Course } from '@domain/entities/Course';
@@ -14,7 +13,6 @@ export const LessonPlayerPage: React.FC = () => {
   const { courseId, lessonId } = useParams<{ courseId: string; lessonId: string }>();
   const navigate = useNavigate();
   const { theme, toggleTheme } = useThemeStore();
-  const { user } = useAuthStore();
 
   const [course, setCourse] = useState<Course | null>(null);
   const [currentLesson, setCurrentLesson] = useState<Lesson | null>(null);
