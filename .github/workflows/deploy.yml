@@ -24,7 +24,7 @@ jobs:
           printf "%s" "${{ secrets.REACT_ENV }}" > .env.production
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Run Lint
         run: npm run lint
