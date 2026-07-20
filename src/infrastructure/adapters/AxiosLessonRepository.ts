@@ -7,7 +7,10 @@ export class AxiosLessonRepository implements ILessonRepository {
   async getLessons(moduleId?: number): Promise<Lesson[]> {
     try {
       const response = await axiosClient.get('/lessons/', {
-        params: moduleId ? { module: moduleId } : {},
+        params: {
+          ...(moduleId ? { module: moduleId } : {}),
+          page_size: 100, // bypass 10-item global pagination limit
+        },
       });
       if (response.data && Array.isArray(response.data.results)) {
         return response.data.results;

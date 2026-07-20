@@ -3,13 +3,10 @@ import { Link } from 'react-router-dom';
 import { Layout } from '../components/Layout';
 import { useAuthStore } from '../store/useAuthStore';
 import { getCoursesUseCase } from '@infrastructure/factories/CourseFactory';
-import { AxiosEnrollmentRepository } from '@infrastructure/adapters/AxiosEnrollmentRepository';
-import { AxiosCategoryRepository } from '@infrastructure/adapters/AxiosCategoryRepository';
-import { LayoutDashboard, BookOpen, Users, FolderOpen, ArrowRight, ShieldCheck, ClipboardList } from 'lucide-react';
+import { getCategoriesUseCase } from '@infrastructure/factories/CategoryFactory';
+import { getEnrollmentsUseCase } from '@infrastructure/factories/EnrollmentFactory';
+import { LayoutDashboard, BookOpen, Users, FolderOpen, ArrowRight, ShieldCheck, ClipboardList, FolderKanban } from 'lucide-react';
 import { Loader } from '../components/Loader';
-
-const enrollmentRepository = new AxiosEnrollmentRepository();
-const categoryRepository = new AxiosCategoryRepository();
 
 export const AdminDashboard: React.FC = () => {
   const { user } = useAuthStore();
@@ -24,11 +21,11 @@ export const AdminDashboard: React.FC = () => {
         const courses = await getCoursesUseCase.execute();
         setCoursesCount(courses.count);
 
-        const enrollments = await enrollmentRepository.getEnrollments();
+        const enrollments = await getEnrollmentsUseCase.execute({ page_size: 1 });
         setEnrollmentsCount(enrollments.count);
 
-        const categories = await categoryRepository.getCategories();
-        setCategoriesCount(categories.length);
+        const categories = await getCategoriesUseCase.execute({ page_size: 1 });
+        setCategoriesCount(categories.count);
       } catch (err) {
         console.error('Failed to load dashboard metrics', err);
       } finally {
@@ -87,7 +84,7 @@ export const AdminDashboard: React.FC = () => {
       </div>
 
       {/* Grid: Actions Section */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Manage Courses Action Card */}
         <div className="group rounded-3xl border border-slate-200 bg-white p-8 dark:border-slate-800 dark:bg-slate-900 shadow-sm flex flex-col justify-between hover:border-brand-500/30 transition-all duration-300">
           <div>
@@ -101,6 +98,23 @@ export const AdminDashboard: React.FC = () => {
           </div>
           <Link to="/admin/courses" className="inline-flex items-center gap-2 text-sm font-bold text-brand-600 dark:text-brand-400 hover:underline mt-auto">
             Acceder al listado de cursos
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </Link>
+        </div>
+
+        {/* Manage Categories Action Card */}
+        <div className="group rounded-3xl border border-slate-200 bg-white p-8 dark:border-slate-800 dark:bg-slate-900 shadow-sm flex flex-col justify-between hover:border-brand-500/30 transition-all duration-300">
+          <div>
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-rose-50 dark:bg-rose-900/20 text-rose-650 dark:text-rose-400 mb-6">
+              <FolderKanban className="h-6 w-6" />
+            </div>
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Administrar Categorías</h3>
+            <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-6">
+              Organiza los cursos en grupos temáticos. Crea nuevas categorías, edita descripciones y estructura el catálogo del sitio web.
+            </p>
+          </div>
+          <Link to="/admin/categories" className="inline-flex items-center gap-2 text-sm font-bold text-brand-600 dark:text-brand-400 hover:underline mt-auto">
+            Acceder a las categorías
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
@@ -125,7 +139,7 @@ export const AdminDashboard: React.FC = () => {
             </li>
             <li className="flex items-center gap-2">
               <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-              <span>**ESTUDIANTE:** Acceso restringido al portal y reproductor de tutoriales.</span>
+              <span>**ESTUDIANTE:** Acceso restringido al portal y reproductor de lecciones.</span>
             </li>
           </ul>
         </div>

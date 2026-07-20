@@ -49,6 +49,13 @@ export const Navbar: React.FC = () => {
             {isAuthenticated ? (
               <div className="flex items-center gap-4">
                 <Link
+                  to="/profile"
+                  className="flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-brand-600 dark:text-slate-300 dark:hover:text-brand-400 mr-2"
+                >
+                  <User className="h-4 w-4" />
+                  <span>Mi Perfil</span>
+                </Link>
+                <Link
                   to={user?.role === 'admin' || user?.role === 'professor' ? '/admin' : '/dashboard'}
                   className="flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-55 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
                 >
@@ -119,6 +126,13 @@ export const Navbar: React.FC = () => {
                 <span>{user?.username}</span>
                 <span className="text-xs font-normal text-slate-500">({user?.role})</span>
               </div>
+              <Link
+                to="/profile"
+                onClick={() => setIsOpen(false)}
+                className="flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-brand-600"
+              >
+                Mi Perfil
+              </Link>
               <Link
                 to={user?.role === 'admin' || user?.role === 'professor' ? '/admin' : '/dashboard'}
                 onClick={() => setIsOpen(false)}

@@ -3,13 +3,11 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Layout } from '../components/Layout';
 import { Button } from '../components/Button';
 import { getCourseByIdUseCase } from '@infrastructure/factories/CourseFactory';
-import { AxiosEnrollmentRepository } from '@infrastructure/adapters/AxiosEnrollmentRepository';
+import { getEnrollmentsUseCase, enrollInCourseUseCase } from '@infrastructure/factories/EnrollmentFactory';
 import { Course } from '@domain/entities/Course';
 import { useAuthStore } from '../store/useAuthStore';
 import { BookOpen, Clock, Award, ShieldAlert, CheckCircle, ArrowLeft, Play } from 'lucide-react';
-import { Loader } from '../components/Loader';
-
-const enrollmentRepository = new AxiosEnrollmentRepository();
+import { CourseDetailSkeleton } from '../components/Skeletons';
 
 export const CourseDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -38,7 +36,7 @@ export const CourseDetailPage: React.FC = () => {
         setCourse(courseData);
 
         if (isAuthenticated) {
-          const enrollments = await enrollmentRepository.getEnrollments({ course: courseId });
+          const enrollments = await getEnrollmentsUseCase.execute({ course: courseId });
           setIsEnrolled(enrollments.count > 0);
         }
       } catch (err: any) {
@@ -60,7 +58,7 @@ export const CourseDetailPage: React.FC = () => {
 
     setIsEnrolling(true);
     try {
-      await enrollmentRepository.enrollInCourse(courseId);
+      await enrollInCourseUseCase.execute(courseId);
       setIsEnrolled(true);
       // Find the first lesson ID if it exists
       const firstLesson = course?.modules?.[0]?.lessons?.[0];
@@ -76,7 +74,13 @@ export const CourseDetailPage: React.FC = () => {
     }
   };
 
-  if (isLoading) return <Loader fullScreen />;
+  if (isLoading) {
+    return (
+      <Layout>
+        <CourseDetailSkeleton />
+      </Layout>
+    );
+  }
 
   if (error || !course) {
     return (

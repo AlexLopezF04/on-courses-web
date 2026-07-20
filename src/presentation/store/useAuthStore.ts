@@ -1,8 +1,14 @@
 import { create } from 'zustand';
 import { User } from '@domain/entities/User';
-import { loginUseCase, authRepositoryInstance } from '@infrastructure/factories/AuthFactory';
+import {
+  loginUseCase,
+  getCurrentUserUseCase,
+  updateCurrentUserUseCase,
+  logoutUseCase,
+} from '@infrastructure/factories/AuthFactory';
 import { LocalTokenStorage } from '@infrastructure/storage/local-token-storage';
 import { LoginRequestDto } from '@application/dtos/AuthDto';
+import { decodeJwt } from '../utils/jwt-helper';
 
 interface AuthState {
   user: User | null;
@@ -13,6 +19,7 @@ interface AuthState {
   login: (credentials: LoginRequestDto) => Promise<void>;
   logout: () => Promise<void>;
   checkAuth: () => Promise<void>;
+  updateProfile: (data: any) => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -30,16 +37,10 @@ export const useAuthStore = create<AuthState>((set) => ({
       LocalTokenStorage.setAccessToken(response.access);
       LocalTokenStorage.setRefreshToken(response.refresh);
       
-      if (response.user) {
-        set({
-          user: response.user,
-          accessToken: response.access,
-          isAuthenticated: true,
-          isLoading: false,
-        });
-      } else {
+      const jwtData = decodeJwt(response.access);
+      if (jwtData && jwtData.user_id) {
         try {
-          const userProfile = await authRepositoryInstance.getCurrentUser();
+          const userProfile = await getCurrentUserUseCase.execute(jwtData.user_id);
           set({
             user: userProfile,
             accessToken: response.access,
@@ -48,12 +49,12 @@ export const useAuthStore = create<AuthState>((set) => ({
           });
         } catch {
           const fallbackUser: User = {
-            id: response.id || 1,
-            username: response.username || credentials.username,
-            email: response.email || `${credentials.username}@example.com`,
-            first_name: response.username || credentials.username,
+            id: jwtData.user_id,
+            username: credentials.username,
+            email: `${credentials.username}@example.com`,
+            first_name: credentials.username,
             last_name: '',
-            role: (response.role as any) || 'student',
+            role: 'student' as any,
             is_active: true,
           };
           set({
@@ -63,6 +64,22 @@ export const useAuthStore = create<AuthState>((set) => ({
             isLoading: false,
           });
         }
+      } else {
+        const fallbackUser: User = {
+          id: 1,
+          username: credentials.username,
+          email: `${credentials.username}@example.com`,
+          first_name: credentials.username,
+          last_name: '',
+          role: 'student' as any,
+          is_active: true,
+        };
+        set({
+          user: fallbackUser,
+          accessToken: response.access,
+          isAuthenticated: true,
+          isLoading: false,
+        });
       }
     } catch (err: any) {
       set({
@@ -77,7 +94,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     const refresh = LocalTokenStorage.getRefreshToken();
     if (refresh) {
       try {
-        await authRepositoryInstance.logout(refresh);
+        await logoutUseCase.execute(refresh);
       } catch (err) {
         console.warn('Logout request failed', err);
       }
@@ -96,9 +113,15 @@ export const useAuthStore = create<AuthState>((set) => ({
       set({ user: null, accessToken: null, isAuthenticated: false, isLoading: false });
       return;
     }
+    const jwtData = decodeJwt(token);
+    if (!jwtData || !jwtData.user_id) {
+      LocalTokenStorage.clear();
+      set({ user: null, accessToken: null, isAuthenticated: false, isLoading: false });
+      return;
+    }
     set({ isLoading: true });
     try {
-      const userProfile = await authRepositoryInstance.getCurrentUser();
+      const userProfile = await getCurrentUserUseCase.execute(jwtData.user_id);
       set({
         user: userProfile,
         accessToken: token,
@@ -114,6 +137,27 @@ export const useAuthStore = create<AuthState>((set) => ({
         isAuthenticated: false,
         isLoading: false,
       });
+    }
+  },
+
+  updateProfile: async (data: any) => {
+    const store = useAuthStore.getState();
+    const currentUserId = store.user?.id;
+    if (!currentUserId) throw new Error('No autenticado');
+    
+    set({ isLoading: true, error: null });
+    try {
+      const updatedUser = await updateCurrentUserUseCase.execute(currentUserId, data);
+      set({
+        user: updatedUser,
+        isLoading: false,
+      });
+    } catch (err: any) {
+      set({
+        isLoading: false,
+        error: err.message || 'Error al actualizar el perfil',
+      });
+      throw err;
     }
   },
 }));

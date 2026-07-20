@@ -9,4 +9,12 @@ export interface User {
   role: UserRole;
   phone?: string;
   is_active: boolean;
+  date_joined?: string;
+  biography?: string;
+  country?: string;
+  birth_date?: string;
+  avatar?: string | null;
+  professional_title?: string;
+  specialty?: string;
+  linkedin_url?: string;
 }
