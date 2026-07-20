@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { getCourseByIdUseCase } from '@infrastructure/factories/CourseFactory';
-import { axiosClient } from '@infrastructure/http/axios-client';
+import {
+  getLessonProgressUseCase,
+  markLessonAsCompletedUseCase,
+} from '@infrastructure/factories/LessonProgressFactory';
 import { Course } from '@domain/entities/Course';
 import { Lesson } from '@domain/entities/Lesson';
 import { GraduationCap, ArrowLeft, CheckCircle, ChevronRight, Play, BookOpen, FileText, CheckSquare, Sparkles } from 'lucide-react';
 import { Loader } from '../components/Loader';
 import { Button } from '../components/Button';
 import { useThemeStore } from '../store/useThemeStore';
+import { sanitizeUrl } from '../utils/sanitize-url';
 
 export const LessonPlayerPage: React.FC = () => {
   const { courseId, lessonId } = useParams<{ courseId: string; lessonId: string }>();
@@ -42,12 +46,9 @@ export const LessonPlayerPage: React.FC = () => {
         setCurrentLesson(foundLesson);
 
         // Load lesson progress for the student
-        const progressRes = await axiosClient.get('/lesson-progress/', {
-          params: { course: idCourse },
-        });
+        const progressList = await getLessonProgressUseCase.execute(idCourse);
         
         const completedMap: Record<number, boolean> = {};
-        const progressList = progressRes.data?.results || progressRes.data || [];
         progressList.forEach((prog: any) => {
           if (prog.is_completed) {
             completedMap[prog.lesson] = true;
@@ -68,11 +69,7 @@ export const LessonPlayerPage: React.FC = () => {
     if (!currentLesson) return;
     setIsCompleting(true);
     try {
-      await axiosClient.post('/lesson-progress/', {
-        lesson: currentLesson.id,
-        percentage: 100,
-        is_completed: true,
-      });
+      await markLessonAsCompletedUseCase.execute(currentLesson.id);
 
       // Update local state
       setCompletedLessons((prev) => ({ ...prev, [currentLesson.id]: true }));
@@ -250,7 +247,7 @@ export const LessonPlayerPage: React.FC = () => {
                     Enlace de apoyo / Referencia externa:
                   </h6>
                   <a
-                    href={currentLesson.video_url}
+                    href={sanitizeUrl(currentLesson.video_url)}
                     target="_blank"
                     rel="noreferrer"
                     className="text-xs text-brand-600 dark:text-brand-400 font-semibold underline truncate block"
