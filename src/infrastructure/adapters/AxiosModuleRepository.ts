@@ -7,7 +7,10 @@ export class AxiosModuleRepository implements IModuleRepository {
   async getModules(courseId?: number): Promise<Module[]> {
     try {
       const response = await axiosClient.get('/modules/', {
-        params: courseId ? { course: courseId } : {},
+        params: {
+          ...(courseId ? { course: courseId } : {}),
+          page_size: 100, // bypass 10-item global pagination limit
+        },
       });
       if (response.data && Array.isArray(response.data.results)) {
         return response.data.results;

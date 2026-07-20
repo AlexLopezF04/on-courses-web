@@ -100,6 +100,21 @@ axiosClient.interceptors.response.use(
       }
     }
 
+    // Transient network or server error retries (safe GET requests only)
+    if (originalRequest) {
+      const isGetRequest = originalRequest.method?.toLowerCase() === 'get';
+      const isTransientError = !error.response || (error.response.status >= 500 && error.response.status <= 599);
+
+      if (isGetRequest && isTransientError) {
+        originalRequest._retryCount = originalRequest._retryCount || 0;
+        if (originalRequest._retryCount < 2) {
+          originalRequest._retryCount += 1;
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+          return axiosClient(originalRequest);
+        }
+      }
+    }
+
     return Promise.reject(error);
   }
 );

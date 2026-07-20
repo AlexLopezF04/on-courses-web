@@ -94,3 +94,31 @@ El proyecto incluye un flujo automático de Integración Continua (CI) y Desplie
 3.  **Build:** Compila el frontend generando los archivos estáticos listos en el directorio `dist/`.
 4.  **Despliegue a VPS:** Transfiere de forma segura la compilación mediante protocolo SSH/SCP hacia el directorio web de producción del VPS (ej: `/var/www/on-courses-frontend`).
 5.  **Recarga de Nginx:** Reinicia de forma remota y sin interrupciones el servidor Nginx en el VPS para servir la nueva versión con el certificado SSL (Let's Encrypt).
+
+---
+
+## 🔑 Credenciales de Prueba (Entorno de Producción)
+
+Para facilitar la evaluación docente, se encuentran creadas y configuradas en el backend las siguientes cuentas con diferentes privilegios y roles:
+
+1.  **Administrador (Admin):**
+    *   **Usuario:** `admin_test`
+    *   **Contraseña:** `admin_Pass123` (o `adminPass123`)
+    *   *Permisos:* Gestión completa (CRUD) de Cursos, Categorías y Temarios.
+
+2.  **Profesor (Professor):**
+    *   **Usuario:** `prof_test`
+    *   **Contraseña:** `profPass123` (o la contraseña definida en tu base de datos)
+    *   *Permisos:* Creación y edición de Cursos, Categorías y Temarios. Botones de eliminación bloqueados en la UI.
+
+3.  **Estudiante (Student):**
+    *   **Usuario:** `student_test`
+    *   **Contraseña:** `studentPass123` (o la contraseña definida en tu base de datos)
+    *   *Permisos:* Acceso público a catálogo y compra/inscripción de cursos, visualización de clases y marcado de progreso.
+
+---
+
+## 🔗 Enlaces del Proyecto en Producción
+
+*   **Aplicación Frontend:** [https://on-courses.uaeftt-ute.site](https://on-courses.uaeftt-ute.site)
+*   **Servicio REST API (Backend):** [https://on-courses-api.uaeftt-ute.site/api/](https://on-courses-api.uaeftt-ute.site/api/)

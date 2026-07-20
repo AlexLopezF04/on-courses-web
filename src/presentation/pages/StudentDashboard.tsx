@@ -2,14 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Layout } from '../components/Layout';
 import { useAuthStore } from '../store/useAuthStore';
-import { AxiosEnrollmentRepository } from '@infrastructure/adapters/AxiosEnrollmentRepository';
+import { getEnrollmentsUseCase } from '@infrastructure/factories/EnrollmentFactory';
 import { getCourseByIdUseCase } from '@infrastructure/factories/CourseFactory';
 import { Enrollment } from '@domain/entities/Enrollment';
 import { BookOpen, LayoutDashboard, PlayCircle, Trophy, Calendar } from 'lucide-react';
-import { Loader } from '../components/Loader';
 import { Button } from '../components/Button';
-
-const enrollmentRepository = new AxiosEnrollmentRepository();
+import { DashboardSkeleton } from '../components/Skeletons';
 
 export const StudentDashboard: React.FC = () => {
   const { user } = useAuthStore();
@@ -18,8 +16,8 @@ export const StudentDashboard: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    enrollmentRepository
-      .getEnrollments()
+    getEnrollmentsUseCase
+      .execute()
       .then((data) => {
         setEnrollments(data.results);
         setIsLoading(false);
@@ -43,8 +41,6 @@ export const StudentDashboard: React.FC = () => {
       navigate(`/courses/${courseId}`);
     }
   };
-
-  if (isLoading) return <Loader fullScreen />;
 
   return (
     <Layout>
@@ -77,7 +73,9 @@ export const StudentDashboard: React.FC = () => {
           Mis Cursos Matriculados
         </h2>
 
-        {enrollments.length > 0 ? (
+        {isLoading ? (
+          <DashboardSkeleton />
+        ) : enrollments.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {enrollments.map((enrollment) => (
               <div

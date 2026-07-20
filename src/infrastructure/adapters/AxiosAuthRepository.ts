@@ -30,17 +30,21 @@ export class AxiosAuthRepository implements IAuthRepository {
     }
   }
 
-  async getCurrentUser(): Promise<any> {
+  async getCurrentUser(userId: number): Promise<any> {
     try {
-      const response = await axiosClient.get('/auth/profile/');
+      const response = await axiosClient.get(`/users/${userId}/`);
       return response.data;
     } catch (error) {
-      try {
-        const response = await axiosClient.get('/users/me/');
-        return response.data;
-      } catch {
-        throw parseApiError(error);
-      }
+      throw parseApiError(error);
+    }
+  }
+
+  async updateCurrentUser(userId: number, data: any): Promise<any> {
+    try {
+      const response = await axiosClient.patch(`/users/${userId}/`, data);
+      return response.data;
+    } catch (error) {
+      throw parseApiError(error);
     }
   }
 }
