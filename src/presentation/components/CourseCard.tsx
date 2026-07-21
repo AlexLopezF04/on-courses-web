@@ -67,7 +67,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
 
       {/* Card Body */}
       <div className="flex flex-1 flex-col p-5 bg-white">
-        <h3 className="font-display text-base font-extrabold text-slate-950 transition-colors line-clamp-1 border-b border-slate-200 pb-1.5">
+        <h3 className="font-display text-base font-extrabold text-slate-955 transition-colors border-b border-slate-200 pb-1.5">
           {course.title}
         </h3>
         

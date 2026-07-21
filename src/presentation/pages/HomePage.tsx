@@ -238,7 +238,7 @@ export const HomePage: React.FC = () => {
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
             {featuredCourses.map((course) => (
-              <div key={course.id} className="snap-start shrink-0 w-[270px]">
+              <div key={course.id} className="snap-start shrink-0 w-[270px] p-1.5">
                 <CourseCard course={course} />
               </div>
             ))}
