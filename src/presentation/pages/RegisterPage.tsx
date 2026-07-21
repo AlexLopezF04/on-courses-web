@@ -7,25 +7,25 @@ import { Layout } from '../components/Layout';
 import { GraduationCap, ShieldAlert, CheckCircle } from 'lucide-react';
 
 const LATAM_COUNTRIES = [
-  { code: '+593', name: 'Ecuador', flag: '🇪🇨' },
-  { code: '+57', name: 'Colombia', flag: '🇨🇴' },
-  { code: '+51', name: 'Perú', flag: '🇵🇪' },
-  { code: '+54', name: 'Argentina', flag: '🇦🇷' },
-  { code: '+55', name: 'Brasil', flag: '🇧🇷' },
-  { code: '+56', name: 'Chile', flag: '🇨🇱' },
-  { code: '+52', name: 'México', flag: '🇲🇽' },
-  { code: '+58', name: 'Venezuela', flag: '🇻🇪' },
-  { code: '+591', name: 'Bolivia', flag: '🇧🇴' },
-  { code: '+595', name: 'Paraguay', flag: '🇵🇾' },
-  { code: '+598', name: 'Uruguay', flag: '🇺🇾' },
-  { code: '+506', name: 'Costa Rica', flag: '🇨🇷' },
-  { code: '+507', name: 'Panamá', flag: '🇵🇦' },
-  { code: '+502', name: 'Guatemala', flag: '🇬🇹' },
-  { code: '+504', name: 'Honduras', flag: '🇭🇳' },
-  { code: '+503', name: 'El Salvador', flag: '🇸🇻' },
-  { code: '+505', name: 'Nicaragua', flag: '🇳🇮' },
-  { code: '+53', name: 'Cuba', flag: '🇨🇺' },
-  { code: '+1', name: 'República Dominicana', flag: '🇩🇴' }
+  { code: '+593', name: 'Ecuador', iso: 'ec' },
+  { code: '+57', name: 'Colombia', iso: 'co' },
+  { code: '+51', name: 'Perú', iso: 'pe' },
+  { code: '+54', name: 'Argentina', iso: 'ar' },
+  { code: '+55', name: 'Brasil', iso: 'br' },
+  { code: '+56', name: 'Chile', iso: 'cl' },
+  { code: '+52', name: 'México', iso: 'mx' },
+  { code: '+58', name: 'Venezuela', iso: 've' },
+  { code: '+591', name: 'Bolivia', iso: 'bo' },
+  { code: '+595', name: 'Paraguay', iso: 'py' },
+  { code: '+598', name: 'Uruguay', iso: 'uy' },
+  { code: '+506', name: 'Costa Rica', iso: 'cr' },
+  { code: '+507', name: 'Panamá', iso: 'pa' },
+  { code: '+502', name: 'Guatemala', iso: 'gt' },
+  { code: '+504', name: 'Honduras', iso: 'hn' },
+  { code: '+503', name: 'El Salvador', iso: 'sv' },
+  { code: '+505', name: 'Nicaragua', iso: 'ni' },
+  { code: '+53', name: 'Cuba', iso: 'cu' },
+  { code: '+1', name: 'República Dominicana', iso: 'do' }
 ];
 
 const formatPhoneNumber = (value: string) => {
@@ -43,6 +43,7 @@ export const RegisterPage: React.FC = () => {
   const [lastName, setLastName] = useState('');
   const [phoneLocal, setPhoneLocal] = useState('');
   const [selectedCountryIndex, setSelectedCountryIndex] = useState(0);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
@@ -173,18 +174,55 @@ export const RegisterPage: React.FC = () => {
                 Teléfono
               </label>
               <div className="flex gap-2">
-                <select
-                  value={selectedCountryIndex}
-                  onChange={(e) => setSelectedCountryIndex(Number(e.target.value))}
-                  disabled={isLoading || isSuccess}
-                  className="px-3 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 transition-all duration-200 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 disabled:opacity-50 disabled:bg-slate-50 dark:disabled:bg-slate-950 text-sm max-w-[140px] sm:max-w-[160px]"
-                >
-                  {LATAM_COUNTRIES.map((c, index) => (
-                    <option key={c.code} value={index}>
-                      {c.flag} {c.code} ({c.name})
-                    </option>
-                  ))}
-                </select>
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                    disabled={isLoading || isSuccess}
+                    className="flex items-center justify-between gap-2 h-[46px] px-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 outline-none text-sm min-w-[110px] focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 disabled:opacity-50"
+                  >
+                    <div className="flex items-center gap-1.5">
+                      <img
+                        src={`https://flagcdn.com/w40/${LATAM_COUNTRIES[selectedCountryIndex].iso}.png`}
+                        alt={LATAM_COUNTRIES[selectedCountryIndex].name}
+                        className="w-5 h-3.5 object-cover rounded-sm shadow-sm"
+                      />
+                      <span>{LATAM_COUNTRIES[selectedCountryIndex].code}</span>
+                    </div>
+                    <span className="text-xs text-slate-400">▼</span>
+                  </button>
+
+                  {isDropdownOpen && (
+                    <>
+                      <div
+                        className="fixed inset-0 z-40"
+                        onClick={() => setIsDropdownOpen(false)}
+                      />
+                      <div className="absolute left-0 mt-1.5 w-60 max-h-60 overflow-y-auto rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 p-1.5 shadow-xl z-50 scrollbar-thin">
+                        {LATAM_COUNTRIES.map((c, index) => (
+                          <button
+                            key={c.code}
+                            type="button"
+                            onClick={() => {
+                              setSelectedCountryIndex(index);
+                              setIsDropdownOpen(false);
+                            }}
+                            className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-left hover:bg-slate-50 dark:hover:bg-slate-900 text-slate-900 dark:text-slate-100 transition-colors text-sm"
+                          >
+                            <img
+                              src={`https://flagcdn.com/w40/${c.iso}.png`}
+                              alt={c.name}
+                              className="w-5 h-3.5 object-cover rounded-sm shadow-sm"
+                            />
+                            <span className="font-medium">{c.code}</span>
+                            <span className="text-xs text-slate-500 truncate">({c.name})</span>
+                          </button>
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </div>
+
                 <input
                   type="text"
                   placeholder="099 999 9999"
