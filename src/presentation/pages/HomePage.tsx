@@ -13,35 +13,35 @@ import { CourseCard } from '../components/CourseCard';
 
 /* ─── Stat pill ─────────────────────────────────────────────────── */
 const Stat: React.FC<{ label: string; value: string; color: string }> = ({ label, value, color }) => (
-  <div className={`flex flex-col items-center px-6 py-3 rounded-xl border-2 border-slate-900 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.05)]`}>
+  <div className={`flex flex-col items-center px-6 py-3 rounded-xl border-2 border-slate-950 bg-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]`}>
     <span className={`text-2xl font-extrabold ${color}`}>{value}</span>
-    <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">{label}</span>
+    <span className="text-xs text-slate-500 font-medium">{label}</span>
   </div>
 );
 
 /* ─── Profile card (¿Es para ti?) ──────────────────────────────── */
 const ProfileCard: React.FC<{ emoji: string; title: string; desc: string; color: string }> = ({ emoji, title, desc, color }) => (
-  <div className={`relative flex flex-col p-6 border-2 border-slate-900 dark:border-slate-700 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.05)] bg-white dark:bg-slate-900 hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-200`}>
+  <div className={`relative flex flex-col p-6 border-2 border-slate-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] bg-white hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-200`}>
     <span className={`text-3xl mb-4 w-12 h-12 flex items-center justify-center rounded-lg ${color}`}>{emoji}</span>
-    <h3 className="font-display text-lg font-extrabold text-slate-900 dark:text-white mb-2">{title}</h3>
-    <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">{desc}</p>
+    <h3 className="font-display text-lg font-extrabold text-slate-950 mb-2">{title}</h3>
+    <p className="text-sm text-slate-600 leading-relaxed">{desc}</p>
   </div>
 );
 
 /* ─── Testimonial card ──────────────────────────────────────────── */
 const Testimonial: React.FC<{ name: string; role: string; quote: string; initial: string; color: string }> = ({ name, role, quote, initial, color }) => (
-  <div className="flex flex-col p-6 border-2 border-slate-900 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.05)]">
+  <div className="flex flex-col p-6 border-2 border-slate-950 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
     <div className="flex items-center gap-1 mb-4">
       {[...Array(5)].map((_, i) => <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400" />)}
     </div>
-    <p className="text-slate-700 dark:text-slate-300 text-sm leading-relaxed mb-5 flex-1">"{quote}"</p>
+    <p className="text-slate-800 text-sm leading-relaxed mb-5 flex-1">"{quote}"</p>
     <div className="flex items-center gap-3">
-      <div className={`w-10 h-10 rounded-lg flex items-center justify-center font-extrabold text-white border-2 border-slate-900 dark:border-slate-700 ${color}`}>
+      <div className={`w-10 h-10 rounded-lg flex items-center justify-center font-extrabold text-white border-2 border-slate-950 ${color}`}>
         {initial}
       </div>
       <div>
-        <p className="font-bold text-sm text-slate-900 dark:text-white">{name}</p>
-        <p className="text-xs text-slate-500 dark:text-slate-400">{role}</p>
+        <p className="font-bold text-sm text-slate-950">{name}</p>
+        <p className="text-xs text-slate-500">{role}</p>
       </div>
     </div>
   </div>
@@ -49,13 +49,13 @@ const Testimonial: React.FC<{ name: string; role: string; quote: string; initial
 
 /* ─── Benefit card ──────────────────────────────────────────────── */
 const Benefit: React.FC<{ icon: React.ReactNode; title: string; desc: string; accent: string }> = ({ icon, title, desc, accent }) => (
-  <div className={`flex gap-4 p-5 border-2 border-slate-900 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.05)] hover:-translate-y-0.5 transition-all duration-200`}>
-    <div className={`shrink-0 w-10 h-10 flex items-center justify-center rounded-lg border-2 border-slate-900 dark:border-slate-700 ${accent}`}>
+  <div className={`flex gap-4 p-5 border-2 border-slate-950 bg-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all duration-200`}>
+    <div className={`shrink-0 w-10 h-10 flex items-center justify-center rounded-lg border-2 border-slate-950 ${accent}`}>
       {icon}
     </div>
     <div>
-      <h3 className="font-bold text-sm text-slate-900 dark:text-white mb-1">{title}</h3>
-      <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">{desc}</p>
+      <h3 className="font-bold text-sm text-slate-950 mb-1">{title}</h3>
+      <p className="text-xs text-slate-500 leading-relaxed">{desc}</p>
     </div>
   </div>
 );
