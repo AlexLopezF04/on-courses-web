@@ -18,10 +18,6 @@ export const Navbar: React.FC = () => {
 
   return (
     <nav className="sticky top-0 z-40 w-full border-b border-slate-200/80 bg-white/80 backdrop-blur-md dark:border-slate-800/80 dark:bg-slate-950/80">
-      {/* Orange Promo Banner */}
-      <div className="w-full bg-amber-500 text-slate-950 text-center py-1.5 px-4 text-xs font-bold tracking-wide">
-        Cupón "MUNDIAL" 30% hasta el 21/07/2026
-      </div>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-8">
