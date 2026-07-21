@@ -22,8 +22,7 @@ const Stat: React.FC<{ label: string; value: string; color: string }> = ({ label
 /* ─── Profile card (¿Es para ti?) ──────────────────────────────── */
 const ProfileCard: React.FC<{ emoji: string; title: string; desc: string; color: string }> = ({ emoji, title, desc, color }) => (
   <div className="relative flex flex-col border-2 border-slate-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00FF41] bg-white hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[6px_6px_0px_0px_#00FF41] transition-all duration-200">
-    <div className="flex items-center justify-between border-b-2 border-slate-950 bg-slate-100 px-3 py-1.5">
-      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-700 dark:text-slate-700">oncourses.profile</span>
+    <div className="flex items-center justify-end border-b-2 border-slate-950 bg-slate-100 px-3 py-1.5">
       <div className="flex items-center gap-1.5 shrink-0">
         <span className="w-3.5 h-3.5 flex items-center justify-center border border-slate-950 text-[10px] font-bold select-none cursor-pointer bg-white text-slate-900 dark:text-slate-900">_</span>
         <span className="w-3.5 h-3.5 flex items-center justify-center border border-slate-950 text-[10px] font-bold select-none cursor-pointer bg-white text-slate-900 dark:text-slate-900">+</span>
@@ -41,8 +40,7 @@ const ProfileCard: React.FC<{ emoji: string; title: string; desc: string; color:
 /* ─── Testimonial card ──────────────────────────────────────────── */
 const Testimonial: React.FC<{ name: string; role: string; quote: string; initial: string; color: string }> = ({ name, role, quote, initial, color }) => (
   <div className="flex flex-col border-2 border-slate-950 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00FF41] h-full">
-    <div className="flex items-center justify-between border-b-2 border-slate-950 bg-slate-100 px-3 py-1.5">
-      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-700 dark:text-slate-700">oncourses.review</span>
+    <div className="flex items-center justify-end border-b-2 border-slate-950 bg-slate-100 px-3 py-1.5">
       <div className="flex items-center gap-1.5 shrink-0">
         <span className="w-3.5 h-3.5 flex items-center justify-center border border-slate-950 text-[10px] font-bold select-none cursor-pointer bg-white text-slate-900 dark:text-slate-900">_</span>
         <span className="w-3.5 h-3.5 flex items-center justify-center border border-slate-950 text-[10px] font-bold select-none cursor-pointer bg-white text-slate-900 dark:text-slate-900">+</span>
@@ -59,7 +57,7 @@ const Testimonial: React.FC<{ name: string; role: string; quote: string; initial
           {initial}
         </div>
         <div>
-          <p className="font-bold text-sm text-slate-950 dark:text-slate-950">{name}</p>
+          <p className="font-bold text-sm text-slate-955 dark:text-slate-955">{name}</p>
           <p className="text-xs text-slate-500 dark:text-slate-500">{role}</p>
         </div>
       </div>
@@ -70,8 +68,7 @@ const Testimonial: React.FC<{ name: string; role: string; quote: string; initial
 /* ─── Benefit card ──────────────────────────────────────────────── */
 const Benefit: React.FC<{ icon: React.ReactNode; title: string; desc: string; accent: string }> = ({ icon, title, desc, accent }) => (
   <div className="flex flex-col border-2 border-slate-950 bg-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00FF41] hover:-translate-y-0.5 transition-all duration-200">
-    <div className="flex items-center justify-between border-b-2 border-slate-950 bg-slate-100 px-3 py-1.5">
-      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-700 dark:text-slate-700">oncourses.benefit</span>
+    <div className="flex items-center justify-end border-b-2 border-slate-950 bg-slate-100 px-3 py-1.5">
       <div className="flex items-center gap-1.5 shrink-0">
         <span className="w-3.5 h-3.5 flex items-center justify-center border border-slate-950 text-[10px] font-bold select-none cursor-pointer bg-white text-slate-900 dark:text-slate-900">_</span>
         <span className="w-3.5 h-3.5 flex items-center justify-center border border-slate-950 text-[10px] font-bold select-none cursor-pointer bg-white text-slate-900 dark:text-slate-900">+</span>
@@ -83,7 +80,7 @@ const Benefit: React.FC<{ icon: React.ReactNode; title: string; desc: string; ac
         {icon}
       </div>
       <div>
-        <h3 className="font-bold text-sm text-slate-950 dark:text-slate-950 mb-1">{title}</h3>
+        <h3 className="font-bold text-sm text-slate-955 dark:text-slate-955 mb-1">{title}</h3>
         <p className="text-xs text-slate-500 dark:text-slate-500 leading-relaxed">{desc}</p>
       </div>
     </div>
