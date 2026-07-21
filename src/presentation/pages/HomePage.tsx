@@ -169,16 +169,16 @@ export const HomePage: React.FC = () => {
                 {/* content */}
                 <div className="p-6 space-y-3">
                   {[
-                    { icon: '🐍', label: 'Python desde cero', color: 'bg-amber-500' },
-                    { icon: '⚛️', label: 'React & TypeScript', color: 'bg-brand-600' },
-                    { icon: '🐳', label: 'Docker & DevOps', color: 'bg-emerald-600' },
-                    { icon: '🗄️', label: 'Bases de Datos SQL', color: 'bg-indigo-600' },
-                  ].map(({ icon, label, color }) => (
-                    <div key={label} className="flex items-center gap-3 p-3 bg-white dark:bg-slate-850 border border-slate-950 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] text-slate-900 dark:text-slate-200">
+                    { icon: '🐍', label: 'Python desde cero', color: 'bg-amber-500', anim: 'animate-progress-1' },
+                    { icon: '⚛️', label: 'React & TypeScript', color: 'bg-brand-650', anim: 'animate-progress-2' },
+                    { icon: '🐳', label: 'Docker & DevOps', color: 'bg-emerald-600', anim: 'animate-progress-3' },
+                    { icon: '🗄️', label: 'Bases de Datos SQL', color: 'bg-indigo-600', anim: 'animate-progress-4' },
+                  ].map(({ icon, label, color, anim }) => (
+                    <div key={label} className="flex items-center gap-3 p-3 bg-white dark:bg-slate-800 border border-slate-950 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] text-slate-900 dark:text-slate-200 transition-colors duration-200">
                       <div className={`w-8 h-8 flex items-center justify-center text-base border border-slate-950 ${color}`}>{icon}</div>
                       <span className="text-sm font-semibold">{label}</span>
-                      <div className="ml-auto w-16 h-2 bg-slate-100 dark:bg-slate-800 border border-slate-950 rounded-none overflow-hidden">
-                        <div className="h-full bg-brand-400" style={{ width: `${Math.random() * 40 + 50}%` }} />
+                      <div className="ml-auto w-16 h-2 bg-slate-100 dark:bg-slate-900 border border-slate-950 rounded-none overflow-hidden">
+                        <div className={`h-full bg-brand-400 ${anim}`} />
                       </div>
                     </div>
                   ))}

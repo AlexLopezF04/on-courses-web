@@ -82,3 +82,15 @@ body {
 .animate-grid {
   animation: grid-move 5s linear infinite;
 }
+
+/* ── Mockup progress bar fill animation ── */
+@keyframes progress-fill {
+  0%   { width: 10%; }
+  50%  { width: 95%; }
+  100% { width: 10%; }
+}
+
+.animate-progress-1 { animation: progress-fill 4s ease-in-out infinite; }
+.animate-progress-2 { animation: progress-fill 3s ease-in-out infinite; }
+.animate-progress-3 { animation: progress-fill 5s ease-in-out infinite; }
+.animate-progress-4 { animation: progress-fill 3.5s ease-in-out infinite; }
