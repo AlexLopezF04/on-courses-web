@@ -96,9 +96,9 @@ export const HomePage: React.FC = () => {
       {/* ── HERO ────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white mb-16 border-b-2 border-slate-200 dark:border-slate-900 transition-colors duration-200">
         {/* Grid background — Light Mode (faint green) */}
-        <div className="block dark:hidden animate-grid transition-none absolute inset-0 bg-[linear-gradient(rgba(0,200,50,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(0,200,50,0.04)_1px,transparent_1px)] bg-[size:40px_40px]" />
+        <div className="block dark:hidden animate-grid transition-none absolute inset-0 bg-[linear-gradient(rgba(0,200,50,0.16)_1px,transparent_1px),linear-gradient(90deg,rgba(0,200,50,0.10)_1px,transparent_1px)] bg-[size:40px_40px]" />
         {/* Grid background — Dark Mode (Matrix phosphor neon) */}
-        <div className="hidden dark:block animate-grid transition-none absolute inset-0 bg-[linear-gradient(rgba(0,255,65,0.25)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,65,0.15)_1px,transparent_1px)] bg-[size:40px_40px]" />
+        <div className="hidden dark:block animate-grid transition-none absolute inset-0 bg-[linear-gradient(rgba(0,255,65,0.38)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,65,0.25)_1px,transparent_1px)] bg-[size:40px_40px]" />
         
         {/* Glow orbs */}
         <div className="hidden dark:block absolute top-0 left-1/4 w-96 h-96 bg-[#00ff41]/10 rounded-full blur-[130px] pointer-events-none" />
@@ -383,9 +383,9 @@ export const HomePage: React.FC = () => {
       <section className="mb-16">
         <div className="bg-slate-50 dark:bg-slate-950 border-2 border-slate-950 shadow-[6px_6px_0px_0px_rgba(0,255,65,0.4)] p-10 lg:p-14 text-center relative overflow-hidden transition-colors duration-200">
           {/* Grid bg — Light mode (faint green) */}
-          <div className="block dark:hidden animate-grid transition-none absolute inset-0 bg-[linear-gradient(rgba(0,200,50,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(0,200,50,0.04)_1px,transparent_1px)] bg-[size:32px_32px]" />
+          <div className="block dark:hidden animate-grid transition-none absolute inset-0 bg-[linear-gradient(rgba(0,200,50,0.16)_1px,transparent_1px),linear-gradient(90deg,rgba(0,200,50,0.10)_1px,transparent_1px)] bg-[size:32px_32px]" />
           {/* Grid bg — Dark mode (neon green) */}
-          <div className="hidden dark:block animate-grid transition-none absolute inset-0 bg-[linear-gradient(rgba(0,255,65,0.18)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,65,0.12)_1px,transparent_1px)] bg-[size:32px_32px]" />
+          <div className="hidden dark:block animate-grid transition-none absolute inset-0 bg-[linear-gradient(rgba(0,255,65,0.32)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,65,0.20)_1px,transparent_1px)] bg-[size:32px_32px]" />
           
           <div className="relative">
             <p className="text-brand-600 dark:text-brand-400 text-xs font-bold uppercase tracking-widest mb-3">¿Listo para empezar?</p>
