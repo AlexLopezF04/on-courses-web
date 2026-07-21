@@ -21,20 +21,54 @@ export const Logo: React.FC<LogoProps> = ({ className = 'h-10 w-10' }) => {
         className="dark:fill-[#00FF41] fill-[#00cc33]"
       />
 
-      {/* Icono de Birrete (GraduationCap) en color blanco en el centro */}
+      {/* Símbolo de Llave Izquierda '{' en blanco */}
+      <text
+        x="12"
+        y="68"
+        fontFamily="var(--font-display), system-ui, sans-serif"
+        fontSize="54"
+        fontWeight="800"
+        fill="#ffffff"
+      >
+        {"{"}
+      </text>
+
+      {/* Símbolo de Encendido (Power) en blanco en el centro */}
       <g
-        transform="translate(20, 20) scale(2.5)"
+        transform="translate(35, 33) scale(1.25)"
         stroke="#ffffff"
-        strokeWidth="2"
+        strokeWidth="3.2"
         strokeLinecap="round"
         strokeLinejoin="round"
         fill="none"
       >
-        {/* Rombo superior del birrete */}
-        <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-        {/* Base del birrete */}
-        <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5" />
+        <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
+        <line x1="12" y1="2" x2="12" y2="12" />
       </g>
+
+      {/* Símbolo de Llave Derecha '}' en blanco */}
+      <text
+        x="63"
+        y="68"
+        fontFamily="var(--font-display), system-ui, sans-serif"
+        fontSize="54"
+        fontWeight="800"
+        fill="#ffffff"
+      >
+        {"}"}
+      </text>
+
+      {/* Superíndice 'dev' arriba a la derecha en blanco */}
+      <text
+        x="78"
+        y="30"
+        fontFamily="var(--font-sans), system-ui, sans-serif"
+        fontSize="15"
+        fontWeight="900"
+        fill="#ffffff"
+      >
+        dev
+      </text>
     </svg>
   );
 };
