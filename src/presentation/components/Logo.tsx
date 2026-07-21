@@ -21,21 +21,21 @@ export const Logo: React.FC<LogoProps> = ({ className = 'h-10 w-10' }) => {
         className="dark:fill-[#00FF41] fill-[#00cc33]"
       />
 
-      {/* Símbolo de Llave Izquierda '{' en blanco */}
+      {/* Símbolo de Llave Izquierda '{' en blanco - Perfectamente centrado */}
       <text
-        x="12"
-        y="68"
+        x="15"
+        y="71"
         fontFamily="var(--font-display), system-ui, sans-serif"
-        fontSize="54"
+        fontSize="56"
         fontWeight="800"
         fill="#ffffff"
       >
         {"{"}
       </text>
 
-      {/* Símbolo de Encendido (Power) en blanco en el centro */}
+      {/* Símbolo de Encendido (Power) en blanco en el centro geométrico */}
       <g
-        transform="translate(35, 33) scale(1.25)"
+        transform="translate(34, 34) scale(1.33)"
         stroke="#ffffff"
         strokeWidth="3.2"
         strokeLinecap="round"
@@ -46,28 +46,16 @@ export const Logo: React.FC<LogoProps> = ({ className = 'h-10 w-10' }) => {
         <line x1="12" y1="2" x2="12" y2="12" />
       </g>
 
-      {/* Símbolo de Llave Derecha '}' en blanco */}
+      {/* Símbolo de Llave Derecha '}' en blanco - Perfectamente centrado */}
       <text
-        x="63"
-        y="68"
+        x="64"
+        y="71"
         fontFamily="var(--font-display), system-ui, sans-serif"
-        fontSize="54"
+        fontSize="56"
         fontWeight="800"
         fill="#ffffff"
       >
         {"}"}
-      </text>
-
-      {/* Superíndice 'dev' arriba a la derecha en blanco */}
-      <text
-        x="78"
-        y="30"
-        fontFamily="var(--font-sans), system-ui, sans-serif"
-        fontSize="15"
-        fontWeight="900"
-        fill="#ffffff"
-      >
-        dev
       </text>
     </svg>
   );
