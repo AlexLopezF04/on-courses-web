@@ -7,32 +7,41 @@ import { Layout } from '../components/Layout';
 import { GraduationCap, ShieldAlert, CheckCircle } from 'lucide-react';
 
 const LATAM_COUNTRIES = [
-  { code: '+593', name: 'Ecuador', iso: 'ec' },
-  { code: '+57', name: 'Colombia', iso: 'co' },
-  { code: '+51', name: 'Perú', iso: 'pe' },
-  { code: '+54', name: 'Argentina', iso: 'ar' },
-  { code: '+55', name: 'Brasil', iso: 'br' },
-  { code: '+56', name: 'Chile', iso: 'cl' },
-  { code: '+52', name: 'México', iso: 'mx' },
-  { code: '+58', name: 'Venezuela', iso: 've' },
-  { code: '+591', name: 'Bolivia', iso: 'bo' },
-  { code: '+595', name: 'Paraguay', iso: 'py' },
-  { code: '+598', name: 'Uruguay', iso: 'uy' },
-  { code: '+506', name: 'Costa Rica', iso: 'cr' },
-  { code: '+507', name: 'Panamá', iso: 'pa' },
-  { code: '+502', name: 'Guatemala', iso: 'gt' },
-  { code: '+504', name: 'Honduras', iso: 'hn' },
-  { code: '+503', name: 'El Salvador', iso: 'sv' },
-  { code: '+505', name: 'Nicaragua', iso: 'ni' },
-  { code: '+53', name: 'Cuba', iso: 'cu' },
-  { code: '+1', name: 'República Dominicana', iso: 'do' }
+  { code: '+593', name: 'Ecuador', iso: 'ec', placeholder: '099 999 9999', format: 'XXX XXX XXXX' },
+  { code: '+57', name: 'Colombia', iso: 'co', placeholder: '300 123 4567', format: 'XXX XXX XXXX' },
+  { code: '+51', name: 'Perú', iso: 'pe', placeholder: '999 999 999', format: 'XXX XXX XXX' },
+  { code: '+54', name: 'Argentina', iso: 'ar', placeholder: '11 1234 5678', format: 'XX XXXX XXXX' },
+  { code: '+55', name: 'Brasil', iso: 'br', placeholder: '11 91234 5678', format: 'XX XXXXX XXXX' },
+  { code: '+56', name: 'Chile', iso: 'cl', placeholder: '9 1234 5678', format: 'X XXXX XXXX' },
+  { code: '+52', name: 'México', iso: 'mx', placeholder: '55 1234 5678', format: 'XX XXXX XXXX' },
+  { code: '+58', name: 'Venezuela', iso: 've', placeholder: '412 123 4567', format: 'XXX XXX XXXX' },
+  { code: '+591', name: 'Bolivia', iso: 'bo', placeholder: '7000 1234', format: 'XXXX XXXX' },
+  { code: '+595', name: 'Paraguay', iso: 'py', placeholder: '981 123 456', format: 'XXX XXX XXX' },
+  { code: '+598', name: 'Uruguay', iso: 'uy', placeholder: '099 123 456', format: 'XXX XXX XXX' },
+  { code: '+506', name: 'Costa Rica', iso: 'cr', placeholder: '8888 8888', format: 'XXXX XXXX' },
+  { code: '+507', name: 'Panamá', iso: 'pa', placeholder: '6666 6666', format: 'XXXX XXXX' },
+  { code: '+502', name: 'Guatemala', iso: 'gt', placeholder: '5555 5555', format: 'XXXX XXXX' },
+  { code: '+504', name: 'Honduras', iso: 'hn', placeholder: '9999 9999', format: 'XXXX XXXX' },
+  { code: '+503', name: 'El Salvador', iso: 'sv', placeholder: '7777 7777', format: 'XXXX XXXX' },
+  { code: '+505', name: 'Nicaragua', iso: 'ni', placeholder: '8888 8888', format: 'XXXX XXXX' },
+  { code: '+53', name: 'Cuba', iso: 'cu', placeholder: '5 1234567', format: 'X XXXXXXX' },
+  { code: '+1', name: 'República Dominicana', iso: 'do', placeholder: '809 123 4567', format: 'XXX XXX XXXX' }
 ];
 
-const formatPhoneNumber = (value: string) => {
+const applyPhoneMask = (value: string, mask: string) => {
   const digits = value.replace(/\D/g, '');
-  if (digits.length <= 3) return digits;
-  if (digits.length <= 6) return `${digits.slice(0, 3)} ${digits.slice(3)}`;
-  return `${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(6, 10)}`;
+  let formatted = '';
+  let digitIndex = 0;
+  for (let i = 0; i < mask.length; i++) {
+    if (digitIndex >= digits.length) break;
+    if (mask[i] === 'X') {
+      formatted += digits[digitIndex];
+      digitIndex++;
+    } else {
+      formatted += mask[i];
+    }
+  }
+  return formatted;
 };
 
 export const RegisterPage: React.FC = () => {
@@ -206,6 +215,11 @@ export const RegisterPage: React.FC = () => {
                             onClick={() => {
                               setSelectedCountryIndex(index);
                               setIsDropdownOpen(false);
+                              // Auto re-format current number with new country mask
+                              setPhoneLocal((prev) => {
+                                const digits = prev.replace(/\D/g, '');
+                                return applyPhoneMask(digits, c.format);
+                              });
                             }}
                             className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-left hover:bg-slate-50 dark:hover:bg-slate-900 text-slate-900 dark:text-slate-100 transition-colors text-sm"
                           >
@@ -225,10 +239,10 @@ export const RegisterPage: React.FC = () => {
 
                 <input
                   type="text"
-                  placeholder="099 999 9999"
+                  placeholder={LATAM_COUNTRIES[selectedCountryIndex].placeholder}
                   value={phoneLocal}
                   onChange={(e) => {
-                    const formatted = formatPhoneNumber(e.target.value);
+                    const formatted = applyPhoneMask(e.target.value, LATAM_COUNTRIES[selectedCountryIndex].format);
                     setPhoneLocal(formatted);
                   }}
                   disabled={isLoading || isSuccess}
