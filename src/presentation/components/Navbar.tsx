@@ -82,8 +82,8 @@ export const Navbar: React.FC = () => {
               </div>
             ) : (
               <div className="flex items-center gap-2">
-                <Link to="/login">
-                  <Button variant="ghost" size="sm">Ingresar</Button>
+                <Link to="/register">
+                  <Button variant="ghost" size="sm">Registrarse</Button>
                 </Link>
                 <Link to="/dashboard">
                   <Button size="sm" className="h-[38px] px-4 font-semibold">Ir al campus</Button>
@@ -182,8 +182,8 @@ export const Navbar: React.FC = () => {
             </div>
           ) : (
             <div className="flex flex-col gap-2">
-              <Link to="/login" onClick={() => setIsOpen(false)}>
-                <Button variant="outline" className="w-full">Ingresar</Button>
+              <Link to="/register" onClick={() => setIsOpen(false)}>
+                <Button variant="outline" className="w-full">Registrarse</Button>
               </Link>
               <Link to="/dashboard" onClick={() => setIsOpen(false)}>
                 <Button className="w-full">Ir al campus</Button>
