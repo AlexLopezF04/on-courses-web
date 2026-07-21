@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore';
 import { useThemeStore } from '../store/useThemeStore';
-import { Sun, Moon, User, LogOut, Menu, X, GraduationCap, BookOpen, Compass, Award, Info, Link2 } from 'lucide-react';
+import { Sun, Moon, User, LogOut, Menu, X, GraduationCap, BookOpen, Compass, Award, Info } from 'lucide-react';
 import { Button } from './Button';
 
 export const Navbar: React.FC = () => {
@@ -47,10 +47,7 @@ export const Navbar: React.FC = () => {
                 <Info className="h-4 w-4 text-violet-500 shrink-0" />
                 <span>Recursos Gratis</span>
               </a>
-              <a href="https://on-courses-api.uaeftt-ute.site/api/docs/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-700 hover:text-brand-600 dark:text-slate-200 dark:hover:text-brand-400">
-                <Link2 className="h-4 w-4 text-rose-500 shrink-0" />
-                <span>API Docs</span>
-              </a>
+
             </div>
           </div>
 
@@ -147,16 +144,7 @@ export const Navbar: React.FC = () => {
             <Info className="h-4 w-4 text-violet-500" />
             <span>Recursos Gratis</span>
           </a>
-          <a
-            href="https://on-courses-api.uaeftt-ute.site/api/docs/"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => setIsOpen(false)}
-            className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-250 hover:text-brand-600"
-          >
-            <Link2 className="h-4 w-4 text-rose-500" />
-            <span>API Docs</span>
-          </a>
+
 
           <hr className="border-slate-200 dark:border-slate-800" />
 

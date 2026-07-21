@@ -129,14 +129,6 @@ export const Footer: React.FC = () => {
               <a href="#" className="hover:text-brand-500 transition-colors">Legal</a>
               <a href="#" className="hover:text-brand-500 transition-colors">Privacidad</a>
               <a href="#" className="hover:text-brand-500 transition-colors">Cookies</a>
-              <a 
-                href="https://on-courses-api.uaeftt-ute.site/api/docs/" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="hover:text-brand-500 font-semibold transition-colors mt-2 text-brand-600 dark:text-brand-400"
-              >
-                API Docs (Swagger)
-              </a>
             </div>
           </div>
         </div>
