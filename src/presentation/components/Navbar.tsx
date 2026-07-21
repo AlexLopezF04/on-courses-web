@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore';
 import { useThemeStore } from '../store/useThemeStore';
-import { Sun, Moon, User, LogOut, Menu, X, GraduationCap } from 'lucide-react';
+import { Sun, Moon, User, LogOut, Menu, X, GraduationCap, BookOpen, Compass, Award, Info, Link2 } from 'lucide-react';
 import { Button } from './Button';
 
 export const Navbar: React.FC = () => {
@@ -18,6 +18,10 @@ export const Navbar: React.FC = () => {
 
   return (
     <nav className="sticky top-0 z-40 w-full border-b border-slate-200/80 bg-white/80 backdrop-blur-md dark:border-slate-800/80 dark:bg-slate-950/80">
+      {/* Orange Promo Banner */}
+      <div className="w-full bg-amber-500 text-slate-950 text-center py-1.5 px-4 text-xs font-bold tracking-wide">
+        Cupón "MUNDIAL" 30% hasta el 21/07/2026
+      </div>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-8">
@@ -30,14 +34,31 @@ export const Navbar: React.FC = () => {
               </span>
             </Link>
 
-            <div className="hidden md:flex items-center gap-6">
-              <Link to="/courses" className="text-sm font-medium text-slate-600 hover:text-brand-600 dark:text-slate-300 dark:hover:text-brand-400">
-                Catálogo de Cursos
+            <div className="hidden lg:flex items-center gap-6">
+              <Link to="/courses" className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-700 hover:text-brand-600 dark:text-slate-200 dark:hover:text-brand-400">
+                <Compass className="h-4 w-4 text-amber-500 shrink-0" />
+                <span>Ruta de Estudio</span>
               </Link>
+              <Link to="/courses" className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-700 hover:text-brand-600 dark:text-slate-200 dark:hover:text-brand-400">
+                <BookOpen className="h-4 w-4 text-emerald-500 shrink-0" />
+                <span>Cursos</span>
+              </Link>
+              <a href="#" className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-700 hover:text-brand-600 dark:text-slate-200 dark:hover:text-brand-400">
+                <Award className="h-4 w-4 text-blue-500 shrink-0" />
+                <span>Precios</span>
+              </a>
+              <a href="#" className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-700 hover:text-brand-600 dark:text-slate-200 dark:hover:text-brand-400">
+                <Info className="h-4 w-4 text-violet-500 shrink-0" />
+                <span>Recursos Gratis</span>
+              </a>
+              <a href="https://on-courses-api.uaeftt-ute.site/api/docs/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-700 hover:text-brand-600 dark:text-slate-200 dark:hover:text-brand-400">
+                <Link2 className="h-4 w-4 text-rose-500 shrink-0" />
+                <span>API Docs</span>
+              </a>
             </div>
           </div>
 
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden lg:flex items-center gap-4">
             <button
               onClick={toggleTheme}
               className="rounded-xl p-2.5 text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors cursor-pointer"
@@ -57,20 +78,9 @@ export const Navbar: React.FC = () => {
                 </Link>
                 <Link
                   to={user?.role === 'admin' || user?.role === 'professor' ? '/admin' : '/dashboard'}
-                  className="flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-55 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
+                  className="flex items-center gap-2 rounded-xl border border-slate-300 dark:border-slate-800 bg-white hover:bg-slate-50 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-850 px-4 h-[38px] text-sm font-semibold shadow-sm transition-colors"
                 >
-                  <User className="h-4 w-4 text-brand-500" />
-                  <span>Mi Panel</span>
-                  {user?.role === 'admin' && (
-                    <span className="rounded bg-rose-100 px-1.5 py-0.5 text-[10px] font-semibold text-rose-700 dark:bg-rose-900/30 dark:text-rose-400">
-                      Admin
-                    </span>
-                  )}
-                  {user?.role === 'professor' && (
-                    <span className="rounded bg-violet-100 px-1.5 py-0.5 text-[10px] font-semibold text-violet-700 dark:bg-violet-900/30 dark:text-violet-400">
-                      Docente
-                    </span>
-                  )}
+                  <span>Ir al campus</span>
                 </Link>
                 <Button variant="ghost" size="sm" onClick={handleLogout} className="flex items-center gap-1.5 text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/20">
                   <LogOut className="h-4 w-4" />
@@ -82,14 +92,14 @@ export const Navbar: React.FC = () => {
                 <Link to="/login">
                   <Button variant="ghost" size="sm">Ingresar</Button>
                 </Link>
-                <Link to="/register">
-                  <Button size="sm">Registrarse</Button>
+                <Link to="/dashboard">
+                  <Button size="sm" className="h-[38px] px-4 font-semibold">Ir al campus</Button>
                 </Link>
               </div>
             )}
           </div>
 
-          <div className="flex md:hidden items-center gap-2">
+          <div className="flex lg:hidden items-center gap-2">
             <button
               onClick={toggleTheme}
               className="rounded-xl p-2 text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
@@ -108,14 +118,49 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden border-t border-slate-200 bg-white px-4 py-4 dark:border-slate-800 dark:bg-slate-950 flex flex-col gap-4">
+        <div className="lg:hidden border-t border-slate-200 bg-white px-4 py-4 dark:border-slate-800 dark:bg-slate-950 flex flex-col gap-4">
           <Link
             to="/courses"
             onClick={() => setIsOpen(false)}
-            className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-brand-600"
+            className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-250 hover:text-brand-600"
           >
-            Catálogo de Cursos
+            <Compass className="h-4 w-4 text-amber-500" />
+            <span>Ruta de Estudio</span>
           </Link>
+          <Link
+            to="/courses"
+            onClick={() => setIsOpen(false)}
+            className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-250 hover:text-brand-600"
+          >
+            <BookOpen className="h-4 w-4 text-emerald-500" />
+            <span>Cursos</span>
+          </Link>
+          <a
+            href="#"
+            onClick={() => setIsOpen(false)}
+            className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-250 hover:text-brand-600"
+          >
+            <Award className="h-4 w-4 text-blue-500" />
+            <span>Precios</span>
+          </a>
+          <a
+            href="#"
+            onClick={() => setIsOpen(false)}
+            className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-250 hover:text-brand-600"
+          >
+            <Info className="h-4 w-4 text-violet-500" />
+            <span>Recursos Gratis</span>
+          </a>
+          <a
+            href="https://on-courses-api.uaeftt-ute.site/api/docs/"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setIsOpen(false)}
+            className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-250 hover:text-brand-600"
+          >
+            <Link2 className="h-4 w-4 text-rose-500" />
+            <span>API Docs</span>
+          </a>
 
           <hr className="border-slate-200 dark:border-slate-800" />
 
@@ -156,8 +201,8 @@ export const Navbar: React.FC = () => {
               <Link to="/login" onClick={() => setIsOpen(false)}>
                 <Button variant="outline" className="w-full">Ingresar</Button>
               </Link>
-              <Link to="/register" onClick={() => setIsOpen(false)}>
-                <Button className="w-full">Registrarse</Button>
+              <Link to="/dashboard" onClick={() => setIsOpen(false)}>
+                <Button className="w-full">Ir al campus</Button>
               </Link>
             </div>
           )}
