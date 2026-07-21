@@ -222,14 +222,14 @@ export const HomePage: React.FC = () => {
         {/* Section header */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
           <div>
-            <div className="flex flex-col gap-2.5 items-start text-xs font-bold uppercase tracking-widest text-brand-600 dark:text-brand-400 mb-3">
-              <FolderOpen className="h-12 w-12" />
+            <div className="flex flex-col gap-3 items-start text-sm font-black uppercase tracking-widest text-brand-600 dark:text-brand-400 mb-4">
+              <FolderOpen className="h-16 w-16" />
               <span>courses.folder</span>
             </div>
-            <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white">
+            <h2 className="font-display text-4xl sm:text-5xl font-black text-slate-900 dark:text-white">
               Cursos
             </h2>
-            <p className="text-slate-500 dark:text-slate-400 mt-1 text-sm">
+            <p className="text-slate-500 dark:text-slate-400 mt-2 text-base">
               Aprende programación desde cero y mejora tus habilidades
             </p>
           </div>
@@ -280,14 +280,14 @@ export const HomePage: React.FC = () => {
       {/* ── ¿ES PARA TI? ────────────────────────────────────────── */}
       <section className="mb-20">
         <div className="mb-8">
-            <div className="flex flex-col gap-2.5 items-start text-xs font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-3">
-              <Code2 className="h-12 w-12" />
+            <div className="flex flex-col gap-3 items-start text-sm font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-4">
+              <Code2 className="h-16 w-16" />
             <span>community.folder</span>
           </div>
-          <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white">
+            <h2 className="font-display text-4xl sm:text-5xl font-black text-slate-900 dark:text-white">
             ¿Estás en el lugar correcto?
           </h2>
-          <p className="text-slate-500 dark:text-slate-400 mt-1 text-sm max-w-xl">
+            <p className="text-slate-500 dark:text-slate-400 mt-2 text-base">
             Si te identificas con alguno de estos perfiles, estás en el lugar correcto
           </p>
         </div>
@@ -317,14 +317,14 @@ export const HomePage: React.FC = () => {
       {/* ── POR QUÉ ONCOURSES ───────────────────────────────────── */}
       <section className="mb-20">
         <div className="mb-8">
-            <div className="flex flex-col gap-2.5 items-start text-xs font-bold uppercase tracking-widest text-brand-600 dark:text-brand-400 mb-3">
-              <Layers className="h-12 w-12" />
+            <div className="flex flex-col gap-3 items-start text-sm font-black uppercase tracking-widest text-brand-600 dark:text-brand-400 mb-4">
+              <Layers className="h-16 w-16" />
             <span>benefits.folder</span>
           </div>
-          <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white">
+            <h2 className="font-display text-4xl sm:text-5xl font-black text-slate-900 dark:text-white">
             Y además
           </h2>
-          <p className="text-slate-500 dark:text-slate-400 mt-1 text-sm">
+            <p className="text-slate-500 dark:text-slate-400 mt-2 text-base">
             Todo lo que incluye aprender en OnCourses
           </p>
         </div>
@@ -372,11 +372,11 @@ export const HomePage: React.FC = () => {
       {/* ── TESTIMONIOS ─────────────────────────────────────────── */}
       <section className="mb-20">
         <div className="mb-8">
-            <div className="flex flex-col gap-2.5 items-start text-xs font-bold uppercase tracking-widest text-rose-600 dark:text-rose-400 mb-3">
-              <Star className="h-12 w-12" />
+            <div className="flex flex-col gap-3 items-start text-sm font-black uppercase tracking-widest text-rose-600 dark:text-rose-400 mb-4">
+              <Star className="h-16 w-16" />
             <span>reviews.folder</span>
           </div>
-          <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white">
+            <h2 className="font-display text-4xl sm:text-5xl font-black text-slate-900 dark:text-white">
             Lo que dicen nuestros estudiantes
           </h2>
         </div>
