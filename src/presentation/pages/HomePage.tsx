@@ -280,8 +280,8 @@ export const HomePage: React.FC = () => {
       {/* ── ¿ES PARA TI? ────────────────────────────────────────── */}
       <section className="mb-20">
         <div className="mb-8">
-          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-1">
-            <Code2 className="h-4 w-4" />
+            <div className="flex flex-col gap-2.5 items-start text-xs font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-3">
+              <Code2 className="h-12 w-12" />
             <span>community.folder</span>
           </div>
           <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white">
@@ -317,8 +317,8 @@ export const HomePage: React.FC = () => {
       {/* ── POR QUÉ ONCOURSES ───────────────────────────────────── */}
       <section className="mb-20">
         <div className="mb-8">
-          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-600 dark:text-brand-400 mb-1">
-            <Layers className="h-4 w-4" />
+            <div className="flex flex-col gap-2.5 items-start text-xs font-bold uppercase tracking-widest text-brand-600 dark:text-brand-400 mb-3">
+              <Layers className="h-12 w-12" />
             <span>benefits.folder</span>
           </div>
           <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white">
@@ -372,8 +372,8 @@ export const HomePage: React.FC = () => {
       {/* ── TESTIMONIOS ─────────────────────────────────────────── */}
       <section className="mb-20">
         <div className="mb-8">
-          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-rose-600 dark:text-rose-400 mb-1">
-            <Star className="h-4 w-4" />
+            <div className="flex flex-col gap-2.5 items-start text-xs font-bold uppercase tracking-widest text-rose-600 dark:text-rose-400 mb-3">
+              <Star className="h-12 w-12" />
             <span>reviews.folder</span>
           </div>
           <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white">
