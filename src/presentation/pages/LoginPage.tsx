@@ -4,7 +4,7 @@ import { useAuthStore } from '../store/useAuthStore';
 import { Input } from '../components/Input';
 import { Button } from '../components/Button';
 import { Layout } from '../components/Layout';
-import { GraduationCap, ShieldAlert } from 'lucide-react';
+import { GraduationCap, ShieldAlert, Eye, EyeOff } from 'lucide-react';
 
 export const LoginPage: React.FC = () => {
   const { login, isLoading, error } = useAuthStore();
@@ -12,6 +12,7 @@ export const LoginPage: React.FC = () => {
   const location = useLocation();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [validationError, setValidationError] = useState<string | null>(null);
 
   const from = (location.state as any)?.from || '/dashboard';
@@ -72,16 +73,33 @@ export const LoginPage: React.FC = () => {
               />
             </div>
 
-            <div className="relative">
-              <Input
-                label="Contraseña"
-                type="password"
-                placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                autoComplete="current-password"
-                disabled={isLoading}
-              />
+            <div className="w-full flex flex-col gap-1.5 relative">
+              <label className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                Contraseña
+              </label>
+              <div className="relative">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  disabled={isLoading}
+                  autoComplete="current-password"
+                  className="w-full pl-4 pr-10 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 transition-all duration-200 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 disabled:opacity-50 disabled:bg-slate-50 dark:disabled:bg-slate-950 text-sm"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  disabled={isLoading}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-5 w-5" />
+                  ) : (
+                    <Eye className="h-5 w-5" />
+                  )}
+                </button>
+              </div>
             </div>
 
             <Button type="submit" isLoading={isLoading} className="w-full mt-2">
