@@ -21,23 +21,23 @@ export const Logo: React.FC<LogoProps> = ({ className = 'h-10 w-10' }) => {
         className="dark:fill-[#00FF41] fill-[#00cc33]"
       />
 
-      {/* Símbolo de Llave Izquierda '{' en blanco - Perfectamente centrado */}
+      {/* Símbolo de Llave Izquierda '{' en blanco - Delgada y estilizada */}
       <text
-        x="15"
-        y="71"
+        x="18"
+        y="72"
         fontFamily="var(--font-display), system-ui, sans-serif"
-        fontSize="56"
-        fontWeight="800"
+        fontSize="62"
+        fontWeight="300"
         fill="#ffffff"
       >
         {"{"}
       </text>
 
-      {/* Símbolo de Encendido (Power) en blanco en el centro geométrico */}
+      {/* Símbolo de Encendido (Power) en blanco - Trazo más delgado para armonía visual */}
       <g
         transform="translate(34, 34) scale(1.33)"
         stroke="#ffffff"
-        strokeWidth="3.2"
+        strokeWidth="2.5"
         strokeLinecap="round"
         strokeLinejoin="round"
         fill="none"
@@ -46,13 +46,13 @@ export const Logo: React.FC<LogoProps> = ({ className = 'h-10 w-10' }) => {
         <line x1="12" y1="2" x2="12" y2="12" />
       </g>
 
-      {/* Símbolo de Llave Derecha '}' en blanco - Perfectamente centrado */}
+      {/* Símbolo de Llave Derecha '}' en blanco - Delgada y estilizada */}
       <text
-        x="64"
-        y="71"
+        x="63"
+        y="72"
         fontFamily="var(--font-display), system-ui, sans-serif"
-        fontSize="56"
-        fontWeight="800"
+        fontSize="62"
+        fontWeight="300"
         fill="#ffffff"
       >
         {"}"}
