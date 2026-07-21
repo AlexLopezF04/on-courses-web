@@ -234,11 +234,11 @@ export const HomePage: React.FC = () => {
         ) : featuredCourses.length > 0 ? (
           <div
             ref={scrollRef}
-            className="flex gap-5 overflow-x-auto pt-3 px-4 pb-6 scrollbar-hide snap-x snap-mandatory"
+            className="flex gap-5 overflow-x-auto pt-3 px-4 pb-6 scrollbar-hide snap-x snap-mandatory items-stretch"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
             {featuredCourses.map((course) => (
-              <div key={course.id} className="snap-start shrink-0 w-[270px] p-1.5">
+              <div key={course.id} className="snap-start shrink-0 w-[270px] p-1.5 flex flex-col">
                 <CourseCard course={course} />
               </div>
             ))}

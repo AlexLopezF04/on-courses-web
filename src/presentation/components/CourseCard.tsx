@@ -29,7 +29,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
 
   return (
     <div
-      className="relative flex flex-col bg-white border-2 border-slate-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] rounded-none overflow-hidden transition-all duration-200 hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] animate-fade-in"
+      className="relative flex flex-col h-full bg-white border-2 border-slate-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] rounded-none overflow-hidden transition-all duration-200 hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] animate-fade-in"
     >
       {/* Window Header */}
       <div className="flex items-center justify-between border-b-2 border-slate-950 bg-slate-100 px-3 py-1.5">
