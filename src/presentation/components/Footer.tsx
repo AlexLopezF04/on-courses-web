@@ -11,7 +11,7 @@ export const Footer: React.FC = () => {
           {/* Col 1: Logo & Brand Info */}
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-2.5">
-              <Logo className="h-9 w-auto text-brand-600 dark:text-brand-400" />
+              <Logo className="h-9 w-9" />
               <span className="font-display font-bold tracking-tight text-slate-900 dark:text-white text-xl">
                 OnCourses
               </span>

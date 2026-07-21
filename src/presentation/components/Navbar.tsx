@@ -23,8 +23,8 @@ export const Navbar: React.FC = () => {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-8">
             <Link to="/" className="flex items-center gap-2">
-              <Logo className="h-9 w-auto text-brand-600 dark:text-brand-400" />
-              <span className="font-display text-xl font-bold tracking-tight bg-gradient-to-r from-brand-600 to-brand-400 bg-clip-text text-transparent dark:from-brand-400 dark:to-brand-300">
+              <Logo className="h-9 w-9" />
+              <span className="font-display text-xl font-bold tracking-tight bg-gradient-to-r from-brand-600 to-brand-400 bg-clip-text text-transparent dark:from-brand-450 dark:to-brand-300">
                 OnCourses
               </span>
             </Link>

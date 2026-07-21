@@ -109,7 +109,7 @@ export const RegisterPage: React.FC = () => {
       <div className="flex flex-1 items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 shadow-sm">
           <div className="flex flex-col items-center mb-8">
-            <Logo className="h-12 w-auto text-brand-600 dark:text-brand-400 mb-3" />
+            <Logo className="h-12 w-12 mb-3" />
             <h2 className="font-display text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
               Crea tu Cuenta
             </h2>
