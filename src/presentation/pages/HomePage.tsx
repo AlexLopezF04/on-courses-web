@@ -95,11 +95,11 @@ export const HomePage: React.FC = () => {
 
       {/* ── HERO ────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden bg-slate-950 text-white mb-16 border-b-2 border-slate-900">
-        {/* Grid background — animated neon green + cyan */}
-        <div className="animate-grid transition-none absolute inset-0 bg-[linear-gradient(rgba(0,255,128,0.22)_1px,transparent_1px),linear-gradient(90deg,rgba(34,211,238,0.18)_1px,transparent_1px)] bg-[size:40px_40px]" />
-        {/* Glow */}
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-brand-600/20 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-brand-500/15 rounded-full blur-[100px] pointer-events-none" />
+        {/* Grid background — Matrix phosphor neon */}
+        <div className="animate-grid transition-none absolute inset-0 bg-[linear-gradient(rgba(0,255,65,0.30)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,65,0.18)_1px,transparent_1px)] bg-[size:40px_40px]" />
+        {/* Glow orbs */}
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#00ff41]/15 rounded-full blur-[130px] pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-[#00ff41]/10 rounded-full blur-[100px] pointer-events-none" />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
           <div className="flex flex-col lg:flex-row items-center gap-12">
