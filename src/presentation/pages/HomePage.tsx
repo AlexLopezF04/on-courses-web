@@ -57,7 +57,7 @@ const Testimonial: React.FC<{ name: string; role: string; quote: string; initial
           {initial}
         </div>
         <div>
-          <p className="font-bold text-sm text-slate-955 dark:text-slate-955">{name}</p>
+          <p className="font-bold text-sm text-slate-950 dark:text-slate-950">{name}</p>
           <p className="text-xs text-slate-500 dark:text-slate-500">{role}</p>
         </div>
       </div>
@@ -80,7 +80,7 @@ const Benefit: React.FC<{ icon: React.ReactNode; title: string; desc: string; ac
         {icon}
       </div>
       <div>
-        <h3 className="font-bold text-sm text-slate-955 dark:text-slate-955 mb-1">{title}</h3>
+        <h3 className="font-bold text-sm text-slate-950 dark:text-slate-950 mb-1">{title}</h3>
         <p className="text-xs text-slate-500 dark:text-slate-500 leading-relaxed">{desc}</p>
       </div>
     </div>
