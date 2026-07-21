@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { GraduationCap, Mail, BookOpen, Compass, Award, Users, Info, Mailbox, Database, Code, Terminal, GitBranch, Building2, MapPin } from 'lucide-react';
+import { Mail, BookOpen, Compass, Award, Users, Info, Mailbox, Database, Code, Terminal, GitBranch, Building2, MapPin } from 'lucide-react';
+import { Logo } from './Logo';
 
 export const Footer: React.FC = () => {
   return (
@@ -10,9 +11,7 @@ export const Footer: React.FC = () => {
           {/* Col 1: Logo & Brand Info */}
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-2.5">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-brand-600 to-brand-400 text-white shadow-md">
-                <GraduationCap className="h-6 w-6" />
-              </div>
+              <Logo className="h-9 w-auto text-brand-600 dark:text-brand-400" iconClassName="" />
               <span className="font-display font-bold tracking-tight text-slate-900 dark:text-white text-xl">
                 OnCourses
               </span>

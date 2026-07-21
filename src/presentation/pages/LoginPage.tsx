@@ -4,7 +4,8 @@ import { useAuthStore } from '../store/useAuthStore';
 import { Input } from '../components/Input';
 import { Button } from '../components/Button';
 import { Layout } from '../components/Layout';
-import { GraduationCap, ShieldAlert, Eye, EyeOff } from 'lucide-react';
+import { ShieldAlert, Eye, EyeOff } from 'lucide-react';
+import { Logo } from '../components/Logo';
 
 export const LoginPage: React.FC = () => {
   const { login, isLoading, error } = useAuthStore();
@@ -39,9 +40,7 @@ export const LoginPage: React.FC = () => {
       <div className="flex flex-1 items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 shadow-sm">
           <div className="flex flex-col items-center mb-8">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-tr from-brand-600 to-brand-400 text-white shadow-lg shadow-brand-500/25 mb-4">
-              <GraduationCap className="h-7 w-7" />
-            </div>
+            <Logo className="h-12 w-auto text-brand-600 dark:text-brand-400 mb-3" iconClassName="" />
             <h2 className="font-display text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
               Iniciar Sesión
             </h2>

@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore';
 import { useThemeStore } from '../store/useThemeStore';
-import { Sun, Moon, User, LogOut, Menu, X, GraduationCap, BookOpen, Compass, Award, Info } from 'lucide-react';
+import { Sun, Moon, User, LogOut, Menu, X, BookOpen, Compass, Award, Info } from 'lucide-react';
 import { Button } from './Button';
+import { Logo } from './Logo';
 
 export const Navbar: React.FC = () => {
   const { user, isAuthenticated, logout } = useAuthStore();
@@ -22,9 +23,7 @@ export const Navbar: React.FC = () => {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-8">
             <Link to="/" className="flex items-center gap-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-brand-600 to-brand-400 text-white shadow-md shadow-brand-500/20">
-                <GraduationCap className="h-6 w-6" />
-              </div>
+              <Logo className="h-9 w-auto text-brand-600 dark:text-brand-400" iconClassName="" />
               <span className="font-display text-xl font-bold tracking-tight bg-gradient-to-r from-brand-600 to-brand-400 bg-clip-text text-transparent dark:from-brand-400 dark:to-brand-300">
                 OnCourses
               </span>
