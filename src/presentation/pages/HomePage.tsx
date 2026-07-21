@@ -222,8 +222,8 @@ export const HomePage: React.FC = () => {
         {/* Section header */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
           <div>
-            <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-600 dark:text-brand-400 mb-1">
-              <FolderOpen className="h-4 w-4" />
+            <div className="flex flex-col gap-2 items-start text-xs font-bold uppercase tracking-widest text-brand-600 dark:text-brand-400 mb-3">
+              <FolderOpen className="h-7 w-7" />
               <span>courses.folder</span>
             </div>
             <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white">
