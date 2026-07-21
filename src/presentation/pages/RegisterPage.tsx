@@ -40,6 +40,7 @@ export const RegisterPage: React.FC = () => {
         username,
         email,
         password,
+        password_confirm: confirmPassword,
         first_name: firstName,
         last_name: lastName,
         phone,
