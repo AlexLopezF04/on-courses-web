@@ -96,7 +96,7 @@ export const HomePage: React.FC = () => {
       {/* ── HERO ────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden bg-slate-950 text-white mb-16 border-b-2 border-slate-900">
         {/* Grid background — animated duotone violet + cyan */}
-        <div className="animate-grid transition-none absolute inset-0 bg-[linear-gradient(rgba(167,139,250,0.13)_1px,transparent_1px),linear-gradient(90deg,rgba(34,211,238,0.08)_1px,transparent_1px)] bg-[size:40px_40px]" />
+        <div className="animate-grid transition-none absolute inset-0 bg-[linear-gradient(rgba(167,139,250,0.28)_1px,transparent_1px),linear-gradient(90deg,rgba(34,211,238,0.20)_1px,transparent_1px)] bg-[size:40px_40px]" />
         {/* Glow */}
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-brand-600/20 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-violet-600/15 rounded-full blur-[100px] pointer-events-none" />
