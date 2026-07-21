@@ -94,12 +94,15 @@ export const HomePage: React.FC = () => {
     <Layout>
 
       {/* ── HERO ────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-slate-950 text-white mb-16 border-b-2 border-slate-900">
-        {/* Grid background — Matrix phosphor neon */}
-        <div className="animate-grid transition-none absolute inset-0 bg-[linear-gradient(rgba(0,255,65,0.30)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,65,0.18)_1px,transparent_1px)] bg-[size:40px_40px]" />
+      <section className="relative overflow-hidden bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white mb-16 border-b-2 border-slate-200 dark:border-slate-900 transition-colors duration-200">
+        {/* Grid background — Light Mode (faint green) */}
+        <div className="block dark:hidden animate-grid transition-none absolute inset-0 bg-[linear-gradient(rgba(0,200,50,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(0,200,50,0.04)_1px,transparent_1px)] bg-[size:40px_40px]" />
+        {/* Grid background — Dark Mode (Matrix phosphor neon) */}
+        <div className="hidden dark:block animate-grid transition-none absolute inset-0 bg-[linear-gradient(rgba(0,255,65,0.25)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,65,0.15)_1px,transparent_1px)] bg-[size:40px_40px]" />
+        
         {/* Glow orbs */}
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#00ff41]/15 rounded-full blur-[130px] pointer-events-none" />
-        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-[#00ff41]/10 rounded-full blur-[100px] pointer-events-none" />
+        <div className="hidden dark:block absolute top-0 left-1/4 w-96 h-96 bg-[#00ff41]/10 rounded-full blur-[130px] pointer-events-none" />
+        <div className="hidden dark:block absolute bottom-0 right-1/4 w-80 h-80 bg-[#00ff41]/5 rounded-full blur-[100px] pointer-events-none" />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
           <div className="flex flex-col lg:flex-row items-center gap-12">
@@ -107,37 +110,37 @@ export const HomePage: React.FC = () => {
             {/* Left column */}
             <div className="flex-1 text-center lg:text-left">
               {/* Badge */}
-              <div className="inline-flex items-center gap-2 bg-brand-600/20 border border-brand-500/30 text-brand-400 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-6">
+              <div className="inline-flex items-center gap-2 bg-brand-100 dark:bg-brand-600/20 border border-brand-200 dark:border-brand-500/30 text-brand-700 dark:text-brand-400 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-6">
                 <Sparkles className="h-3.5 w-3.5" />
                 Plataforma de Aprendizaje Tecnológico
               </div>
 
               {/* Headline */}
               <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.05] mb-4">
-                <span className="text-white">On</span>
-                <span className="text-brand-400">Courses</span>
+                <span className="text-slate-900 dark:text-white">On</span>
+                <span className="text-brand-600 dark:text-brand-400">Courses</span>
                 <br />
-                <span className="text-slate-300 text-4xl sm:text-5xl lg:text-6xl font-bold">
+                <span className="text-slate-700 dark:text-slate-300 text-4xl sm:text-5xl lg:text-6xl font-bold">
                   es aprender<br />
-                  <span className="text-white">de verdad</span>
+                  <span className="text-slate-900 dark:text-white">de verdad</span>
                 </span>
               </h1>
 
               {/* Sub */}
-              <p className="text-slate-400 text-lg max-w-xl mx-auto lg:mx-0 mb-8 leading-relaxed">
+              <p className="text-slate-600 dark:text-slate-400 text-lg max-w-xl mx-auto lg:mx-0 mb-8 leading-relaxed">
                 Estudia programación y desarrollo de software con cursos estructurados, evaluaciones reales y certificados que respaldan tu progreso.
               </p>
 
               {/* CTAs */}
               <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start mb-10">
                 <Link to="/courses">
-                  <button className="inline-flex items-center gap-2 px-7 py-3.5 bg-brand-600 hover:bg-brand-500 text-white font-extrabold text-sm border-2 border-brand-400 shadow-[4px_4px_0px_0px_rgba(139,92,246,0.5)] hover:shadow-[6px_6px_0px_0px_rgba(139,92,246,0.5)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer">
+                  <button className="inline-flex items-center gap-2 px-7 py-3.5 bg-brand-600 hover:bg-brand-500 text-white font-extrabold text-sm border-2 border-slate-950 shadow-[4px_4px_0px_0px_rgba(0,255,65,0.4)] hover:shadow-[6px_6px_0px_0px_rgba(0,255,65,0.5)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer">
                     Comenzar a aprender
                     <ArrowRight className="h-4 w-4" />
                   </button>
                 </Link>
                 <Link to="/register">
-                  <button className="inline-flex items-center gap-2 px-7 py-3.5 bg-transparent hover:bg-slate-800 text-slate-200 font-bold text-sm border-2 border-slate-700 hover:border-slate-500 transition-all duration-200 cursor-pointer">
+                  <button className="inline-flex items-center gap-2 px-7 py-3.5 bg-transparent hover:bg-slate-200/50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 font-bold text-sm border-2 border-slate-950 hover:border-slate-800 dark:hover:border-slate-500 transition-all duration-200 cursor-pointer">
                     Crear cuenta gratis
                   </button>
                 </Link>
@@ -145,22 +148,22 @@ export const HomePage: React.FC = () => {
 
               {/* Stats */}
               <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
-                <Stat value="+500" label="Estudiantes" color="text-brand-400" />
-                <Stat value="+20" label="Cursos" color="text-emerald-400" />
-                <Stat value="100%" label="Online" color="text-amber-400" />
+                <Stat value="+500" label="Estudiantes" color="text-brand-600 dark:text-brand-400" />
+                <Stat value="+20" label="Cursos" color="text-emerald-600 dark:text-emerald-400" />
+                <Stat value="100%" label="Online" color="text-amber-500 dark:text-amber-400" />
               </div>
             </div>
 
             {/* Right column — mockup window retro style */}
             <div className="hidden lg:block flex-1 max-w-lg w-full">
-              <div className="border-2 border-white/20 shadow-[8px_8px_0px_0px_rgba(139,92,246,0.35)] bg-slate-900">
+              <div className="border-2 border-slate-950 shadow-[8px_8px_0px_0px_rgba(0,255,65,0.4)] bg-white dark:bg-slate-900 transition-colors duration-200">
                 {/* window chrome — retro _ + X style */}
-                <div className="flex items-center justify-between px-3 py-1.5 bg-slate-800 border-b-2 border-white/10">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">oncourses.app</span>
+                <div className="flex items-center justify-between px-3 py-1.5 bg-slate-100 dark:bg-slate-850 border-b-2 border-slate-950">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">oncourses.app</span>
                   <div className="flex items-center gap-1">
-                    <span className="w-4 h-4 flex items-center justify-center border border-white/20 text-[10px] font-bold text-slate-300 bg-slate-700 select-none">_</span>
-                    <span className="w-4 h-4 flex items-center justify-center border border-white/20 text-[10px] font-bold text-slate-300 bg-slate-700 select-none">+</span>
-                    <span className="w-4 h-4 flex items-center justify-center border border-white/20 text-[10px] font-bold text-slate-300 bg-slate-700 select-none">X</span>
+                    <span className="w-4 h-4 flex items-center justify-center border border-slate-950 text-[10px] font-bold text-slate-800 dark:text-slate-300 bg-white dark:bg-slate-800 select-none">_</span>
+                    <span className="w-4 h-4 flex items-center justify-center border border-slate-950 text-[10px] font-bold text-slate-800 dark:text-slate-300 bg-white dark:bg-slate-800 select-none">+</span>
+                    <span className="w-4 h-4 flex items-center justify-center border border-slate-950 text-[10px] font-bold text-slate-800 dark:text-slate-300 bg-white dark:bg-slate-800 select-none">X</span>
                   </div>
                 </div>
                 {/* content */}
@@ -171,11 +174,11 @@ export const HomePage: React.FC = () => {
                     { icon: '🐳', label: 'Docker & DevOps', color: 'bg-emerald-600' },
                     { icon: '🗄️', label: 'Bases de Datos SQL', color: 'bg-indigo-600' },
                   ].map(({ icon, label, color }) => (
-                    <div key={label} className="flex items-center gap-3 p-3 bg-slate-800 border border-slate-700">
-                      <div className={`w-8 h-8 flex items-center justify-center text-base border border-slate-600 ${color}`}>{icon}</div>
-                      <span className="text-sm text-slate-300 font-medium">{label}</span>
-                      <div className="ml-auto w-16 h-1.5 bg-slate-700 rounded-full overflow-hidden">
-                        <div className="h-full bg-brand-500 rounded-full" style={{ width: `${Math.random() * 40 + 50}%` }} />
+                    <div key={label} className="flex items-center gap-3 p-3 bg-white dark:bg-slate-850 border border-slate-950 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] text-slate-900 dark:text-slate-200">
+                      <div className={`w-8 h-8 flex items-center justify-center text-base border border-slate-950 ${color}`}>{icon}</div>
+                      <span className="text-sm font-semibold">{label}</span>
+                      <div className="ml-auto w-16 h-2 bg-slate-100 dark:bg-slate-800 border border-slate-950 rounded-none overflow-hidden">
+                        <div className="h-full bg-brand-400" style={{ width: `${Math.random() * 40 + 50}%` }} />
                       </div>
                     </div>
                   ))}
@@ -378,26 +381,29 @@ export const HomePage: React.FC = () => {
 
       {/* ── CTA FINAL ───────────────────────────────────────────── */}
       <section className="mb-16">
-        <div className="bg-slate-950 dark:bg-slate-900 border-2 border-slate-900 dark:border-slate-700 shadow-[6px_6px_0px_0px_rgba(139,92,246,0.4)] p-10 lg:p-14 text-center relative overflow-hidden">
-          {/* Grid bg */}
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(139,92,246,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(139,92,246,0.06)_1px,transparent_1px)] bg-[size:32px_32px]" />
+        <div className="bg-slate-50 dark:bg-slate-950 border-2 border-slate-950 shadow-[6px_6px_0px_0px_rgba(0,255,65,0.4)] p-10 lg:p-14 text-center relative overflow-hidden transition-colors duration-200">
+          {/* Grid bg — Light mode (faint green) */}
+          <div className="block dark:hidden animate-grid transition-none absolute inset-0 bg-[linear-gradient(rgba(0,200,50,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(0,200,50,0.04)_1px,transparent_1px)] bg-[size:32px_32px]" />
+          {/* Grid bg — Dark mode (neon green) */}
+          <div className="hidden dark:block animate-grid transition-none absolute inset-0 bg-[linear-gradient(rgba(0,255,65,0.18)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,65,0.12)_1px,transparent_1px)] bg-[size:32px_32px]" />
+          
           <div className="relative">
-            <p className="text-brand-400 text-xs font-bold uppercase tracking-widest mb-3">¿Listo para empezar?</p>
-            <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-white mb-4">
+            <p className="text-brand-600 dark:text-brand-400 text-xs font-bold uppercase tracking-widest mb-3">¿Listo para empezar?</p>
+            <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mb-4">
               Comienza a aprender hoy
             </h2>
-            <p className="text-slate-400 text-base max-w-xl mx-auto mb-8">
+            <p className="text-slate-600 dark:text-slate-400 text-base max-w-xl mx-auto mb-8">
               Únete a cientos de estudiantes que ya están transformando su carrera con OnCourses.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link to="/register">
-                <button className="inline-flex items-center gap-2 px-8 py-3.5 bg-brand-600 hover:bg-brand-500 text-white font-extrabold text-sm border-2 border-brand-400 shadow-[4px_4px_0px_0px_rgba(139,92,246,0.5)] hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_0px_rgba(139,92,246,0.5)] transition-all duration-200 cursor-pointer">
+                <button className="inline-flex items-center gap-2 px-8 py-3.5 bg-brand-600 hover:bg-brand-500 text-white font-extrabold text-sm border-2 border-slate-950 shadow-[4px_4px_0px_0px_rgba(0,255,65,0.4)] hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_0px_rgba(0,255,65,0.5)] transition-all duration-200 cursor-pointer">
                   Registrarse gratis
                   <ArrowRight className="h-4 w-4" />
                 </button>
               </Link>
               <Link to="/courses">
-                <button className="inline-flex items-center gap-2 px-8 py-3.5 bg-transparent hover:bg-slate-800 text-slate-200 font-bold text-sm border-2 border-slate-700 hover:border-slate-500 transition-all duration-200 cursor-pointer">
+                <button className="inline-flex items-center gap-2 px-8 py-3.5 bg-transparent hover:bg-slate-200/50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 font-bold text-sm border-2 border-slate-950 hover:border-slate-800 dark:hover:border-slate-500 transition-all duration-200 cursor-pointer">
                   Ver catálogo
                 </button>
               </Link>
