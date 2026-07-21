@@ -6,13 +6,43 @@ import { Button } from '../components/Button';
 import { Layout } from '../components/Layout';
 import { GraduationCap, ShieldAlert, CheckCircle } from 'lucide-react';
 
+const LATAM_COUNTRIES = [
+  { code: '+593', name: 'Ecuador', flag: '🇪🇨' },
+  { code: '+57', name: 'Colombia', flag: '🇨🇴' },
+  { code: '+51', name: 'Perú', flag: '🇵🇪' },
+  { code: '+54', name: 'Argentina', flag: '🇦🇷' },
+  { code: '+55', name: 'Brasil', flag: '🇧🇷' },
+  { code: '+56', name: 'Chile', flag: '🇨🇱' },
+  { code: '+52', name: 'México', flag: '🇲🇽' },
+  { code: '+58', name: 'Venezuela', flag: '🇻🇪' },
+  { code: '+591', name: 'Bolivia', flag: '🇧🇴' },
+  { code: '+595', name: 'Paraguay', flag: '🇵🇾' },
+  { code: '+598', name: 'Uruguay', flag: '🇺🇾' },
+  { code: '+506', name: 'Costa Rica', flag: '🇨🇷' },
+  { code: '+507', name: 'Panamá', flag: '🇵🇦' },
+  { code: '+502', name: 'Guatemala', flag: '🇬🇹' },
+  { code: '+504', name: 'Honduras', flag: '🇭🇳' },
+  { code: '+503', name: 'El Salvador', flag: '🇸🇻' },
+  { code: '+505', name: 'Nicaragua', flag: '🇳🇮' },
+  { code: '+53', name: 'Cuba', flag: '🇨🇺' },
+  { code: '+1', name: 'República Dominicana', flag: '🇩🇴' }
+];
+
+const formatPhoneNumber = (value: string) => {
+  const digits = value.replace(/\D/g, '');
+  if (digits.length <= 3) return digits;
+  if (digits.length <= 6) return `${digits.slice(0, 3)} ${digits.slice(3)}`;
+  return `${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(6, 10)}`;
+};
+
 export const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [phone, setPhone] = useState('');
+  const [phoneLocal, setPhoneLocal] = useState('');
+  const [selectedCountryIndex, setSelectedCountryIndex] = useState(0);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
@@ -36,6 +66,11 @@ export const RegisterPage: React.FC = () => {
 
     setIsLoading(true);
     try {
+      const selectedCountry = LATAM_COUNTRIES[selectedCountryIndex];
+      const formattedPhone = phoneLocal.trim()
+        ? `(${selectedCountry.code}) [${selectedCountry.name}] ${phoneLocal}`
+        : '';
+
       await authRepositoryInstance.register({
         username,
         email,
@@ -43,7 +78,7 @@ export const RegisterPage: React.FC = () => {
         password_confirm: confirmPassword,
         first_name: firstName,
         last_name: lastName,
-        phone,
+        phone: formattedPhone,
       });
       setIsSuccess(true);
       setTimeout(() => {
@@ -133,14 +168,36 @@ export const RegisterPage: React.FC = () => {
               />
             </div>
 
-            <Input
-              label="Teléfono"
-              type="text"
-              placeholder="+593 99 999 9999"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              disabled={isLoading || isSuccess}
-            />
+            <div className="w-full flex flex-col gap-1.5">
+              <label className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                Teléfono
+              </label>
+              <div className="flex gap-2">
+                <select
+                  value={selectedCountryIndex}
+                  onChange={(e) => setSelectedCountryIndex(Number(e.target.value))}
+                  disabled={isLoading || isSuccess}
+                  className="px-3 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 transition-all duration-200 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 disabled:opacity-50 disabled:bg-slate-50 dark:disabled:bg-slate-950 text-sm max-w-[140px] sm:max-w-[160px]"
+                >
+                  {LATAM_COUNTRIES.map((c, index) => (
+                    <option key={c.code} value={index}>
+                      {c.flag} {c.code} ({c.name})
+                    </option>
+                  ))}
+                </select>
+                <input
+                  type="text"
+                  placeholder="099 999 9999"
+                  value={phoneLocal}
+                  onChange={(e) => {
+                    const formatted = formatPhoneNumber(e.target.value);
+                    setPhoneLocal(formatted);
+                  }}
+                  disabled={isLoading || isSuccess}
+                  className="flex-1 px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 transition-all duration-200 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 disabled:opacity-50 disabled:bg-slate-50 dark:disabled:bg-slate-950"
+                />
+              </div>
+            </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Input
