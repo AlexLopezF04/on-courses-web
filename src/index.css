@@ -70,3 +70,13 @@ body {
 .dark ::-webkit-scrollbar-thumb:hover {
   background: #4b5563;
 }
+
+/* ── Animated moving grid (hero background) ── */
+@keyframes grid-move {
+  0%   { background-position: 0 0, 0 0; }
+  100% { background-position: 40px 40px, 40px 40px; }
+}
+
+.animate-grid {
+  animation: grid-move 5s linear infinite;
+}
