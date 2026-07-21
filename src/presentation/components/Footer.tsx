@@ -28,7 +28,7 @@ export const Footer: React.FC = () => {
           </div>
         </div>
         <div className="mt-8 border-t border-slate-100 pt-8 text-center text-xs text-slate-400 dark:border-slate-850 dark:text-slate-600">
-          &copy; {new Date().getFullYear()} OnCourses. Todos los derechos reservados. Desarrollado con Arquitectura Limpia.
+          Desarrollado con ♡ [y gracias a ti] desde Ecuador para el mundo. v1.0 &copy; 2024-{new Date().getFullYear()} OnCourses by Alex López.
         </div>
       </div>
     </footer>
