@@ -10,7 +10,7 @@ export const Footer: React.FC = () => {
           {/* Col 1: Logo & Brand Info */}
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-2.5">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-brand-600 to-violet-600 text-white shadow-md">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-brand-600 to-brand-400 text-white shadow-md">
                 <GraduationCap className="h-6 w-6" />
               </div>
               <span className="font-display font-bold tracking-tight text-slate-900 dark:text-white text-xl">
@@ -77,7 +77,7 @@ export const Footer: React.FC = () => {
                 <span>Precios</span>
               </a>
               <a href="#" className="flex items-center gap-2 hover:text-brand-500 transition-colors">
-                <Info className="h-4 w-4 text-violet-500" />
+                <Info className="h-4 w-4 text-brand-500" />
                 <span>Recursos Gratis</span>
               </a>
               <a href="#" className="flex items-center gap-2 hover:text-brand-500 transition-colors">
@@ -110,7 +110,7 @@ export const Footer: React.FC = () => {
                 <span>JavaScript</span>
               </div>
               <div className="flex items-center gap-2">
-                <GitBranch className="h-4 w-4 text-violet-500" />
+                <GitBranch className="h-4 w-4 text-brand-500" />
                 <span>Git y GitHub</span>
               </div>
               <div className="flex items-center gap-2">

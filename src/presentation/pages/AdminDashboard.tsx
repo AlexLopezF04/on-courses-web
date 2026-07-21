@@ -63,7 +63,7 @@ export const AdminDashboard: React.FC = () => {
         </div>
 
         <div className="rounded-3xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900 shadow-sm flex items-center gap-5">
-          <div className="rounded-2xl bg-violet-100 p-4.5 text-violet-600 dark:bg-violet-900/30 dark:text-violet-450 shrink-0">
+          <div className="rounded-2xl bg-brand-100 p-4.5 text-brand-600 dark:bg-brand-900/30 dark:text-brand-400 shrink-0">
             <Users className="h-6 w-6" />
           </div>
           <div>
@@ -134,7 +134,7 @@ export const AdminDashboard: React.FC = () => {
               <span>**ADMINISTRADOR:** Acceso completo CRUD y capacidad de eliminación definitiva.</span>
             </li>
             <li className="flex items-center gap-2">
-              <div className="h-1.5 w-1.5 rounded-full bg-violet-500" />
+              <div className="h-1.5 w-1.5 rounded-full bg-brand-500" />
               <span>**DOCENTE:** Edición, creación e inserción de lecciones a cursos propios.</span>
             </li>
             <li className="flex items-center gap-2">

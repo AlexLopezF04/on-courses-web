@@ -99,7 +99,7 @@ export const HomePage: React.FC = () => {
         <div className="animate-grid transition-none absolute inset-0 bg-[linear-gradient(rgba(0,255,128,0.22)_1px,transparent_1px),linear-gradient(90deg,rgba(34,211,238,0.18)_1px,transparent_1px)] bg-[size:40px_40px]" />
         {/* Glow */}
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-brand-600/20 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-violet-600/15 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-brand-500/15 rounded-full blur-[100px] pointer-events-none" />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
           <div className="flex flex-col lg:flex-row items-center gap-12">
@@ -287,7 +287,7 @@ export const HomePage: React.FC = () => {
       {/* ── POR QUÉ ONCOURSES ───────────────────────────────────── */}
       <section className="mb-20">
         <div className="mb-8">
-          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-violet-600 dark:text-violet-400 mb-1">
+          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-600 dark:text-brand-400 mb-1">
             <Layers className="h-4 w-4" />
             <span>benefits.folder</span>
           </div>
@@ -322,7 +322,7 @@ export const HomePage: React.FC = () => {
             icon={<Users className="h-5 w-5 text-white" />}
             title="Docentes expertos"
             desc="Aprende de profesores con experiencia real en la industria del software."
-            accent="bg-violet-600"
+            accent="bg-brand-700"
           />
           <Benefit
             icon={<GraduationCap className="h-5 w-5 text-white" />}

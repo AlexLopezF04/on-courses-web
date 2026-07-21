@@ -22,10 +22,10 @@ export const Navbar: React.FC = () => {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-8">
             <Link to="/" className="flex items-center gap-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-brand-600 to-violet-600 text-white shadow-md shadow-brand-500/20">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-brand-600 to-brand-400 text-white shadow-md shadow-brand-500/20">
                 <GraduationCap className="h-6 w-6" />
               </div>
-              <span className="font-display text-xl font-bold tracking-tight bg-gradient-to-r from-brand-600 to-violet-600 bg-clip-text text-transparent dark:from-brand-400 dark:to-violet-400">
+              <span className="font-display text-xl font-bold tracking-tight bg-gradient-to-r from-brand-600 to-brand-400 bg-clip-text text-transparent dark:from-brand-400 dark:to-brand-300">
                 OnCourses
               </span>
             </Link>
@@ -44,7 +44,7 @@ export const Navbar: React.FC = () => {
                 <span>Precios</span>
               </a>
               <a href="#" className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-700 hover:text-brand-600 dark:text-slate-200 dark:hover:text-brand-400">
-                <Info className="h-4 w-4 text-violet-500 shrink-0" />
+                <Info className="h-4 w-4 text-brand-500 shrink-0" />
                 <span>Recursos Gratis</span>
               </a>
 
@@ -141,7 +141,7 @@ export const Navbar: React.FC = () => {
             onClick={() => setIsOpen(false)}
             className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-250 hover:text-brand-600"
           >
-            <Info className="h-4 w-4 text-violet-500" />
+            <Info className="h-4 w-4 text-brand-500" />
             <span>Recursos Gratis</span>
           </a>
 

@@ -223,7 +223,7 @@ export const CourseDetailPage: React.FC = () => {
                   className="w-full h-full object-cover"
                 />
               ) : (
-                <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-brand-100 to-violet-100 text-brand-600 dark:from-brand-950 dark:to-violet-950">
+                <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-brand-100 to-brand-200 text-brand-600 dark:from-brand-950 dark:to-brand-900">
                   <BookOpen className="h-10 w-10" />
                 </div>
               )}

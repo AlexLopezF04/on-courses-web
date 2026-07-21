@@ -13,7 +13,7 @@ const getCategoryColor = (categoryName?: string) => {
     return 'bg-amber-500 text-amber-955';
   }
   if (name.includes('back') || name.includes('python') || name.includes('django') || name.includes('api')) {
-    return 'bg-violet-600 text-violet-100';
+    return 'bg-brand-600 text-brand-100';
   }
   if (name.includes('base') || name.includes('sql') || name.includes('data')) {
     return 'bg-indigo-600 text-indigo-100';

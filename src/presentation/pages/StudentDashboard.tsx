@@ -94,7 +94,7 @@ export const StudentDashboard: React.FC = () => {
 
                   <div className="w-full bg-slate-100 dark:bg-slate-800 h-2.5 rounded-full overflow-hidden mb-6">
                     <div
-                      className="bg-gradient-to-r from-brand-500 to-violet-500 h-full rounded-full transition-all duration-500"
+                      className="bg-gradient-to-r from-brand-500 to-brand-400 h-full rounded-full transition-all duration-500"
                       style={{ width: `${parseFloat(enrollment.total_progress)}%` }}
                     />
                   </div>
