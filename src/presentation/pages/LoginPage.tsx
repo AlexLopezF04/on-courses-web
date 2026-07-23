@@ -38,7 +38,7 @@ export const LoginPage: React.FC = () => {
   return (
     <Layout>
       <div className="flex flex-1 items-center justify-center py-10 px-4 sm:px-6 lg:px-8">
-        <div className="w-full max-w-5xl border-2 border-slate-950 shadow-[8px_8px_0px_0px_rgba(0,255,65,0.4)] dark:shadow-[8px_8px_0px_0px_rgba(0,255,65,0.5)] bg-white dark:bg-slate-900 transition-colors duration-200 overflow-hidden">
+        <div className="w-full max-w-5xl border-2 border-slate-950 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_#00FF41] bg-white dark:bg-slate-900 transition-all duration-200 overflow-hidden">
           {/* OS Window Chrome Header Bar */}
           <div className="flex items-center justify-end px-4 py-1.5 bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-950">
             <div className="flex items-center gap-1.5">
@@ -128,7 +128,7 @@ export const LoginPage: React.FC = () => {
                       onChange={(e) => setPassword(e.target.value)}
                       disabled={isLoading}
                       autoComplete="current-password"
-                      className="w-full pl-4 pr-10 py-2.5 rounded-none border-2 border-slate-950 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-950 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(0,255,65,0.3)] transition-all duration-200 outline-none focus:border-brand-400 focus:shadow-[0_0_14px_rgba(0,255,65,0.75),2px_2px_0px_0px_rgba(0,0,0,1)] dark:focus:shadow-[0_0_16px_rgba(0,255,65,0.85)] disabled:opacity-50 text-sm font-medium"
+                      className="w-full pl-4 pr-10 py-2.5 rounded-none border-2 border-slate-950 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-950 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_#00FF41] transition-all duration-200 outline-none focus:border-brand-500 focus:shadow-[0_0_12px_rgba(0,255,65,0.65),2px_2px_0px_0px_rgba(0,0,0,1)] dark:focus:shadow-[0_0_16px_rgba(0,255,65,0.85),2px_2px_0px_0px_#00FF41] disabled:opacity-50 text-sm font-medium"
                     />
                     <button
                       type="button"
@@ -148,7 +148,7 @@ export const LoginPage: React.FC = () => {
                 <Button
                   type="submit"
                   isLoading={isLoading}
-                  className="w-full mt-3 py-3.5 border-2 border-slate-950 font-black text-sm uppercase tracking-wider bg-brand-400 hover:bg-brand-300 text-slate-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[6px_6px_0px_0px_#00FF41] transition-all cursor-pointer"
+                  className="w-full mt-3 py-3.5 border-2 border-slate-950 font-black text-sm uppercase tracking-wider bg-brand-400 hover:bg-brand-300 text-slate-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00FF41] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[6px_6px_0px_0px_#00FF41] transition-all cursor-pointer"
                 >
                   Ingresar a la Plataforma
                 </Button>
