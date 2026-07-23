@@ -58,13 +58,13 @@ export const Logo: React.FC<LogoProps> = ({ className = 'h-10 w-10' }) => {
         `}</style>
       </defs>
 
-      {/* Contenedor redondeado estilo Squircle en negro/dark con borde verde Matrix neón */}
+      {/* Contenedor estilo placa/badge con esquinas en término medio elegante */}
       <rect
         x="3"
         y="3"
         width="94"
         height="94"
-        rx="26"
+        rx="16"
         fill="#090d16"
         stroke="#00FF41"
         strokeWidth="4.5"
