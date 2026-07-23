@@ -132,8 +132,12 @@ export const LessonPlayerPage: React.FC = () => {
       {/* Sidebar: Navigation List */}
       <aside className="w-80 border-r border-slate-200 dark:border-slate-850 bg-white dark:bg-slate-900 flex flex-col h-full shrink-0">
         <div className="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center gap-3">
-          <Link to="/dashboard" className="rounded-xl p-2 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500">
-            <ArrowLeft className="h-5 w-5" />
+          <Link
+            to="/dashboard"
+            className="p-2 border-2 border-slate-950 bg-white dark:bg-slate-950 text-slate-950 dark:text-white font-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-brand-400 hover:text-slate-950 transition-all cursor-pointer shrink-0"
+            title="Volver a Mi Panel"
+          >
+            <ArrowLeft className="h-4 w-4" />
           </Link>
           <div>
             <h4 className="font-display font-bold text-xs uppercase tracking-wider text-brand-500 line-clamp-1">

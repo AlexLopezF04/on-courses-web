@@ -120,10 +120,10 @@ export const UserManagementPage: React.FC = () => {
       <div className="mb-6">
         <Link
           to="/admin"
-          className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-brand-600 dark:text-slate-400 mb-4"
+          className="inline-flex items-center gap-2 px-3.5 py-1.5 border-2 border-slate-950 bg-white dark:bg-slate-900 text-slate-950 dark:text-white font-extrabold text-xs uppercase tracking-wider shadow-[2.5px_2.5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2.5px_2.5px_0px_0px_#00FF41] hover:bg-brand-400 hover:text-slate-950 dark:hover:bg-brand-400 dark:hover:text-slate-950 transition-all cursor-pointer mb-4"
         >
           <ArrowLeft className="h-4 w-4" />
-          Volver al Panel Administrativo
+          <span>Volver al Panel de Control</span>
         </Link>
 
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
