@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import { Layout } from '../components/Layout';
 import { Button } from '../components/Button';
@@ -13,6 +14,7 @@ import { CatalogSkeleton } from '../components/Skeletons';
 import { CourseCard } from '../components/CourseCard';
 
 export const CatalogPage: React.FC = () => {
+  const [searchParams] = useSearchParams();
   const [courses, setCourses] = useState<Course[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -25,6 +27,16 @@ export const CatalogPage: React.FC = () => {
   // Pagination State
   const [page, setPage] = useState(1);
   const [totalCourses, setTotalCourses] = useState(0);
+
+  useEffect(() => {
+    // Read URL search params
+    const qSearch = searchParams.get('search');
+    if (qSearch !== null) setSearch(qSearch);
+    const qCat = searchParams.get('category');
+    if (qCat !== null) setSelectedCategory(Number(qCat));
+    const qMaxPrice = searchParams.get('max_price');
+    if (qMaxPrice !== null) setMaxPrice(qMaxPrice);
+  }, [searchParams]);
 
   useEffect(() => {
     // Load categories once
