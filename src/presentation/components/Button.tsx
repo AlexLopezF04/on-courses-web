@@ -20,22 +20,27 @@ export const Button: React.FC<ButtonProps> = ({
     <button
       disabled={disabled || isLoading}
       className={cn(
-        'inline-flex items-center justify-center font-medium rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand-500/50 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none disabled:active:scale-100',
+        'inline-flex items-center justify-center font-extrabold tracking-wider uppercase border-2 border-slate-950 transition-all cursor-pointer focus:outline-none disabled:opacity-50 disabled:pointer-events-none active:translate-x-0.5 active:translate-y-0.5',
         {
-          'bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-700 hover:to-brand-600 text-white shadow-md shadow-brand-500/10':
+          // Primary: Matrix Green in both light and dark mode with 3D shadow!
+          'bg-brand-500 hover:bg-brand-400 text-slate-950 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00FF41]':
             variant === 'primary',
-          'bg-slate-100 hover:bg-slate-200 text-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-100':
+          // Secondary: Dark solid button with 3D shadow
+          'bg-slate-950 hover:bg-slate-800 text-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00FF41]':
             variant === 'secondary',
-          'bg-rose-500 hover:bg-rose-600 text-white shadow-md shadow-rose-500/10':
+          // Danger: Red solid button with 3D shadow
+          'bg-rose-500 hover:bg-rose-600 text-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00FF41]':
             variant === 'danger',
-          'border border-slate-300 hover:bg-slate-50 text-slate-700 dark:border-slate-700 dark:hover:bg-slate-800 dark:text-slate-200':
+          // Outline: White background in both themes, 3D shadow
+          'bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-950 dark:text-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00FF41]':
             variant === 'outline',
-          'hover:bg-slate-100 text-slate-600 dark:hover:bg-slate-800 dark:text-slate-300':
+          // Ghost: High-contrast button with 3D shadow
+          'bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-950 dark:text-slate-100 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_#00FF41]':
             variant === 'ghost',
-          
-          'px-3 py-1.5 text-sm': size === 'sm',
-          'px-5 py-2.5 text-base': size === 'md',
-          'px-7 py-3 text-lg': size === 'lg',
+
+          'px-3 py-1.5 text-xs': size === 'sm',
+          'px-5 py-2.5 text-xs sm:text-sm': size === 'md',
+          'px-7 py-3 text-sm sm:text-base': size === 'lg',
         },
         className
       )}

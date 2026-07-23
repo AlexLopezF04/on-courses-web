@@ -58,39 +58,36 @@ export const Navbar: React.FC = () => {
             <div className="hidden lg:flex items-center gap-4">
               <button
                 onClick={toggleTheme}
-                className="rounded-xl p-2.5 text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+                className="p-2 border-2 border-slate-950 bg-white dark:bg-slate-900 text-slate-950 dark:text-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_#00FF41] hover:bg-brand-400 hover:text-slate-950 transition-colors cursor-pointer"
                 aria-label="Toggle theme"
               >
-                {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
               </button>
 
               {isAuthenticated ? (
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-3">
                   <Link
                     to="/profile"
-                    className="flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-brand-600 dark:text-slate-300 dark:hover:text-brand-400 mr-2"
+                    className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-700 hover:text-brand-600 dark:text-slate-200 dark:hover:text-brand-400 mr-1"
                   >
                     <User className="h-4 w-4" />
                     <span>Mi Perfil</span>
                   </Link>
-                  <Link
-                    to={user?.role === 'admin' || user?.role === 'professor' ? '/admin' : '/dashboard'}
-                    className="flex items-center gap-2 rounded-xl border border-slate-300 dark:border-slate-800 bg-white hover:bg-slate-50 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-850 px-4 h-[38px] text-sm font-semibold shadow-sm transition-colors"
-                  >
-                    <span>Ir al campus</span>
+                  <Link to={user?.role === 'admin' || user?.role === 'professor' ? '/admin' : '/dashboard'}>
+                    <Button variant="outline" size="sm">Ir al campus</Button>
                   </Link>
-                  <Button variant="ghost" size="sm" onClick={handleLogout} className="flex items-center gap-1.5 text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/20">
-                    <LogOut className="h-4 w-4" />
+                  <Button variant="danger" size="sm" onClick={handleLogout} className="flex items-center gap-1.5">
+                    <LogOut className="h-3.5 w-3.5" />
                     <span>Salir</span>
                   </Button>
                 </div>
               ) : (
                 <div className="flex items-center gap-2">
                   <Link to="/register">
-                    <Button variant="ghost" size="sm">Registrarse</Button>
+                    <Button variant="outline" size="sm">Registrarse</Button>
                   </Link>
                   <Link to="/dashboard">
-                    <Button size="sm" className="h-[38px] px-4 font-semibold">Ir al campus</Button>
+                    <Button variant="primary" size="sm">Ir al campus</Button>
                   </Link>
                 </div>
               )}
