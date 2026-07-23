@@ -13,6 +13,15 @@ export const Logo: React.FC<LogoProps> = ({ className = 'h-10 w-10' }) => {
       xmlns="http://www.w3.org/2000/svg"
     >
       <defs>
+        {/* Resplandor verde Matrix neón */}
+        <filter id="hatGlow" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="2.5" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+
         <style>{`
           @keyframes logoHatLatency {
             0%, 100% {
@@ -49,53 +58,33 @@ export const Logo: React.FC<LogoProps> = ({ className = 'h-10 w-10' }) => {
         `}</style>
       </defs>
 
-      {/* Contenedor redondeado estilo Squircle en verde Matrix brillante */}
+      {/* Contenedor redondeado estilo Squircle en negro/dark con borde verde Matrix neón */}
       <rect
-        width="100"
-        height="100"
-        rx="28"
-        fill="#00FF41"
-        className="dark:fill-[#00FF41] fill-[#00cc33]"
+        x="3"
+        y="3"
+        width="94"
+        height="94"
+        rx="26"
+        fill="#090d16"
+        stroke="#00FF41"
+        strokeWidth="4.5"
       />
 
-      {/* Símbolo de Llave Izquierda '{' en negro - Delgada y estilizada */}
-      <text
-        x="18"
-        y="72"
-        fontFamily="var(--font-display), system-ui, sans-serif"
-        fontSize="62"
-        fontWeight="300"
-        fill="#000000"
-      >
-        {"{"}
-      </text>
-
-      {/* Sombrero de graduación (GraduationCap) con animación de latencia / titileo */}
+      {/* Sombrero de graduación (GraduationCap) centrado en verde neón con animación de latencia / titileo */}
       <g
         className="animate-hat-latency"
-        transform="translate(36, 37) scale(1.15)"
-        stroke="#000000"
-        strokeWidth="2"
+        transform="translate(20, 20) scale(2.5)"
+        stroke="#00FF41"
+        strokeWidth="2.2"
         strokeLinecap="round"
         strokeLinejoin="round"
         fill="none"
+        filter="url(#hatGlow)"
       >
         <path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" />
         <path d="M22 10v6" />
         <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" />
       </g>
-
-      {/* Símbolo de Llave Derecha '}' en negro - Delgada y estilizada */}
-      <text
-        x="63"
-        y="72"
-        fontFamily="var(--font-display), system-ui, sans-serif"
-        fontSize="62"
-        fontWeight="300"
-        fill="#000000"
-      >
-        {"}"}
-      </text>
     </svg>
   );
 };
