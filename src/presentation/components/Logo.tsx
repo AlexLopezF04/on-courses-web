@@ -12,6 +12,43 @@ export const Logo: React.FC<LogoProps> = ({ className = 'h-10 w-10' }) => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
+      <defs>
+        <style>{`
+          @keyframes logoHatLatency {
+            0%, 100% {
+              opacity: 1;
+            }
+            45% {
+              opacity: 1;
+            }
+            48% {
+              opacity: 0.25;
+            }
+            50% {
+              opacity: 0.95;
+            }
+            52% {
+              opacity: 0.35;
+            }
+            54% {
+              opacity: 1;
+            }
+            82% {
+              opacity: 1;
+            }
+            84% {
+              opacity: 0.45;
+            }
+            86% {
+              opacity: 1;
+            }
+          }
+          .animate-hat-latency {
+            animation: logoHatLatency 3.5s ease-in-out infinite;
+          }
+        `}</style>
+      </defs>
+
       {/* Contenedor redondeado estilo Squircle en verde Matrix brillante */}
       <rect
         width="100"
@@ -33,17 +70,19 @@ export const Logo: React.FC<LogoProps> = ({ className = 'h-10 w-10' }) => {
         {"{"}
       </text>
 
-      {/* Símbolo de Encendido (Power) en negro - Trazo más delgado para armonía visual */}
+      {/* Sombrero de graduación (GraduationCap) con animación de latencia / titileo */}
       <g
-        transform="translate(34, 34) scale(1.33)"
+        className="animate-hat-latency"
+        transform="translate(36, 37) scale(1.15)"
         stroke="#000000"
-        strokeWidth="2.5"
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
         fill="none"
       >
-        <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
-        <line x1="12" y1="2" x2="12" y2="12" />
+        <path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" />
+        <path d="M22 10v6" />
+        <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" />
       </g>
 
       {/* Símbolo de Llave Derecha '}' en negro - Delgada y estilizada */}
