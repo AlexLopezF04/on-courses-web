@@ -16,6 +16,7 @@ import { AdminDashboard } from '../pages/AdminDashboard';
 import { CourseManagementPage } from '../pages/CourseManagementPage';
 import { LessonManagementPage } from '../pages/LessonManagementPage';
 import { CategoryManagementPage } from '../pages/CategoryManagementPage';
+import { StudentManagementPage } from '../pages/StudentManagementPage';
 import { ProfilePage } from '../pages/ProfilePage';
 
 // Guard for authenticated users with role restrictions
@@ -153,6 +154,14 @@ export const AppRouter: React.FC = () => {
           element={
             <RequireAuth allowedRoles={['admin', 'professor']}>
               <CategoryManagementPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/admin/students"
+          element={
+            <RequireAuth allowedRoles={['admin', 'professor']}>
+              <StudentManagementPage />
             </RequireAuth>
           }
         />

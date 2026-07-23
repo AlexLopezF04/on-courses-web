@@ -5,7 +5,7 @@ import { useAuthStore } from '../store/useAuthStore';
 import { getCoursesUseCase } from '@infrastructure/factories/CourseFactory';
 import { getCategoriesUseCase } from '@infrastructure/factories/CategoryFactory';
 import { getEnrollmentsUseCase } from '@infrastructure/factories/EnrollmentFactory';
-import { LayoutDashboard, BookOpen, Users, FolderOpen, ArrowRight, ShieldCheck, ClipboardList, FolderKanban } from 'lucide-react';
+import { LayoutDashboard, BookOpen, Users, FolderOpen, ArrowRight, ClipboardList, FolderKanban } from 'lucide-react';
 import { Loader } from '../components/Loader';
 
 export const AdminDashboard: React.FC = () => {
@@ -62,15 +62,15 @@ export const AdminDashboard: React.FC = () => {
           </div>
         </div>
 
-        <div className="rounded-3xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900 shadow-sm flex items-center gap-5">
+        <Link to="/admin/students" className="rounded-3xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900 shadow-sm flex items-center gap-5 hover:border-brand-500/30 transition-all cursor-pointer">
           <div className="rounded-2xl bg-brand-100 p-4.5 text-brand-600 dark:bg-brand-900/30 dark:text-brand-400 shrink-0">
             <Users className="h-6 w-6" />
           </div>
           <div>
-            <span className="text-xs text-slate-400 block font-semibold uppercase tracking-wider">Inscripciones</span>
+            <span className="text-xs text-slate-400 block font-semibold uppercase tracking-wider">Inscripciones &rarr;</span>
             <span className="text-2xl font-extrabold text-slate-900 dark:text-white">{enrollmentsCount}</span>
           </div>
-        </div>
+        </Link>
 
         <div className="rounded-3xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900 shadow-sm flex items-center gap-5">
           <div className="rounded-2xl bg-rose-100 p-4.5 text-rose-600 dark:bg-rose-900/30 dark:text-rose-450 shrink-0">
@@ -119,29 +119,21 @@ export const AdminDashboard: React.FC = () => {
           </Link>
         </div>
 
-        {/* Security / System Access Card */}
-        <div className="rounded-3xl border border-slate-200 bg-white p-8 dark:border-slate-800 dark:bg-slate-900 shadow-sm flex flex-col">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-50 dark:bg-emerald-900/20 text-emerald-650 dark:text-emerald-400 mb-6">
-            <ShieldCheck className="h-6 w-6" />
+        {/* Manage Students Action Card */}
+        <div className="group rounded-3xl border border-slate-200 bg-white p-8 dark:border-slate-800 dark:bg-slate-900 shadow-sm flex flex-col justify-between hover:border-brand-500/30 transition-all duration-300">
+          <div>
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 mb-6">
+              <Users className="h-6 w-6" />
+            </div>
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Estudiantes Inscritos</h3>
+            <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-6">
+              Nómina general de alumnos matriculados por curso. Busca estudiantes por nombre, analiza el avance de lecciones y filtra por estado.
+            </p>
           </div>
-          <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Reglas de Negocio y Roles</h3>
-          <p className="text-slate-500 dark:text-slate-455 text-sm leading-relaxed mb-6">
-            De acuerdo con el rol asignado por Django, se configuran las siguientes directivas automáticas:
-          </p>
-          <ul className="text-xs text-slate-500 dark:text-slate-455 flex flex-col gap-2.5 mt-auto">
-            <li className="flex items-center gap-2">
-              <div className="h-1.5 w-1.5 rounded-full bg-rose-500" />
-              <span>**ADMINISTRADOR:** Acceso completo CRUD y capacidad de eliminación definitiva.</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <div className="h-1.5 w-1.5 rounded-full bg-brand-500" />
-              <span>**DOCENTE:** Edición, creación e inserción de lecciones a cursos propios.</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-              <span>**ESTUDIANTE:** Acceso restringido al portal y reproductor de lecciones.</span>
-            </li>
-          </ul>
+          <Link to="/admin/students" className="inline-flex items-center gap-2 text-sm font-bold text-brand-600 dark:text-brand-400 hover:underline mt-auto">
+            Ver nómina de estudiantes
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </Link>
         </div>
       </div>
     </Layout>
