@@ -107,13 +107,13 @@ export const RegisterPage: React.FC = () => {
   return (
     <Layout>
       <div className="flex flex-1 items-center justify-center py-10 px-4 sm:px-6 lg:px-8">
-        <div className="w-full max-w-6xl border-2 border-slate-950 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_#00FF41] bg-white dark:bg-slate-900 transition-all duration-200 overflow-hidden">
+        <div className="w-full max-w-6xl border-2 border-slate-950 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_#00FF41] bg-white dark:bg-white transition-all duration-200 overflow-hidden">
           {/* OS Window Chrome Header Bar */}
-          <div className="flex items-center justify-end px-4 py-1.5 bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-950">
+          <div className="flex items-center justify-end px-4 py-1.5 bg-slate-100 dark:bg-slate-100 border-b-2 border-slate-950">
             <div className="flex items-center gap-1.5">
-              <span className="w-4 h-4 flex items-center justify-center border border-slate-950 text-[10px] font-bold text-slate-800 dark:text-slate-300 bg-white dark:bg-slate-800 select-none">_</span>
-              <span className="w-4 h-4 flex items-center justify-center border border-slate-950 text-[10px] font-bold text-slate-800 dark:text-slate-300 bg-white dark:bg-slate-800 select-none">+</span>
-              <span className="w-4 h-4 flex items-center justify-center border border-slate-950 text-[10px] font-bold text-slate-800 dark:text-slate-300 bg-white dark:bg-slate-800 select-none">X</span>
+              <span className="w-4 h-4 flex items-center justify-center border border-slate-950 text-[10px] font-bold text-slate-800 dark:text-slate-800 bg-white dark:bg-white select-none">_</span>
+              <span className="w-4 h-4 flex items-center justify-center border border-slate-950 text-[10px] font-bold text-slate-800 dark:text-slate-800 bg-white dark:bg-white select-none">+</span>
+              <span className="w-4 h-4 flex items-center justify-center border border-slate-950 text-[10px] font-bold text-slate-800 dark:text-slate-800 bg-white dark:bg-white select-none">X</span>
             </div>
           </div>
 
@@ -158,19 +158,19 @@ export const RegisterPage: React.FC = () => {
             </div>
 
             {/* Right Side — Register Form */}
-            <div className="lg:col-span-7 p-6 sm:p-10 flex flex-col justify-center bg-white dark:bg-slate-900">
+            <div className="lg:col-span-7 p-6 sm:p-10 flex flex-col justify-center bg-white dark:bg-white">
               <div className="mb-6">
-                <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-950 dark:text-white">
+                <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-950 dark:text-slate-950">
                   Crea tu Cuenta
                 </h2>
-                <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">
+                <p className="text-slate-600 dark:text-slate-600 text-sm mt-1">
                   Únete gratis a OnCourses hoy mismo
                 </p>
               </div>
 
               {isSuccess && (
-                <div className="flex items-start gap-2.5 bg-emerald-50 dark:bg-emerald-950/40 border-2 border-emerald-500 p-3.5 text-xs text-emerald-900 dark:text-emerald-200 mb-6 shadow-[2px_2px_0px_0px_rgba(16,185,129,0.5)]">
-                  <CheckCircle className="h-5 w-5 shrink-0 text-emerald-600 dark:text-emerald-400" />
+                <div className="flex items-start gap-2.5 bg-emerald-50 dark:bg-emerald-50 border-2 border-emerald-500 p-3.5 text-xs text-emerald-900 dark:text-emerald-900 mb-6 shadow-[2px_2px_0px_0px_rgba(16,185,129,0.5)]">
+                  <CheckCircle className="h-5 w-5 shrink-0 text-emerald-600 dark:text-emerald-600" />
                   <div>
                     <span className="font-bold">¡Registro Exitoso!</span>
                     <p className="mt-0.5 font-medium leading-relaxed">
@@ -181,8 +181,8 @@ export const RegisterPage: React.FC = () => {
               )}
 
               {error && (
-                <div className="flex items-start gap-2.5 bg-rose-50 dark:bg-rose-950/40 border-2 border-rose-500 p-3.5 text-xs text-rose-900 dark:text-rose-200 mb-6 shadow-[2px_2px_0px_0px_rgba(244,63,94,0.5)]">
-                  <ShieldAlert className="h-5 w-5 shrink-0 text-rose-600 dark:text-rose-400" />
+                <div className="flex items-start gap-2.5 bg-rose-50 dark:bg-rose-50 border-2 border-rose-500 p-3.5 text-xs text-rose-900 dark:text-rose-900 mb-6 shadow-[2px_2px_0px_0px_rgba(244,63,94,0.5)]">
+                  <ShieldAlert className="h-5 w-5 shrink-0 text-rose-600 dark:text-rose-600" />
                   <div>
                     <span className="font-bold">Error al registrarse:</span>
                     <p className="mt-0.5 font-medium leading-relaxed">{error}</p>
@@ -231,7 +231,7 @@ export const RegisterPage: React.FC = () => {
 
                 {/* Teléfono con selector de país */}
                 <div className="w-full flex flex-col gap-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200">
+                  <label className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-800">
                     Teléfono
                   </label>
                   <div className="flex gap-2">
@@ -240,7 +240,7 @@ export const RegisterPage: React.FC = () => {
                         type="button"
                         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                         disabled={isLoading || isSuccess}
-                        className="flex items-center justify-between gap-2 h-[44px] px-3 rounded-none border-2 border-slate-950 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-950 dark:text-slate-100 outline-none text-sm font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_#00FF41] transition-all duration-200 focus:border-brand-500 focus:shadow-[0_0_12px_rgba(0,255,65,0.65),2px_2px_0px_0px_rgba(0,0,0,1)] dark:focus:shadow-[0_0_16px_rgba(0,255,65,0.85),2px_2px_0px_0px_#00FF41] min-w-[110px] disabled:opacity-50 cursor-pointer"
+                        className="flex items-center justify-between gap-2 h-[44px] px-3 rounded-none border-2 border-slate-950 dark:border-slate-950 bg-white dark:bg-white text-slate-950 dark:text-slate-950 outline-none text-sm font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_#00FF41] transition-all duration-200 focus:border-brand-500 focus:shadow-[0_0_12px_rgba(0,255,65,0.65),2px_2px_0px_0px_rgba(0,0,0,1)] dark:focus:shadow-[0_0_16px_rgba(0,255,65,0.85),2px_2px_0px_0px_#00FF41] min-w-[110px] disabled:opacity-50 cursor-pointer"
                       >
                         <div className="flex items-center gap-1.5">
                           <img
@@ -259,7 +259,7 @@ export const RegisterPage: React.FC = () => {
                             className="fixed inset-0 z-40"
                             onClick={() => setIsDropdownOpen(false)}
                           />
-                          <div className="absolute left-0 mt-1.5 w-60 max-h-60 overflow-y-auto border-2 border-slate-950 bg-white dark:bg-slate-950 p-1.5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00FF41] z-50 scrollbar-thin">
+                          <div className="absolute left-0 mt-1.5 w-60 max-h-60 overflow-y-auto border-2 border-slate-950 dark:border-slate-950 bg-white dark:bg-white p-1.5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00FF41] z-50 scrollbar-thin">
                             {LATAM_COUNTRIES.map((c, index) => (
                               <button
                                 key={c.code}
@@ -272,7 +272,7 @@ export const RegisterPage: React.FC = () => {
                                     return applyPhoneMask(digits, c.format);
                                   });
                                 }}
-                                className="w-full flex items-center gap-2.5 px-3 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-900 text-slate-950 dark:text-slate-100 transition-colors text-sm font-medium cursor-pointer"
+                                className="w-full flex items-center gap-2.5 px-3 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-100 text-slate-950 dark:text-slate-950 transition-colors text-sm font-medium cursor-pointer"
                               >
                                 <img
                                   src={`https://flagcdn.com/w40/${c.iso}.png`}
@@ -297,14 +297,14 @@ export const RegisterPage: React.FC = () => {
                         setPhoneLocal(formatted);
                       }}
                       disabled={isLoading || isSuccess}
-                      className="flex-1 px-4 py-2.5 rounded-none border-2 border-slate-950 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-950 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_#00FF41] transition-all duration-200 outline-none focus:border-brand-500 focus:shadow-[0_0_12px_rgba(0,255,65,0.65),2px_2px_0px_0px_rgba(0,0,0,1)] dark:focus:shadow-[0_0_16px_rgba(0,255,65,0.85),2px_2px_0px_0px_#00FF41] disabled:opacity-50 text-sm font-medium"
+                      className="flex-1 px-4 py-2.5 rounded-none border-2 border-slate-950 dark:border-slate-950 bg-white dark:bg-white text-slate-950 dark:text-slate-950 placeholder-slate-400 dark:placeholder-slate-400 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_#00FF41] transition-all duration-200 outline-none focus:border-brand-500 focus:shadow-[0_0_12px_rgba(0,255,65,0.65),2px_2px_0px_0px_rgba(0,0,0,1)] dark:focus:shadow-[0_0_16px_rgba(0,255,65,0.85),2px_2px_0px_0px_#00FF41] disabled:opacity-50 text-sm font-medium"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="w-full flex flex-col gap-1.5 relative">
-                    <label className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200">
+                    <label className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-800">
                       Contraseña *
                     </label>
                     <div className="relative">
@@ -314,13 +314,13 @@ export const RegisterPage: React.FC = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         disabled={isLoading || isSuccess}
-                        className="w-full pl-4 pr-10 py-2.5 rounded-none border-2 border-slate-950 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-950 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_#00FF41] transition-all duration-200 outline-none focus:border-brand-500 focus:shadow-[0_0_12px_rgba(0,255,65,0.65),2px_2px_0px_0px_rgba(0,0,0,1)] dark:focus:shadow-[0_0_16px_rgba(0,255,65,0.85),2px_2px_0px_0px_#00FF41] disabled:opacity-50 text-sm font-medium"
+                        className="w-full pl-4 pr-10 py-2.5 rounded-none border-2 border-slate-950 dark:border-slate-950 bg-white dark:bg-white text-slate-950 dark:text-slate-950 placeholder-slate-400 dark:placeholder-slate-400 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_#00FF41] transition-all duration-200 outline-none focus:border-brand-500 focus:shadow-[0_0_12px_rgba(0,255,65,0.65),2px_2px_0px_0px_rgba(0,0,0,1)] dark:focus:shadow-[0_0_16px_rgba(0,255,65,0.85),2px_2px_0px_0px_#00FF41] disabled:opacity-50 text-sm font-medium"
                       />
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
                         disabled={isLoading || isSuccess}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white transition-colors cursor-pointer"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-500 hover:text-slate-950 dark:hover:text-slate-950 transition-colors cursor-pointer"
                       >
                         {showPassword ? (
                           <EyeOff className="h-5 w-5" />
@@ -332,7 +332,7 @@ export const RegisterPage: React.FC = () => {
                   </div>
 
                   <div className="w-full flex flex-col gap-1.5 relative">
-                    <label className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200">
+                    <label className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-800">
                       Confirmar Contraseña *
                     </label>
                     <div className="relative">
@@ -342,13 +342,13 @@ export const RegisterPage: React.FC = () => {
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         disabled={isLoading || isSuccess}
-                        className="w-full pl-4 pr-10 py-2.5 rounded-none border-2 border-slate-950 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-950 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_#00FF41] transition-all duration-200 outline-none focus:border-brand-500 focus:shadow-[0_0_12px_rgba(0,255,65,0.65),2px_2px_0px_0px_rgba(0,0,0,1)] dark:focus:shadow-[0_0_16px_rgba(0,255,65,0.85),2px_2px_0px_0px_#00FF41] disabled:opacity-50 text-sm font-medium"
+                        className="w-full pl-4 pr-10 py-2.5 rounded-none border-2 border-slate-950 dark:border-slate-950 bg-white dark:bg-white text-slate-950 dark:text-slate-950 placeholder-slate-400 dark:placeholder-slate-400 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_#00FF41] transition-all duration-200 outline-none focus:border-brand-500 focus:shadow-[0_0_12px_rgba(0,255,65,0.65),2px_2px_0px_0px_rgba(0,0,0,1)] dark:focus:shadow-[0_0_16px_rgba(0,255,65,0.85),2px_2px_0px_0px_#00FF41] disabled:opacity-50 text-sm font-medium"
                       />
                       <button
                         type="button"
                         onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                         disabled={isLoading || isSuccess}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white transition-colors cursor-pointer"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-500 hover:text-slate-950 dark:hover:text-slate-950 transition-colors cursor-pointer"
                       >
                         {showConfirmPassword ? (
                           <EyeOff className="h-5 w-5" />
@@ -370,9 +370,9 @@ export const RegisterPage: React.FC = () => {
                 </Button>
               </form>
 
-              <p className="mt-8 text-center text-sm font-medium text-slate-600 dark:text-slate-400">
+              <p className="mt-8 text-center text-sm font-medium text-slate-600 dark:text-slate-600">
                 ¿Ya tienes una cuenta?{' '}
-                <Link to="/login" className="font-bold text-brand-600 dark:text-brand-400 hover:underline">
+                <Link to="/login" className="font-bold text-brand-600 dark:text-brand-600 hover:underline">
                   Inicia sesión aquí
                 </Link>
               </p>

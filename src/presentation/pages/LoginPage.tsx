@@ -38,13 +38,13 @@ export const LoginPage: React.FC = () => {
   return (
     <Layout>
       <div className="flex flex-1 items-center justify-center py-10 px-4 sm:px-6 lg:px-8">
-        <div className="w-full max-w-5xl border-2 border-slate-950 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_#00FF41] bg-white dark:bg-slate-900 transition-all duration-200 overflow-hidden">
+        <div className="w-full max-w-5xl border-2 border-slate-950 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_#00FF41] bg-white dark:bg-white transition-all duration-200 overflow-hidden">
           {/* OS Window Chrome Header Bar */}
-          <div className="flex items-center justify-end px-4 py-1.5 bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-950">
+          <div className="flex items-center justify-end px-4 py-1.5 bg-slate-100 dark:bg-slate-100 border-b-2 border-slate-950">
             <div className="flex items-center gap-1.5">
-              <span className="w-4 h-4 flex items-center justify-center border border-slate-950 text-[10px] font-bold text-slate-800 dark:text-slate-300 bg-white dark:bg-slate-800 select-none">_</span>
-              <span className="w-4 h-4 flex items-center justify-center border border-slate-950 text-[10px] font-bold text-slate-800 dark:text-slate-300 bg-white dark:bg-slate-800 select-none">+</span>
-              <span className="w-4 h-4 flex items-center justify-center border border-slate-950 text-[10px] font-bold text-slate-800 dark:text-slate-300 bg-white dark:bg-slate-800 select-none">X</span>
+              <span className="w-4 h-4 flex items-center justify-center border border-slate-950 text-[10px] font-bold text-slate-800 dark:text-slate-800 bg-white dark:bg-white select-none">_</span>
+              <span className="w-4 h-4 flex items-center justify-center border border-slate-950 text-[10px] font-bold text-slate-800 dark:text-slate-800 bg-white dark:bg-white select-none">+</span>
+              <span className="w-4 h-4 flex items-center justify-center border border-slate-950 text-[10px] font-bold text-slate-800 dark:text-slate-800 bg-white dark:bg-white select-none">X</span>
             </div>
           </div>
 
@@ -85,19 +85,19 @@ export const LoginPage: React.FC = () => {
             </div>
 
             {/* Right Side — Login Form */}
-            <div className="lg:col-span-7 p-6 sm:p-10 flex flex-col justify-center bg-white dark:bg-slate-900">
+            <div className="lg:col-span-7 p-6 sm:p-10 flex flex-col justify-center bg-white dark:bg-white">
               <div className="mb-6">
-                <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-950 dark:text-white">
+                <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-950 dark:text-slate-950">
                   Iniciar Sesión
                 </h2>
-                <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">
+                <p className="text-slate-600 dark:text-slate-600 text-sm mt-1">
                   Ingresa tus credenciales para ingresar a tu cuenta
                 </p>
               </div>
 
               {(error || validationError) && (
-                <div className="flex items-start gap-2.5 bg-rose-50 dark:bg-rose-950/40 border-2 border-rose-500 p-3.5 text-xs text-rose-900 dark:text-rose-200 mb-6 shadow-[2px_2px_0px_0px_rgba(244,63,94,0.5)]">
-                  <ShieldAlert className="h-5 w-5 shrink-0 text-rose-600 dark:text-rose-400" />
+                <div className="flex items-start gap-2.5 bg-rose-50 dark:bg-rose-50 border-2 border-rose-500 p-3.5 text-xs text-rose-900 dark:text-rose-900 mb-6 shadow-[2px_2px_0px_0px_rgba(244,63,94,0.5)]">
+                  <ShieldAlert className="h-5 w-5 shrink-0 text-rose-600 dark:text-rose-600" />
                   <div>
                     <span className="font-bold">Error al iniciar sesión:</span>
                     <p className="mt-0.5 font-medium leading-relaxed">{validationError || error}</p>
@@ -117,7 +117,7 @@ export const LoginPage: React.FC = () => {
                 />
 
                 <div className="w-full flex flex-col gap-1.5 relative">
-                  <label className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200">
+                  <label className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-800">
                     Contraseña
                   </label>
                   <div className="relative">
@@ -128,13 +128,13 @@ export const LoginPage: React.FC = () => {
                       onChange={(e) => setPassword(e.target.value)}
                       disabled={isLoading}
                       autoComplete="current-password"
-                      className="w-full pl-4 pr-10 py-2.5 rounded-none border-2 border-slate-950 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-950 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_#00FF41] transition-all duration-200 outline-none focus:border-brand-500 focus:shadow-[0_0_12px_rgba(0,255,65,0.65),2px_2px_0px_0px_rgba(0,0,0,1)] dark:focus:shadow-[0_0_16px_rgba(0,255,65,0.85),2px_2px_0px_0px_#00FF41] disabled:opacity-50 text-sm font-medium"
+                      className="w-full pl-4 pr-10 py-2.5 rounded-none border-2 border-slate-950 dark:border-slate-950 bg-white dark:bg-white text-slate-950 dark:text-slate-950 placeholder-slate-400 dark:placeholder-slate-400 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_#00FF41] transition-all duration-200 outline-none focus:border-brand-500 focus:shadow-[0_0_12px_rgba(0,255,65,0.65),2px_2px_0px_0px_rgba(0,0,0,1)] dark:focus:shadow-[0_0_16px_rgba(0,255,65,0.85),2px_2px_0px_0px_#00FF41] disabled:opacity-50 text-sm font-medium"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
                       disabled={isLoading}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white transition-colors cursor-pointer"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-500 hover:text-slate-950 dark:hover:text-slate-950 transition-colors cursor-pointer"
                     >
                       {showPassword ? (
                         <EyeOff className="h-5 w-5" />
@@ -154,9 +154,9 @@ export const LoginPage: React.FC = () => {
                 </Button>
               </form>
 
-              <p className="mt-8 text-center text-sm font-medium text-slate-600 dark:text-slate-400">
+              <p className="mt-8 text-center text-sm font-medium text-slate-600 dark:text-slate-600">
                 ¿Aún no tienes cuenta?{' '}
-                <Link to="/register" className="font-bold text-brand-600 dark:text-brand-400 hover:underline">
+                <Link to="/register" className="font-bold text-brand-600 dark:text-brand-600 hover:underline">
                   Regístrate gratis aquí
                 </Link>
               </p>
