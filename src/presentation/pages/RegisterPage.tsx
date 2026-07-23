@@ -106,221 +106,288 @@ export const RegisterPage: React.FC = () => {
 
   return (
     <Layout>
-      <div className="flex flex-1 items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div className="w-full max-w-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 shadow-sm">
-          <div className="flex flex-col items-center mb-8">
-            <Logo className="h-12 w-12 mb-3" />
-            <h2 className="font-display text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
-              Crea tu Cuenta
-            </h2>
-            <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">
-              Únete gratis a OnCourses hoy
-            </p>
+      <div className="flex flex-1 items-center justify-center py-10 px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-6xl border-2 border-slate-950 shadow-[8px_8px_0px_0px_rgba(0,255,65,0.4)] dark:shadow-[8px_8px_0px_0px_rgba(0,255,65,0.5)] bg-white dark:bg-slate-900 transition-colors duration-200 overflow-hidden">
+          {/* OS Window Chrome Header Bar */}
+          <div className="flex items-center justify-between px-4 py-2 bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-950">
+            <div className="flex items-center gap-2">
+              <span className="w-3 h-3 rounded-full bg-rose-500 inline-block border border-slate-950" />
+              <span className="w-3 h-3 rounded-full bg-amber-500 inline-block border border-slate-950" />
+              <span className="w-3 h-3 rounded-full bg-emerald-500 inline-block border border-slate-950" />
+              <span className="ml-2 text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+                oncourses.app/register
+              </span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="w-4 h-4 flex items-center justify-center border border-slate-950 text-[10px] font-bold text-slate-800 dark:text-slate-300 bg-white dark:bg-slate-800 select-none">_</span>
+              <span className="w-4 h-4 flex items-center justify-center border border-slate-950 text-[10px] font-bold text-slate-800 dark:text-slate-300 bg-white dark:bg-slate-800 select-none">+</span>
+              <span className="w-4 h-4 flex items-center justify-center border border-slate-950 text-[10px] font-bold text-slate-800 dark:text-slate-300 bg-white dark:bg-slate-800 select-none">X</span>
+            </div>
           </div>
 
-          {isSuccess && (
-            <div className="flex items-start gap-2.5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-250/30 p-4 text-sm text-emerald-800 dark:text-emerald-400 mb-6">
-              <CheckCircle className="h-5 w-5 shrink-0" />
-              <div>
-                <span className="font-semibold">¡Registro Exitoso!</span>
-                <p className="mt-0.5 text-xs font-medium leading-relaxed">
-                  Tu cuenta ha sido creada correctamente. Te redirigiremos al login en unos segundos.
+          {/* Split Screen Container */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[620px]">
+            {/* Left Side — Branding & Logo Hero */}
+            <div className="lg:col-span-5 relative flex flex-col justify-between p-8 sm:p-10 bg-slate-950 text-white border-b-2 lg:border-b-0 lg:border-r-2 border-slate-950 overflow-hidden">
+              {/* Matrix Grid animation background */}
+              <div className="animate-grid absolute inset-0 bg-[linear-gradient(rgba(0,255,65,0.20)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,65,0.12)_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none" />
+
+              <div className="relative z-10">
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-brand-400/10 border border-brand-400 text-brand-400 text-xs font-mono font-bold uppercase tracking-wider mb-6">
+                  <span>$ oncourses --register</span>
+                </div>
+
+                <div className="flex flex-col items-center lg:items-start text-center lg:text-left mb-6">
+                  <div className="p-3 bg-slate-900 border-2 border-slate-950 shadow-[4px_4px_0px_0px_#00FF41] mb-5">
+                    <Logo className="h-16 w-16" />
+                  </div>
+                  <h1 className="font-display text-3xl font-extrabold tracking-tight text-white mb-2">
+                    Comienza tu Carrera DEV
+                  </h1>
+                  <p className="text-slate-400 text-sm leading-relaxed">
+                    Forma parte de la plataforma interactiva de aprendizaje de programación más dinámica.
+                  </p>
+                </div>
+              </div>
+
+              {/* Badges / Stats */}
+              <div className="relative z-10 space-y-3 pt-6 border-t border-slate-800">
+                <div className="flex items-center gap-3 p-2.5 bg-slate-900/80 border border-slate-800 text-xs font-semibold text-slate-300">
+                  <span className="w-6 h-6 flex items-center justify-center bg-brand-400 text-slate-950 border border-slate-950 font-bold">💻</span>
+                  <span>+50 Cursos interactivos desde cero</span>
+                </div>
+                <div className="flex items-center gap-3 p-2.5 bg-slate-900/80 border border-slate-800 text-xs font-semibold text-slate-300">
+                  <span className="w-6 h-6 flex items-center justify-center bg-emerald-400 text-slate-950 border border-slate-950 font-bold">🛡️</span>
+                  <span>Proyectos reales de portafolio</span>
+                </div>
+                <div className="flex items-center gap-3 p-2.5 bg-slate-900/80 border border-slate-800 text-xs font-semibold text-slate-300">
+                  <span className="w-6 h-6 flex items-center justify-center bg-amber-400 text-slate-950 border border-slate-950 font-bold">⚡</span>
+                  <span>Acceso a la comunidad DEV 24/7</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Side — Register Form */}
+            <div className="lg:col-span-7 p-6 sm:p-10 flex flex-col justify-center bg-white dark:bg-slate-900">
+              <div className="mb-6">
+                <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-950 dark:text-white">
+                  Crea tu Cuenta
+                </h2>
+                <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">
+                  Únete gratis a OnCourses hoy mismo
                 </p>
               </div>
-            </div>
-          )}
 
-          {error && (
-            <div className="flex items-start gap-2.5 rounded-2xl bg-rose-50 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900/50 p-4 text-sm text-rose-800 dark:text-rose-450 mb-6">
-              <ShieldAlert className="h-5 w-5 shrink-0" />
-              <div>
-                <span className="font-semibold">Error al registrarse:</span>
-                <p className="mt-0.5 text-xs font-medium leading-relaxed">{error}</p>
-              </div>
-            </div>
-          )}
+              {isSuccess && (
+                <div className="flex items-start gap-2.5 bg-emerald-50 dark:bg-emerald-950/40 border-2 border-emerald-500 p-3.5 text-xs text-emerald-900 dark:text-emerald-200 mb-6 shadow-[2px_2px_0px_0px_rgba(16,185,129,0.5)]">
+                  <CheckCircle className="h-5 w-5 shrink-0 text-emerald-600 dark:text-emerald-400" />
+                  <div>
+                    <span className="font-bold">¡Registro Exitoso!</span>
+                    <p className="mt-0.5 font-medium leading-relaxed">
+                      Tu cuenta ha sido creada correctamente. Te redirigiremos al login en unos segundos...
+                    </p>
+                  </div>
+                </div>
+              )}
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Input
-                label="Nombre de Usuario *"
-                type="text"
-                placeholder="usuario123"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                disabled={isLoading || isSuccess}
-              />
-              <Input
-                label="Correo Electrónico *"
-                type="email"
-                placeholder="correo@ejemplo.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                disabled={isLoading || isSuccess}
-              />
-            </div>
+              {error && (
+                <div className="flex items-start gap-2.5 bg-rose-50 dark:bg-rose-950/40 border-2 border-rose-500 p-3.5 text-xs text-rose-900 dark:text-rose-200 mb-6 shadow-[2px_2px_0px_0px_rgba(244,63,94,0.5)]">
+                  <ShieldAlert className="h-5 w-5 shrink-0 text-rose-600 dark:text-rose-400" />
+                  <div>
+                    <span className="font-bold">Error al registrarse:</span>
+                    <p className="mt-0.5 font-medium leading-relaxed">{error}</p>
+                  </div>
+                </div>
+              )}
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Input
-                label="Nombre"
-                type="text"
-                placeholder="Juan"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                disabled={isLoading || isSuccess}
-              />
-              <Input
-                label="Apellidos"
-                type="text"
-                placeholder="Pérez"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                disabled={isLoading || isSuccess}
-              />
-            </div>
-
-            <div className="w-full flex flex-col gap-1.5">
-              <label className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                Teléfono
-              </label>
-              <div className="flex gap-2">
-                <div className="relative">
-                  <button
-                    type="button"
-                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <Input
+                    label="Nombre de Usuario *"
+                    type="text"
+                    placeholder="usuario123"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                     disabled={isLoading || isSuccess}
-                    className="flex items-center justify-between gap-2 h-[46px] px-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 outline-none text-sm min-w-[110px] focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 disabled:opacity-50"
-                  >
-                    <div className="flex items-center gap-1.5">
-                      <img
-                        src={`https://flagcdn.com/w40/${LATAM_COUNTRIES[selectedCountryIndex].iso}.png`}
-                        alt={LATAM_COUNTRIES[selectedCountryIndex].name}
-                        className="w-5 h-3.5 object-cover rounded-sm shadow-sm"
-                      />
-                      <span>{LATAM_COUNTRIES[selectedCountryIndex].code}</span>
+                  />
+                  <Input
+                    label="Correo Electrónico *"
+                    type="email"
+                    placeholder="correo@ejemplo.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    disabled={isLoading || isSuccess}
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <Input
+                    label="Nombre"
+                    type="text"
+                    placeholder="Juan"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    disabled={isLoading || isSuccess}
+                  />
+                  <Input
+                    label="Apellidos"
+                    type="text"
+                    placeholder="Pérez"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    disabled={isLoading || isSuccess}
+                  />
+                </div>
+
+                {/* Teléfono con selector de país */}
+                <div className="w-full flex flex-col gap-1.5">
+                  <label className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200">
+                    Teléfono
+                  </label>
+                  <div className="flex gap-2">
+                    <div className="relative">
+                      <button
+                        type="button"
+                        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                        disabled={isLoading || isSuccess}
+                        className="flex items-center justify-between gap-2 h-[44px] px-3 rounded-none border-2 border-slate-950 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-950 dark:text-slate-100 outline-none text-sm font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(0,255,65,0.3)] transition-all duration-200 focus:border-brand-400 focus:shadow-[0_0_14px_rgba(0,255,65,0.75),2px_2px_0px_0px_rgba(0,0,0,1)] dark:focus:shadow-[0_0_16px_rgba(0,255,65,0.85)] min-w-[110px] disabled:opacity-50 cursor-pointer"
+                      >
+                        <div className="flex items-center gap-1.5">
+                          <img
+                            src={`https://flagcdn.com/w40/${LATAM_COUNTRIES[selectedCountryIndex].iso}.png`}
+                            alt={LATAM_COUNTRIES[selectedCountryIndex].name}
+                            className="w-5 h-3.5 object-cover border border-slate-950 shadow-sm"
+                          />
+                          <span>{LATAM_COUNTRIES[selectedCountryIndex].code}</span>
+                        </div>
+                        <span className="text-xs text-slate-500">▼</span>
+                      </button>
+
+                      {isDropdownOpen && (
+                        <>
+                          <div
+                            className="fixed inset-0 z-40"
+                            onClick={() => setIsDropdownOpen(false)}
+                          />
+                          <div className="absolute left-0 mt-1.5 w-60 max-h-60 overflow-y-auto border-2 border-slate-950 bg-white dark:bg-slate-950 p-1.5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00FF41] z-50 scrollbar-thin">
+                            {LATAM_COUNTRIES.map((c, index) => (
+                              <button
+                                key={c.code}
+                                type="button"
+                                onClick={() => {
+                                  setSelectedCountryIndex(index);
+                                  setIsDropdownOpen(false);
+                                  setPhoneLocal((prev) => {
+                                    const digits = prev.replace(/\D/g, '');
+                                    return applyPhoneMask(digits, c.format);
+                                  });
+                                }}
+                                className="w-full flex items-center gap-2.5 px-3 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-900 text-slate-950 dark:text-slate-100 transition-colors text-sm font-medium cursor-pointer"
+                              >
+                                <img
+                                  src={`https://flagcdn.com/w40/${c.iso}.png`}
+                                  alt={c.name}
+                                  className="w-5 h-3.5 object-cover border border-slate-950 shadow-sm"
+                                />
+                                <span className="font-bold">{c.code}</span>
+                                <span className="text-xs text-slate-500 truncate">({c.name})</span>
+                              </button>
+                            ))}
+                          </div>
+                        </>
+                      )}
                     </div>
-                    <span className="text-xs text-slate-400">▼</span>
-                  </button>
 
-                  {isDropdownOpen && (
-                    <>
-                      <div
-                        className="fixed inset-0 z-40"
-                        onClick={() => setIsDropdownOpen(false)}
+                    <input
+                      type="text"
+                      placeholder={LATAM_COUNTRIES[selectedCountryIndex].placeholder}
+                      value={phoneLocal}
+                      onChange={(e) => {
+                        const formatted = applyPhoneMask(e.target.value, LATAM_COUNTRIES[selectedCountryIndex].format);
+                        setPhoneLocal(formatted);
+                      }}
+                      disabled={isLoading || isSuccess}
+                      className="flex-1 px-4 py-2.5 rounded-none border-2 border-slate-950 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-950 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(0,255,65,0.3)] transition-all duration-200 outline-none focus:border-brand-400 focus:shadow-[0_0_14px_rgba(0,255,65,0.75),2px_2px_0px_0px_rgba(0,0,0,1)] dark:focus:shadow-[0_0_16px_rgba(0,255,65,0.85)] disabled:opacity-50 text-sm font-medium"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="w-full flex flex-col gap-1.5 relative">
+                    <label className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200">
+                      Contraseña *
+                    </label>
+                    <div className="relative">
+                      <input
+                        type={showPassword ? 'text' : 'password'}
+                        placeholder="••••••••"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        disabled={isLoading || isSuccess}
+                        className="w-full pl-4 pr-10 py-2.5 rounded-none border-2 border-slate-950 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-950 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(0,255,65,0.3)] transition-all duration-200 outline-none focus:border-brand-400 focus:shadow-[0_0_14px_rgba(0,255,65,0.75),2px_2px_0px_0px_rgba(0,0,0,1)] dark:focus:shadow-[0_0_16px_rgba(0,255,65,0.85)] disabled:opacity-50 text-sm font-medium"
                       />
-                      <div className="absolute left-0 mt-1.5 w-60 max-h-60 overflow-y-auto rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 p-1.5 shadow-xl z-50 scrollbar-thin">
-                        {LATAM_COUNTRIES.map((c, index) => (
-                          <button
-                            key={c.code}
-                            type="button"
-                            onClick={() => {
-                              setSelectedCountryIndex(index);
-                              setIsDropdownOpen(false);
-                              // Auto re-format current number with new country mask
-                              setPhoneLocal((prev) => {
-                                const digits = prev.replace(/\D/g, '');
-                                return applyPhoneMask(digits, c.format);
-                              });
-                            }}
-                            className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-left hover:bg-slate-50 dark:hover:bg-slate-900 text-slate-900 dark:text-slate-100 transition-colors text-sm"
-                          >
-                            <img
-                              src={`https://flagcdn.com/w40/${c.iso}.png`}
-                              alt={c.name}
-                              className="w-5 h-3.5 object-cover rounded-sm shadow-sm"
-                            />
-                            <span className="font-medium">{c.code}</span>
-                            <span className="text-xs text-slate-500 truncate">({c.name})</span>
-                          </button>
-                        ))}
-                      </div>
-                    </>
-                  )}
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        disabled={isLoading || isSuccess}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white transition-colors cursor-pointer"
+                      >
+                        {showPassword ? (
+                          <EyeOff className="h-5 w-5" />
+                        ) : (
+                          <Eye className="h-5 w-5" />
+                        )}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="w-full flex flex-col gap-1.5 relative">
+                    <label className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200">
+                      Confirmar Contraseña *
+                    </label>
+                    <div className="relative">
+                      <input
+                        type={showConfirmPassword ? 'text' : 'password'}
+                        placeholder="••••••••"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        disabled={isLoading || isSuccess}
+                        className="w-full pl-4 pr-10 py-2.5 rounded-none border-2 border-slate-950 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-950 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(0,255,65,0.3)] transition-all duration-200 outline-none focus:border-brand-400 focus:shadow-[0_0_14px_rgba(0,255,65,0.75),2px_2px_0px_0px_rgba(0,0,0,1)] dark:focus:shadow-[0_0_16px_rgba(0,255,65,0.85)] disabled:opacity-50 text-sm font-medium"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                        disabled={isLoading || isSuccess}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white transition-colors cursor-pointer"
+                      >
+                        {showConfirmPassword ? (
+                          <EyeOff className="h-5 w-5" />
+                        ) : (
+                          <Eye className="h-5 w-5" />
+                        )}
+                      </button>
+                    </div>
+                  </div>
                 </div>
 
-                <input
-                  type="text"
-                  placeholder={LATAM_COUNTRIES[selectedCountryIndex].placeholder}
-                  value={phoneLocal}
-                  onChange={(e) => {
-                    const formatted = applyPhoneMask(e.target.value, LATAM_COUNTRIES[selectedCountryIndex].format);
-                    setPhoneLocal(formatted);
-                  }}
-                  disabled={isLoading || isSuccess}
-                  className="flex-1 px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 transition-all duration-200 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 disabled:opacity-50 disabled:bg-slate-50 dark:disabled:bg-slate-950"
-                />
-              </div>
+                <Button
+                  type="submit"
+                  isLoading={isLoading}
+                  disabled={isSuccess}
+                  className="w-full mt-3 py-3.5 border-2 border-slate-950 font-black text-sm uppercase tracking-wider bg-brand-400 hover:bg-brand-300 text-slate-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[6px_6px_0px_0px_#00FF41] transition-all cursor-pointer"
+                >
+                  Registrar Cuenta
+                </Button>
+              </form>
+
+              <p className="mt-8 text-center text-sm font-medium text-slate-600 dark:text-slate-400">
+                ¿Ya tienes una cuenta?{' '}
+                <Link to="/login" className="font-bold text-brand-600 dark:text-brand-400 hover:underline">
+                  Inicia sesión aquí
+                </Link>
+              </p>
             </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="w-full flex flex-col gap-1.5 relative">
-                <label className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                  Contraseña *
-                </label>
-                <div className="relative">
-                  <input
-                    type={showPassword ? 'text' : 'password'}
-                    placeholder="••••••••"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    disabled={isLoading || isSuccess}
-                    className="w-full pl-4 pr-10 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 transition-all duration-200 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 disabled:opacity-50 disabled:bg-slate-50 dark:disabled:bg-slate-950 text-sm"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    disabled={isLoading || isSuccess}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
-                  >
-                    {showPassword ? (
-                      <EyeOff className="h-5 w-5" />
-                    ) : (
-                      <Eye className="h-5 w-5" />
-                    )}
-                  </button>
-                </div>
-              </div>
-
-              <div className="w-full flex flex-col gap-1.5 relative">
-                <label className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                  Confirmar Contraseña *
-                </label>
-                <div className="relative">
-                  <input
-                    type={showConfirmPassword ? 'text' : 'password'}
-                    placeholder="••••••••"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    disabled={isLoading || isSuccess}
-                    className="w-full pl-4 pr-10 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 transition-all duration-200 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 disabled:opacity-50 disabled:bg-slate-50 dark:disabled:bg-slate-950 text-sm"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    disabled={isLoading || isSuccess}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
-                  >
-                    {showConfirmPassword ? (
-                      <EyeOff className="h-5 w-5" />
-                    ) : (
-                      <Eye className="h-5 w-5" />
-                    )}
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <Button type="submit" isLoading={isLoading} disabled={isSuccess} className="w-full mt-4 py-3">
-              Registrar Cuenta
-            </Button>
-          </form>
-
-          <p className="mt-8 text-center text-sm text-slate-500 dark:text-slate-400">
-            ¿Ya tienes una cuenta?{' '}
-            <Link to="/login" className="font-semibold text-brand-600 dark:text-brand-400 hover:underline">
-              Inicia sesión aquí
-            </Link>
-          </p>
+          </div>
         </div>
       </div>
     </Layout>
