@@ -5,7 +5,7 @@ import { useAuthStore } from '../store/useAuthStore';
 import { getCoursesUseCase } from '@infrastructure/factories/CourseFactory';
 import { getCategoriesUseCase } from '@infrastructure/factories/CategoryFactory';
 import { getEnrollmentsUseCase } from '@infrastructure/factories/EnrollmentFactory';
-import { LayoutDashboard, BookOpen, Users, FolderOpen, ArrowRight, ClipboardList, FolderKanban } from 'lucide-react';
+import { LayoutDashboard, BookOpen, Users, FolderOpen, ArrowRight, ClipboardList, FolderKanban, UserCheck, BarChart3 } from 'lucide-react';
 import { Loader } from '../components/Loader';
 
 export const AdminDashboard: React.FC = () => {
@@ -132,6 +132,40 @@ export const AdminDashboard: React.FC = () => {
           </div>
           <Link to="/admin/students" className="inline-flex items-center gap-2 text-sm font-bold text-brand-600 dark:text-brand-400 hover:underline mt-auto">
             Ver nómina de estudiantes
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </Link>
+        </div>
+
+        {/* User Role Management Card */}
+        <div className="group rounded-3xl border border-slate-200 bg-white p-8 dark:border-slate-800 dark:bg-slate-900 shadow-sm flex flex-col justify-between hover:border-brand-500/30 transition-all duration-300">
+          <div>
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 mb-6">
+              <UserCheck className="h-6 w-6" />
+            </div>
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Gestión de Usuarios y Roles</h3>
+            <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-6">
+              Asigna roles de Administrador, Docente o Estudiante. Administra las credenciales y accesos del sistema con control estricto RBAC.
+            </p>
+          </div>
+          <Link to="/admin/users" className="inline-flex items-center gap-2 text-sm font-bold text-brand-600 dark:text-brand-400 hover:underline mt-auto">
+            Administrar usuarios y roles
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </Link>
+        </div>
+
+        {/* Analytics & Reports Card */}
+        <div className="group rounded-3xl border border-slate-200 bg-white p-8 dark:border-slate-800 dark:bg-slate-900 shadow-sm flex flex-col justify-between hover:border-brand-500/30 transition-all duration-300">
+          <div>
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 mb-6">
+              <BarChart3 className="h-6 w-6" />
+            </div>
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Analíticas y Reportes</h3>
+            <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-6">
+              Visualiza reportes ejecutivos de rendimiento, ingresos por ventas de cursos, tasa de retención estudiantil y bitácoras de auditoría.
+            </p>
+          </div>
+          <Link to="/admin/analytics" className="inline-flex items-center gap-2 text-sm font-bold text-brand-600 dark:text-brand-400 hover:underline mt-auto">
+            Ver métricas y exportar informe
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
