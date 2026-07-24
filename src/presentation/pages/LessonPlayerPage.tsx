@@ -302,12 +302,21 @@ export const LessonPlayerPage: React.FC = () => {
                     <div key={i} className="space-y-4">
                       {block.split('\n\n').map((para, j) => {
                         if (para.startsWith('### ')) {
-                          return <h3 key={j} className="text-lg font-bold text-slate-950 dark:text-white mt-6 mb-2">{para.replace('### ', '')}</h3>;
+                          return <h3 key={j} className="text-lg font-black text-slate-950 dark:text-white mt-6 mb-2 flex items-center gap-2">{para.replace('### ', '')}</h3>;
                         }
                         if (para.startsWith('#### ')) {
-                          return <h4 key={j} className="text-sm font-bold text-slate-900 dark:text-slate-200 mt-4 mb-1">{para.replace('#### ', '')}</h4>;
+                          return <h4 key={j} className="text-sm font-extrabold text-slate-900 dark:text-slate-200 mt-4 mb-2">{para.replace('#### ', '')}</h4>;
                         }
-                        return <p key={j} className="text-sm sm:text-base leading-relaxed">{para}</p>;
+                        if (para.split('\n').every(line => line.trim().startsWith('- ') || line.trim().startsWith('* '))) {
+                          return (
+                            <ul key={j} className="list-disc list-inside space-y-1.5 text-xs sm:text-sm text-slate-800 dark:text-slate-200 font-medium pl-2 my-3">
+                              {para.split('\n').map((item, k) => (
+                                <li key={k}>{item.replace(/^[-*]\s+/, '')}</li>
+                              ))}
+                            </ul>
+                          );
+                        }
+                        return <p key={j} className="text-xs sm:text-sm leading-relaxed text-slate-800 dark:text-slate-200 font-medium">{para}</p>;
                       })}
                     </div>
                   );

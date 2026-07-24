@@ -4,6 +4,8 @@ import { getCourseByIdUseCase } from '@infrastructure/factories/CourseFactory';
 import {
   getModulesUseCase,
   createModuleUseCase,
+  updateModuleUseCase,
+  deleteModuleUseCase,
 } from '@infrastructure/factories/ModuleFactory';
 import {
   getLessonsUseCase,
@@ -37,8 +39,10 @@ export const useLessonManagement = (courseIdStr?: string) => {
   const [formLessonOrder, setFormLessonOrder] = useState('0');
   const [formLessonModule, setFormLessonModule] = useState<number | ''>('');
 
-  // Module creation sub-form (in-page)
+  // Module creation & edit form (in-page)
   const [showModuleForm, setShowModuleForm] = useState(false);
+  const [isEditingModule, setIsEditingModule] = useState(false);
+  const [editingModuleId, setEditingModuleId] = useState<number | null>(null);
   const [moduleTitle, setModuleTitle] = useState('');
   const [moduleOrder, setModuleOrder] = useState('0');
 
@@ -83,25 +87,72 @@ export const useLessonManagement = (courseIdStr?: string) => {
     }
   }, [idCourse, loadCourseDetails]);
 
-  const handleCreateModule = async (e: React.FormEvent) => {
+  const handleOpenCreateModule = () => {
+    setIsEditingModule(false);
+    setEditingModuleId(null);
+    setModuleTitle('');
+    setModuleOrder(String(modules.length + 1));
+    setShowModuleForm(true);
+  };
+
+  const handleOpenEditModule = (mod: Module) => {
+    setIsEditingModule(true);
+    setEditingModuleId(mod.id);
+    setModuleTitle(mod.title);
+    setModuleOrder(String(mod.order));
+    setShowModuleForm(true);
+  };
+
+  const handleSaveModule = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!moduleTitle.trim()) return;
 
     setFormLoading(true);
     try {
-      await createModuleUseCase.execute({
-        course: idCourse,
-        title: moduleTitle,
-        order: Number(moduleOrder),
-      });
+      if (isEditingModule && editingModuleId) {
+        await updateModuleUseCase.execute(editingModuleId, {
+          title: moduleTitle,
+          order: Number(moduleOrder),
+        });
+        setSuccessMessage('Sección/Módulo actualizada correctamente');
+      } else {
+        await createModuleUseCase.execute({
+          course: idCourse,
+          title: moduleTitle,
+          order: Number(moduleOrder),
+        });
+        setSuccessMessage('Sección/Módulo creada correctamente');
+      }
       setModuleTitle('');
       setModuleOrder('0');
       setShowModuleForm(false);
-      setSuccessMessage('Módulo creado correctamente');
+      setIsEditingModule(false);
+      setEditingModuleId(null);
       loadCourseDetails();
       setTimeout(() => setSuccessMessage(null), 4000);
     } catch (err: any) {
-      alert(err.message || 'Error al crear el módulo');
+      alert(err.message || 'Error al guardar la sección/módulo');
+    } finally {
+      setFormLoading(false);
+    }
+  };
+
+  const handleDeleteModule = async (moduleId: number) => {
+    if (!window.confirm('¿Estás seguro de eliminar este módulo/sección? Las lecciones asociadas también se borrarán.')) {
+      return;
+    }
+
+    setFormLoading(true);
+    try {
+      await deleteModuleUseCase.execute(moduleId);
+      setSuccessMessage('Módulo eliminado correctamente');
+      if (selectedModuleId === moduleId) {
+        setSelectedModuleId('');
+      }
+      loadCourseDetails();
+      setTimeout(() => setSuccessMessage(null), 4000);
+    } catch (err: any) {
+      alert(err.message || 'Error al eliminar el módulo');
     } finally {
       setFormLoading(false);
     }
@@ -206,6 +257,7 @@ export const useLessonManagement = (courseIdStr?: string) => {
     setFormLessonModule,
     showModuleForm,
     setShowModuleForm,
+    isEditingModule,
     moduleTitle,
     setModuleTitle,
     moduleOrder,
@@ -214,7 +266,11 @@ export const useLessonManagement = (courseIdStr?: string) => {
     formError,
     successMessage,
     isAdmin,
-    handleCreateModule,
+    handleOpenCreateModule,
+    handleOpenEditModule,
+    handleSaveModule,
+    handleDeleteModule,
+    handleCreateModule: handleSaveModule,
     handleOpenCreateLesson,
     handleOpenEditLesson,
     handleSaveLesson,

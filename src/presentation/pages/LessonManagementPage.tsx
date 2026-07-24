@@ -38,6 +38,7 @@ export const LessonManagementPage: React.FC = () => {
     setFormLessonModule,
     showModuleForm,
     setShowModuleForm,
+    isEditingModule,
     moduleTitle,
     setModuleTitle,
     moduleOrder,
@@ -46,7 +47,10 @@ export const LessonManagementPage: React.FC = () => {
     formError,
     successMessage,
     isAdmin,
-    handleCreateModule,
+    handleOpenCreateModule,
+    handleOpenEditModule,
+    handleSaveModule,
+    handleDeleteModule,
     handleOpenCreateLesson,
     handleOpenEditLesson,
     handleSaveLesson,
@@ -75,8 +79,17 @@ export const LessonManagementPage: React.FC = () => {
           </div>
 
           <div className="flex gap-2 shrink-0">
-            <Button variant="outline" onClick={() => setShowModuleForm(!showModuleForm)}>
-              Gestionar Secciones/Módulos
+            <Button
+              variant="outline"
+              onClick={() => {
+                if (showModuleForm) {
+                  setShowModuleForm(false);
+                } else {
+                  handleOpenCreateModule();
+                }
+              }}
+            >
+              + Nueva Sección (Módulo)
             </Button>
             <Button onClick={handleOpenCreateLesson} disabled={modules.length === 0} className="flex items-center gap-2">
               <Plus className="h-5 w-5" />
@@ -87,21 +100,23 @@ export const LessonManagementPage: React.FC = () => {
       </div>
 
       {successMessage && (
-        <div className="flex items-center gap-2.5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-250/30 p-4 text-sm text-emerald-800 dark:text-emerald-450 mb-6">
-          <CheckCircle className="h-5 w-5 text-emerald-600 dark:text-emerald-455" />
+        <div className="flex items-center gap-2.5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border-2 border-slate-950 p-4 text-xs font-black text-emerald-900 dark:text-emerald-300 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00b835] mb-6">
+          <CheckCircle className="h-5 w-5 text-[#00cc33] shrink-0" />
           <span>{successMessage}</span>
         </div>
       )}
 
-      {/* Module Addition Sub-Form */}
+      {/* Module Addition / Editing Sub-Form */}
       {showModuleForm && (
-        <div className="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 mb-8">
-          <h3 className="font-bold text-slate-800 dark:text-white mb-4">Nueva Sección (Módulo)</h3>
-          <form onSubmit={handleCreateModule} className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-end">
+        <div className="bg-slate-100 dark:bg-slate-900 border-2 border-slate-950 p-6 mb-8 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_#00b835]">
+          <h3 className="font-extrabold text-sm uppercase tracking-wider text-slate-950 dark:text-white mb-4">
+            {isEditingModule ? '✏️ Editar Sección (Módulo)' : '➕ Nueva Sección (Módulo)'}
+          </h3>
+          <form onSubmit={handleSaveModule} className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-end">
             <Input
               label="Título del Módulo *"
               type="text"
-              placeholder="Bases y Conceptos Clave"
+              placeholder="Ej: Módulo 1: Setup e Instalación de Entorno"
               value={moduleTitle}
               onChange={(e) => setModuleTitle(e.target.value)}
               required
@@ -109,14 +124,14 @@ export const LessonManagementPage: React.FC = () => {
             <Input
               label="Orden *"
               type="number"
-              placeholder="0"
+              placeholder="1"
               value={moduleOrder}
               onChange={(e) => setModuleOrder(e.target.value)}
               required
             />
             <div className="flex gap-2">
               <Button type="submit" isLoading={formLoading} className="flex-1">
-                Guardar Sección
+                {isEditingModule ? 'Actualizar Sección' : 'Guardar Sección'}
               </Button>
               <Button type="button" variant="outline" onClick={() => setShowModuleForm(false)} className="px-4">
                 Cancelar
@@ -135,6 +150,8 @@ export const LessonManagementPage: React.FC = () => {
             modules={modules}
             selectedModuleId={selectedModuleId}
             onSelect={setSelectedModuleId}
+            onEditModule={handleOpenEditModule}
+            onDeleteModule={handleDeleteModule}
           />
           <LessonsList
             lessons={lessons}
