@@ -7,13 +7,16 @@ import { useLessonManagement } from '../hooks/useLessonManagement';
 import { ModuleSidebar } from '../components/lesson-management/ModuleSidebar';
 import { LessonsList } from '../components/lesson-management/LessonsList';
 import { LessonModal } from '../components/lesson-management/LessonModal';
+import { CoursePreviewModal } from '../components/lesson-management/CoursePreviewModal';
 import { ConfirmModal } from '../components/ConfirmModal';
-import { ArrowLeft, Plus, CheckCircle } from 'lucide-react';
+import { ArrowLeft, Plus, CheckCircle, Eye } from 'lucide-react';
 import { Loader } from '../components/Loader';
 
 export const LessonManagementPage: React.FC = () => {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [deleteTargetId, setDeleteTargetId] = useState<number | null>(null);
+  const [previewModalOpen, setPreviewModalOpen] = useState(false);
+  const [previewInitialLessonId, setPreviewInitialLessonId] = useState<number | null>(null);
 
   const {courseId} = useParams<{ courseId: string }>();
   const {
@@ -78,7 +81,7 @@ export const LessonManagementPage: React.FC = () => {
             </h1>
           </div>
 
-          <div className="flex gap-2 shrink-0">
+          <div className="flex flex-wrap items-center gap-2 shrink-0">
             <Button
               variant="outline"
               onClick={() => {
@@ -90,6 +93,17 @@ export const LessonManagementPage: React.FC = () => {
               }}
             >
               + Nueva Sección (Módulo)
+            </Button>
+            <Button
+              onClick={() => {
+                setPreviewInitialLessonId(null);
+                setPreviewModalOpen(true);
+              }}
+              variant="secondary"
+              className="flex items-center gap-1.5"
+            >
+              <Eye className="h-4 w-4" />
+              <span>👁️ Vista Previa Estudiante</span>
             </Button>
             <Button onClick={handleOpenCreateLesson} disabled={modules.length === 0} className="flex items-center gap-2">
               <Plus className="h-5 w-5" />
@@ -158,6 +172,10 @@ export const LessonManagementPage: React.FC = () => {
             selectedModuleId={selectedModuleId}
             isAdmin={isAdmin}
             onEdit={handleOpenEditLesson}
+            onPreview={(lesId) => {
+              setPreviewInitialLessonId(lesId);
+              setPreviewModalOpen(true);
+            }}
             onDelete={(id) => {
               setDeleteTargetId(id);
               setConfirmOpen(true);
@@ -165,6 +183,16 @@ export const LessonManagementPage: React.FC = () => {
           />
         </div>
       )}
+
+      {/* Course & Lesson Interactive Preview Modal */}
+      <CoursePreviewModal
+        isOpen={previewModalOpen}
+        onClose={() => setPreviewModalOpen(false)}
+        course={course}
+        modules={modules}
+        lessons={lessons}
+        initialLessonId={previewInitialLessonId}
+      />
 
       {/* Lesson Modal */}
       <LessonModal

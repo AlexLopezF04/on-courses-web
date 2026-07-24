@@ -1,12 +1,13 @@
 import React from 'react';
 import { Lesson } from '@domain/entities/Lesson';
-import { FileText, Pencil, Trash2 } from 'lucide-react';
+import { FileText, Pencil, Trash2, Eye } from 'lucide-react';
 
 interface LessonsListProps {
   lessons: Lesson[];
   selectedModuleId: number | '';
   isAdmin: boolean;
   onEdit: (lesson: Lesson) => void;
+  onPreview?: (lessonId: number) => void;
   onDelete: (id: number) => void;
 }
 
@@ -15,6 +16,7 @@ export const LessonsList: React.FC<LessonsListProps> = ({
   selectedModuleId,
   isAdmin,
   onEdit,
+  onPreview,
   onDelete,
 }) => {
   const filtered = lessons.filter((les) => les.module === selectedModuleId);
@@ -52,6 +54,16 @@ export const LessonsList: React.FC<LessonsListProps> = ({
                   <span className="text-[10px] font-mono font-extrabold text-slate-950 bg-slate-100 dark:bg-slate-800 dark:text-slate-200 border border-slate-950 px-2 py-0.5">
                     Orden: {les.order}
                   </span>
+                  {onPreview && (
+                    <button
+                      onClick={() => onPreview(les.id)}
+                      className="px-2.5 py-1 bg-[#00cc33] text-slate-950 font-extrabold text-[10px] uppercase border border-slate-950 hover:bg-[#00ff41] shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] cursor-pointer flex items-center gap-1"
+                      title="Vista Previa de la Lección"
+                    >
+                      <Eye className="h-3.5 w-3.5" />
+                      <span className="hidden md:inline">Ver</span>
+                    </button>
+                  )}
                   <button
                     onClick={() => onEdit(les)}
                     className="px-2.5 py-1 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 font-bold text-[10px] uppercase border border-slate-950 hover:bg-slate-200 cursor-pointer"
