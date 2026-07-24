@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { BookOpen, ShoppingBag } from 'lucide-react';
+import { BookOpen, ShoppingBag, Pencil } from 'lucide-react';
 import { Course } from '../../domain/entities/Course';
 import { useCartStore } from '../store/useCartStore';
+import { useAuthStore } from '../store/useAuthStore';
 
 interface CourseCardProps {
   course: Course;
@@ -26,8 +27,10 @@ const getCategoryColor = (categoryName?: string) => {
 };
 
 export const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
+  const { user } = useAuthStore();
   const { addItem } = useCartStore();
   const videoHours = ((course.modules_count || 0) * 1.5 + 2).toFixed(0);
+  const isAdminOrProfessor = user?.role === 'admin' || user?.role === 'professor';
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -69,6 +72,18 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
           <span>🛡️</span>
           <span>Con certificado</span>
         </div>
+
+        {/* Admin Direct Edit Badge Overlay */}
+        {isAdminOrProfessor && (
+          <Link
+            to={`/courses/${course.id}`}
+            className="absolute top-2.5 right-2.5 z-10 flex items-center gap-1 bg-amber-400 border-2 border-slate-950 px-2 py-0.5 text-[9px] font-black text-slate-950 uppercase tracking-wider shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-amber-300 transition-all cursor-pointer"
+            title="Gestión Directa del Curso"
+          >
+            <Pencil className="h-3 w-3" />
+            <span>Editar (ADMIN)</span>
+          </Link>
+        )}
       </div>
 
       {/* Card Body */}

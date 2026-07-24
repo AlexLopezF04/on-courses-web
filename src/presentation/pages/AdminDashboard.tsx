@@ -5,12 +5,13 @@ import { useAuthStore } from '../store/useAuthStore';
 import { getCoursesUseCase } from '@infrastructure/factories/CourseFactory';
 import { getCategoriesUseCase } from '@infrastructure/factories/CategoryFactory';
 import { getEnrollmentsUseCase } from '@infrastructure/factories/EnrollmentFactory';
-import { LayoutDashboard, BookOpen, Users, FolderOpen, ClipboardList, FolderKanban, UserCheck, BarChart3 } from 'lucide-react';
+import { LayoutDashboard, BookOpen, Users, FolderOpen, ClipboardList, FolderKanban, EyeOff, UserCheck, BarChart3 } from 'lucide-react';
 import { Loader } from '../components/Loader';
 
 export const AdminDashboard: React.FC = () => {
   const { user } = useAuthStore();
-  const [coursesCount, setCoursesCount] = useState(0);
+  const [activeCoursesCount, setActiveCoursesCount] = useState(0);
+  const [inactiveCoursesCount, setInactiveCoursesCount] = useState(0);
   const [enrollmentsCount, setEnrollmentsCount] = useState(0);
   const [categoriesCount, setCategoriesCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -18,8 +19,10 @@ export const AdminDashboard: React.FC = () => {
   useEffect(() => {
     const fetchCounts = async () => {
       try {
-        const courses = await getCoursesUseCase.execute();
-        setCoursesCount(courses.count);
+        const coursesData = await getCoursesUseCase.execute({ page_size: 100 });
+        const allCourses = coursesData.results || [];
+        setActiveCoursesCount(allCourses.filter((c) => c.is_active).length);
+        setInactiveCoursesCount(allCourses.filter((c) => !c.is_active).length);
 
         const enrollments = await getEnrollmentsUseCase.execute({ page_size: 1 });
         setEnrollmentsCount(enrollments.count);
@@ -50,37 +53,71 @@ export const AdminDashboard: React.FC = () => {
         </p>
       </div>
 
-      {/* Grid: Statistics Widgets */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12">
-        <div className="border-2 border-slate-950 bg-white p-6 text-slate-950 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[5px_5px_0px_0px_#00b835] flex items-center gap-5">
-          <div className="border border-slate-950 bg-brand-400 p-3.5 text-slate-950 shrink-0">
+      {/* Grid: 4 Interactive Statistics Shortcut Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        {/* Active Courses Shortcut */}
+        <Link
+          to="/admin/courses"
+          className="border-2 border-slate-950 bg-white p-6 text-slate-950 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[5px_5px_0px_0px_#00b835] flex items-center gap-4 hover:bg-slate-50 transition-all cursor-pointer group"
+        >
+          <div className="border border-slate-950 bg-[#00cc33] p-3 text-slate-950 shrink-0 shadow-[1.5px_1.5px_0px_0px_rgba(0,0,0,1)]">
             <BookOpen className="h-6 w-6" />
           </div>
           <div>
-            <span className="text-xs text-slate-600 block font-bold uppercase tracking-wider">Cursos Activos</span>
-            <span className="text-2xl font-black text-slate-950">{coursesCount}</span>
+            <span className="text-xs text-slate-700 block font-black uppercase tracking-wider group-hover:text-[#00cc33] transition-colors">
+              Cursos Activos &rarr;
+            </span>
+            <span className="text-2xl font-black text-slate-950">{activeCoursesCount}</span>
           </div>
-        </div>
+        </Link>
 
-        <Link to="/admin/students" className="border-2 border-slate-950 bg-white p-6 text-slate-950 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[5px_5px_0px_0px_#00b835] flex items-center gap-5 hover:bg-slate-50 transition-all cursor-pointer">
-          <div className="border border-slate-950 bg-emerald-400 p-3.5 text-slate-950 shrink-0">
+        {/* Enrollments Shortcut */}
+        <Link
+          to="/admin/students"
+          className="border-2 border-slate-950 bg-white p-6 text-slate-950 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[5px_5px_0px_0px_#00b835] flex items-center gap-4 hover:bg-slate-50 transition-all cursor-pointer group"
+        >
+          <div className="border border-slate-950 bg-emerald-400 p-3 text-slate-950 shrink-0 shadow-[1.5px_1.5px_0px_0px_rgba(0,0,0,1)]">
             <Users className="h-6 w-6" />
           </div>
           <div>
-            <span className="text-xs text-slate-600 block font-bold uppercase tracking-wider">Inscripciones &rarr;</span>
+            <span className="text-xs text-slate-700 block font-black uppercase tracking-wider group-hover:text-emerald-600 transition-colors">
+              Inscripciones &rarr;
+            </span>
             <span className="text-2xl font-black text-slate-950">{enrollmentsCount}</span>
           </div>
         </Link>
 
-        <div className="border-2 border-slate-950 bg-white p-6 text-slate-950 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[5px_5px_0px_0px_#00b835] flex items-center gap-5">
-          <div className="border border-slate-950 bg-rose-400 p-3.5 text-slate-950 shrink-0">
+        {/* Categories Shortcut */}
+        <Link
+          to="/admin/categories"
+          className="border-2 border-slate-950 bg-white p-6 text-slate-950 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[5px_5px_0px_0px_#00b835] flex items-center gap-4 hover:bg-slate-50 transition-all cursor-pointer group"
+        >
+          <div className="border border-slate-950 bg-rose-400 p-3 text-slate-950 shrink-0 shadow-[1.5px_1.5px_0px_0px_rgba(0,0,0,1)]">
             <FolderOpen className="h-6 w-6" />
           </div>
           <div>
-            <span className="text-xs text-slate-600 block font-bold uppercase tracking-wider">Categorías</span>
+            <span className="text-xs text-slate-700 block font-black uppercase tracking-wider group-hover:text-rose-600 transition-colors">
+              Categorías &rarr;
+            </span>
             <span className="text-2xl font-black text-slate-950">{categoriesCount}</span>
           </div>
-        </div>
+        </Link>
+
+        {/* Inactive Courses Shortcut */}
+        <Link
+          to="/admin/courses"
+          className="border-2 border-slate-950 bg-white p-6 text-slate-950 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[5px_5px_0px_0px_#00b835] flex items-center gap-4 hover:bg-slate-50 transition-all cursor-pointer group"
+        >
+          <div className="border border-slate-950 bg-amber-400 p-3 text-slate-950 shrink-0 shadow-[1.5px_1.5px_0px_0px_rgba(0,0,0,1)]">
+            <EyeOff className="h-6 w-6" />
+          </div>
+          <div>
+            <span className="text-xs text-slate-700 block font-black uppercase tracking-wider group-hover:text-amber-600 transition-colors">
+              Cursos Inactivos &rarr;
+            </span>
+            <span className="text-2xl font-black text-slate-950">{inactiveCoursesCount}</span>
+          </div>
+        </Link>
       </div>
 
       {/* Grid: Actions Section */}
