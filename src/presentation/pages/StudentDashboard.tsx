@@ -16,17 +16,45 @@ export const StudentDashboard: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getEnrollmentsUseCase
-      .execute()
-      .then((data) => {
-        setEnrollments(data.results);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.error('Failed to load enrollments', err);
-        setIsLoading(false);
+    const fetchAllEnrollments = async () => {
+      setIsLoading(true);
+      let apiEnrollments: Enrollment[] = [];
+
+      try {
+        const data = await getEnrollmentsUseCase.execute();
+        apiEnrollments = data.results || [];
+      } catch (err) {
+        console.warn('API enrollments fetch error, loading from local cache', err);
+      }
+
+      // Merge with local storage cached enrollments for logged in user
+      let cachedEnrollments: any[] = [];
+      try {
+        if (user) {
+          const userKey = user.username?.toLowerCase() || String(user.id);
+          const storedCache = JSON.parse(localStorage.getItem('oncourses_user_enrollments') || '{}');
+          const userStored = storedCache[userKey] || [];
+          cachedEnrollments = userStored;
+        }
+      } catch (cacheErr) {
+        console.warn('Failed to parse local enrollment cache', cacheErr);
+      }
+
+      // Merge both arrays without duplicates by course ID
+      const mergedMap = new Map<number, any>();
+      apiEnrollments.forEach((e) => mergedMap.set(e.course, e));
+      cachedEnrollments.forEach((e) => {
+        if (!mergedMap.has(e.course)) {
+          mergedMap.set(e.course, e);
+        }
       });
-  }, []);
+
+      setEnrollments(Array.from(mergedMap.values()));
+      setIsLoading(false);
+    };
+
+    fetchAllEnrollments();
+  }, [user]);
 
   const handleResumeCourse = async (courseId: number) => {
     try {
