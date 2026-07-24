@@ -5,6 +5,8 @@ import { Button } from '../components/Button';
 import { getCourseByIdUseCase, updateCourseUseCase } from '@infrastructure/factories/CourseFactory';
 import { getCategoriesUseCase } from '@infrastructure/factories/CategoryFactory';
 import { getEnrollmentsUseCase, enrollInCourseUseCase } from '@infrastructure/factories/EnrollmentFactory';
+import { getModulesUseCase } from '@infrastructure/factories/ModuleFactory';
+import { getLessonsUseCase } from '@infrastructure/factories/LessonFactory';
 import { Course } from '@domain/entities/Course';
 import { Category } from '@domain/entities/Category';
 import { useAuthStore } from '../store/useAuthStore';
@@ -51,6 +53,34 @@ export const CourseDetailPage: React.FC = () => {
       setIsLoading(true);
       try {
         const courseData = await getCourseByIdUseCase.execute(courseId);
+
+        // Fetch modules and lessons to enrich course structure
+        try {
+          const modulesData = await getModulesUseCase.execute(courseId);
+          if (modulesData && modulesData.length > 0) {
+            const modulesWithLessons = await Promise.all(
+              modulesData.map(async (mod) => {
+                try {
+                  const modLessons = await getLessonsUseCase.execute(mod.id);
+                  modLessons.sort((a, b) => a.order - b.order);
+                  return {
+                    ...mod,
+                    lessons: modLessons || [],
+                  };
+                } catch {
+                  return {
+                    ...mod,
+                    lessons: mod.lessons || [],
+                  };
+                }
+              })
+            );
+            courseData.modules = modulesWithLessons;
+          }
+        } catch (modErr) {
+          console.warn('Could not fetch modules/lessons for course detail', modErr);
+        }
+
         setCourse(courseData);
 
         const categoriesData = await getCategoriesUseCase.execute({ page_size: 100 });
