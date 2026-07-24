@@ -45,9 +45,27 @@ export const AdminDashboard: React.FC = () => {
           <LayoutDashboard className="h-8 w-8 text-[#00cc33]" />
           Panel de Control Administrativo
         </h1>
-        <p className="text-slate-500 dark:text-slate-400 mt-1 text-sm font-medium">
-          Bienvenido, <span className="font-bold text-slate-950 dark:text-white">{user?.first_name || user?.username}</span>. Rol: <span className="text-[#00cc33] font-extrabold uppercase">{user?.role}</span>
-        </p>
+        <div className="flex flex-wrap items-center gap-3 mt-1.5 text-sm font-medium">
+          <span className="text-slate-600 dark:text-slate-400">
+            Bienvenido, <span className="font-extrabold text-slate-950 dark:text-white">{user?.first_name ? `${user.first_name} ${user.last_name}` : user?.username}</span>
+          </span>
+          <span className="text-slate-400">•</span>
+          {user?.role === 'admin' && (
+            <span className="inline-flex items-center gap-1 bg-rose-500 text-white font-black text-xs uppercase tracking-wider px-2.5 py-0.5 border-2 border-slate-950 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_#00b835]">
+              👑 ROL: ADMINISTRADOR
+            </span>
+          )}
+          {user?.role === 'professor' && (
+            <span className="inline-flex items-center gap-1 bg-purple-500 text-white font-black text-xs uppercase tracking-wider px-2.5 py-0.5 border-2 border-slate-950 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_#00b835]">
+              🎓 ROL: DOCENTE
+            </span>
+          )}
+          {user?.role === 'student' && (
+            <span className="inline-flex items-center gap-1 bg-[#00cc33] text-slate-950 font-black text-xs uppercase tracking-wider px-2.5 py-0.5 border-2 border-slate-950 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_#00b835]">
+              ⚡ ROL: ESTUDIANTE
+            </span>
+          )}
+        </div>
       </div>
 
       {/* Grid: 3 Core KPI Summary Widgets */}
