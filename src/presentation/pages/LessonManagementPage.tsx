@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Layout } from '../components/Layout';
 import { Button } from '../components/Button';
 import { Input } from '../components/Input';
@@ -13,12 +13,12 @@ import { ArrowLeft, Plus, CheckCircle, Eye } from 'lucide-react';
 import { Loader } from '../components/Loader';
 
 export const LessonManagementPage: React.FC = () => {
+  const navigate = useNavigate();
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [deleteTargetId, setDeleteTargetId] = useState<number | null>(null);
   const [previewModalOpen, setPreviewModalOpen] = useState(false);
-  const [previewInitialLessonId, setPreviewInitialLessonId] = useState<number | null>(null);
 
-  const {courseId} = useParams<{ courseId: string }>();
+  const { courseId } = useParams<{ courseId: string }>();
   const {
     course,
     modules,
@@ -95,10 +95,7 @@ export const LessonManagementPage: React.FC = () => {
               + Nueva Sección (Módulo)
             </Button>
             <Button
-              onClick={() => {
-                setPreviewInitialLessonId(null);
-                setPreviewModalOpen(true);
-              }}
+              onClick={() => navigate(`/courses/${courseId}`)}
               variant="secondary"
               className="flex items-center gap-1.5"
             >
@@ -173,8 +170,7 @@ export const LessonManagementPage: React.FC = () => {
             isAdmin={isAdmin}
             onEdit={handleOpenEditLesson}
             onPreview={(lesId) => {
-              setPreviewInitialLessonId(lesId);
-              setPreviewModalOpen(true);
+              navigate(`/learn/${courseId}/lesson/${lesId}`);
             }}
             onDelete={(id) => {
               setDeleteTargetId(id);
@@ -191,7 +187,6 @@ export const LessonManagementPage: React.FC = () => {
         course={course}
         modules={modules}
         lessons={lessons}
-        initialLessonId={previewInitialLessonId}
       />
 
       {/* Lesson Modal */}
