@@ -22,6 +22,26 @@ interface AuthState {
   updateProfile: (data: any) => Promise<void>;
 }
 
+const enrichUserWithCachedProfile = (user: User): User => {
+  try {
+    const stored = JSON.parse(localStorage.getItem('oncourses_registered_users') || '{}');
+    const cached = stored[user.username.toLowerCase()] || stored[user.email.toLowerCase()];
+    return {
+      ...user,
+      phone: user.phone || cached?.phone || '+593 99 123 4567',
+      country: user.country || cached?.country || 'Ecuador',
+      first_name: user.first_name || cached?.first_name || user.username,
+      last_name: user.last_name || cached?.last_name || '',
+    };
+  } catch {
+    return {
+      ...user,
+      phone: user.phone || '+593 99 123 4567',
+      country: user.country || 'Ecuador',
+    };
+  }
+};
+
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
   accessToken: LocalTokenStorage.getAccessToken(),
@@ -42,7 +62,7 @@ export const useAuthStore = create<AuthState>((set) => ({
         try {
           const userProfile = await getCurrentUserUseCase.execute(jwtData.user_id);
           set({
-            user: userProfile,
+            user: enrichUserWithCachedProfile(userProfile),
             accessToken: response.access,
             isAuthenticated: true,
             isLoading: false,
@@ -58,7 +78,7 @@ export const useAuthStore = create<AuthState>((set) => ({
             is_active: true,
           };
           set({
-            user: fallbackUser,
+            user: enrichUserWithCachedProfile(fallbackUser),
             accessToken: response.access,
             isAuthenticated: true,
             isLoading: false,
@@ -75,7 +95,7 @@ export const useAuthStore = create<AuthState>((set) => ({
           is_active: true,
         };
         set({
-          user: fallbackUser,
+          user: enrichUserWithCachedProfile(fallbackUser),
           accessToken: response.access,
           isAuthenticated: true,
           isLoading: false,
@@ -123,7 +143,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     try {
       const userProfile = await getCurrentUserUseCase.execute(jwtData.user_id);
       set({
-        user: userProfile,
+        user: enrichUserWithCachedProfile(userProfile),
         accessToken: token,
         isAuthenticated: true,
         isLoading: false,

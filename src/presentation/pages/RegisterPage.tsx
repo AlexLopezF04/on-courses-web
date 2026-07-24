@@ -81,8 +81,26 @@ export const RegisterPage: React.FC = () => {
     try {
       const selectedCountry = LATAM_COUNTRIES[selectedCountryIndex];
       const formattedPhone = phoneLocal.trim()
-        ? `(${selectedCountry.code}) [${selectedCountry.name}] ${phoneLocal}`
-        : '';
+        ? `${selectedCountry.code} ${applyPhoneMask(phoneLocal, selectedCountry.format)}`
+        : `${selectedCountry.code} 099 123 4567`;
+
+      const userProfileCache = {
+        username,
+        email,
+        first_name: firstName,
+        last_name: lastName,
+        phone: formattedPhone,
+        country: selectedCountry.name || 'Ecuador',
+      };
+
+      try {
+        const stored = JSON.parse(localStorage.getItem('oncourses_registered_users') || '{}');
+        stored[username.toLowerCase()] = userProfileCache;
+        stored[email.toLowerCase()] = userProfileCache;
+        localStorage.setItem('oncourses_registered_users', JSON.stringify(stored));
+      } catch (e) {
+        console.warn('Failed to cache profile meta', e);
+      }
 
       await authRepositoryInstance.register({
         username,
