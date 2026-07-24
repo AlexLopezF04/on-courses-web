@@ -52,7 +52,7 @@ export const AdminDashboard: React.FC = () => {
 
       {/* Grid: Statistics Widgets */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12">
-        <div className="border-2 border-slate-950 bg-white p-6 text-slate-950 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[5px_5px_0px_0px_#00FF41] flex items-center gap-5">
+        <div className="border-2 border-slate-950 bg-white p-6 text-slate-950 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[5px_5px_0px_0px_#00b835] flex items-center gap-5">
           <div className="border border-slate-950 bg-brand-400 p-3.5 text-slate-950 shrink-0">
             <BookOpen className="h-6 w-6" />
           </div>
@@ -62,7 +62,7 @@ export const AdminDashboard: React.FC = () => {
           </div>
         </div>
 
-        <Link to="/admin/students" className="border-2 border-slate-950 bg-white p-6 text-slate-950 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[5px_5px_0px_0px_#00FF41] flex items-center gap-5 hover:bg-slate-50 transition-all cursor-pointer">
+        <Link to="/admin/students" className="border-2 border-slate-950 bg-white p-6 text-slate-950 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[5px_5px_0px_0px_#00b835] flex items-center gap-5 hover:bg-slate-50 transition-all cursor-pointer">
           <div className="border border-slate-950 bg-emerald-400 p-3.5 text-slate-950 shrink-0">
             <Users className="h-6 w-6" />
           </div>
@@ -72,7 +72,7 @@ export const AdminDashboard: React.FC = () => {
           </div>
         </Link>
 
-        <div className="border-2 border-slate-950 bg-white p-6 text-slate-950 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[5px_5px_0px_0px_#00FF41] flex items-center gap-5">
+        <div className="border-2 border-slate-950 bg-white p-6 text-slate-950 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[5px_5px_0px_0px_#00b835] flex items-center gap-5">
           <div className="border border-slate-950 bg-rose-400 p-3.5 text-slate-950 shrink-0">
             <FolderOpen className="h-6 w-6" />
           </div>
@@ -86,7 +86,7 @@ export const AdminDashboard: React.FC = () => {
       {/* Grid: Actions Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {/* Manage Courses Action Card */}
-        <div className="border-2 border-slate-950 bg-white p-8 text-slate-950 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_#00FF41] flex flex-col justify-between">
+        <div className="border-2 border-slate-950 bg-white p-8 text-slate-950 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_#00b835] flex flex-col justify-between">
           <div>
             <div className="flex h-12 w-12 items-center justify-center border-2 border-slate-950 bg-brand-400 text-slate-950 mb-6 font-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
               <ClipboardList className="h-6 w-6" />
@@ -102,7 +102,7 @@ export const AdminDashboard: React.FC = () => {
         </div>
 
         {/* Manage Categories Action Card */}
-        <div className="border-2 border-slate-950 bg-white p-8 text-slate-950 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_#00FF41] flex flex-col justify-between">
+        <div className="border-2 border-slate-950 bg-white p-8 text-slate-950 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_#00b835] flex flex-col justify-between">
           <div>
             <div className="flex h-12 w-12 items-center justify-center border-2 border-slate-950 bg-rose-400 text-slate-950 mb-6 font-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
               <FolderKanban className="h-6 w-6" />
@@ -118,7 +118,7 @@ export const AdminDashboard: React.FC = () => {
         </div>
 
         {/* Manage Students Action Card */}
-        <div className="border-2 border-slate-950 bg-white p-8 text-slate-950 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_#00FF41] flex flex-col justify-between">
+        <div className="border-2 border-slate-950 bg-white p-8 text-slate-950 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_#00b835] flex flex-col justify-between">
           <div>
             <div className="flex h-12 w-12 items-center justify-center border-2 border-slate-950 bg-amber-400 text-slate-950 mb-6 font-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
               <Users className="h-6 w-6" />
@@ -134,7 +134,7 @@ export const AdminDashboard: React.FC = () => {
         </div>
 
         {/* User Role Management Card */}
-        <div className="border-2 border-slate-950 bg-white p-8 text-slate-950 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_#00FF41] flex flex-col justify-between">
+        <div className="border-2 border-slate-950 bg-white p-8 text-slate-950 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_#00b835] flex flex-col justify-between">
           <div>
             <div className="flex h-12 w-12 items-center justify-center border-2 border-slate-950 bg-purple-400 text-slate-950 mb-6 font-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
               <UserCheck className="h-6 w-6" />
@@ -150,7 +150,7 @@ export const AdminDashboard: React.FC = () => {
         </div>
 
         {/* Analytics & Reports Card */}
-        <div className="border-2 border-slate-950 bg-white p-8 text-slate-950 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_#00FF41] flex flex-col justify-between">
+        <div className="border-2 border-slate-950 bg-white p-8 text-slate-950 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_#00b835] flex flex-col justify-between">
           <div>
             <div className="flex h-12 w-12 items-center justify-center border-2 border-slate-950 bg-emerald-400 text-slate-950 mb-6 font-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
               <BarChart3 className="h-6 w-6" />

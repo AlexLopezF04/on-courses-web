@@ -47,7 +47,7 @@ export const LessonModal: React.FC<LessonModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="w-full max-w-lg border-2 border-slate-950 bg-white p-6 text-slate-950 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_#00FF41] animate-in zoom-in-95 duration-200">
+      <div className="w-full max-w-lg border-2 border-slate-950 bg-white p-6 text-slate-950 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_#00b835] animate-in zoom-in-95 duration-200">
         <h2 className="font-display text-xl font-black text-slate-950 mb-4 pb-2 border-b-2 border-slate-950 flex justify-between items-center">
           <span>{isEditing ? 'Editar Tema' : 'Crear Nuevo Tema'}</span>
           <span className="text-xs font-mono bg-brand-400 text-slate-950 px-2 py-0.5 border border-slate-950">TEMA</span>

@@ -120,7 +120,7 @@ export const UserManagementPage: React.FC = () => {
       <div className="mb-6">
         <Link
           to="/admin"
-          className="inline-flex items-center gap-2 px-3.5 py-1.5 border-2 border-slate-950 bg-white dark:bg-slate-900 text-slate-950 dark:text-white font-extrabold text-xs uppercase tracking-wider shadow-[2.5px_2.5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2.5px_2.5px_0px_0px_#00FF41] hover:bg-brand-400 hover:text-slate-950 dark:hover:bg-brand-400 dark:hover:text-slate-950 transition-all cursor-pointer mb-4"
+          className="inline-flex items-center gap-2 px-3.5 py-1.5 border-2 border-slate-950 bg-white dark:bg-slate-900 text-slate-950 dark:text-white font-extrabold text-xs uppercase tracking-wider shadow-[2.5px_2.5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2.5px_2.5px_0px_0px_#00b835] hover:bg-brand-400 hover:text-slate-950 dark:hover:bg-brand-400 dark:hover:text-slate-950 transition-all cursor-pointer mb-4"
         >
           <ArrowLeft className="h-4 w-4" />
           <span>Volver al Panel de Control</span>
@@ -154,7 +154,7 @@ export const UserManagementPage: React.FC = () => {
 
       {/* Metrics Summary */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-        <div className="border-2 border-slate-950 bg-white dark:bg-slate-900 p-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00FF41] flex items-center gap-4">
+        <div className="border-2 border-slate-950 bg-white dark:bg-slate-900 p-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00b835] flex items-center gap-4">
           <div className="w-12 h-12 bg-rose-100 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 border-2 border-slate-950 flex items-center justify-center shrink-0">
             <Crown className="h-6 w-6" />
           </div>
@@ -166,7 +166,7 @@ export const UserManagementPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="border-2 border-slate-950 bg-white dark:bg-slate-900 p-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00FF41] flex items-center gap-4">
+        <div className="border-2 border-slate-950 bg-white dark:bg-slate-900 p-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00b835] flex items-center gap-4">
           <div className="w-12 h-12 bg-brand-100 dark:bg-brand-900/30 text-brand-600 dark:text-brand-400 border-2 border-slate-950 flex items-center justify-center shrink-0">
             <Shield className="h-6 w-6" />
           </div>
@@ -178,7 +178,7 @@ export const UserManagementPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="border-2 border-slate-950 bg-white dark:bg-slate-900 p-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00FF41] flex items-center gap-4">
+        <div className="border-2 border-slate-950 bg-white dark:bg-slate-900 p-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00b835] flex items-center gap-4">
           <div className="w-12 h-12 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 border-2 border-slate-950 flex items-center justify-center shrink-0">
             <BookOpen className="h-6 w-6" />
           </div>
@@ -192,7 +192,7 @@ export const UserManagementPage: React.FC = () => {
       </div>
 
       {/* Toolbar */}
-      <div className="border-2 border-slate-950 bg-white dark:bg-slate-900 p-6 mb-8 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00FF41]">
+      <div className="border-2 border-slate-950 bg-white dark:bg-slate-900 p-6 mb-8 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00b835]">
         <div className="flex flex-col sm:flex-row gap-4 justify-between items-center">
           <div className="relative flex-1 w-full">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
@@ -222,7 +222,7 @@ export const UserManagementPage: React.FC = () => {
       </div>
 
       {/* User Table */}
-      <div className="border-2 border-slate-950 bg-white dark:bg-slate-900 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_#00FF41] overflow-hidden">
+      <div className="border-2 border-slate-950 bg-white dark:bg-slate-900 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_#00b835] overflow-hidden">
         <div className="flex items-center justify-between px-6 py-4 bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-950">
           <span className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200">
             Cuentas de Usuario Registradas ({filteredUsers.length})

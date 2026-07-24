@@ -233,7 +233,7 @@ export const LessonPlayerPage: React.FC = () => {
             {/* Practical instructions / theoretical text */}
             {/* Embedded Video Player */}
             {currentLesson.video_url && (
-              <div className="mb-8 overflow-hidden border-2 border-slate-950 bg-slate-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00FF41]">
+              <div className="mb-8 overflow-hidden border-2 border-slate-950 bg-slate-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00b835]">
                 <div className="flex items-center justify-between px-4 py-2 bg-slate-900 border-b-2 border-slate-950 text-xs font-mono font-bold text-brand-400">
                   <div className="flex items-center gap-2">
                     <Play className="h-4 w-4 fill-current text-brand-400" />
@@ -279,7 +279,7 @@ export const LessonPlayerPage: React.FC = () => {
                     const codeContent = lines[0].match(/^[a-z]+/i) ? lines.slice(1).join('\n') : block;
 
                     return (
-                      <div key={i} className="my-6 border-2 border-slate-950 bg-slate-950 text-emerald-400 p-4 font-mono text-xs shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00FF41] overflow-x-auto">
+                      <div key={i} className="my-6 border-2 border-slate-950 bg-slate-950 text-emerald-400 p-4 font-mono text-xs shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00b835] overflow-x-auto">
                         <div className="flex justify-between items-center pb-2 mb-2 border-b border-slate-800 text-[10px] text-slate-400 uppercase font-bold">
                           <span>{lang}</span>
                           <span>OnCourses Console</span>

@@ -23,19 +23,19 @@ export const Button: React.FC<ButtonProps> = ({
         'inline-flex items-center justify-center font-extrabold tracking-wider uppercase border-2 border-slate-950 transition-all cursor-pointer focus:outline-none disabled:opacity-50 disabled:pointer-events-none active:translate-x-0.5 active:translate-y-0.5',
         {
           // Primary: Matrix Green in both light and dark mode with 3D shadow!
-          'bg-brand-500 hover:bg-brand-400 text-slate-950 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00FF41]':
+          'bg-brand-500 hover:bg-brand-400 text-slate-950 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00b835]':
             variant === 'primary',
           // Secondary: Dark solid button with 3D shadow
-          'bg-slate-950 hover:bg-slate-800 text-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00FF41]':
+          'bg-slate-950 hover:bg-slate-800 text-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00b835]':
             variant === 'secondary',
           // Danger: Red solid button with 3D shadow
-          'bg-rose-500 hover:bg-rose-600 text-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00FF41]':
+          'bg-rose-500 hover:bg-rose-600 text-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00b835]':
             variant === 'danger',
           // Outline: White background in both themes, 3D shadow
-          'bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-950 dark:text-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00FF41]':
+          'bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-950 dark:text-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00b835]':
             variant === 'outline',
           // Ghost: High-contrast button with 3D shadow
-          'bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-950 dark:text-slate-100 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_#00FF41]':
+          'bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-950 dark:text-slate-100 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_#00b835]':
             variant === 'ghost',
 
           'px-3 py-1.5 text-xs': size === 'sm',

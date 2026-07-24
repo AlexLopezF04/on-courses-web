@@ -66,7 +66,7 @@ export const Logo: React.FC<LogoProps> = ({ className = 'h-10 w-10' }) => {
         height="94"
         rx="16"
         fill="#090d16"
-        stroke="#00FF41"
+        stroke="#00b835"
         strokeWidth="4.5"
       />
 
@@ -74,7 +74,7 @@ export const Logo: React.FC<LogoProps> = ({ className = 'h-10 w-10' }) => {
       <g
         className="animate-hat-latency"
         transform="translate(20, 20) scale(2.5)"
-        stroke="#00FF41"
+        stroke="#00b835"
         strokeWidth="2.2"
         strokeLinecap="round"
         strokeLinejoin="round"

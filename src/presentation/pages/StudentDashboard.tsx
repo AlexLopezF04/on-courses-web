@@ -56,7 +56,7 @@ export const StudentDashboard: React.FC = () => {
         </div>
 
         <div className="flex gap-4">
-          <div className="border-2 border-slate-950 bg-white p-4 text-slate-950 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00FF41] flex items-center gap-3">
+          <div className="border-2 border-slate-950 bg-white p-4 text-slate-950 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00b835] flex items-center gap-3">
             <div className="border border-slate-950 bg-brand-400 p-2 text-slate-950">
               <BookOpen className="h-5 w-5" />
             </div>
@@ -83,7 +83,7 @@ export const StudentDashboard: React.FC = () => {
               return (
                 <div
                   key={enrollment.id}
-                  className="border-2 border-slate-950 bg-white p-6 text-slate-950 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[5px_5px_0px_0px_#00FF41] flex flex-col justify-between transition-all"
+                  className="border-2 border-slate-950 bg-white p-6 text-slate-950 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[5px_5px_0px_0px_#00b835] flex flex-col justify-between transition-all"
                 >
                   <div>
                     <div className="flex justify-between items-start gap-4 mb-4">
@@ -110,7 +110,7 @@ export const StudentDashboard: React.FC = () => {
 
                   <button
                     onClick={() => handleResumeCourse(enrollment.course)}
-                    className="w-full py-2.5 px-4 border-2 border-slate-950 bg-slate-950 text-white font-extrabold text-xs uppercase tracking-wider shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00FF41] hover:bg-brand-500 hover:text-slate-950 active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                    className="w-full py-2.5 px-4 border-2 border-slate-950 bg-slate-950 text-white font-extrabold text-xs uppercase tracking-wider shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00b835] hover:bg-brand-500 hover:text-slate-950 active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <PlayCircle className="h-4 w-4" />
                     Continuar Aprendizaje
@@ -120,7 +120,7 @@ export const StudentDashboard: React.FC = () => {
             })}
           </div>
         ) : (
-          <div className="text-center py-16 border-2 border-slate-950 bg-white p-8 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00FF41]">
+          <div className="text-center py-16 border-2 border-slate-950 bg-white p-8 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00b835]">
             <BookOpen className="h-12 w-12 text-slate-400 mx-auto mb-4" />
             <h3 className="text-lg font-bold text-slate-950">Aún no estás matriculado en ningún curso</h3>
             <p className="text-xs text-slate-600 mt-1 mb-6">Explora nuestro catálogo y empieza tu ruta de aprendizaje hoy mismo.</p>

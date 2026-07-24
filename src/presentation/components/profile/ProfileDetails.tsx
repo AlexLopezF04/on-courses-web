@@ -15,7 +15,7 @@ export const ProfileDetails: React.FC<ProfileDetailsProps> = ({
   return (
     <div className="flex flex-col gap-8">
       {/* Biography Section */}
-      <div className="border-2 border-slate-950 bg-white p-6 md:p-8 text-slate-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00FF41]">
+      <div className="border-2 border-slate-950 bg-white p-6 md:p-8 text-slate-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00b835]">
         <h3 className="font-display font-black text-slate-950 text-lg mb-4 flex items-center gap-2">
           <Book className="h-5 w-5 text-brand-500" />
           Biografía
@@ -28,7 +28,7 @@ export const ProfileDetails: React.FC<ProfileDetailsProps> = ({
       {/* Details Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Personal Details */}
-        <div className="border-2 border-slate-950 bg-white p-6 md:p-8 text-slate-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00FF41]">
+        <div className="border-2 border-slate-950 bg-white p-6 md:p-8 text-slate-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00b835]">
           <h3 className="font-display font-black text-slate-950 text-lg mb-6 flex items-center gap-2">
             <Shield className="h-5 w-5 text-brand-500" />
             Datos Personales
@@ -60,7 +60,7 @@ export const ProfileDetails: React.FC<ProfileDetailsProps> = ({
 
         {/* Academic Details (only if Professor or Admin) */}
         {isProfessorOrAdmin && (
-          <div className="border-2 border-slate-950 bg-white p-6 md:p-8 text-slate-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00FF41]">
+          <div className="border-2 border-slate-950 bg-white p-6 md:p-8 text-slate-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00b835]">
             <h3 className="font-display font-black text-slate-950 text-lg mb-6 flex items-center gap-2">
               <Award className="h-5 w-5 text-brand-500" />
               Perfil Profesional

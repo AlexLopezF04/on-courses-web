@@ -21,7 +21,7 @@ export const LessonsList: React.FC<LessonsListProps> = ({
 
   return (
     <div className="lg:col-span-3 flex flex-col gap-4">
-      <div className="border-2 border-slate-950 bg-white dark:bg-slate-900 p-6 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_#00FF41]">
+      <div className="border-2 border-slate-950 bg-white dark:bg-slate-900 p-6 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_#00b835]">
         <h3 className="font-display font-black text-lg text-slate-950 dark:text-white mb-6 flex items-center justify-between border-b-2 border-slate-950 pb-3">
           <span>Temas del Módulo Seleccionado</span>
           <span className="text-xs font-mono bg-brand-400 text-slate-950 px-2.5 py-0.5 border border-slate-950">

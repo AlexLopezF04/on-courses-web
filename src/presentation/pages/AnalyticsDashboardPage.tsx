@@ -9,7 +9,7 @@ export const AnalyticsDashboardPage: React.FC = () => {
       <div className="mb-6">
         <Link
           to="/admin"
-          className="inline-flex items-center gap-2 px-3.5 py-1.5 border-2 border-slate-950 bg-white dark:bg-slate-900 text-slate-950 dark:text-white font-extrabold text-xs uppercase tracking-wider shadow-[2.5px_2.5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2.5px_2.5px_0px_0px_#00FF41] hover:bg-brand-400 hover:text-slate-950 dark:hover:bg-brand-400 dark:hover:text-slate-950 transition-all cursor-pointer mb-4"
+          className="inline-flex items-center gap-2 px-3.5 py-1.5 border-2 border-slate-950 bg-white dark:bg-slate-900 text-slate-950 dark:text-white font-extrabold text-xs uppercase tracking-wider shadow-[2.5px_2.5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2.5px_2.5px_0px_0px_#00b835] hover:bg-brand-400 hover:text-slate-950 dark:hover:bg-brand-400 dark:hover:text-slate-950 transition-all cursor-pointer mb-4"
         >
           <ArrowLeft className="h-4 w-4" />
           <span>Volver al Panel de Control</span>
@@ -38,7 +38,7 @@ export const AnalyticsDashboardPage: React.FC = () => {
 
       {/* KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div className="border-2 border-slate-950 bg-white dark:bg-slate-900 p-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00FF41]">
+        <div className="border-2 border-slate-950 bg-white dark:bg-slate-900 p-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00b835]">
           <div className="flex justify-between items-start mb-2">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Ingresos Totales</span>
             <span className="p-2 bg-emerald-100 text-emerald-600 border border-slate-950 font-bold text-xs">$</span>
@@ -47,7 +47,7 @@ export const AnalyticsDashboardPage: React.FC = () => {
           <span className="text-[10px] text-emerald-600 font-bold">↑ +18.5% este mes</span>
         </div>
 
-        <div className="border-2 border-slate-950 bg-white dark:bg-slate-900 p-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00FF41]">
+        <div className="border-2 border-slate-950 bg-white dark:bg-slate-900 p-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00b835]">
           <div className="flex justify-between items-start mb-2">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Tasa de Completado</span>
             <span className="p-2 bg-brand-100 text-brand-600 border border-slate-950 font-bold text-xs">%</span>
@@ -56,7 +56,7 @@ export const AnalyticsDashboardPage: React.FC = () => {
           <span className="text-[10px] text-emerald-600 font-bold">↑ +5.2% retención</span>
         </div>
 
-        <div className="border-2 border-slate-950 bg-white dark:bg-slate-900 p-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00FF41]">
+        <div className="border-2 border-slate-950 bg-white dark:bg-slate-900 p-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00b835]">
           <div className="flex justify-between items-start mb-2">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Horas de Estudio</span>
             <span className="p-2 bg-amber-100 text-amber-600 border border-slate-950 font-bold text-xs">⏱</span>
@@ -65,7 +65,7 @@ export const AnalyticsDashboardPage: React.FC = () => {
           <span className="text-[10px] text-slate-400 font-bold">Lecciones vistas</span>
         </div>
 
-        <div className="border-2 border-slate-950 bg-white dark:bg-slate-900 p-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00FF41]">
+        <div className="border-2 border-slate-950 bg-white dark:bg-slate-900 p-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00b835]">
           <div className="flex justify-between items-start mb-2">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Certificados Emitidos</span>
             <span className="p-2 bg-purple-100 text-purple-600 border border-slate-950 font-bold text-xs">🎓</span>
@@ -78,7 +78,7 @@ export const AnalyticsDashboardPage: React.FC = () => {
       {/* Visual Charts Simulation */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
         {/* Popular Courses Bar Graph */}
-        <div className="lg:col-span-8 border-2 border-slate-950 bg-white dark:bg-slate-900 p-6 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_#00FF41]">
+        <div className="lg:col-span-8 border-2 border-slate-950 bg-white dark:bg-slate-900 p-6 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_#00b835]">
           <div className="flex justify-between items-center pb-4 mb-6 border-b-2 border-slate-950">
             <h3 className="font-bold text-sm uppercase tracking-wider text-slate-950 dark:text-white flex items-center gap-2">
               <TrendingUp className="h-4 w-4 text-brand-500" />
@@ -141,7 +141,7 @@ export const AnalyticsDashboardPage: React.FC = () => {
         </div>
 
         {/* Audit Log / Recent Activity */}
-        <div className="lg:col-span-4 border-2 border-slate-950 bg-white dark:bg-slate-900 p-6 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_#00FF41]">
+        <div className="lg:col-span-4 border-2 border-slate-950 bg-white dark:bg-slate-900 p-6 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_#00b835]">
           <div className="flex justify-between items-center pb-4 mb-4 border-b-2 border-slate-950">
             <h3 className="font-bold text-sm uppercase tracking-wider text-slate-950 dark:text-white flex items-center gap-2">
               <Activity className="h-4 w-4 text-emerald-500" />

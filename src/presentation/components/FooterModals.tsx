@@ -13,7 +13,7 @@ export const LegalModal: React.FC<{
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm animate-fade-in">
-      <div className="w-full max-w-2xl border-2 border-slate-950 bg-white dark:bg-slate-900 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_#00FF41] overflow-hidden">
+      <div className="w-full max-w-2xl border-2 border-slate-950 bg-white dark:bg-slate-900 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_#00b835] overflow-hidden">
         {/* OS Header */}
         <div className="flex items-center justify-between px-4 py-2 bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-950">
           <div className="flex items-center gap-2">
@@ -137,7 +137,7 @@ export const PricingModal: React.FC<{ isOpen: boolean; onClose: () => void }> = 
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm animate-fade-in">
-      <div className="w-full max-w-3xl border-2 border-slate-950 bg-white dark:bg-slate-900 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_#00FF41] overflow-hidden">
+      <div className="w-full max-w-3xl border-2 border-slate-950 bg-white dark:bg-slate-900 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_#00b835] overflow-hidden">
         {/* OS Header */}
         <div className="flex items-center justify-between px-4 py-2 bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-950">
           <div className="flex items-center gap-2">
@@ -169,7 +169,7 @@ export const PricingModal: React.FC<{ isOpen: boolean; onClose: () => void }> = 
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Plan Gratuito */}
-            <div className="border-2 border-slate-950 p-6 bg-white dark:bg-slate-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00FF41] flex flex-col justify-between">
+            <div className="border-2 border-slate-950 p-6 bg-white dark:bg-slate-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00b835] flex flex-col justify-between">
               <div>
                 <div className="flex justify-between items-center mb-4">
                   <span className="font-bold text-sm uppercase text-slate-900 dark:text-white">Plan Free</span>
@@ -191,7 +191,7 @@ export const PricingModal: React.FC<{ isOpen: boolean; onClose: () => void }> = 
             </div>
 
             {/* Plan PRO */}
-            <div className="border-2 border-slate-950 p-6 bg-slate-900 text-white shadow-[4px_4px_0px_0px_#00FF41] flex flex-col justify-between relative overflow-hidden">
+            <div className="border-2 border-slate-950 p-6 bg-slate-900 text-white shadow-[4px_4px_0px_0px_#00b835] flex flex-col justify-between relative overflow-hidden">
               <div className="absolute top-3 right-3 px-2 py-0.5 bg-brand-400 text-slate-950 font-black text-[10px] uppercase border border-slate-950 shadow-sm">
                 RECOMENDADO
               </div>
@@ -230,7 +230,7 @@ export const CommunityModal: React.FC<{ isOpen: boolean; onClose: () => void }> 
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm animate-fade-in">
-      <div className="w-full max-w-lg border-2 border-slate-950 bg-white dark:bg-slate-900 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_#00FF41] overflow-hidden">
+      <div className="w-full max-w-lg border-2 border-slate-950 bg-white dark:bg-slate-900 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_#00b835] overflow-hidden">
         <div className="flex items-center justify-between px-4 py-2 bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-950">
           <div className="flex items-center gap-2">
             <Users className="h-4 w-4 text-orange-500" />
@@ -255,7 +255,7 @@ export const CommunityModal: React.FC<{ isOpen: boolean; onClose: () => void }> 
               href="https://github.com/AlexLopezF04"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between p-3.5 border-2 border-slate-950 bg-slate-900 text-white font-bold text-xs uppercase tracking-wider shadow-[3px_3px_0px_0px_#00FF41] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
+              className="flex items-center justify-between p-3.5 border-2 border-slate-950 bg-slate-900 text-white font-bold text-xs uppercase tracking-wider shadow-[3px_3px_0px_0px_#00b835] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
             >
               <div className="flex items-center gap-3">
                 <Send className="h-4 w-4 text-brand-400" />
@@ -296,7 +296,7 @@ export const NewsletterModal: React.FC<{ isOpen: boolean; onClose: () => void }>
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm animate-fade-in">
-      <div className="w-full max-w-md border-2 border-slate-950 bg-white dark:bg-slate-900 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_#00FF41] overflow-hidden">
+      <div className="w-full max-w-md border-2 border-slate-950 bg-white dark:bg-slate-900 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_#00b835] overflow-hidden">
         <div className="flex items-center justify-between px-4 py-2 bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-950">
           <div className="flex items-center gap-2">
             <Mail className="h-4 w-4 text-pink-500" />

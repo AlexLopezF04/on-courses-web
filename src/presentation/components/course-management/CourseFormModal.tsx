@@ -53,7 +53,7 @@ export const CourseFormModal: React.FC<CourseFormModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 backdrop-blur-sm p-4 overflow-y-auto">
-      <div className="w-full max-w-lg border-2 border-slate-950 bg-white p-8 text-slate-950 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_#00FF41] relative my-8">
+      <div className="w-full max-w-lg border-2 border-slate-950 bg-white p-8 text-slate-950 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_#00b835] relative my-8">
         <h3 className="font-display text-xl font-black text-slate-950 mb-6 pb-2 border-b-2 border-slate-950 flex justify-between items-center">
           <span>{isEditing ? 'Editar Curso' : 'Crear Nuevo Curso'}</span>
           <span className="text-xs font-mono bg-brand-400 text-slate-950 px-2 py-0.5 border border-slate-950">CURSO</span>

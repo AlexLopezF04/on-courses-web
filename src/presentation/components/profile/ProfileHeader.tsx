@@ -16,7 +16,7 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   joinedDate,
 }) => {
   return (
-    <div className="relative border-2 border-slate-950 bg-white p-6 md:p-8 flex flex-col md:flex-row gap-6 items-center shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[5px_5px_0px_0px_#00FF41] overflow-hidden text-slate-950">
+    <div className="relative border-2 border-slate-950 bg-white p-6 md:p-8 flex flex-col md:flex-row gap-6 items-center shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[5px_5px_0px_0px_#00b835] overflow-hidden text-slate-950">
       {/* Avatar Container */}
       <div className="relative shrink-0 select-none">
         {user?.avatar ? (

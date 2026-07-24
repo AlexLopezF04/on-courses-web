@@ -25,7 +25,7 @@ export const ModuleSidebar: React.FC<ModuleSidebarProps> = ({
             onClick={() => onSelect(mod.id)}
             className={`w-full text-left px-4 py-3 border-2 border-slate-950 font-bold transition-all cursor-pointer ${
               selectedModuleId === mod.id
-                ? 'bg-brand-400 text-slate-950 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00FF41]'
+                ? 'bg-brand-400 text-slate-950 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00b835]'
                 : 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white hover:bg-slate-50 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
             }`}
           >
