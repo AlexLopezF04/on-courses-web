@@ -177,12 +177,12 @@ export const RegisterPage: React.FC = () => {
             </div>
 
             {/* Right Side — Register Form */}
-            <div className="lg:col-span-7 p-6 sm:p-10 flex flex-col justify-center bg-white dark:bg-white">
+            <div className="lg:col-span-7 p-6 sm:p-10 flex flex-col justify-center bg-white dark:bg-slate-900">
               <div className="mb-6">
-                <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-950 dark:text-slate-950">
+                <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-950 dark:text-white">
                   Crea tu Cuenta
                 </h2>
-                <p className="text-slate-600 dark:text-slate-600 text-sm mt-1">
+                <p className="text-slate-600 dark:text-slate-300 text-sm mt-1">
                   Únete gratis a OnCourses hoy mismo
                 </p>
               </div>
