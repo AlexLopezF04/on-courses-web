@@ -7,6 +7,7 @@ interface CourseTableProps {
   courses: Course[];
   isAdmin: boolean;
   onEdit: (course: Course) => void;
+  onToggleStatus?: (course: Course) => void;
   onDelete: (id: number) => void;
 }
 
@@ -14,6 +15,7 @@ export const CourseTable: React.FC<CourseTableProps> = ({
   courses,
   isAdmin,
   onEdit,
+  onToggleStatus,
   onDelete,
 }) => {
   return (
@@ -23,7 +25,7 @@ export const CourseTable: React.FC<CourseTableProps> = ({
           <th className="py-3.5 px-6">ID</th>
           <th className="py-3.5 px-4">Curso</th>
           <th className="py-3.5 px-4">Precio</th>
-          <th className="py-3.5 px-4">Estado</th>
+          <th className="py-3.5 px-4">Estado (Clic para Cambiar)</th>
           <th className="py-3.5 px-4 text-center">Acciones</th>
         </tr>
       </thead>
@@ -42,13 +44,18 @@ export const CourseTable: React.FC<CourseTableProps> = ({
                 {parseFloat(c.price) === 0 ? 'Gratis' : `$${c.price}`}
               </td>
               <td className="py-4 px-4">
-                <span className={`inline-flex items-center gap-1 border px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
-                  c.is_active
-                    ? 'border-emerald-500 bg-emerald-50 text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300'
-                    : 'border-slate-400 bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300'
-                }`}>
-                  {c.is_active ? 'Activo' : 'Borrador'}
-                </span>
+                <button
+                  type="button"
+                  onClick={() => onToggleStatus?.(c)}
+                  className={`inline-flex items-center gap-1 border-2 border-slate-950 px-2.5 py-1 text-[10px] font-black uppercase tracking-wider shadow-[1.5px_1.5px_0px_0px_rgba(0,0,0,1)] transition-all cursor-pointer ${
+                    c.is_active
+                      ? 'bg-emerald-400 text-slate-950 hover:bg-rose-400'
+                      : 'bg-amber-400 text-slate-950 hover:bg-emerald-400'
+                  }`}
+                  title={c.is_active ? 'Clic para Inactivar este curso' : 'Clic para Activar este curso'}
+                >
+                  <span>{c.is_active ? '🟢 ACTIVO' : '🟡 INACTIVO'}</span>
+                </button>
               </td>
               <td className="py-4 px-4 text-center">
                 <div className="flex items-center justify-center gap-1.5">

@@ -24,14 +24,24 @@ interface AuthState {
 
 const enrichUserWithCachedProfile = (user: User): User => {
   try {
-    const stored = JSON.parse(localStorage.getItem('oncourses_registered_users') || '{}');
-    const cached = stored[user.username.toLowerCase()] || stored[user.email.toLowerCase()];
+    const storedReg = JSON.parse(localStorage.getItem('oncourses_registered_users') || '{}');
+    const cachedReg = storedReg[user.username?.toLowerCase()] || storedReg[user.email?.toLowerCase()];
+
+    const savedProfiles = JSON.parse(localStorage.getItem('oncourses_user_profiles') || '{}');
+    const saved = savedProfiles[user.username?.toLowerCase()] || savedProfiles[user.id] || {};
+
     return {
       ...user,
-      phone: user.phone || cached?.phone || '+593 99 123 4567',
-      country: user.country || cached?.country || 'Ecuador',
-      first_name: user.first_name || cached?.first_name || user.username,
-      last_name: user.last_name || cached?.last_name || '',
+      first_name: saved.first_name || user.first_name || cachedReg?.first_name || user.username,
+      last_name: saved.last_name || user.last_name || cachedReg?.last_name || '',
+      avatar: saved.avatar || user.avatar || '',
+      phone: saved.phone || user.phone || cachedReg?.phone || '+593 99 123 4567',
+      country: saved.country || user.country || cachedReg?.country || 'Ecuador',
+      birth_date: saved.birth_date || user.birth_date || '',
+      biography: saved.biography || user.biography || '',
+      professional_title: saved.professional_title || user.professional_title || '',
+      specialty: saved.specialty || user.specialty || '',
+      linkedin_url: saved.linkedin_url || user.linkedin_url || '',
     };
   } catch {
     return {
@@ -167,14 +177,42 @@ export const useAuthStore = create<AuthState>((set) => ({
     
     set({ isLoading: true, error: null });
     try {
-      let updatedUser: any;
+      let updatedUser: any = {};
       try {
         updatedUser = await updateCurrentUserUseCase.execute(currentUserId, data);
       } catch {
-        updatedUser = { ...(store.user as User), ...data };
+        updatedUser = {};
       }
+
+      const mergedUser = { ...(store.user as User), ...updatedUser, ...data };
+
+      // Save merged user profile permanently to localStorage
+      try {
+        const savedProfiles = JSON.parse(localStorage.getItem('oncourses_user_profiles') || '{}');
+        const userKey = store.user?.username?.toLowerCase() || currentUserId;
+        savedProfiles[userKey] = {
+          ...(savedProfiles[userKey] || {}),
+          ...data,
+          ...updatedUser,
+        };
+        localStorage.setItem('oncourses_user_profiles', JSON.stringify(savedProfiles));
+
+        // Also update registered users cache
+        const storedReg = JSON.parse(localStorage.getItem('oncourses_registered_users') || '{}');
+        if (userKey && storedReg[userKey]) {
+          storedReg[userKey] = {
+            ...storedReg[userKey],
+            ...data,
+            ...updatedUser,
+          };
+          localStorage.setItem('oncourses_registered_users', JSON.stringify(storedReg));
+        }
+      } catch (storageErr) {
+        console.warn('Could not update localStorage profile cache', storageErr);
+      }
+
       set({
-        user: { ...(store.user as User), ...updatedUser, ...data },
+        user: mergedUser,
         isLoading: false,
       });
     } catch (err: any) {

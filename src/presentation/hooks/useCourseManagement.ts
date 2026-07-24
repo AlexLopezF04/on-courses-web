@@ -188,12 +188,35 @@ export const useCourseManagement = () => {
     }
   };
 
+  const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'inactive'>('all');
+
+  const handleToggleActive = async (course: Course) => {
+    try {
+      const updatedStatus = !course.is_active;
+      await updateCourseUseCase.execute(course.id, { is_active: updatedStatus });
+      setSuccessMessage(`El curso "${course.title}" ahora está ${updatedStatus ? '🟢 ACTIVO' : '🟡 INACTIVO'}`);
+      loadCourses();
+      setTimeout(() => setSuccessMessage(null), 3500);
+    } catch (err: any) {
+      alert(err.message || 'Error al cambiar estado del curso');
+    }
+  };
+
+  const filteredCourses = courses.filter((c) => {
+    if (statusFilter === 'active') return c.is_active;
+    if (statusFilter === 'inactive') return !c.is_active;
+    return true;
+  });
+
   return {
-    courses,
+    courses: filteredCourses,
+    rawCourses: courses,
     categories,
     isLoading,
     search,
     setSearch,
+    statusFilter,
+    setStatusFilter,
     page,
     setPage,
     totalCourses,
@@ -222,6 +245,7 @@ export const useCourseManagement = () => {
     handleOpenEdit,
     handleTitleChange,
     handleSubmit,
+    handleToggleActive,
     handleDelete,
   };
 };
