@@ -131,17 +131,27 @@ export const CourseFormModal: React.FC<CourseFormModalProps> = ({
               required
             />
 
-            <div className="flex flex-col gap-1.5">
+            <div className="flex flex-col gap-2">
               <label className="text-xs font-extrabold uppercase tracking-wider text-slate-700">
-                Imagen de Portada (Opcional)
+                Imagen de Portada (Subida de Archivo o Predefinido)
               </label>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => onCoverImageChange(e.target.files?.[0] || null)}
-                disabled={loading}
-                className="w-full text-xs text-slate-700 file:mr-4 file:py-1.5 file:px-3 file:border-2 file:border-slate-950 file:text-xs file:font-extrabold file:bg-brand-400 file:text-slate-950"
-              />
+
+              <div className="flex items-center gap-3">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0] || null;
+                    onCoverImageChange(file);
+                  }}
+                  disabled={loading}
+                  className="w-full text-xs text-slate-700 file:mr-4 file:py-1.5 file:px-3 file:border-2 file:border-slate-950 file:text-xs file:font-extrabold file:bg-[#00cc33] file:text-slate-950 hover:file:bg-[#00ff41] file:cursor-pointer"
+                />
+              </div>
+
+              <p className="text-[11px] text-slate-500 font-medium mt-1">
+                Formats soportados: PNG, JPG, WEBP, SVG. La foto se asociará automáticamente a la portada del curso.
+              </p>
             </div>
           </div>
 

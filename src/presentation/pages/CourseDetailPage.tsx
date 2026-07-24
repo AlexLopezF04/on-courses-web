@@ -6,13 +6,15 @@ import { getCourseByIdUseCase } from '@infrastructure/factories/CourseFactory';
 import { getEnrollmentsUseCase, enrollInCourseUseCase } from '@infrastructure/factories/EnrollmentFactory';
 import { Course } from '@domain/entities/Course';
 import { useAuthStore } from '../store/useAuthStore';
-import { BookOpen, Clock, Award, ShieldAlert, CheckCircle, ArrowLeft, Play } from 'lucide-react';
+import { useCartStore } from '../store/useCartStore';
+import { BookOpen, Clock, Award, ShieldAlert, CheckCircle, ArrowLeft, Play, ShoppingBag } from 'lucide-react';
 import { CourseDetailSkeleton } from '../components/Skeletons';
 
 export const CourseDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { isAuthenticated, user } = useAuthStore();
+  const { addItem: addToCart } = useCartStore();
 
   const [course, setCourse] = useState<Course | null>(null);
   const [isEnrolled, setIsEnrolled] = useState(false);
@@ -269,13 +271,26 @@ export const CourseDetailPage: React.FC = () => {
                 )}
               </div>
             ) : (
-              <Button
-                onClick={handleEnroll}
-                isLoading={isEnrolling}
-                className="w-full py-3"
-              >
-                {isAuthenticated ? 'Inscribirse Ahora' : 'Iniciar sesión para inscribirse'}
-              </Button>
+              <div className="flex flex-col gap-3">
+                <Button
+                  onClick={handleEnroll}
+                  isLoading={isEnrolling}
+                  className="w-full py-3"
+                >
+                  {isAuthenticated ? 'Inscribirse Ahora' : 'Iniciar sesión para inscribirse'}
+                </Button>
+                
+                {course && (
+                  <Button
+                    variant="outline"
+                    onClick={() => addToCart(course)}
+                    className="w-full flex items-center justify-center gap-2"
+                  >
+                    <ShoppingBag className="h-4 w-4" />
+                    <span>Añadir al Carrito</span>
+                  </Button>
+                )}
+              </div>
             )}
 
             <div className="border-t border-slate-100 dark:border-slate-800 pt-4 text-xs text-slate-500 dark:text-slate-455 flex flex-col gap-2">

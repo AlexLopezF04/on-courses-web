@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { BookOpen } from 'lucide-react';
+import { BookOpen, ShoppingBag } from 'lucide-react';
 import { Course } from '../../domain/entities/Course';
+import { useCartStore } from '../store/useCartStore';
 
 interface CourseCardProps {
   course: Course;
@@ -25,7 +26,13 @@ const getCategoryColor = (categoryName?: string) => {
 };
 
 export const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
+  const { addItem } = useCartStore();
   const videoHours = ((course.modules_count || 0) * 1.5 + 2).toFixed(0);
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    addItem(course);
+  };
 
   return (
     <div
@@ -89,14 +96,29 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
       </div>
       
       {/* Bottom Button Stack */}
-      <div className="flex flex-col gap-2 p-5 border-t border-slate-200 bg-slate-50">
-        <Link to={`/courses/${course.id}`} className="w-full">
-          <button className="w-full text-center py-2 border border-slate-950 text-xs font-extrabold bg-white text-slate-950 dark:text-slate-950 hover:bg-slate-100 transition-colors shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] cursor-pointer">
-            Ver el curso
+      <div className="flex flex-col gap-2 p-4 border-t border-slate-200 bg-slate-50">
+        <div className="flex items-center justify-between gap-2 mb-1">
+          <span className="text-xs font-mono font-bold text-slate-600">
+            {parseFloat(course.price) === 0 ? 'Gratuito' : `Precio:`}
+          </span>
+          <span className="text-sm font-black text-slate-950 font-mono">
+            {parseFloat(course.price) === 0 ? 'GRATIS' : `$${course.price} USD`}
+          </span>
+        </div>
+
+        <div className="grid grid-cols-2 gap-2">
+          <Link to={`/courses/${course.id}`}>
+            <button className="w-full text-center py-2 border-2 border-slate-950 text-xs font-extrabold bg-white text-slate-950 hover:bg-slate-100 transition-colors shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] cursor-pointer">
+              Ver detalle
+            </button>
+          </Link>
+          <button
+            onClick={handleAddToCart}
+            className="w-full flex items-center justify-center gap-1.5 py-2 border-2 border-slate-950 text-xs font-black bg-[#00cc33] hover:bg-[#00ff41] text-slate-950 transition-colors shadow-[2px_2px_0px_0px_#00b835] cursor-pointer"
+          >
+            <ShoppingBag className="h-3.5 w-3.5" />
+            <span>Carrito</span>
           </button>
-        </Link>
-        <div className="w-full text-center py-2 border border-slate-350 text-xs font-bold bg-white text-slate-900 dark:text-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-          {parseFloat(course.price) === 0 ? 'Acceso Gratis' : `Pago único: $${course.price}`}
         </div>
       </div>
     </div>

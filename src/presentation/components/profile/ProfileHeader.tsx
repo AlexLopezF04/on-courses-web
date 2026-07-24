@@ -17,8 +17,8 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
 }) => {
   return (
     <div className="relative border-2 border-slate-950 bg-white p-6 md:p-8 flex flex-col md:flex-row gap-6 items-center shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[5px_5px_0px_0px_#00b835] overflow-hidden text-slate-950">
-      {/* Avatar Container */}
-      <div className="relative shrink-0 select-none">
+      {/* Avatar Container with Photo Change Trigger */}
+      <div className="relative shrink-0 select-none group">
         {user?.avatar ? (
           <img
             src={user.avatar}
@@ -26,7 +26,7 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
             className="h-24 w-24 rounded-full object-cover border-4 border-slate-950 shadow-md"
           />
         ) : (
-          <div className="h-24 w-24 rounded-full bg-brand-400 text-slate-950 border-2 border-slate-950 flex items-center justify-center font-display font-black text-3xl shadow-inner uppercase">
+          <div className="h-24 w-24 rounded-full bg-[#00cc33] text-slate-950 border-4 border-slate-950 flex items-center justify-center font-display font-black text-3xl shadow-inner uppercase">
             {initials}
           </div>
         )}

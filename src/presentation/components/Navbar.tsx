@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore';
 import { useThemeStore } from '../store/useThemeStore';
-import { Sun, Moon, User, LogOut, Menu, X, BookOpen, Compass, Award, Info } from 'lucide-react';
+import { useCartStore } from '../store/useCartStore';
+import { Sun, Moon, User, LogOut, Menu, X, BookOpen, Compass, Award, Info, ShoppingBag } from 'lucide-react';
 import { Button } from './Button';
 import { Logo } from './Logo';
 import { PricingModal } from './FooterModals';
@@ -10,6 +11,7 @@ import { PricingModal } from './FooterModals';
 export const Navbar: React.FC = () => {
   const { user, isAuthenticated, logout } = useAuthStore();
   const { theme, toggleTheme } = useThemeStore();
+  const { items: cartItems, openCart } = useCartStore();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [showPricingModal, setShowPricingModal] = useState(false);
@@ -56,6 +58,20 @@ export const Navbar: React.FC = () => {
             </div>
 
             <div className="hidden lg:flex items-center gap-4">
+              <button
+                onClick={openCart}
+                className="relative p-2 border-2 border-slate-950 bg-[#00cc33] hover:bg-[#00ff41] text-slate-950 shadow-[2px_2px_0px_0px_#00b835] transition-colors cursor-pointer"
+                aria-label="Ver carrito de compras"
+                title="Carrito de Compras"
+              >
+                <ShoppingBag className="h-4 w-4" />
+                {cartItems.length > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-rose-600 text-white border-2 border-slate-950 text-[10px] font-black w-5 h-5 flex items-center justify-center rounded-none shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] animate-bounce">
+                    {cartItems.length}
+                  </span>
+                )}
+              </button>
+
               <button
                 onClick={toggleTheme}
                 className="p-2 border-2 border-slate-950 bg-[#00cc33] hover:bg-[#00ff41] text-slate-950 shadow-[2px_2px_0px_0px_#00b835] transition-colors cursor-pointer"
