@@ -50,25 +50,24 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
         </div>
       </div>
 
-      {/* Card Header Color Block */}
-      <div className={`relative aspect-video flex items-center justify-center p-6 ${getCategoryColor(course.category_name)}`}>
-        {/* Certificate Badge */}
-        <div className="absolute top-2.5 left-2.5 flex items-center gap-1 bg-white border border-slate-950 rounded px-1.5 py-0.5 text-[9px] font-bold text-slate-900 dark:text-slate-900 uppercase tracking-wider shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] dark:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">
+      {/* Full Cover Image Container */}
+      <div className={`relative aspect-video w-full overflow-hidden border-b-2 border-slate-950 ${getCategoryColor(course.category_name)}`}>
+        {course.cover_image ? (
+          <img
+            src={course.cover_image}
+            alt={course.title}
+            className="w-full h-full object-cover block transition-transform duration-300 hover:scale-105"
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center p-6">
+            <BookOpen className="h-12 w-12 text-slate-950" />
+          </div>
+        )}
+
+        {/* Certificate Badge Overlay */}
+        <div className="absolute top-2.5 left-2.5 z-10 flex items-center gap-1 bg-white border-2 border-slate-950 px-2 py-0.5 text-[9px] font-extrabold text-slate-950 uppercase tracking-wider shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
           <span>🛡️</span>
           <span>Con certificado</span>
-        </div>
-        
-        {/* Centered technology/course image */}
-        <div className="w-20 h-20 bg-white border-2 border-slate-950 p-1 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center overflow-hidden">
-          {course.cover_image ? (
-            <img
-              src={course.cover_image}
-              alt={course.title}
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <BookOpen className="h-10 w-10 text-slate-900" />
-          )}
         </div>
       </div>
 
