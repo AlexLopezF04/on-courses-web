@@ -58,7 +58,7 @@ export const Navbar: React.FC = () => {
             <div className="hidden lg:flex items-center gap-4">
               <button
                 onClick={toggleTheme}
-                className="p-2 border-2 border-slate-950 bg-white dark:bg-[#0f241a] text-slate-950 dark:text-emerald-100 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_#00b835] hover:bg-brand-400 hover:text-slate-950 transition-colors cursor-pointer"
+                className="p-2 border-2 border-slate-950 bg-white dark:bg-[#0a4d29] text-slate-950 dark:text-emerald-50 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_#00e63a] hover:bg-brand-400 hover:text-slate-950 transition-colors cursor-pointer"
                 aria-label="Toggle theme"
               >
                 {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
