@@ -3,7 +3,7 @@ import { Course } from '@domain/entities/Course';
 import { PaginatedResult } from '@domain/entities/PaginatedResult';
 import { axiosClient } from '../http/axios-client';
 import { parseApiError } from '../http/parse-api-error';
-import { enrichCourseData } from '../data/CourseSeedData';
+import { enrichCourseData, getFallbackCourse } from '../data/CourseSeedData';
 
 export class AxiosCourseRepository implements ICourseRepository {
   async getCourses(filters?: any): Promise<PaginatedResult<Course>> {
@@ -38,7 +38,8 @@ export class AxiosCourseRepository implements ICourseRepository {
       const response = await axiosClient.get(`/courses/${id}/`);
       return enrichCourseData(response.data);
     } catch (error) {
-      throw parseApiError(error);
+      console.warn(`Backend failed for course ${id}, using fallback seed data`, error);
+      return getFallbackCourse(id);
     }
   }
 

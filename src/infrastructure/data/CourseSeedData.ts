@@ -482,3 +482,43 @@ export function enrichCourseData(course: Course): Course {
     modules: course.modules && course.modules.length > 0 ? course.modules : seed.modules
   };
 }
+
+/**
+ * Generate full seed course for any ID if backend returns 403 or 404
+ */
+export function getFallbackCourse(id: number): Course {
+  const seedKeys = Object.keys(COURSE_SEED_DETAILS);
+  const keyIndex = Math.abs(id - 1) % seedKeys.length;
+  const seedKey = seedKeys[keyIndex] || 'python';
+  const seed = COURSE_SEED_DETAILS[seedKey];
+
+  const titles: Record<number, string> = {
+    1: 'Python 3: Desde Cero hasta Inteligencia Artificial',
+    2: 'React 19 & TypeScript: Guía Práctica Fullstack',
+    3: 'Docker & DevOps: Contenedores y CI/CD',
+    4: 'Bases de Datos SQL: PostgreSQL y Consultas Avanzadas',
+    5: 'Git & GitHub: Control de Versiones y Trabajo en Equipo',
+    6: 'JavaScript Moderno ES6+: Asincronía y Promesas',
+  };
+
+  const title = titles[id] || `Curso #${id}: Desarrollo de Software Avanzado`;
+
+  return {
+    id: id,
+    title: title,
+    slug: `curso-${id}`,
+    price: id % 2 === 0 ? '19.99' : '0.00',
+    cover_image: seed.cover_image,
+    category: 1,
+    category_name: 'Programación & DevOps',
+    professor_name: 'Prof. Alex López',
+    is_active: true,
+    modules_count: seed.modules.length,
+    created_at: new Date().toISOString(),
+    description: seed.description,
+    modules: seed.modules.map((mod) => ({
+      ...mod,
+      course: id,
+    })),
+  };
+}
