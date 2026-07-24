@@ -7,16 +7,20 @@ import { useLessonManagement } from '../hooks/useLessonManagement';
 import { ModuleSidebar } from '../components/lesson-management/ModuleSidebar';
 import { LessonsList } from '../components/lesson-management/LessonsList';
 import { LessonModal } from '../components/lesson-management/LessonModal';
-import { CoursePreviewModal } from '../components/lesson-management/CoursePreviewModal';
+import { SingleLessonPreviewModal } from '../components/lesson-management/SingleLessonPreviewModal';
 import { ConfirmModal } from '../components/ConfirmModal';
 import { ArrowLeft, Plus, CheckCircle, Eye } from 'lucide-react';
 import { Loader } from '../components/Loader';
+import { Lesson } from '@domain/entities/Lesson';
 
 export const LessonManagementPage: React.FC = () => {
   const navigate = useNavigate();
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [deleteTargetId, setDeleteTargetId] = useState<number | null>(null);
-  const [previewModalOpen, setPreviewModalOpen] = useState(false);
+
+  // Single Lesson Preview Modal State
+  const [selectedLessonForPreview, setSelectedLessonForPreview] = useState<Lesson | null>(null);
+  const [showSinglePreviewModal, setShowSinglePreviewModal] = useState(false);
 
   const { courseId } = useParams<{ courseId: string }>();
   const {
@@ -170,7 +174,9 @@ export const LessonManagementPage: React.FC = () => {
             isAdmin={isAdmin}
             onEdit={handleOpenEditLesson}
             onPreview={(lesId) => {
-              navigate(`/learn/${courseId}/lesson/${lesId}`);
+              const target = lessons.find((l) => l.id === lesId) || null;
+              setSelectedLessonForPreview(target);
+              setShowSinglePreviewModal(true);
             }}
             onDelete={(id) => {
               setDeleteTargetId(id);
@@ -180,13 +186,17 @@ export const LessonManagementPage: React.FC = () => {
         </div>
       )}
 
-      {/* Course & Lesson Interactive Preview Modal */}
-      <CoursePreviewModal
-        isOpen={previewModalOpen}
-        onClose={() => setPreviewModalOpen(false)}
-        course={course}
-        modules={modules}
-        lessons={lessons}
+      {/* Single Lesson Dedicated Preview Modal */}
+      <SingleLessonPreviewModal
+        isOpen={showSinglePreviewModal}
+        onClose={() => setShowSinglePreviewModal(false)}
+        lesson={selectedLessonForPreview}
+        moduleTitle={modules.find((m) => m.id === selectedLessonForPreview?.module)?.title}
+        courseId={Number(courseId)}
+        onLaunchFullPlayer={(lesId) => {
+          setShowSinglePreviewModal(false);
+          navigate(`/learn/${courseId}/lesson/${lesId}`);
+        }}
       />
 
       {/* Lesson Modal */}
