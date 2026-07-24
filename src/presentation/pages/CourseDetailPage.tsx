@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Layout } from '../components/Layout';
 import { Button } from '../components/Button';
-import { getCourseByIdUseCase } from '@infrastructure/factories/CourseFactory';
+import { getCourseByIdUseCase, updateCourseUseCase } from '@infrastructure/factories/CourseFactory';
+import { getCategoriesUseCase } from '@infrastructure/factories/CategoryFactory';
 import { getEnrollmentsUseCase, enrollInCourseUseCase } from '@infrastructure/factories/EnrollmentFactory';
 import { Course } from '@domain/entities/Course';
+import { Category } from '@domain/entities/Category';
 import { useAuthStore } from '../store/useAuthStore';
 import { useCartStore } from '../store/useCartStore';
-import { BookOpen, Clock, Award, ShieldAlert, CheckCircle, ArrowLeft, Play, ShoppingBag } from 'lucide-react';
+import { CourseFormModal } from '../components/course-management/CourseFormModal';
+import { BookOpen, Clock, Award, ShieldAlert, CheckCircle, ArrowLeft, Play, ShoppingBag, Pencil } from 'lucide-react';
 import { CourseDetailSkeleton } from '../components/Skeletons';
 
 export const CourseDetailPage: React.FC = () => {
@@ -17,10 +20,23 @@ export const CourseDetailPage: React.FC = () => {
   const { addItem: addToCart } = useCartStore();
 
   const [course, setCourse] = useState<Course | null>(null);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [isEnrolled, setIsEnrolled] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isEnrolling, setIsEnrolling] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Direct Admin Course Edit Modal State
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [formCategory, setFormCategory] = useState<number | ''>('');
+  const [formTitle, setFormTitle] = useState('');
+  const [formDescription, setFormDescription] = useState('');
+  const [formPrice, setFormPrice] = useState('');
+  const [formSlug, setFormSlug] = useState('');
+  const [formIsActive, setFormIsActive] = useState(true);
+  const [formCoverImage, setFormCoverImage] = useState<File | null>(null);
+  const [formLoading, setFormLoading] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
 
   const courseId = Number(id);
 
@@ -36,6 +52,9 @@ export const CourseDetailPage: React.FC = () => {
       try {
         const courseData = await getCourseByIdUseCase.execute(courseId);
         setCourse(courseData);
+
+        const categoriesData = await getCategoriesUseCase.execute({ page_size: 100 });
+        setCategories(categoriesData.results || []);
 
         if (isAuthenticated) {
           try {
@@ -61,6 +80,46 @@ export const CourseDetailPage: React.FC = () => {
 
     loadData();
   }, [courseId, isAuthenticated]);
+
+  const handleOpenEditModal = () => {
+    if (!course) return;
+    const catId = typeof course.category === 'object' ? (course.category as any)?.id : course.category;
+    setFormCategory(catId ? Number(catId) : '');
+    setFormTitle(course.title);
+    setFormDescription(course.description || '');
+    setFormPrice(course.price.toString());
+    setFormSlug(course.slug);
+    setFormIsActive(course.is_active);
+    setFormCoverImage(null);
+    setFormError(null);
+    setShowEditModal(true);
+  };
+
+  const handleSaveCourse = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!course) return;
+    setFormLoading(true);
+    setFormError(null);
+
+    try {
+      const updated = await updateCourseUseCase.execute(course.id, {
+        category: formCategory ? Number(formCategory) : undefined,
+        title: formTitle,
+        description: formDescription,
+        price: formPrice,
+        slug: formSlug,
+        is_active: formIsActive,
+        cover_image: formCoverImage || undefined,
+      });
+
+      setCourse(updated);
+      setShowEditModal(false);
+    } catch (err: any) {
+      setFormError(err.message || 'Error al guardar cambios del curso');
+    } finally {
+      setFormLoading(false);
+    }
+  };
 
   const handleEnroll = async () => {
     if (!isAuthenticated) {
@@ -266,11 +325,29 @@ export const CourseDetailPage: React.FC = () => {
               </div>
 
               {user?.role === 'admin' || user?.role === 'professor' ? (
-                <div className="text-center bg-amber-50 dark:bg-amber-950/40 border-2 border-slate-950 p-4 text-xs font-bold text-slate-950 dark:text-amber-300 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-                  Estás registrado como <span className="uppercase text-[#00cc33] font-black">{user?.role}</span>. Puedes gestionar este curso desde el panel.
-                  <Link to={`/admin/courses/${course.id}/lessons`} className="block font-black mt-2 text-[#00cc33] hover:underline">
-                    Administrar lecciones &rarr;
-                  </Link>
+                <div className="flex flex-col gap-3 bg-amber-50 dark:bg-amber-950/40 border-2 border-slate-950 p-4 text-xs font-bold text-slate-950 dark:text-amber-300 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00b835]">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#00cc33] animate-pulse" />
+                    <span>Modo Gestión (<span className="uppercase font-black text-brand-600 dark:text-[#00cc33]">{user?.role}</span>)</span>
+                  </div>
+
+                  <div className="flex flex-col gap-2 pt-1">
+                    <button
+                      type="button"
+                      onClick={handleOpenEditModal}
+                      className="w-full py-2 px-3 border-2 border-slate-950 bg-amber-400 text-slate-950 font-black text-xs uppercase tracking-wider shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-amber-300 transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                    >
+                      <Pencil className="h-4 w-4" />
+                      <span>Editar Información del Curso</span>
+                    </button>
+
+                    <Link to={`/admin/courses/${course.id}/lessons`} className="w-full">
+                      <Button className="w-full flex items-center justify-center gap-1.5 py-2">
+                        <BookOpen className="h-4 w-4" />
+                        <span>Administrar Temas y Secciones &rarr;</span>
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
               ) : isEnrolled ? (
                 <div className="flex flex-col gap-3">
@@ -333,6 +410,33 @@ export const CourseDetailPage: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Course Edit Modal for Admins & Instructors */}
+      <CourseFormModal
+        isOpen={showEditModal}
+        isEditing={true}
+        categories={categories}
+        category={formCategory}
+        title={formTitle}
+        description={formDescription}
+        price={formPrice}
+        slug={formSlug}
+        isActive={formIsActive}
+        loading={formLoading}
+        error={formError}
+        onCategoryChange={setFormCategory}
+        onTitleChange={(val) => {
+          setFormTitle(val);
+          setFormSlug(val.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, ''));
+        }}
+        onDescriptionChange={setFormDescription}
+        onPriceChange={setFormPrice}
+        onSlugChange={setFormSlug}
+        onIsActiveChange={setFormIsActive}
+        onCoverImageChange={setFormCoverImage}
+        onClose={() => setShowEditModal(false)}
+        onSubmit={handleSaveCourse}
+      />
     </Layout>
   );
 };
