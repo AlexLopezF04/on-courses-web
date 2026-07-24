@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { getCourseByIdUseCase } from '@infrastructure/factories/CourseFactory';
+import { getModulesUseCase } from '@infrastructure/factories/ModuleFactory';
+import { getLessonsUseCase } from '@infrastructure/factories/LessonFactory';
 import {
   getLessonProgressUseCase,
   markLessonAsCompletedUseCase,
@@ -32,6 +34,34 @@ export const LessonPlayerPage: React.FC = () => {
       setIsLoading(true);
       try {
         const courseData = await getCourseByIdUseCase.execute(idCourse);
+
+        // Enrich modules with lessons
+        try {
+          const modulesData = await getModulesUseCase.execute(idCourse);
+          if (modulesData && modulesData.length > 0) {
+            const modulesWithLessons = await Promise.all(
+              modulesData.map(async (mod) => {
+                try {
+                  const modLessons = await getLessonsUseCase.execute(mod.id);
+                  modLessons.sort((a, b) => a.order - b.order);
+                  return {
+                    ...mod,
+                    lessons: modLessons || [],
+                  };
+                } catch {
+                  return {
+                    ...mod,
+                    lessons: mod.lessons || [],
+                  };
+                }
+              })
+            );
+            courseData.modules = modulesWithLessons;
+          }
+        } catch (modErr) {
+          console.warn('Could not fetch modules/lessons in player', modErr);
+        }
+
         setCourse(courseData);
 
         // Find active lesson or default to first lesson
