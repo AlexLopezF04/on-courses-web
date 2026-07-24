@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { Layout } from '../components/Layout';
 import { Button } from '../components/Button';
 import { useCourseManagement } from '../hooks/useCourseManagement';
@@ -16,10 +16,13 @@ export const CourseManagementPage: React.FC = () => {
 
   const {
     courses,
+    rawCourses,
     categories,
     isLoading,
     search,
     setSearch,
+    statusFilter,
+    setStatusFilter,
     page,
     setPage,
     totalCourses,
@@ -47,8 +50,24 @@ export const CourseManagementPage: React.FC = () => {
     handleOpenEdit,
     handleTitleChange,
     handleSubmit,
+    handleToggleActive,
     handleDelete,
   } = useCourseManagement();
+
+  const location = useLocation();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const statusParam = params.get('status');
+    if (statusParam === 'inactive') {
+      setStatusFilter('inactive');
+    } else if (statusParam === 'active') {
+      setStatusFilter('active');
+    }
+  }, [location.search, setStatusFilter]);
+
+  const activeCount = rawCourses.filter((c) => c.is_active).length;
+  const inactiveCount = rawCourses.filter((c) => !c.is_active).length;
 
   return (
     <Layout>
@@ -66,7 +85,7 @@ export const CourseManagementPage: React.FC = () => {
             Gestión de Cursos
           </h1>
           <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">
-            Administra el catálogo completo de cursos y rutas formativas.
+            Administra el catálogo completo de cursos y cambia su estado de publicación con un clic.
           </p>
         </div>
 
@@ -77,24 +96,65 @@ export const CourseManagementPage: React.FC = () => {
       </div>
 
       {successMessage && (
-        <div className="flex items-center gap-2.5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-250/30 p-4 text-sm text-emerald-800 dark:text-emerald-450 mb-6">
-          <CheckCircle className="h-5 w-5 text-emerald-600 dark:text-emerald-455" />
+        <div className="flex items-center gap-2.5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/20 border-2 border-slate-950 p-4 text-xs font-black text-emerald-800 dark:text-emerald-300 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00b835] mb-6">
+          <CheckCircle className="h-5 w-5 text-[#00cc33] shrink-0" />
           <span>{successMessage}</span>
         </div>
       )}
 
       {/* Main Container */}
       <div className="border-2 border-slate-950 bg-white dark:bg-slate-900 p-6 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_#00b835] overflow-hidden">
-        {/* Search bar */}
-        <div className="relative max-w-md mb-6">
-          <Search className="absolute left-3.5 top-3 h-4 w-4 text-slate-400" />
-          <input
-            type="text"
-            placeholder="Buscar por título de curso..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full border-2 border-slate-950 bg-white dark:bg-slate-950 text-slate-950 dark:text-white pl-10 pr-4 py-2 text-xs font-medium shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] outline-none focus:border-brand-500"
-          />
+        
+        {/* Controls Bar: Search & Status Filter Tabs */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+          {/* Search bar */}
+          <div className="relative max-w-md w-full">
+            <Search className="absolute left-3.5 top-3 h-4 w-4 text-slate-400" />
+            <input
+              type="text"
+              placeholder="Buscar por título de curso..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full border-2 border-slate-950 bg-white dark:bg-slate-950 text-slate-950 dark:text-white pl-10 pr-4 py-2 text-xs font-medium shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] outline-none focus:border-[#00cc33]"
+            />
+          </div>
+
+          {/* Status Filter Tabs */}
+          <div className="flex border-2 border-slate-950 bg-slate-100 dark:bg-slate-950 p-0.5 shrink-0">
+            <button
+              type="button"
+              onClick={() => setStatusFilter('all')}
+              className={`px-3 py-1.5 text-xs font-black uppercase transition-all cursor-pointer ${
+                statusFilter === 'all'
+                  ? 'bg-slate-950 text-white dark:bg-[#00cc33] dark:text-slate-950'
+                  : 'text-slate-700 dark:text-slate-300 hover:bg-slate-200'
+              }`}
+            >
+              Todos ({rawCourses.length})
+            </button>
+            <button
+              type="button"
+              onClick={() => setStatusFilter('active')}
+              className={`px-3 py-1.5 text-xs font-black uppercase transition-all cursor-pointer ${
+                statusFilter === 'active'
+                  ? 'bg-[#00cc33] text-slate-950 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]'
+                  : 'text-slate-700 dark:text-slate-300 hover:bg-slate-200'
+              }`}
+            >
+              🟢 Activos ({activeCount})
+            </button>
+            <button
+              type="button"
+              onClick={() => setStatusFilter('inactive')}
+              className={`px-3 py-1.5 text-xs font-black uppercase transition-all cursor-pointer ${
+                statusFilter === 'inactive'
+                  ? 'bg-amber-400 text-slate-950 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]'
+                  : 'text-slate-700 dark:text-slate-300 hover:bg-slate-200'
+              }`}
+            >
+              🟡 Inactivos ({inactiveCount})
+            </button>
+          </div>
         </div>
 
         {isLoading ? (
@@ -105,6 +165,7 @@ export const CourseManagementPage: React.FC = () => {
               courses={courses}
               isAdmin={isAdmin}
               onEdit={handleOpenEdit}
+              onToggleStatus={handleToggleActive}
               onDelete={(id) => {
                 setDeleteTargetId(id);
                 setConfirmOpen(true);
