@@ -40,11 +40,12 @@ export const LoginPage: React.FC = () => {
       <div className="flex flex-1 items-center justify-center py-10 px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-5xl border-2 border-slate-950 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_#00b835] bg-white dark:bg-white transition-all duration-200 overflow-hidden">
           {/* OS Window Chrome Header Bar */}
-          <div className="flex items-center justify-end px-4 py-1.5 bg-slate-100 dark:bg-slate-100 border-b-2 border-slate-950">
+          <div className="flex items-center justify-between px-4 py-1.5 bg-slate-100 dark:bg-slate-100 border-b-2 border-slate-950">
+            <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-700 font-mono">ONCOURSES.APP</span>
             <div className="flex items-center gap-1.5">
-              <span className="w-4 h-4 flex items-center justify-center border border-slate-950 text-[10px] font-bold text-slate-800 dark:text-slate-800 bg-white dark:bg-white select-none">_</span>
-              <span className="w-4 h-4 flex items-center justify-center border border-slate-950 text-[10px] font-bold text-slate-800 dark:text-slate-800 bg-white dark:bg-white select-none">+</span>
-              <span className="w-4 h-4 flex items-center justify-center border border-slate-950 text-[10px] font-bold text-slate-800 dark:text-slate-800 bg-white dark:bg-white select-none">X</span>
+              <span className="w-5 h-5 flex items-center justify-center border-2 border-slate-950 text-[11px] font-black text-slate-950 dark:text-slate-950 bg-white dark:bg-white select-none shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">_</span>
+              <span className="w-5 h-5 flex items-center justify-center border-2 border-slate-950 text-[11px] font-black text-slate-950 dark:text-slate-950 bg-white dark:bg-white select-none shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">+</span>
+              <span className="w-5 h-5 flex items-center justify-center border-2 border-slate-950 text-[11px] font-black text-slate-950 dark:text-slate-950 bg-white dark:bg-white select-none shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">X</span>
             </div>
           </div>
 
