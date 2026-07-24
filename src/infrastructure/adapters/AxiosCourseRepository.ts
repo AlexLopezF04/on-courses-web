@@ -3,23 +3,26 @@ import { Course } from '@domain/entities/Course';
 import { PaginatedResult } from '@domain/entities/PaginatedResult';
 import { axiosClient } from '../http/axios-client';
 import { parseApiError } from '../http/parse-api-error';
+import { enrichCourseData } from '../data/CourseSeedData';
 
 export class AxiosCourseRepository implements ICourseRepository {
   async getCourses(filters?: any): Promise<PaginatedResult<Course>> {
     try {
       const response = await axiosClient.get('/courses/', { params: filters });
       if (response.data && Array.isArray(response.data.results)) {
+        const enrichedResults = response.data.results.map(enrichCourseData);
         return {
-          results: response.data.results,
-          count: response.data.count || response.data.results.length,
+          results: enrichedResults,
+          count: response.data.count || enrichedResults.length,
           next: response.data.next || null,
           previous: response.data.previous || null,
         };
       }
       if (Array.isArray(response.data)) {
+        const enrichedResults = response.data.map(enrichCourseData);
         return {
-          results: response.data,
-          count: response.data.length,
+          results: enrichedResults,
+          count: enrichedResults.length,
           next: null,
           previous: null,
         };
@@ -33,7 +36,7 @@ export class AxiosCourseRepository implements ICourseRepository {
   async getCourseById(id: number): Promise<Course> {
     try {
       const response = await axiosClient.get(`/courses/${id}/`);
-      return response.data;
+      return enrichCourseData(response.data);
     } catch (error) {
       throw parseApiError(error);
     }

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
+
 import { Layout } from '../components/Layout';
 import { Button } from '../components/Button';
 import { Input } from '../components/Input';
@@ -7,11 +8,13 @@ import { getCoursesUseCase } from '@infrastructure/factories/CourseFactory';
 import { getCategoriesUseCase } from '@infrastructure/factories/CategoryFactory';
 import { Course } from '@domain/entities/Course';
 import { Category } from '@domain/entities/Category';
-import { BookOpen, Search, SlidersHorizontal, Users } from 'lucide-react';
+import { BookOpen, Search, SlidersHorizontal } from 'lucide-react';
 import { Pagination } from '../components/Pagination';
 import { CatalogSkeleton } from '../components/Skeletons';
+import { CourseCard } from '../components/CourseCard';
 
 export const CatalogPage: React.FC = () => {
+  const [searchParams] = useSearchParams();
   const [courses, setCourses] = useState<Course[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -24,6 +27,16 @@ export const CatalogPage: React.FC = () => {
   // Pagination State
   const [page, setPage] = useState(1);
   const [totalCourses, setTotalCourses] = useState(0);
+
+  useEffect(() => {
+    // Read URL search params
+    const qSearch = searchParams.get('search');
+    if (qSearch !== null) setSearch(qSearch);
+    const qCat = searchParams.get('category');
+    if (qCat !== null) setSelectedCategory(Number(qCat));
+    const qMaxPrice = searchParams.get('max_price');
+    if (qMaxPrice !== null) setMaxPrice(qMaxPrice);
+  }, [searchParams]);
 
   useEffect(() => {
     // Load categories once
@@ -84,10 +97,10 @@ export const CatalogPage: React.FC = () => {
     <Layout>
       <div className="mb-10">
         <h1 className="font-display text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mb-2">
-          Catálogo de Cursos
+          Cursos
         </h1>
-        <p className="text-slate-500 dark:text-slate-400">
-          Encuentra el curso perfecto para tus metas profesionales
+        <p className="text-slate-505 dark:text-slate-400">
+          Aprende programación desde cero y mejora tus habilidades
         </p>
       </div>
 
@@ -189,55 +202,7 @@ export const CatalogPage: React.FC = () => {
                 <>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {courses.map((course) => (
-                      <div
-                        key={course.id}
-                        className="group flex flex-col rounded-2xl border border-slate-200 bg-white shadow-sm hover:shadow-md transition-all duration-300 dark:border-slate-800 dark:bg-slate-900 overflow-hidden"
-                      >
-                        <div className="relative aspect-video bg-slate-100 dark:bg-slate-950 overflow-hidden">
-                          {course.cover_image ? (
-                            <img
-                              src={course.cover_image}
-                              alt={course.title}
-                              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                            />
-                          ) : (
-                            <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-brand-100 to-violet-100 text-brand-600 dark:from-brand-950 dark:to-violet-950">
-                              <BookOpen className="h-8 w-8" />
-                            </div>
-                          )}
-                          <span className="absolute top-3 left-3 rounded-lg bg-white/90 backdrop-blur px-2.5 py-1 text-xs font-bold text-slate-900 shadow">
-                            {course.category_name || 'Desarrollo'}
-                          </span>
-                        </div>
-
-                        <div className="flex flex-1 flex-col p-6">
-                          <h3 className="font-display text-lg font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors line-clamp-1">
-                            {course.title}
-                          </h3>
-                          <p className="text-slate-500 dark:text-slate-400 text-sm mt-2 line-clamp-2">
-                            {course.description || 'Sin descripción disponible.'}
-                          </p>
-                          
-                          <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-4 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400">
-                            <div className="flex items-center gap-1">
-                              <Users className="h-4 w-4 text-brand-500" />
-                              <span>{course.modules_count || 0} Módulos</span>
-                            </div>
-                            <span>Prof: {course.professor_name}</span>
-                          </div>
-                        </div>
-                        
-                        <div className="bg-slate-50 px-6 py-4 border-t border-slate-100 dark:bg-slate-900/50 dark:border-slate-800 flex justify-between items-center">
-                          <span className="text-lg font-bold text-brand-600 dark:text-brand-400">
-                            {parseFloat(course.price) === 0 ? 'Gratis' : `$${course.price}`}
-                          </span>
-                          <Link to={`/courses/${course.id}`}>
-                            <Button variant="outline" size="sm">
-                              Ver Detalles
-                            </Button>
-                          </Link>
-                        </div>
-                      </div>
+                      <CourseCard key={course.id} course={course} />
                     ))}
                   </div>
                   <Pagination

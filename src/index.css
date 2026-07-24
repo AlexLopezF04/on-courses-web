@@ -5,17 +5,19 @@
 @theme {
   --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
   --font-display: 'Outfit', system-ui, sans-serif;
-  
-  --color-brand-50: #f5f3ff;
-  --color-brand-100: #ede9fe;
-  --color-brand-200: #ddd6fe;
-  --color-brand-300: #c4b5fd;
-  --color-brand-400: #a78bfa;
-  --color-brand-500: #8b5cf6;
-  --color-brand-600: #7c3aed;
-  --color-brand-700: #6d28d9;
-  --color-brand-800: #5b21b6;
-  --color-brand-900: #4c1d95;
+
+  /* ── Matrix Phosphor Green ── */
+  --color-brand-50:  #f0fff4;
+  --color-brand-100: #c2ffd4;
+  --color-brand-200: #7bffa8;
+  --color-brand-300: #39ff7c;
+  --color-brand-400: #00b835;   /* Classic Matrix neon */
+  --color-brand-500: #00cc33;
+  --color-brand-600: #009926;
+  --color-brand-700: #007a1f;
+  --color-brand-800: #005c17;
+  --color-brand-900: #003d10;
+  --color-brand-950: #001f08;
 }
 
 /* Configuración de Dark Mode para Tailwind v4 basado en clase .dark */
@@ -70,3 +72,25 @@ body {
 .dark ::-webkit-scrollbar-thumb:hover {
   background: #4b5563;
 }
+
+/* ── Animated moving grid (hero background) ── */
+@keyframes grid-move {
+  0%   { background-position: 0 0, 0 0; }
+  100% { background-position: 40px 40px, 40px 40px; }
+}
+
+.animate-grid {
+  animation: grid-move 5s linear infinite;
+}
+
+/* ── Mockup progress bar fill animation ── */
+@keyframes progress-fill {
+  0%   { width: 10%; }
+  50%  { width: 95%; }
+  100% { width: 10%; }
+}
+
+.animate-progress-1 { animation: progress-fill 4s ease-in-out infinite; }
+.animate-progress-2 { animation: progress-fill 3s ease-in-out infinite; }
+.animate-progress-3 { animation: progress-fill 5s ease-in-out infinite; }
+.animate-progress-4 { animation: progress-fill 3.5s ease-in-out infinite; }

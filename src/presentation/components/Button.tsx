@@ -20,22 +20,21 @@ export const Button: React.FC<ButtonProps> = ({
     <button
       disabled={disabled || isLoading}
       className={cn(
-        'inline-flex items-center justify-center font-medium rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand-500/50 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none disabled:active:scale-100',
+        'inline-flex items-center justify-center font-extrabold tracking-wider uppercase border-2 border-slate-950 transition-all cursor-pointer focus:outline-none disabled:opacity-50 disabled:pointer-events-none active:translate-x-0.5 active:translate-y-0.5',
         {
-          'bg-gradient-to-r from-brand-600 to-violet-600 hover:from-brand-700 hover:to-violet-700 text-white shadow-md shadow-brand-500/10':
-            variant === 'primary',
-          'bg-slate-100 hover:bg-slate-200 text-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-100':
-            variant === 'secondary',
-          'bg-rose-500 hover:bg-rose-600 text-white shadow-md shadow-rose-500/10':
+          // Solid Matrix Green body fill & constant L-shadow in BOTH light and dark mode!
+          'bg-[#00cc33] hover:bg-[#00ff41] text-slate-950 shadow-[3px_3px_0px_0px_#00b835]':
+            variant === 'primary' || variant === 'secondary' || variant === 'outline',
+          // Danger: Red Alert in BOTH light and dark mode
+          'bg-rose-500 hover:bg-rose-600 text-white shadow-[3px_3px_0px_0px_#991b1b]':
             variant === 'danger',
-          'border border-slate-300 hover:bg-slate-50 text-slate-700 dark:border-slate-700 dark:hover:bg-slate-800 dark:text-slate-200':
-            variant === 'outline',
-          'hover:bg-slate-100 text-slate-600 dark:hover:bg-slate-800 dark:text-slate-300':
+          // Ghost: Soft Matrix Green with 2px shadow
+          'bg-[#00cc33] hover:bg-[#00ff41] text-slate-950 shadow-[2px_2px_0px_0px_#00b835]':
             variant === 'ghost',
-          
-          'px-3 py-1.5 text-sm': size === 'sm',
-          'px-5 py-2.5 text-base': size === 'md',
-          'px-7 py-3 text-lg': size === 'lg',
+
+          'px-3 py-1.5 text-xs': size === 'sm',
+          'px-5 py-2.5 text-xs sm:text-sm': size === 'md',
+          'px-7 py-3 text-sm sm:text-base': size === 'lg',
         },
         className
       )}

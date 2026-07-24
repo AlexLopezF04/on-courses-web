@@ -15,6 +15,9 @@ export const ProfilePage: React.FC = () => {
     setFirstName,
     lastName,
     setLastName,
+    avatar,
+    setAvatar,
+    handleAvatarFile,
     phone,
     setPhone,
     biography,
@@ -94,6 +97,7 @@ export const ProfilePage: React.FC = () => {
             isProfessorOrAdmin={isProfessorOrAdmin}
             firstName={firstName}
             lastName={lastName}
+            avatar={avatar}
             phone={phone}
             biography={biography}
             country={country}
@@ -104,6 +108,8 @@ export const ProfilePage: React.FC = () => {
             loading={isLoading}
             setFirstName={setFirstName}
             setLastName={setLastName}
+            setAvatar={setAvatar}
+            onAvatarFileChange={handleAvatarFile}
             setPhone={setPhone}
             setBiography={setBiography}
             setCountry={setCountry}
