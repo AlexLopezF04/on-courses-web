@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCartStore } from '../../store/useCartStore';
 import { useAuthStore } from '../../store/useAuthStore';
+import { enrollInCourseUseCase } from '@infrastructure/factories/EnrollmentFactory';
+import { Course } from '@domain/entities/Course';
 import { Button } from '../Button';
-import { ShoppingBag, Trash2, Tag, CheckCircle2, ArrowRight, X, ShieldCheck } from 'lucide-react';
+import { ShoppingBag, Trash2, Tag, X, ShieldCheck } from 'lucide-react';
+import { PaymentCheckoutModal, BillingDetails } from './PaymentCheckoutModal';
+import { InvoiceModal } from './InvoiceModal';
 
 export const CartDrawer: React.FC = () => {
   const {
@@ -25,10 +29,16 @@ export const CartDrawer: React.FC = () => {
 
   const [couponCode, setCouponCode] = useState('');
   const [couponFeedback, setCouponFeedback] = useState<{ success: boolean; message: string } | null>(null);
-  const [isCheckingOut, setIsCheckingOut] = useState(false);
-  const [checkoutSuccess, setCheckoutSuccess] = useState(false);
 
-  if (!isOpen) return null;
+  // Modals state
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [showInvoiceModal, setShowInvoiceModal] = useState(false);
+  const [currentBilling, setCurrentBilling] = useState<BillingDetails | null>(null);
+  const [currentPaymentMethod, setCurrentPaymentMethod] = useState('card');
+  const [invoiceNumber, setInvoiceNumber] = useState('');
+  const [purchasedCourses, setPurchasedCourses] = useState<Course[]>([]);
+
+  if (!isOpen && !showPaymentModal && !showInvoiceModal) return null;
 
   const totalRaw = getTotalPrice();
   const totalFinal = getDiscountedTotal();
@@ -43,23 +53,74 @@ export const CartDrawer: React.FC = () => {
     }
   };
 
-  const handleCheckout = () => {
+  const handleOpenCheckoutModal = () => {
     if (!isAuthenticated) {
       closeCart();
       navigate('/login', { state: { from: '/cart' } });
       return;
     }
-
-    setIsCheckingOut(true);
-    setTimeout(() => {
-      setIsCheckingOut(false);
-      setCheckoutSuccess(true);
-    }, 1200);
+    setShowPaymentModal(true);
   };
 
-  const handleFinishCheckout = () => {
+  const handleCompleteCheckout = async (billing: BillingDetails, paymentMethod: string) => {
+    if (!user) return;
+
+    const coursesToEnroll = [...items];
+    const newEnrollments: any[] = [];
+
+    // Execute Enrollment Use Case for each course
+    for (const course of coursesToEnroll) {
+      try {
+        await enrollInCourseUseCase.execute(course.id);
+      } catch (err) {
+        console.warn(`API enrollment for course ${course.id} failed, relying on local cache`, err);
+      }
+
+      newEnrollments.push({
+        id: Date.now() + Math.floor(Math.random() * 1000),
+        student: user.id,
+        course: course.id,
+        course_title: course.title,
+        enrolled_at: new Date().toISOString(),
+        total_progress: '0.00',
+        course_data: course,
+      });
+    }
+
+    // Save enrollments in localStorage cache for current user
+    try {
+      const userKey = user.username?.toLowerCase() || String(user.id);
+      const existingCache = JSON.parse(localStorage.getItem('oncourses_user_enrollments') || '{}');
+      const userEnrollments = existingCache[userKey] || [];
+      
+      const merged = [...userEnrollments];
+      for (const newEnr of newEnrollments) {
+        if (!merged.some((e: any) => e.course === newEnr.course)) {
+          merged.push(newEnr);
+        }
+      }
+
+      existingCache[userKey] = merged;
+      localStorage.setItem('oncourses_user_enrollments', JSON.stringify(existingCache));
+    } catch (storageErr) {
+      console.warn('Could not save local enrollment cache', storageErr);
+    }
+
+    // Setup Invoice details
+    const randomFac = 'FAC-2026-' + Math.floor(10000 + Math.random() * 90000);
+    setInvoiceNumber(randomFac);
+    setPurchasedCourses(coursesToEnroll);
+    setCurrentBilling(billing);
+    setCurrentPaymentMethod(paymentMethod);
+
+    // Clear cart and switch to Invoice Modal
     clearCart();
-    setCheckoutSuccess(false);
+    setShowPaymentModal(false);
+    setShowInvoiceModal(true);
+  };
+
+  const handleGoToMyCourses = () => {
+    setShowInvoiceModal(false);
     closeCart();
     navigate(user?.role === 'admin' || user?.role === 'professor' ? '/admin' : '/dashboard');
   };
@@ -85,27 +146,8 @@ export const CartDrawer: React.FC = () => {
           </div>
         </div>
 
-        {/* Checkout Success Screen */}
-        {checkoutSuccess ? (
-          <div className="flex-1 flex flex-col items-center justify-center p-8 text-center animate-fade-in">
-            <div className="w-16 h-16 bg-[#00cc33] text-slate-950 border-2 border-slate-950 flex items-center justify-center mb-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-              <CheckCircle2 className="h-10 w-10 stroke-[2.5]" />
-            </div>
-            <h3 className="font-display text-2xl font-black text-slate-950 dark:text-white mb-2">
-              ¡Inscripción Exitosa! 🎉
-            </h3>
-            <p className="text-xs font-semibold text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
-              Te has inscrito correctamente a tus nuevos cursos. Ya están disponibles en tu Campus Estudiantil.
-            </p>
-            <Button onClick={handleFinishCheckout} className="w-full flex items-center justify-center gap-2">
-              <span>Ir a mis Cursos</span>
-              <ArrowRight className="h-4 w-4" />
-            </Button>
-          </div>
-        ) : (
-          <>
-            {/* Cart Items List */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-3">
+        {/* Cart Items List */}
+        <div className="flex-1 overflow-y-auto p-4 space-y-3">
               {items.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-center p-6 my-auto">
                   <div className="w-16 h-16 bg-emerald-100 dark:bg-emerald-950/40 border-2 border-slate-950 flex items-center justify-center mb-4 text-emerald-600 dark:text-emerald-400">
@@ -242,16 +284,43 @@ export const CartDrawer: React.FC = () => {
 
                 {/* Checkout Button */}
                 <Button
-                  onClick={handleCheckout}
-                  isLoading={isCheckingOut}
+                  onClick={handleOpenCheckoutModal}
                   className="w-full flex items-center justify-center gap-2 py-3"
                 >
                   <ShieldCheck className="h-4 w-4" />
-                  <span>{totalFinal === 0 ? 'Inscribirme Gratis' : 'Completar Compra'}</span>
+                  <span>{totalFinal === 0 ? 'Inscribirme Gratis' : 'Completar Compra & Facturar'}</span>
                 </Button>
               </div>
             )}
-          </>
+
+        {/* Checkout & Payment Modal */}
+        <PaymentCheckoutModal
+          isOpen={showPaymentModal}
+          onClose={() => setShowPaymentModal(false)}
+          courses={items}
+          totalRaw={totalRaw}
+          totalFinal={totalFinal}
+          discountAmount={discountAmount}
+          appliedCoupon={appliedCoupon}
+          discountPercent={discountPercent}
+          onCompleteCheckout={handleCompleteCheckout}
+        />
+
+        {/* Invoice & Receipt Modal */}
+        {currentBilling && (
+          <InvoiceModal
+            isOpen={showInvoiceModal}
+            onClose={() => setShowInvoiceModal(false)}
+            courses={purchasedCourses}
+            billing={currentBilling}
+            paymentMethod={currentPaymentMethod}
+            totalRaw={totalRaw}
+            totalFinal={totalFinal}
+            discountAmount={discountAmount}
+            invoiceNumber={invoiceNumber}
+            invoiceDate={new Date().toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}
+            onGoToCourses={handleGoToMyCourses}
+          />
         )}
       </div>
     </div>
