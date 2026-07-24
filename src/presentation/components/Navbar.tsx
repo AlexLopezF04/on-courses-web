@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore';
 import { useThemeStore } from '../store/useThemeStore';
 import { useCartStore } from '../store/useCartStore';
-import { Sun, Moon, User, LogOut, Menu, X, BookOpen, Compass, Award, Info, ShoppingBag } from 'lucide-react';
+import { Sun, Moon, LogOut, Menu, X, BookOpen, Compass, Award, Info, ShoppingBag } from 'lucide-react';
 import { Button } from './Button';
 import { Logo } from './Logo';
 import { PricingModal } from './FooterModals';
@@ -84,9 +84,19 @@ export const Navbar: React.FC = () => {
                 <div className="flex items-center gap-3">
                   <Link
                     to="/profile"
-                    className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-700 hover:text-brand-600 dark:text-slate-200 dark:hover:text-brand-400 mr-1"
+                    className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-700 hover:text-brand-600 dark:text-slate-200 dark:hover:text-brand-400 mr-1"
                   >
-                    <User className="h-4 w-4" />
+                    {user?.avatar ? (
+                      <img
+                        src={user.avatar}
+                        alt={user.username}
+                        className="h-7 w-7 rounded-full object-cover border-2 border-slate-950 dark:border-slate-300 shadow-[1.5px_1.5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[1.5px_1.5px_0px_0px_#00b835] shrink-0"
+                      />
+                    ) : (
+                      <div className="h-7 w-7 rounded-full bg-[#00cc33] text-slate-950 border-2 border-slate-950 dark:border-slate-300 font-black text-xs flex items-center justify-center shrink-0 uppercase shadow-[1.5px_1.5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[1.5px_1.5px_0px_0px_#00b835]">
+                        {(user?.first_name?.charAt(0) || user?.username?.charAt(0) || 'U')}
+                      </div>
+                    )}
                     <span>Mi Perfil</span>
                   </Link>
                   <Link to={user?.role === 'admin' || user?.role === 'professor' ? '/admin' : '/dashboard'}>
@@ -169,9 +179,19 @@ export const Navbar: React.FC = () => {
 
           {isAuthenticated ? (
             <div className="flex flex-col gap-3">
-              <div className="flex items-center gap-2 px-2 text-sm font-semibold text-slate-700 dark:text-slate-300">
-                <User className="h-4 w-4 text-brand-500" />
-                <span>{user?.username}</span>
+              <div className="flex items-center gap-2.5 px-2 text-sm font-semibold text-slate-700 dark:text-slate-300">
+                {user?.avatar ? (
+                  <img
+                    src={user.avatar}
+                    alt={user.username}
+                    className="h-7 w-7 rounded-full object-cover border-2 border-slate-950 dark:border-slate-300 shadow-sm shrink-0"
+                  />
+                ) : (
+                  <div className="h-7 w-7 rounded-full bg-[#00cc33] text-slate-950 border-2 border-slate-950 dark:border-slate-300 font-black text-xs flex items-center justify-center shrink-0 uppercase">
+                    {(user?.first_name?.charAt(0) || user?.username?.charAt(0) || 'U')}
+                  </div>
+                )}
+                <span>{user?.first_name ? `${user.first_name} ${user.last_name}` : user?.username}</span>
                 <span className="text-xs font-normal text-slate-500">({user?.role})</span>
               </div>
               <Link
