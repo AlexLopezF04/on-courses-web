@@ -81,7 +81,24 @@ export const Navbar: React.FC = () => {
               </button>
 
               {isAuthenticated ? (
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2.5">
+                  {/* Role Identification Badge */}
+                  {user?.role === 'admin' && (
+                    <span className="inline-flex items-center gap-1 bg-rose-500 text-white font-black text-[10px] uppercase tracking-wider px-2 py-0.5 border-2 border-slate-950 shadow-[1.5px_1.5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[1.5px_1.5px_0px_0px_#00b835] shrink-0" title="Rol: Administrador">
+                      👑 ADMIN
+                    </span>
+                  )}
+                  {user?.role === 'professor' && (
+                    <span className="inline-flex items-center gap-1 bg-purple-500 text-white font-black text-[10px] uppercase tracking-wider px-2 py-0.5 border-2 border-slate-950 shadow-[1.5px_1.5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[1.5px_1.5px_0px_0px_#00b835] shrink-0" title="Rol: Docente / Profesor">
+                      🎓 DOCENTE
+                    </span>
+                  )}
+                  {user?.role === 'student' && (
+                    <span className="inline-flex items-center gap-1 bg-[#00cc33] text-slate-950 font-black text-[10px] uppercase tracking-wider px-2 py-0.5 border-2 border-slate-950 shadow-[1.5px_1.5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[1.5px_1.5px_0px_0px_#00b835] shrink-0" title="Rol: Estudiante">
+                      ⚡ ALUMNO
+                    </span>
+                  )}
+
                   <Link
                     to="/profile"
                     className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-700 hover:text-brand-600 dark:text-slate-200 dark:hover:text-brand-400 mr-1"
@@ -174,25 +191,40 @@ export const Navbar: React.FC = () => {
               <span>Recursos Gratis</span>
             </Link>
 
-
           <hr className="border-slate-200 dark:border-slate-800" />
 
           {isAuthenticated ? (
             <div className="flex flex-col gap-3">
-              <div className="flex items-center gap-2.5 px-2 text-sm font-semibold text-slate-700 dark:text-slate-300">
-                {user?.avatar ? (
-                  <img
-                    src={user.avatar}
-                    alt={user.username}
-                    className="h-7 w-7 rounded-full object-cover border-2 border-slate-950 dark:border-slate-300 shadow-sm shrink-0"
-                  />
-                ) : (
-                  <div className="h-7 w-7 rounded-full bg-[#00cc33] text-slate-950 border-2 border-slate-950 dark:border-slate-300 font-black text-xs flex items-center justify-center shrink-0 uppercase">
-                    {(user?.first_name?.charAt(0) || user?.username?.charAt(0) || 'U')}
-                  </div>
+              <div className="flex items-center justify-between px-2 text-sm font-semibold text-slate-700 dark:text-slate-300">
+                <div className="flex items-center gap-2.5">
+                  {user?.avatar ? (
+                    <img
+                      src={user.avatar}
+                      alt={user.username}
+                      className="h-7 w-7 rounded-full object-cover border-2 border-slate-950 dark:border-slate-300 shadow-sm shrink-0"
+                    />
+                  ) : (
+                    <div className="h-7 w-7 rounded-full bg-[#00cc33] text-slate-950 border-2 border-slate-950 dark:border-slate-300 font-black text-xs flex items-center justify-center shrink-0 uppercase">
+                      {(user?.first_name?.charAt(0) || user?.username?.charAt(0) || 'U')}
+                    </div>
+                  )}
+                  <span>{user?.first_name ? `${user.first_name} ${user.last_name}` : user?.username}</span>
+                </div>
+                {user?.role === 'admin' && (
+                  <span className="bg-rose-500 text-white font-black text-[10px] uppercase px-2 py-0.5 border border-slate-950 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">
+                    👑 ADMIN
+                  </span>
                 )}
-                <span>{user?.first_name ? `${user.first_name} ${user.last_name}` : user?.username}</span>
-                <span className="text-xs font-normal text-slate-500">({user?.role})</span>
+                {user?.role === 'professor' && (
+                  <span className="bg-purple-500 text-white font-black text-[10px] uppercase px-2 py-0.5 border border-slate-950 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">
+                    🎓 DOCENTE
+                  </span>
+                )}
+                {user?.role === 'student' && (
+                  <span className="bg-[#00cc33] text-slate-950 font-black text-[10px] uppercase px-2 py-0.5 border border-slate-950 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">
+                    ⚡ ALUMNO
+                  </span>
+                )}
               </div>
               <Link
                 to="/profile"
