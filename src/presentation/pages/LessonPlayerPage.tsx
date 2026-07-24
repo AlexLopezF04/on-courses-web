@@ -34,7 +34,7 @@ export const LessonPlayerPage: React.FC = () => {
         const courseData = await getCourseByIdUseCase.execute(idCourse);
         setCourse(courseData);
 
-        // Find active lesson
+        // Find active lesson or default to first lesson
         let foundLesson: Lesson | null = null;
         courseData.modules?.forEach((mod) => {
           mod.lessons?.forEach((les) => {
@@ -43,18 +43,27 @@ export const LessonPlayerPage: React.FC = () => {
             }
           });
         });
+
+        if (!foundLesson && courseData.modules?.[0]?.lessons?.[0]) {
+          foundLesson = courseData.modules[0].lessons[0];
+        }
         setCurrentLesson(foundLesson);
 
         // Load lesson progress for the student
-        const progressList = await getLessonProgressUseCase.execute(idCourse);
-        
-        const completedMap: Record<number, boolean> = {};
-        progressList.forEach((prog: any) => {
-          if (prog.is_completed) {
-            completedMap[prog.lesson] = true;
+        try {
+          const progressList = await getLessonProgressUseCase.execute(idCourse);
+          const completedMap: Record<number, boolean> = {};
+          if (Array.isArray(progressList)) {
+            progressList.forEach((prog: any) => {
+              if (prog.is_completed) {
+                completedMap[prog.lesson] = true;
+              }
+            });
           }
-        });
-        setCompletedLessons(completedMap);
+          setCompletedLessons(completedMap);
+        } catch {
+          setCompletedLessons({});
+        }
       } catch (err) {
         console.error('Failed to load course detail or progress', err);
       } finally {

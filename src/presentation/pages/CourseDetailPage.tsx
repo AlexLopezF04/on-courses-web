@@ -38,8 +38,18 @@ export const CourseDetailPage: React.FC = () => {
         setCourse(courseData);
 
         if (isAuthenticated) {
-          const enrollments = await getEnrollmentsUseCase.execute({ course: courseId });
-          setIsEnrolled(enrollments.count > 0);
+          try {
+            const enrollments = await getEnrollmentsUseCase.execute({ course: courseId });
+            setIsEnrolled(
+              Boolean(
+                (enrollments && enrollments.count > 0) ||
+                (enrollments && Array.isArray(enrollments.results) && enrollments.results.length > 0)
+              )
+            );
+          } catch (enrollErr) {
+            console.warn('Could not check enrollment status, defaulting to false', enrollErr);
+            setIsEnrolled(false);
+          }
         }
       } catch (err: any) {
         console.error(err);
