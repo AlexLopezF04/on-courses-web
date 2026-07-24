@@ -95,7 +95,7 @@ export const Navbar: React.FC = () => {
                   )}
                   {user?.role === 'student' && (
                     <span className="inline-flex items-center gap-1 bg-[#00cc33] text-slate-950 font-black text-[10px] uppercase tracking-wider px-2 py-0.5 border-2 border-slate-950 shadow-[1.5px_1.5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[1.5px_1.5px_0px_0px_#00b835] shrink-0" title="Rol: Estudiante">
-                      ⚡ ALUMNO
+                      ⚡ ESTUDIANTE
                     </span>
                   )}
 
@@ -222,7 +222,7 @@ export const Navbar: React.FC = () => {
                 )}
                 {user?.role === 'student' && (
                   <span className="bg-[#00cc33] text-slate-950 font-black text-[10px] uppercase px-2 py-0.5 border border-slate-950 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">
-                    ⚡ ALUMNO
+                    ⚡ ESTUDIANTE
                   </span>
                 )}
               </div>

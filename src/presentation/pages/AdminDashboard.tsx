@@ -62,7 +62,7 @@ export const AdminDashboard: React.FC = () => {
           )}
           {user?.role === 'student' && (
             <span className="inline-flex items-center gap-1 bg-[#00cc33] text-slate-950 font-black text-xs uppercase tracking-wider px-2.5 py-0.5 border-2 border-slate-950 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_#00b835]">
-              ⚡ ROL: ESTUDIANTE
+              ⚡ ESTUDIANTE
             </span>
           )}
         </div>
