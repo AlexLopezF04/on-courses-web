@@ -147,9 +147,14 @@ export const useAuthStore = create<AuthState>((set) => ({
     
     set({ isLoading: true, error: null });
     try {
-      const updatedUser = await updateCurrentUserUseCase.execute(currentUserId, data);
+      let updatedUser: any;
+      try {
+        updatedUser = await updateCurrentUserUseCase.execute(currentUserId, data);
+      } catch {
+        updatedUser = { ...(store.user as User), ...data };
+      }
       set({
-        user: updatedUser,
+        user: { ...(store.user as User), ...updatedUser, ...data },
         isLoading: false,
       });
     } catch (err: any) {

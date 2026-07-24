@@ -6,6 +6,7 @@ interface ProfileEditFormProps {
   isProfessorOrAdmin: boolean;
   firstName: string;
   lastName: string;
+  avatar?: string;
   phone: string;
   biography: string;
   country: string;
@@ -16,6 +17,8 @@ interface ProfileEditFormProps {
   loading: boolean;
   setFirstName: (val: string) => void;
   setLastName: (val: string) => void;
+  setAvatar?: (val: string) => void;
+  onAvatarFileChange?: (file: File | null) => void;
   setPhone: (val: string) => void;
   setBiography: (val: string) => void;
   setCountry: (val: string) => void;
@@ -30,6 +33,7 @@ export const ProfileEditForm: React.FC<ProfileEditFormProps> = ({
   isProfessorOrAdmin,
   firstName,
   lastName,
+  avatar,
   phone,
   biography,
   country,
@@ -40,6 +44,7 @@ export const ProfileEditForm: React.FC<ProfileEditFormProps> = ({
   loading,
   setFirstName,
   setLastName,
+  onAvatarFileChange,
   setPhone,
   setBiography,
   setCountry,
@@ -50,8 +55,30 @@ export const ProfileEditForm: React.FC<ProfileEditFormProps> = ({
   onSubmit,
 }) => {
   return (
-    <form onSubmit={onSubmit} className="flex flex-col gap-6 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 rounded-3xl p-6 md:p-8">
-      <h3 className="font-display font-bold text-slate-900 dark:text-white text-lg">Editar Información Personal</h3>
+    <form onSubmit={onSubmit} className="flex flex-col gap-6 border-2 border-slate-950 bg-white dark:bg-slate-900 p-6 md:p-8 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[5px_5px_0px_0px_#00b835] text-slate-950 dark:text-white">
+      <h3 className="font-display font-extrabold text-slate-950 dark:text-white text-xl pb-3 border-b-2 border-slate-950">
+        Editar Perfil de Usuario
+      </h3>
+
+      {/* Avatar upload section */}
+      <div className="flex flex-col gap-2 p-4 bg-slate-50 dark:bg-slate-950 border-2 border-slate-950">
+        <label className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-slate-200">
+          Foto de Perfil (Subir imagen desde equipo)
+        </label>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => onAvatarFileChange?.(e.target.files?.[0] || null)}
+          disabled={loading}
+          className="w-full text-xs text-slate-700 dark:text-slate-300 file:mr-4 file:py-1.5 file:px-3 file:border-2 file:border-slate-950 file:text-xs file:font-extrabold file:bg-[#00cc33] file:text-slate-950 hover:file:bg-[#00ff41] file:cursor-pointer"
+        />
+        {avatar && (
+          <div className="flex items-center gap-3 mt-2">
+            <img src={avatar} alt="Preview" className="w-12 h-12 rounded-full object-cover border-2 border-slate-950" />
+            <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400">✓ Vista previa de foto cargada</span>
+          </div>
+        )}
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Input

@@ -35,22 +35,23 @@ export const CategoryFormModal: React.FC<CategoryFormModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="w-full max-w-lg rounded-3xl border border-slate-200 bg-white p-6 shadow-xl dark:border-slate-800 dark:bg-slate-900 animate-in zoom-in-95 duration-200">
-        <h2 className="font-display text-xl font-bold text-slate-900 dark:text-white mb-4">
-          {isEditing ? 'Editar Categoría' : 'Nueva Categoría'}
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="w-full max-w-lg border-2 border-slate-950 bg-white p-6 text-slate-950 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_#00b835] animate-in zoom-in-95 duration-200">
+        <h2 className="font-display text-xl font-black text-slate-950 mb-4 pb-2 border-b-2 border-slate-950 flex justify-between items-center">
+          <span>{isEditing ? 'Editar Categoría' : 'Nueva Categoría'}</span>
+          <span className="text-xs font-mono bg-brand-400 text-slate-950 px-2 py-0.5 border border-slate-950">FORM</span>
         </h2>
 
         {error && (
-          <div className="mb-4 flex items-start gap-2.5 rounded-2xl bg-rose-50 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900/50 p-4 text-sm text-rose-800 dark:text-rose-400">
-            <ShieldAlert className="h-5 w-5 shrink-0 text-rose-600 dark:text-rose-455" />
-            <span className="font-medium text-xs">{error}</span>
+          <div className="mb-4 flex items-start gap-2.5 bg-rose-50 border-2 border-rose-500 p-3 text-xs font-bold text-rose-900">
+            <ShieldAlert className="h-4 w-4 shrink-0 text-rose-600" />
+            <span>{error}</span>
           </div>
         )}
 
         <form onSubmit={onSubmit} className="flex flex-col gap-4">
           <Input
-            label="Nombre de la Categoría"
+            label="Nombre de la Categoría *"
             placeholder="Ej: Inteligencia Artificial, Frontend, Backend"
             value={name}
             onChange={(e) => onNameChange(e.target.value)}
@@ -59,7 +60,7 @@ export const CategoryFormModal: React.FC<CategoryFormModalProps> = ({
           />
 
           <Input
-            label="Slug de la Categoría"
+            label="Slug de la Categoría *"
             placeholder="ej: inteligencia-artificial"
             value={slug}
             onChange={(e) => onSlugChange(e.target.value)}
@@ -68,7 +69,7 @@ export const CategoryFormModal: React.FC<CategoryFormModalProps> = ({
           />
 
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+            <label className="text-xs font-extrabold uppercase tracking-wider text-slate-700">
               Descripción (Opcional)
             </label>
             <textarea
@@ -77,7 +78,7 @@ export const CategoryFormModal: React.FC<CategoryFormModalProps> = ({
               onChange={(e) => onDescriptionChange(e.target.value)}
               disabled={loading}
               rows={3}
-              className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-sm outline-none transition-all focus:border-brand-500 dark:border-slate-800 dark:bg-slate-950 dark:text-white dark:focus:border-brand-500 resize-none"
+              className="w-full border-2 border-slate-950 bg-white px-4 py-2.5 text-xs font-medium outline-none shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] focus:border-brand-500 resize-none"
             />
           </div>
 
@@ -85,12 +86,13 @@ export const CategoryFormModal: React.FC<CategoryFormModalProps> = ({
             <Button
               type="button"
               variant="outline"
+              size="sm"
               onClick={onClose}
               disabled={loading}
             >
               Cancelar
             </Button>
-            <Button type="submit" isLoading={loading}>
+            <Button type="submit" size="sm" isLoading={loading}>
               {isEditing ? 'Guardar Cambios' : 'Crear Categoría'}
             </Button>
           </div>

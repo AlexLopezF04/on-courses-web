@@ -48,10 +48,10 @@ export const CategoryManagementPage: React.FC = () => {
         <div>
           <Link
             to="/admin"
-            className="inline-flex items-center gap-1 text-xs font-semibold text-slate-400 hover:text-brand-500 mb-2"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 border-2 border-slate-950 bg-white dark:bg-slate-900 text-slate-950 dark:text-white font-extrabold text-xs uppercase tracking-wider shadow-[2.5px_2.5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2.5px_2.5px_0px_0px_#00b835] hover:bg-brand-400 hover:text-slate-950 dark:hover:bg-brand-400 dark:hover:text-slate-950 transition-all cursor-pointer mb-3"
           >
-            <ArrowLeft className="h-3 w-3" />
-            Volver al Panel de Control
+            <ArrowLeft className="h-4 w-4" />
+            <span>Volver al Panel de Control</span>
           </Link>
           <h1 className="font-display text-3xl font-extrabold text-slate-900 dark:text-white">
             Gestión de Categorías
@@ -76,18 +76,18 @@ export const CategoryManagementPage: React.FC = () => {
 
       {/* Search Bar */}
       <div className="mb-6 max-w-md relative">
-        <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-455" />
+        <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
         <input
           type="text"
           placeholder="Buscar categorías por nombre o descripción..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full rounded-2xl border border-slate-200 bg-white pl-10 pr-4 py-2.5 text-sm outline-none transition-all focus:border-brand-500 dark:border-slate-800 dark:bg-slate-950 dark:text-white dark:focus:border-brand-500"
+          className="w-full border-2 border-slate-950 bg-white dark:bg-slate-950 text-slate-950 dark:text-white pl-10 pr-4 py-2.5 text-xs font-medium shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] outline-none focus:border-brand-500"
         />
       </div>
 
       {/* Main categories table */}
-      <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900 p-6">
+      <div className="border-2 border-slate-950 bg-white dark:bg-slate-900 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_#00b835] p-6 overflow-hidden">
         {isLoading ? (
           <Loader />
         ) : (

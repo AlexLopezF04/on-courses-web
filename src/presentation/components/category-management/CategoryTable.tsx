@@ -16,51 +16,51 @@ export const CategoryTable: React.FC<CategoryTableProps> = ({
   onDelete,
 }) => {
   return (
-    <table className="w-full text-left border-collapse text-sm">
+    <table className="w-full text-left border-collapse text-xs">
       <thead>
-        <tr className="border-b border-slate-200 bg-slate-50/75 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:border-slate-800 dark:bg-slate-900/50 dark:text-slate-400">
-          <th className="px-6 py-4">ID</th>
-          <th className="px-6 py-4">Nombre</th>
-          <th className="px-6 py-4">Slug</th>
-          <th className="px-6 py-4">Descripción</th>
-          <th className="px-6 py-4 text-right">Acciones</th>
+        <tr className="border-b-2 border-slate-950 bg-slate-100 dark:bg-slate-950 text-[11px] font-black uppercase tracking-wider text-slate-800 dark:text-slate-200">
+          <th className="px-6 py-3.5">ID</th>
+          <th className="px-6 py-3.5">Nombre</th>
+          <th className="px-6 py-3.5">Slug</th>
+          <th className="px-6 py-3.5">Descripción</th>
+          <th className="px-6 py-3.5 text-right">Acciones</th>
         </tr>
       </thead>
-      <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
+      <tbody className="divide-y-2 divide-slate-100 dark:divide-slate-850 font-medium text-slate-800 dark:text-slate-200">
         {categories.length > 0 ? (
           categories.map((category) => (
             <tr
               key={category.id}
-              className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors"
+              className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors"
             >
-              <td className="px-6 py-4 font-semibold text-slate-400">#{category.id}</td>
-              <td className="px-6 py-4 font-bold text-slate-900 dark:text-white">
+              <td className="px-6 py-4 font-mono font-bold text-slate-400">#{category.id}</td>
+              <td className="px-6 py-4 font-extrabold text-slate-950 dark:text-white">
                 {category.name}
               </td>
               <td className="px-6 py-4">
-                <span className="rounded bg-slate-100 dark:bg-slate-800 px-2 py-0.5 text-xs font-medium text-slate-600 dark:text-slate-400">
+                <span className="border border-slate-950 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 text-[10px] font-mono font-bold text-slate-950 dark:text-slate-200">
                   {category.slug}
                 </span>
               </td>
-              <td className="px-6 py-4 text-slate-500 dark:text-slate-400 max-w-xs truncate">
+              <td className="px-6 py-4 text-slate-600 dark:text-slate-400 max-w-xs truncate font-medium">
                 {category.description || <span className="italic text-slate-400">Sin descripción</span>}
               </td>
               <td className="px-6 py-4 text-right">
-                <div className="flex justify-end gap-2">
+                <div className="flex justify-end gap-1.5">
                   <button
                     onClick={() => onEdit(category)}
-                    className="rounded-xl border border-slate-200 p-2 text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white transition-colors"
+                    className="px-2.5 py-1 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 font-bold text-[10px] uppercase tracking-wider border border-slate-950 hover:bg-slate-200 cursor-pointer"
                     title="Editar"
                   >
-                    <Pencil className="h-4 w-4" />
+                    <Pencil className="h-3.5 w-3.5" />
                   </button>
                   {isAdmin && (
                     <button
                       onClick={() => onDelete(category.id)}
-                      className="rounded-xl border border-slate-200 p-2 text-rose-500 hover:bg-rose-50 hover:text-rose-600 dark:border-slate-800 dark:text-rose-400 dark:hover:bg-rose-950/20 dark:hover:text-rose-455 transition-colors"
+                      className="px-2.5 py-1 bg-rose-500 text-white font-bold text-[10px] uppercase tracking-wider border border-slate-950 hover:bg-rose-600 cursor-pointer"
                       title="Eliminar"
                     >
-                      <Trash2 className="h-4 w-4" />
+                      <Trash2 className="h-3.5 w-3.5" />
                     </button>
                   )}
                 </div>

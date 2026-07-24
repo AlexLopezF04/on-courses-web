@@ -6,13 +6,15 @@ import { getCourseByIdUseCase } from '@infrastructure/factories/CourseFactory';
 import { getEnrollmentsUseCase, enrollInCourseUseCase } from '@infrastructure/factories/EnrollmentFactory';
 import { Course } from '@domain/entities/Course';
 import { useAuthStore } from '../store/useAuthStore';
-import { BookOpen, Clock, Award, ShieldAlert, CheckCircle, ArrowLeft, Play } from 'lucide-react';
+import { useCartStore } from '../store/useCartStore';
+import { BookOpen, Clock, Award, ShieldAlert, CheckCircle, ArrowLeft, Play, ShoppingBag } from 'lucide-react';
 import { CourseDetailSkeleton } from '../components/Skeletons';
 
 export const CourseDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { isAuthenticated, user } = useAuthStore();
+  const { addItem: addToCart } = useCartStore();
 
   const [course, setCourse] = useState<Course | null>(null);
   const [isEnrolled, setIsEnrolled] = useState(false);
@@ -106,9 +108,12 @@ export const CourseDetailPage: React.FC = () => {
   return (
     <Layout>
       <div className="mb-6">
-        <Link to="/courses" className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-brand-600 dark:text-slate-400">
+        <Link
+          to="/courses"
+          className="inline-flex items-center gap-2 px-3.5 py-1.5 border-2 border-slate-950 bg-white dark:bg-slate-900 text-slate-950 dark:text-white font-extrabold text-xs uppercase tracking-wider shadow-[2.5px_2.5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2.5px_2.5px_0px_0px_#00b835] hover:bg-brand-400 hover:text-slate-950 dark:hover:bg-brand-400 dark:hover:text-slate-950 transition-all cursor-pointer"
+        >
           <ArrowLeft className="h-4 w-4" />
-          Volver al catálogo
+          <span>Volver al Catálogo</span>
         </Link>
       </div>
 
@@ -223,7 +228,7 @@ export const CourseDetailPage: React.FC = () => {
                   className="w-full h-full object-cover"
                 />
               ) : (
-                <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-brand-100 to-violet-100 text-brand-600 dark:from-brand-950 dark:to-violet-950">
+                <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-brand-100 to-brand-200 text-brand-600 dark:from-brand-950 dark:to-brand-900">
                   <BookOpen className="h-10 w-10" />
                 </div>
               )}
@@ -266,13 +271,26 @@ export const CourseDetailPage: React.FC = () => {
                 )}
               </div>
             ) : (
-              <Button
-                onClick={handleEnroll}
-                isLoading={isEnrolling}
-                className="w-full py-3"
-              >
-                {isAuthenticated ? 'Inscribirse Ahora' : 'Iniciar sesión para inscribirse'}
-              </Button>
+              <div className="flex flex-col gap-3">
+                <Button
+                  onClick={handleEnroll}
+                  isLoading={isEnrolling}
+                  className="w-full py-3"
+                >
+                  {isAuthenticated ? 'Inscribirse Ahora' : 'Iniciar sesión para inscribirse'}
+                </Button>
+                
+                {course && (
+                  <Button
+                    variant="outline"
+                    onClick={() => addToCart(course)}
+                    className="w-full flex items-center justify-center gap-2"
+                  >
+                    <ShoppingBag className="h-4 w-4" />
+                    <span>Añadir al Carrito</span>
+                  </Button>
+                )}
+              </div>
             )}
 
             <div className="border-t border-slate-100 dark:border-slate-800 pt-4 text-xs text-slate-500 dark:text-slate-455 flex flex-col gap-2">

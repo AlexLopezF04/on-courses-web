@@ -132,8 +132,12 @@ export const LessonPlayerPage: React.FC = () => {
       {/* Sidebar: Navigation List */}
       <aside className="w-80 border-r border-slate-200 dark:border-slate-850 bg-white dark:bg-slate-900 flex flex-col h-full shrink-0">
         <div className="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center gap-3">
-          <Link to="/dashboard" className="rounded-xl p-2 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500">
-            <ArrowLeft className="h-5 w-5" />
+          <Link
+            to="/dashboard"
+            className="p-2 border-2 border-slate-950 bg-white dark:bg-slate-950 text-slate-950 dark:text-white font-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-brand-400 hover:text-slate-950 transition-all cursor-pointer shrink-0"
+            title="Volver a Mi Panel"
+          >
+            <ArrowLeft className="h-4 w-4" />
           </Link>
           <div>
             <h4 className="font-display font-bold text-xs uppercase tracking-wider text-brand-500 line-clamp-1">
@@ -227,33 +231,81 @@ export const LessonPlayerPage: React.FC = () => {
             </div>
 
             {/* Practical instructions / theoretical text */}
-            <article className="prose dark:prose-invert max-w-none text-slate-655 dark:text-slate-350 leading-relaxed mb-8 space-y-6">
+            {/* Embedded Video Player */}
+            {currentLesson.video_url && (
+              <div className="mb-8 overflow-hidden border-2 border-slate-950 bg-slate-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00b835]">
+                <div className="flex items-center justify-between px-4 py-2 bg-slate-900 border-b-2 border-slate-950 text-xs font-mono font-bold text-brand-400">
+                  <div className="flex items-center gap-2">
+                    <Play className="h-4 w-4 fill-current text-brand-400" />
+                    <span>CLASE EN VIDEO · ONCOURSES PLAYER</span>
+                  </div>
+                  <span className="text-[10px] text-slate-400">HD 1080p</span>
+                </div>
+                <div className="relative aspect-video bg-black">
+                  {currentLesson.video_url.includes('youtube') || currentLesson.video_url.includes('embed') ? (
+                    <iframe
+                      src={sanitizeUrl(currentLesson.video_url)}
+                      title={currentLesson.title}
+                      className="w-full h-full border-0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  ) : (
+                    <div className="flex flex-col items-center justify-center h-full p-6 text-center text-slate-300">
+                      <Play className="h-12 w-12 text-brand-400 mb-3" />
+                      <p className="text-sm font-bold">Video de la clase disponible</p>
+                      <a
+                        href={sanitizeUrl(currentLesson.video_url)}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="mt-2 text-xs text-brand-400 underline font-mono"
+                      >
+                        Abrir video en nueva pestaña ↗
+                      </a>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Practical instructions / theoretical text */}
+            <article className="prose dark:prose-invert max-w-none text-slate-700 dark:text-slate-300 leading-relaxed mb-8 space-y-6">
               {currentLesson.content_text ? (
-                currentLesson.content_text.split('\n\n').map((para, i) => (
-                  <p key={i} className="text-sm sm:text-base">
-                    {para}
-                  </p>
-                ))
+                currentLesson.content_text.split('```').map((block, i) => {
+                  if (i % 2 === 1) {
+                    // Code block
+                    const lines = block.trim().split('\n');
+                    const lang = lines[0].match(/^[a-z]+/i) ? lines[0] : 'code';
+                    const codeContent = lines[0].match(/^[a-z]+/i) ? lines.slice(1).join('\n') : block;
+
+                    return (
+                      <div key={i} className="my-6 border-2 border-slate-950 bg-slate-950 text-emerald-400 p-4 font-mono text-xs shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00b835] overflow-x-auto">
+                        <div className="flex justify-between items-center pb-2 mb-2 border-b border-slate-800 text-[10px] text-slate-400 uppercase font-bold">
+                          <span>{lang}</span>
+                          <span>OnCourses Console</span>
+                        </div>
+                        <pre className="whitespace-pre-wrap">{codeContent.trim()}</pre>
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <div key={i} className="space-y-4">
+                      {block.split('\n\n').map((para, j) => {
+                        if (para.startsWith('### ')) {
+                          return <h3 key={j} className="text-lg font-bold text-slate-950 dark:text-white mt-6 mb-2">{para.replace('### ', '')}</h3>;
+                        }
+                        if (para.startsWith('#### ')) {
+                          return <h4 key={j} className="text-sm font-bold text-slate-900 dark:text-slate-200 mt-4 mb-1">{para.replace('#### ', '')}</h4>;
+                        }
+                        return <p key={j} className="text-sm sm:text-base leading-relaxed">{para}</p>;
+                      })}
+                    </div>
+                  );
+                })
               ) : (
                 <div className="p-8 border border-dashed border-slate-300 dark:border-slate-800 rounded-2xl text-center text-slate-400 text-sm">
                   Este tema no incluye material de lectura estático. Por favor consulta las referencias externas.
-                </div>
-              )}
-
-              {currentLesson.video_url && (
-                <div className="mt-6 p-4 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-850 rounded-2xl flex flex-col gap-3">
-                  <h6 className="text-sm font-bold text-slate-800 dark:text-white flex items-center gap-2">
-                    <Play className="h-4 w-4 text-brand-500 fill-current" />
-                    Enlace de apoyo / Referencia externa:
-                  </h6>
-                  <a
-                    href={sanitizeUrl(currentLesson.video_url)}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-xs text-brand-600 dark:text-brand-400 font-semibold underline truncate block"
-                  >
-                    {currentLesson.video_url}
-                  </a>
                 </div>
               )}
             </article>

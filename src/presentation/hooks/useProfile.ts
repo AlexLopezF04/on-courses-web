@@ -8,6 +8,7 @@ export const useProfile = () => {
   // Form States
   const [firstName, setFirstName] = useState(user?.first_name || '');
   const [lastName, setLastName] = useState(user?.last_name || '');
+  const [avatar, setAvatar] = useState(user?.avatar || '');
   const [phone, setPhone] = useState(user?.phone || '');
   const [biography, setBiography] = useState(user?.biography || '');
   const [country, setCountry] = useState(user?.country || '');
@@ -22,11 +23,21 @@ export const useProfile = () => {
 
   const isProfessorOrAdmin = user?.role === 'admin' || user?.role === 'professor';
 
+  const handleAvatarFile = (file: File | null) => {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setAvatar(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  };
+
   const handleEditToggle = () => {
     if (isEditing) {
       // Reset to original values on cancel
       setFirstName(user?.first_name || '');
       setLastName(user?.last_name || '');
+      setAvatar(user?.avatar || '');
       setPhone(user?.phone || '');
       setBiography(user?.biography || '');
       setCountry(user?.country || '');
@@ -48,6 +59,7 @@ export const useProfile = () => {
     const data: any = {
       first_name: firstName.trim(),
       last_name: lastName.trim(),
+      avatar: avatar,
       phone: phone.trim(),
       biography: biography.trim(),
       country: country.trim(),
@@ -119,6 +131,9 @@ export const useProfile = () => {
     setFirstName,
     lastName,
     setLastName,
+    avatar,
+    setAvatar,
+    handleAvatarFile,
     phone,
     setPhone,
     biography,

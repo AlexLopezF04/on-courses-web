@@ -1,20 +1,104 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Layout } from '../components/Layout';
-import { Button } from '../components/Button';
 import { getCoursesUseCase } from '@infrastructure/factories/CourseFactory';
 import { Course } from '@domain/entities/Course';
-import { ArrowRight, BookOpen, Clock, Users, ShieldCheck, Sparkles } from 'lucide-react';
+import {
+  ArrowRight, BookOpen, ChevronLeft, ChevronRight,
+  Clock, Users, ShieldCheck, GraduationCap, Star,
+  FolderOpen, Sparkles, Code2, Layers
+} from 'lucide-react';
 import { Loader } from '../components/Loader';
+import { CourseCard } from '../components/CourseCard';
 
+/* ─── Stat pill ─── */
+const Stat: React.FC<{ label: string; value: string; color: string }> = ({ label, value, color }) => (
+  <div className="flex flex-col items-center px-6 py-3 rounded-xl border-2 border-slate-950 bg-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00b835]">
+    <span className={`text-2xl font-extrabold ${color}`}>{value}</span>
+    <span className="text-xs text-slate-500 dark:text-slate-500 font-medium">{label}</span>
+  </div>
+);
+
+/* ─── Profile card (¿Es para ti?) ──────────────────────────────── */
+const ProfileCard: React.FC<{ emoji: string; title: string; desc: string; color: string }> = ({ emoji, title, desc, color }) => (
+  <div className="relative flex flex-col border-2 border-slate-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00b835] bg-white hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[6px_6px_0px_0px_#00b835] transition-all duration-200">
+    <div className="flex items-center justify-end border-b-2 border-slate-950 bg-slate-100 px-3 py-1.5">
+      <div className="flex items-center gap-1.5 shrink-0">
+        <span className="w-3.5 h-3.5 flex items-center justify-center border border-slate-950 text-[10px] font-bold select-none cursor-pointer bg-white text-slate-900 dark:text-slate-900">_</span>
+        <span className="w-3.5 h-3.5 flex items-center justify-center border border-slate-950 text-[10px] font-bold select-none cursor-pointer bg-white text-slate-900 dark:text-slate-900">+</span>
+        <span className="w-3.5 h-3.5 flex items-center justify-center border border-slate-950 text-[10px] font-bold select-none cursor-pointer bg-white text-slate-900 dark:text-slate-900">X</span>
+      </div>
+    </div>
+    <div className="p-6 flex flex-col flex-1">
+      <span className={`text-3xl mb-4 w-12 h-12 flex items-center justify-center rounded-lg ${color}`}>{emoji}</span>
+      <h3 className="font-display text-lg font-extrabold text-slate-950 dark:text-slate-950 mb-2">{title}</h3>
+      <p className="text-sm text-slate-600 dark:text-slate-600 leading-relaxed">{desc}</p>
+    </div>
+  </div>
+);
+
+/* ─── Testimonial card ──────────────────────────────────────────── */
+const Testimonial: React.FC<{ name: string; role: string; quote: string; initial: string; color: string }> = ({ name, role, quote, initial, color }) => (
+  <div className="flex flex-col border-2 border-slate-950 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00b835] h-full">
+    <div className="flex items-center justify-end border-b-2 border-slate-950 bg-slate-100 px-3 py-1.5">
+      <div className="flex items-center gap-1.5 shrink-0">
+        <span className="w-3.5 h-3.5 flex items-center justify-center border border-slate-950 text-[10px] font-bold select-none cursor-pointer bg-white text-slate-900 dark:text-slate-900">_</span>
+        <span className="w-3.5 h-3.5 flex items-center justify-center border border-slate-950 text-[10px] font-bold select-none cursor-pointer bg-white text-slate-900 dark:text-slate-900">+</span>
+        <span className="w-3.5 h-3.5 flex items-center justify-center border border-slate-950 text-[10px] font-bold select-none cursor-pointer bg-white text-slate-900 dark:text-slate-900">X</span>
+      </div>
+    </div>
+    <div className="p-6 flex flex-col flex-1">
+      <div className="flex items-center gap-1 mb-4">
+        {[...Array(5)].map((_, i) => <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400" />)}
+      </div>
+      <p className="text-slate-800 dark:text-slate-800 text-sm leading-relaxed mb-5 flex-1">"{quote}"</p>
+      <div className="flex items-center gap-3 mt-auto">
+        <div className={`w-10 h-10 rounded-lg flex items-center justify-center font-extrabold text-white border-2 border-slate-950 ${color}`}>
+          {initial}
+        </div>
+        <div>
+          <p className="font-bold text-sm text-slate-950 dark:text-slate-950">{name}</p>
+          <p className="text-xs text-slate-500 dark:text-slate-500">{role}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+/* ─── Benefit card ──────────────────────────────────────────────── */
+const Benefit: React.FC<{ icon: React.ReactNode; title: string; desc: string; accent: string }> = ({ icon, title, desc, accent }) => (
+  <div className="flex flex-col border-2 border-slate-950 bg-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00b835] hover:-translate-y-0.5 transition-all duration-200">
+    <div className="flex items-center justify-end border-b-2 border-slate-950 bg-slate-100 px-3 py-1.5">
+      <div className="flex items-center gap-1.5 shrink-0">
+        <span className="w-3.5 h-3.5 flex items-center justify-center border border-slate-950 text-[10px] font-bold select-none cursor-pointer bg-white text-slate-900 dark:text-slate-900">_</span>
+        <span className="w-3.5 h-3.5 flex items-center justify-center border border-slate-950 text-[10px] font-bold select-none cursor-pointer bg-white text-slate-900 dark:text-slate-900">+</span>
+        <span className="w-3.5 h-3.5 flex items-center justify-center border border-slate-950 text-[10px] font-bold select-none cursor-pointer bg-white text-slate-900 dark:text-slate-900">X</span>
+      </div>
+    </div>
+    <div className="flex gap-4 p-5 flex-1">
+      <div className={`shrink-0 w-10 h-10 flex items-center justify-center rounded-lg border-2 border-slate-950 ${accent}`}>
+        {icon}
+      </div>
+      <div>
+        <h3 className="font-bold text-sm text-slate-950 dark:text-slate-950 mb-1">{title}</h3>
+        <p className="text-xs text-slate-500 dark:text-slate-500 leading-relaxed">{desc}</p>
+      </div>
+    </div>
+  </div>
+);
+
+/* ══════════════════════════════════════════════════════════════════
+   HOME PAGE
+══════════════════════════════════════════════════════════════════ */
 export const HomePage: React.FC = () => {
   const [featuredCourses, setFeaturedCourses] = useState<Course[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let isMounted = true;
     getCoursesUseCase
-      .execute({ page_size: 3, is_active: true })
+      .execute({ page_size: 6, is_active: true })
       .then((data) => {
         if (isMounted) {
           setFeaturedCourses(data.results);
@@ -25,176 +109,336 @@ export const HomePage: React.FC = () => {
         console.error(err);
         if (isMounted) setIsLoading(false);
       });
-    return () => {
-      isMounted = false;
-    };
+    return () => { isMounted = false; };
   }, []);
+
+  const scrollCourses = (dir: 'left' | 'right') => {
+    if (!scrollRef.current) return;
+    scrollRef.current.scrollBy({ left: dir === 'right' ? 320 : -320, behavior: 'smooth' });
+  };
 
   return (
     <Layout>
-      {/* Hero Section */}
-      <section className="relative py-20 lg:py-28 overflow-hidden rounded-3xl bg-slate-900 text-white dark:bg-slate-900/50 mb-16">
-        <div className="absolute inset-0 bg-gradient-to-tr from-brand-900/40 to-violet-900/40 opacity-50" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-brand-500/10 blur-[120px]" />
+
+      {/* ── HERO ────────────────────────────────────────────────── */}
+      <section className="relative overflow-hidden bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white mb-16 border-b-2 border-slate-200 dark:border-slate-900 transition-colors duration-200">
+        {/* Grid background — Light Mode (faint green) */}
+        <div className="block dark:hidden animate-grid transition-none absolute inset-0 bg-[linear-gradient(rgba(0,200,50,0.16)_1px,transparent_1px),linear-gradient(90deg,rgba(0,200,50,0.10)_1px,transparent_1px)] bg-[size:40px_40px]" />
+        {/* Grid background — Dark Mode (Matrix phosphor neon) */}
+        <div className="hidden dark:block animate-grid transition-none absolute inset-0 bg-[linear-gradient(rgba(0,255,65,0.38)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,65,0.25)_1px,transparent_1px)] bg-[size:40px_40px]" />
         
-        <div className="relative mx-auto max-w-4xl text-center px-4">
-          <div className="inline-flex items-center gap-1.5 rounded-full bg-slate-800/80 px-4 py-1.5 text-xs font-semibold text-brand-400 border border-slate-700/50 backdrop-blur mb-6">
-            <Sparkles className="h-3.5 w-3.5 animate-pulse" />
-            <span>El Futuro del Aprendizaje Tecnológico</span>
-          </div>
-          
-          <h1 className="font-display text-4xl sm:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
-            Domina las Tecnologías más <br className="hidden sm:inline" />
-            Demandadas del Mercado
-          </h1>
-          
-          <p className="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto mb-10">
-            Aprende programación, desarrollo de software y sistemas de la mano de expertos del sector, con lecciones estructuradas y evaluaciones reales.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-            <Link to="/courses">
-              <Button size="lg" className="w-full sm:w-auto flex items-center gap-2">
-                Explorar Cursos
-                <ArrowRight className="h-5 w-5" />
-              </Button>
-            </Link>
-            <a href="#benefits">
-              <Button variant="outline" size="lg" className="w-full sm:w-auto border-slate-700 text-white hover:bg-slate-800 hover:text-white">
-                Ver Beneficios
-              </Button>
-            </a>
+        {/* Glow orbs */}
+        <div className="hidden dark:block absolute top-0 left-1/4 w-96 h-96 bg-[#00b835]/10 rounded-full blur-[130px] pointer-events-none" />
+        <div className="hidden dark:block absolute bottom-0 right-1/4 w-80 h-80 bg-[#00b835]/5 rounded-full blur-[100px] pointer-events-none" />
+
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
+          <div className="flex flex-col lg:flex-row items-center gap-12">
+
+            {/* Left column */}
+            <div className="flex-1 text-center lg:text-left">
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 bg-brand-100 dark:bg-brand-600/20 border border-brand-200 dark:border-brand-500/30 text-brand-700 dark:text-brand-400 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-6">
+                <Sparkles className="h-3.5 w-3.5" />
+                Plataforma de Aprendizaje Tecnológico
+              </div>
+
+              {/* Headline */}
+              <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.05] mb-4">
+                <span className="text-slate-900 dark:text-white">On</span>
+                <span className="text-brand-600 dark:text-brand-400">Courses</span>
+                <br />
+                <span className="text-slate-700 dark:text-slate-300 text-4xl sm:text-5xl lg:text-6xl font-bold">
+                  es aprender<br />
+                  <span className="text-slate-900 dark:text-white">de verdad</span>
+                </span>
+              </h1>
+
+              {/* Sub */}
+              <p className="text-slate-600 dark:text-slate-400 text-lg max-w-xl mx-auto lg:mx-0 mb-8 leading-relaxed">
+                Estudia programación y desarrollo de software con cursos estructurados, evaluaciones reales y certificados que respaldan tu progreso.
+              </p>
+
+              {/* CTAs */}
+              <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start mb-10">
+                <Link to="/courses">
+                  <button className="inline-flex items-center gap-2 px-7 py-3.5 bg-brand-600 hover:bg-brand-500 text-white font-extrabold text-sm border-2 border-slate-950 shadow-[4px_4px_0px_0px_rgba(0,255,65,0.4)] hover:shadow-[6px_6px_0px_0px_rgba(0,255,65,0.5)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer">
+                    Comenzar a aprender
+                    <ArrowRight className="h-4 w-4" />
+                  </button>
+                </Link>
+                <Link to="/register">
+                  <button className="inline-flex items-center gap-2 px-7 py-3.5 bg-transparent hover:bg-slate-200/50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 font-bold text-sm border-2 border-slate-950 hover:border-slate-800 dark:hover:border-slate-500 transition-all duration-200 cursor-pointer">
+                    Crear cuenta gratis
+                  </button>
+                </Link>
+              </div>
+
+              {/* Stats */}
+              <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
+                <Stat value="+500" label="Estudiantes" color="text-brand-600 dark:text-brand-600" />
+                <Stat value="+20" label="Cursos" color="text-emerald-600 dark:text-emerald-600" />
+                <Stat value="100%" label="Online" color="text-amber-600 dark:text-amber-600" />
+              </div>
+            </div>
+
+            {/* Right column — mockup window retro style */}
+            <div className="hidden lg:block flex-1 max-w-lg w-full">
+              <div className="border-2 border-slate-950 shadow-[8px_8px_0px_0px_rgba(0,255,65,0.4)] bg-white dark:bg-slate-900 transition-colors duration-200">
+                {/* window chrome — retro _ + X style */}
+                <div className="flex items-center justify-between px-3.5 py-1.5 bg-slate-100 dark:bg-slate-100 border-b-2 border-slate-950">
+                  <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-700 font-mono">ONCOURSES.APP</span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-5 h-5 flex items-center justify-center border-2 border-slate-950 text-[11px] font-black text-slate-950 dark:text-slate-950 bg-white dark:bg-white select-none shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">_</span>
+                    <span className="w-5 h-5 flex items-center justify-center border-2 border-slate-950 text-[11px] font-black text-slate-950 dark:text-slate-950 bg-white dark:bg-white select-none shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">+</span>
+                    <span className="w-5 h-5 flex items-center justify-center border-2 border-slate-950 text-[11px] font-black text-slate-950 dark:text-slate-950 bg-white dark:bg-white select-none shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">X</span>
+                  </div>
+                </div>
+                {/* content */}
+                <div className="p-6 space-y-3">
+                  {[
+                    { icon: '🐍', label: 'Python desde cero', color: 'bg-amber-500', anim: 'animate-progress-1' },
+                    { icon: '⚛️', label: 'React & TypeScript', color: 'bg-brand-650', anim: 'animate-progress-2' },
+                    { icon: '🐳', label: 'Docker & DevOps', color: 'bg-emerald-600', anim: 'animate-progress-3' },
+                    { icon: '🗄️', label: 'Bases de Datos SQL', color: 'bg-indigo-600', anim: 'animate-progress-4' },
+                  ].map(({ icon, label, color, anim }) => (
+                    <div key={label} className="flex items-center gap-3 p-3 bg-white dark:bg-slate-800 border border-slate-950 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] text-slate-900 dark:text-slate-200 transition-colors duration-200">
+                      <div className={`w-8 h-8 flex items-center justify-center text-base border border-slate-950 ${color}`}>{icon}</div>
+                      <span className="text-sm font-semibold">{label}</span>
+                      <div className="ml-auto w-16 h-2 bg-slate-100 dark:bg-slate-900 border border-slate-950 rounded-none overflow-hidden">
+                        <div className={`h-full bg-brand-400 ${anim}`} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
 
-      {/* Featured Courses Section */}
+      {/* ── COURSES ─────────────────────────────────────────────── */}
       <section className="mb-20">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-8">
+        {/* Section header */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
           <div>
-            <h2 className="font-display text-3xl font-bold text-slate-900 dark:text-white">
-              Cursos Destacados
+            <div className="flex flex-col gap-3 items-start text-sm font-black uppercase tracking-widest text-brand-600 dark:text-brand-400 mb-4">
+              <FolderOpen className="h-16 w-16" />
+              <span>courses.folder</span>
+            </div>
+            <h2 className="font-display text-4xl sm:text-5xl font-black text-slate-900 dark:text-white">
+              Cursos
             </h2>
-            <p className="text-slate-550 dark:text-slate-400 mt-1">
-              Impulsa tu carrera con estas rutas de aprendizaje populares
+            <p className="text-slate-500 dark:text-slate-400 mt-2 text-base">
+              Aprende programación desde cero y mejora tus habilidades
             </p>
           </div>
-          <Link to="/courses" className="group flex items-center gap-1 text-sm font-semibold text-brand-600 dark:text-brand-400 hover:underline">
-            Ver todo el catálogo
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </Link>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => scrollCourses('left')}
+              className="w-9 h-9 flex items-center justify-center border-2 border-slate-900 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all duration-150 cursor-pointer"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+            <button
+              onClick={() => scrollCourses('right')}
+              className="w-9 h-9 flex items-center justify-center border-2 border-slate-900 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all duration-150 cursor-pointer"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+            <Link
+              to="/courses"
+              className="flex items-center gap-1 text-sm font-bold text-brand-600 dark:text-brand-400 hover:underline ml-2"
+            >
+              Ver todos
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
         </div>
 
         {isLoading ? (
           <Loader />
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {featuredCourses.length > 0 ? (
-              featuredCourses.map((course) => (
-                <div
-                  key={course.id}
-                  className="group flex flex-col rounded-2xl border border-slate-200 bg-white shadow-sm hover:shadow-md transition-all duration-300 dark:border-slate-800 dark:bg-slate-900 overflow-hidden"
-                >
-                  <div className="relative aspect-video bg-slate-100 dark:bg-slate-950 overflow-hidden">
-                    {course.cover_image ? (
-                      <img
-                        src={course.cover_image}
-                        alt={course.title}
-                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                      />
-                    ) : (
-                      <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-brand-100 to-violet-100 text-brand-600 dark:from-brand-950 dark:to-violet-950">
-                        <BookOpen className="h-10 w-10" />
-                      </div>
-                    )}
-                    <span className="absolute top-3 left-3 rounded-lg bg-white/90 backdrop-blur px-2.5 py-1 text-xs font-bold text-slate-900 shadow">
-                      {course.category_name || 'Desarrollo'}
-                    </span>
-                  </div>
-
-                  <div className="flex flex-1 flex-col p-6">
-                    <h3 className="font-display text-lg font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors line-clamp-1">
-                      {course.title}
-                    </h3>
-                    <p className="text-slate-500 dark:text-slate-400 text-sm mt-2 line-clamp-2">
-                      {course.description || 'Sin descripción disponible todavía.'}
-                    </p>
-                    
-                    <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-4 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400">
-                      <div className="flex items-center gap-1">
-                        <Users className="h-4 w-4 text-brand-500" />
-                        <span>{course.modules_count || 0} Módulos</span>
-                      </div>
-                      <div className="flex items-center gap-1 font-semibold text-slate-900 dark:text-white">
-                        <span>Prof: {course.professor_name}</span>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="bg-slate-50 px-6 py-4 border-t border-slate-100 dark:bg-slate-900/50 dark:border-slate-800 flex justify-between items-center">
-                    <span className="text-lg font-bold text-brand-600 dark:text-brand-400">
-                      {parseFloat(course.price) === 0 ? 'Gratis' : `$${course.price}`}
-                    </span>
-                    <Link to={`/courses/${course.id}`}>
-                      <Button variant="outline" size="sm">
-                        Ver Detalles
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div className="col-span-3 text-center py-12 text-slate-500">
-                No hay cursos disponibles en este momento.
+        ) : featuredCourses.length > 0 ? (
+          <div
+            ref={scrollRef}
+            className="flex gap-5 overflow-x-auto pt-3 px-4 pb-6 scrollbar-hide snap-x snap-mandatory items-stretch"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
+            {featuredCourses.map((course) => (
+              <div key={course.id} className="snap-start shrink-0 w-[270px] p-1.5 flex flex-col">
+                <CourseCard course={course} />
               </div>
-            )}
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12 border-2 border-dashed border-slate-300 dark:border-slate-700 text-slate-500">
+            No hay cursos disponibles en este momento.
           </div>
         )}
       </section>
 
-      {/* Benefits Section */}
-      <section id="benefits" className="mb-16 py-12">
-        <div className="text-center max-w-2xl mx-auto mb-12">
-          <h2 className="font-display text-3xl font-bold text-slate-900 dark:text-white">
-            ¿Por qué aprender en OnCourses?
+      {/* ── ¿ES PARA TI? ────────────────────────────────────────── */}
+      <section className="mb-20">
+        <div className="mb-8">
+            <div className="flex flex-col gap-3 items-start text-sm font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-4">
+              <Code2 className="h-16 w-16" />
+            <span>community.folder</span>
+          </div>
+            <h2 className="font-display text-4xl sm:text-5xl font-black text-slate-900 dark:text-white">
+            ¿Estás en el lugar correcto?
           </h2>
-          <p className="text-slate-500 dark:text-slate-400 mt-2">
-            Nuestra plataforma está diseñada para acompañarte en cada paso de tu formación técnica.
+            <p className="text-slate-500 dark:text-slate-400 mt-2 text-base">
+            Si te identificas con alguno de estos perfiles, estás en el lugar correcto
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="rounded-2xl border border-slate-200 bg-white p-8 dark:border-slate-800 dark:bg-slate-900 shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-100 text-brand-600 dark:bg-brand-900/30 dark:text-brand-400 mb-6">
-              <Clock className="h-6 w-6" />
-            </div>
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">A tu propio ritmo</h3>
-            <p className="text-slate-500 dark:text-slate-400 text-sm">
-              Accede a los tutoriales y lecciones teóricas las 24 horas del día. Sin horarios fijos ni presiones.
-            </p>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <ProfileCard
+            emoji="🌱"
+            title="Empiezas desde cero"
+            desc="¿Sin experiencia previa? Te damos el aprendizaje estructurado con fundamentos sólidos y buenas prácticas desde el primer día."
+            color="bg-emerald-100 dark:bg-emerald-900/30"
+          />
+          <ProfileCard
+            emoji="⚡"
+            title="Estudiante o Junior"
+            desc="Tienes algo de base pero quieres solidificar conocimientos, avanzar en tu carrera o aprender tecnologías más demandadas del mercado."
+            color="bg-brand-100 dark:bg-brand-900/30"
+          />
+          <ProfileCard
+            emoji="🚀"
+            title="Profesional activo"
+            desc="Con experiencia pero necesitas actualizarte, cambiar de stack, o añadir habilidades que te diferencien en el mercado laboral."
+            color="bg-amber-100 dark:bg-amber-900/30"
+          />
+        </div>
+      </section>
 
-          <div className="rounded-2xl border border-slate-200 bg-white p-8 dark:border-slate-800 dark:bg-slate-900 shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-violet-100 text-violet-600 dark:bg-violet-900/30 dark:text-violet-400 mb-6">
-              <ShieldCheck className="h-6 w-6" />
-            </div>
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">Evaluaciones y Cuestionarios</h3>
-            <p className="text-slate-500 dark:text-slate-400 text-sm">
-              Valida lo aprendido completando cuestionarios integrados al finalizar cada módulo.
-            </p>
+      {/* ── POR QUÉ ONCOURSES ───────────────────────────────────── */}
+      <section className="mb-20">
+        <div className="mb-8">
+            <div className="flex flex-col gap-3 items-start text-sm font-black uppercase tracking-widest text-brand-600 dark:text-brand-400 mb-4">
+              <Layers className="h-16 w-16" />
+            <span>benefits.folder</span>
           </div>
+            <h2 className="font-display text-4xl sm:text-5xl font-black text-slate-900 dark:text-white">
+            Y además
+          </h2>
+            <p className="text-slate-500 dark:text-slate-400 mt-2 text-base">
+            Todo lo que incluye aprender en OnCourses
+          </p>
+        </div>
 
-          <div className="rounded-2xl border border-slate-200 bg-white p-8 dark:border-slate-800 dark:bg-slate-900 shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-rose-100 text-rose-600 dark:bg-rose-900/30 dark:text-rose-400 mb-6">
-              <Users className="h-6 w-6" />
-            </div>
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">Liderado por Expertos</h3>
-            <p className="text-slate-500 dark:text-slate-400 text-sm">
-              Aprende de profesores con experiencia real en el desarrollo de software y sistemas distribuidos.
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <Benefit
+            icon={<Clock className="h-5 w-5 text-white" />}
+            title="A tu propio ritmo"
+            desc="Accede a las lecciones las 24h del día. Sin horarios fijos ni fechas de vencimiento."
+            accent="bg-brand-600"
+          />
+          <Benefit
+            icon={<ShieldCheck className="h-5 w-5 text-white" />}
+            title="Certificado incluido"
+            desc="Al completar cada curso recibes un certificado de finalización validado por la plataforma."
+            accent="bg-emerald-600"
+          />
+          <Benefit
+            icon={<BookOpen className="h-5 w-5 text-white" />}
+            title="Lecciones y cuestionarios"
+            desc="Valida lo aprendido con tests integrados al finalizar cada módulo del curso."
+            accent="bg-amber-500"
+          />
+          <Benefit
+            icon={<Users className="h-5 w-5 text-white" />}
+            title="Docentes expertos"
+            desc="Aprende de profesores con experiencia real en la industria del software."
+            accent="bg-brand-700"
+          />
+          <Benefit
+            icon={<GraduationCap className="h-5 w-5 text-white" />}
+            title="Contenido estructurado"
+            desc="Rutas de aprendizaje claras organizadas por módulos, de menor a mayor complejidad."
+            accent="bg-rose-600"
+          />
+          <Benefit
+            icon={<Sparkles className="h-5 w-5 text-white" />}
+            title="Actualización continua"
+            desc="El contenido se actualiza periódicamente para mantenerlo al día con las tendencias del sector."
+            accent="bg-indigo-600"
+          />
+        </div>
+      </section>
+
+      {/* ── TESTIMONIOS ─────────────────────────────────────────── */}
+      <section className="mb-20">
+        <div className="mb-8">
+            <div className="flex flex-col gap-3 items-start text-sm font-black uppercase tracking-widest text-rose-600 dark:text-rose-400 mb-4">
+              <Star className="h-16 w-16" />
+            <span>reviews.folder</span>
+          </div>
+            <h2 className="font-display text-4xl sm:text-5xl font-black text-slate-900 dark:text-white">
+            Lo que dicen nuestros estudiantes
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <Testimonial
+            name="Sofía Ramírez"
+            role="Desarrolladora Junior · Quito"
+            quote="OnCourses me dio la estructura que necesitaba. Aprendí Python desde cero y en 3 meses ya estaba aplicando a mi primer trabajo."
+            initial="S"
+            color="bg-brand-600"
+          />
+          <Testimonial
+            name="Mateo Torres"
+            role="Estudiante de Ingeniería · Guayaquil"
+            quote="Los cursos están muy bien explicados. Los cuestionarios al final de cada módulo me ayudaron a afianzar los conceptos."
+            initial="M"
+            color="bg-emerald-600"
+          />
+          <Testimonial
+            name="Valeria Cárdenas"
+            role="Diseñadora → Dev Full Stack · Cuenca"
+            quote="Venía del diseño y no sabía nada de código. Los cursos son claros, directos y con práctica desde el primer día. ¡Muy recomendado!"
+            initial="V"
+            color="bg-amber-500"
+          />
+        </div>
+      </section>
+
+      {/* ── CTA FINAL ───────────────────────────────────────────── */}
+      <section className="mb-16">
+        <div className="bg-slate-50 dark:bg-slate-950 border-2 border-slate-950 shadow-[6px_6px_0px_0px_rgba(0,255,65,0.4)] p-10 lg:p-14 text-center relative overflow-hidden transition-colors duration-200">
+          {/* Grid bg — Light mode (faint green) */}
+          <div className="block dark:hidden animate-grid transition-none absolute inset-0 bg-[linear-gradient(rgba(0,200,50,0.16)_1px,transparent_1px),linear-gradient(90deg,rgba(0,200,50,0.10)_1px,transparent_1px)] bg-[size:32px_32px]" />
+          {/* Grid bg — Dark mode (neon green) */}
+          <div className="hidden dark:block animate-grid transition-none absolute inset-0 bg-[linear-gradient(rgba(0,255,65,0.32)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,65,0.20)_1px,transparent_1px)] bg-[size:32px_32px]" />
+          
+          <div className="relative">
+            <p className="text-brand-600 dark:text-brand-400 text-xs font-bold uppercase tracking-widest mb-3">¿Listo para empezar?</p>
+            <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mb-4">
+              Comienza a aprender hoy
+            </h2>
+            <p className="text-slate-600 dark:text-slate-400 text-base max-w-xl mx-auto mb-8">
+              Únete a cientos de estudiantes que ya están transformando su carrera con OnCourses.
             </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Link to="/register">
+                <button className="inline-flex items-center gap-2 px-8 py-3.5 bg-brand-600 hover:bg-brand-500 text-white font-extrabold text-sm border-2 border-slate-950 shadow-[4px_4px_0px_0px_rgba(0,255,65,0.4)] hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_0px_rgba(0,255,65,0.5)] transition-all duration-200 cursor-pointer">
+                  Registrarse gratis
+                  <ArrowRight className="h-4 w-4" />
+                </button>
+              </Link>
+              <Link to="/courses">
+                <button className="inline-flex items-center gap-2 px-8 py-3.5 bg-transparent hover:bg-slate-200/50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 font-bold text-sm border-2 border-slate-950 hover:border-slate-800 dark:hover:border-slate-500 transition-all duration-200 cursor-pointer">
+                  Ver catálogo
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
+
     </Layout>
   );
 };
