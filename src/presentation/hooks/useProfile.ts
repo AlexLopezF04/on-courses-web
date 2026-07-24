@@ -5,13 +5,26 @@ export const useProfile = () => {
   const { user, updateProfile, isLoading, error } = useAuthStore();
   const [isEditing, setIsEditing] = useState(false);
 
+  const getCachedRegistration = () => {
+    try {
+      const stored = JSON.parse(localStorage.getItem('oncourses_registered_users') || '{}');
+      if (user?.username && stored[user.username.toLowerCase()]) return stored[user.username.toLowerCase()];
+      if (user?.email && stored[user.email.toLowerCase()]) return stored[user.email.toLowerCase()];
+    } catch {}
+    return null;
+  };
+
+  const cachedReg = getCachedRegistration();
+  const defaultPhone = user?.phone || cachedReg?.phone || '+593 99 123 4567';
+  const defaultCountry = user?.country || cachedReg?.country || 'Ecuador';
+
   // Form States
-  const [firstName, setFirstName] = useState(user?.first_name || '');
-  const [lastName, setLastName] = useState(user?.last_name || '');
+  const [firstName, setFirstName] = useState(user?.first_name || cachedReg?.first_name || '');
+  const [lastName, setLastName] = useState(user?.last_name || cachedReg?.last_name || '');
   const [avatar, setAvatar] = useState(user?.avatar || '');
-  const [phone, setPhone] = useState(user?.phone || '');
+  const [phone, setPhone] = useState(defaultPhone);
   const [biography, setBiography] = useState(user?.biography || '');
-  const [country, setCountry] = useState(user?.country || '');
+  const [country, setCountry] = useState(defaultCountry);
   const [birthDate, setBirthDate] = useState(user?.birth_date || '');
   const [professionalTitle, setProfessionalTitle] = useState(user?.professional_title || '');
   const [specialty, setSpecialty] = useState(user?.specialty || '');
@@ -35,12 +48,12 @@ export const useProfile = () => {
   const handleEditToggle = () => {
     if (isEditing) {
       // Reset to original values on cancel
-      setFirstName(user?.first_name || '');
-      setLastName(user?.last_name || '');
+      setFirstName(user?.first_name || cachedReg?.first_name || '');
+      setLastName(user?.last_name || cachedReg?.last_name || '');
       setAvatar(user?.avatar || '');
-      setPhone(user?.phone || '');
+      setPhone(user?.phone || cachedReg?.phone || '+593 99 123 4567');
       setBiography(user?.biography || '');
-      setCountry(user?.country || '');
+      setCountry(user?.country || cachedReg?.country || 'Ecuador');
       setBirthDate(user?.birth_date || '');
       setProfessionalTitle(user?.professional_title || '');
       setSpecialty(user?.specialty || '');
