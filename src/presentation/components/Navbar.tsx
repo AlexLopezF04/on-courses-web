@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore';
 import { useThemeStore } from '../store/useThemeStore';
 import { useCartStore } from '../store/useCartStore';
-import { Sun, Moon, LogOut, Menu, X, BookOpen, Compass, Award, Info, ShoppingBag } from 'lucide-react';
+import { Sun, Moon, LogOut, Menu, X, BookOpen, Info, ShoppingBag } from 'lucide-react';
 import { Button } from './Button';
 import { Logo } from './Logo';
 import { PricingModal } from './FooterModals';
@@ -36,20 +36,9 @@ export const Navbar: React.FC = () => {
 
               <div className="hidden lg:flex items-center gap-6">
                 <Link to="/courses" className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-700 hover:text-brand-600 dark:text-slate-200 dark:hover:text-brand-400">
-                  <Compass className="h-4 w-4 text-amber-500 shrink-0" />
-                  <span>Ruta de Estudio</span>
-                </Link>
-                <Link to="/courses" className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-700 hover:text-brand-600 dark:text-slate-200 dark:hover:text-brand-400">
                   <BookOpen className="h-4 w-4 text-emerald-500 shrink-0" />
                   <span>Cursos</span>
                 </Link>
-                <button
-                  onClick={() => setShowPricingModal(true)}
-                  className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-700 hover:text-brand-600 dark:text-slate-200 dark:hover:text-brand-400 cursor-pointer"
-                >
-                  <Award className="h-4 w-4 text-blue-500 shrink-0" />
-                  <span>Precios</span>
-                </button>
                 <Link to="/courses?max_price=0" className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-700 hover:text-brand-600 dark:text-slate-200 dark:hover:text-brand-400">
                   <Info className="h-4 w-4 text-brand-500 shrink-0" />
                   <span>Recursos Gratis</span>
@@ -161,27 +150,9 @@ export const Navbar: React.FC = () => {
               onClick={() => setIsOpen(false)}
               className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-250 hover:text-brand-600"
             >
-              <Compass className="h-4 w-4 text-amber-500" />
-              <span>Ruta de Estudio</span>
-            </Link>
-            <Link
-              to="/courses"
-              onClick={() => setIsOpen(false)}
-              className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-250 hover:text-brand-600"
-            >
               <BookOpen className="h-4 w-4 text-emerald-500" />
               <span>Cursos</span>
             </Link>
-            <button
-              onClick={() => {
-                setIsOpen(false);
-                setShowPricingModal(true);
-              }}
-              className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-250 hover:text-brand-600 cursor-pointer"
-            >
-              <Award className="h-4 w-4 text-blue-500" />
-              <span>Precios</span>
-            </button>
             <Link
               to="/courses?max_price=0"
               onClick={() => setIsOpen(false)}

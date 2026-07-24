@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, BookOpen, Compass, Award, Users, Info, Mailbox, Database, Code, Terminal, GitBranch, Building2, MapPin } from 'lucide-react';
+import { Mail, BookOpen, Users, Info, Mailbox, Database, Code, Terminal, GitBranch, Building2, MapPin } from 'lucide-react';
 import { Logo } from './Logo';
 import { LegalModal, PricingModal, CommunityModal, NewsletterModal } from './FooterModals';
 
@@ -70,20 +70,9 @@ export const Footer: React.FC = () => {
             </h3>
             <div className="flex flex-col gap-2.5 text-sm">
               <Link to="/courses" className="flex items-center gap-2 hover:text-brand-500 transition-colors">
-                <Compass className="h-4 w-4 text-amber-500" />
-                <span>Ruta de Estudio</span>
-              </Link>
-              <Link to="/courses" className="flex items-center gap-2 hover:text-brand-500 transition-colors">
                 <BookOpen className="h-4 w-4 text-emerald-500" />
                 <span>Cursos</span>
               </Link>
-              <button
-                onClick={() => setShowPricingModal(true)}
-                className="flex items-center gap-2 text-left hover:text-brand-500 transition-colors cursor-pointer"
-              >
-                <Award className="h-4 w-4 text-blue-500" />
-                <span>Precios</span>
-              </button>
               <Link to="/courses?max_price=0" className="flex items-center gap-2 hover:text-brand-500 transition-colors">
                 <Info className="h-4 w-4 text-brand-500" />
                 <span>Recursos Gratis</span>
