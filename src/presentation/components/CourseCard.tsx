@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { BookOpen, ShoppingBag, Pencil } from 'lucide-react';
+import { BookOpen, ShoppingBag, Pencil, X } from 'lucide-react';
 import { Course } from '../../domain/entities/Course';
 import { useCartStore } from '../store/useCartStore';
 import { useAuthStore } from '../store/useAuthStore';
@@ -46,10 +46,12 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
         <span className="text-[10px] font-bold uppercase tracking-wider text-slate-700 dark:text-slate-700 truncate max-w-[150px]">
           {course.category_name || 'Desarrollo'}
         </span>
-        <div className="flex items-center gap-1.5 shrink-0">
+        <div className="flex items-center gap-1.5 shrink-0" translate="no">
           <span className="w-3.5 h-3.5 flex items-center justify-center border border-slate-950 text-[10px] font-bold select-none cursor-pointer bg-white text-slate-900 dark:text-slate-900">_</span>
           <span className="w-3.5 h-3.5 flex items-center justify-center border border-slate-950 text-[10px] font-bold select-none cursor-pointer bg-white text-slate-900 dark:text-slate-900">+</span>
-          <span className="w-3.5 h-3.5 flex items-center justify-center border border-slate-950 text-[10px] font-bold select-none cursor-pointer bg-white text-slate-900 dark:text-slate-900">X</span>
+          <span className="w-3.5 h-3.5 flex items-center justify-center border border-slate-950 text-[10px] font-bold select-none cursor-pointer bg-white text-slate-900 dark:text-slate-900" aria-label="Cerrar">
+            <X className="h-2 w-2" />
+          </span>
         </div>
       </div>
 

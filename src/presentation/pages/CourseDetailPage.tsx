@@ -12,7 +12,7 @@ import { Category } from '@domain/entities/Category';
 import { useAuthStore } from '../store/useAuthStore';
 import { useCartStore } from '../store/useCartStore';
 import { CourseFormModal } from '../components/course-management/CourseFormModal';
-import { BookOpen, Clock, Award, ShieldAlert, CheckCircle, ArrowLeft, Play, ShoppingBag, Pencil } from 'lucide-react';
+import { BookOpen, Clock, Award, ShieldAlert, CheckCircle, ArrowLeft, Play, ShoppingBag, Pencil, X } from 'lucide-react';
 import { CourseDetailSkeleton } from '../components/Skeletons';
 
 export const CourseDetailPage: React.FC = () => {
@@ -322,10 +322,12 @@ export const CourseDetailPage: React.FC = () => {
             {/* Retro Window Top Header */}
             <div className="flex items-center justify-between px-4 py-1.5 bg-slate-100 dark:bg-slate-100 border-b-2 border-slate-950">
               <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-700 font-mono">ONCOURSES.APP</span>
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-1.5" translate="no">
                 <span className="w-4 h-4 flex items-center justify-center border border-slate-950 text-[10px] font-bold bg-white text-slate-900 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">_</span>
                 <span className="w-4 h-4 flex items-center justify-center border border-slate-950 text-[10px] font-bold bg-white text-slate-900 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">+</span>
-                <span className="w-4 h-4 flex items-center justify-center border border-slate-950 text-[10px] font-bold bg-white text-slate-900 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">X</span>
+                <span className="w-4 h-4 flex items-center justify-center border border-slate-950 text-[10px] font-bold bg-white text-slate-900 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]" aria-label="Cerrar">
+                  <X className="h-2.5 w-2.5" />
+                </span>
               </div>
             </div>
 
