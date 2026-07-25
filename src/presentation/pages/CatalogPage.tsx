@@ -8,7 +8,7 @@ import { getCoursesUseCase } from '@infrastructure/factories/CourseFactory';
 import { getCategoriesUseCase } from '@infrastructure/factories/CategoryFactory';
 import { Course } from '@domain/entities/Course';
 import { Category } from '@domain/entities/Category';
-import { BookOpen, Search, SlidersHorizontal } from 'lucide-react';
+import { BookOpen, Search, SlidersHorizontal, Gift, Sparkles } from 'lucide-react';
 import { Pagination } from '../components/Pagination';
 import { CatalogSkeleton } from '../components/Skeletons';
 import { CourseCard } from '../components/CourseCard';
@@ -27,6 +27,8 @@ export const CatalogPage: React.FC = () => {
   // Pagination State
   const [page, setPage] = useState(1);
   const [totalCourses, setTotalCourses] = useState(0);
+
+  const isFreeResourcesView = maxPrice === '0';
 
   useEffect(() => {
     // Read URL search params
@@ -54,8 +56,8 @@ export const CatalogPage: React.FC = () => {
     };
     if (search) filters.search = search;
     if (selectedCategory) filters.category = selectedCategory;
-    if (minPrice) filters.min_price = minPrice;
-    if (maxPrice) filters.max_price = maxPrice;
+    if (minPrice !== '') filters.min_price = minPrice;
+    if (maxPrice !== '') filters.max_price = maxPrice;
 
     getCoursesUseCase
       .execute(filters)
@@ -96,11 +98,20 @@ export const CatalogPage: React.FC = () => {
   return (
     <Layout>
       <div className="mb-10">
-        <h1 className="font-display text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mb-2">
-          Cursos
+        <h1 className="font-display text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mb-2 flex items-center gap-3">
+          {isFreeResourcesView ? (
+            <>
+              <Gift className="h-8 w-8 text-[#00cc33]" />
+              <span>Recursos Gratis & Cursos Liberados</span>
+            </>
+          ) : (
+            'Catálogo de Cursos'
+          )}
         </h1>
-        <p className="text-slate-505 dark:text-slate-400">
-          Aprende programación desde cero y mejora tus habilidades
+        <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">
+          {isFreeResourcesView
+            ? 'Cursos gratuitos liberados por la administración para el aprendizaje libre de la comunidad.'
+            : 'Aprende programación desde cero con nuestros manuales de estudio paso a paso.'}
         </p>
       </div>
 
@@ -215,11 +226,26 @@ export const CatalogPage: React.FC = () => {
                     }}
                   />
                 </>
+              ) : isFreeResourcesView ? (
+                <div className="border-2 border-slate-950 bg-white dark:bg-slate-900 p-8 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_#00b835] text-center flex flex-col items-center justify-center">
+                  <div className="w-16 h-16 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border-2 border-slate-950 flex items-center justify-center mb-4 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
+                    <Sparkles className="h-8 w-8 text-[#00cc33]" />
+                  </div>
+                  <h3 className="font-display text-xl font-extrabold text-slate-950 dark:text-white mb-2">
+                    No hay recursos gratuitos liberados por el momento
+                  </h3>
+                  <p className="text-slate-600 dark:text-slate-300 text-sm max-w-md mb-6 leading-relaxed">
+                    Como administrador, puedes liberar cualquier curso cambiando su precio a <strong>$0.00 USD</strong> desde la pantalla de <span className="font-bold underline">Editar Curso</span>. ¡Cualquier curso que tenga precio $0 aparecerá automáticamente en esta sección!
+                  </p>
+                  <Button onClick={handleResetFilters}>
+                    Explorar Todos los Cursos &rarr;
+                  </Button>
+                </div>
               ) : (
-                <div className="text-center py-16 bg-white dark:bg-slate-900 border border-dashed border-slate-350 dark:border-slate-800 rounded-2xl p-6">
-                  <BookOpen className="h-12 w-12 text-slate-300 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold text-slate-700 dark:text-slate-300">No se encontraron cursos</h3>
-                  <p className="text-sm text-slate-500 dark:text-slate-455 mt-1 mb-6">Prueba a ajustar los criterios de búsqueda o filtros.</p>
+                <div className="text-center py-16 bg-white dark:bg-slate-900 border-2 border-slate-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] p-6">
+                  <BookOpen className="h-12 w-12 text-slate-400 mx-auto mb-4" />
+                  <h3 className="text-lg font-bold text-slate-950 dark:text-white">No se encontraron cursos</h3>
+                  <p className="text-sm text-slate-500 dark:text-slate-400 mt-1 mb-6">Prueba a ajustar los criterios de búsqueda o filtros.</p>
                   <Button onClick={handleResetFilters} variant="outline" size="sm">
                     Restablecer Búsqueda y Filtros
                   </Button>

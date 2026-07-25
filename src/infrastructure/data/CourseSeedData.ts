@@ -48,6 +48,28 @@ export function saveActiveState(courseId: number, isActive: boolean): void {
   }
 }
 
+export function getSavedPrice(courseId: number): string | null {
+  try {
+    const prices = JSON.parse(localStorage.getItem('oncourses_custom_prices') || '{}');
+    if (prices[courseId] !== undefined && prices[courseId] !== null) {
+      return String(prices[courseId]);
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+export function saveCustomPrice(courseId: number, price: string): void {
+  try {
+    const prices = JSON.parse(localStorage.getItem('oncourses_custom_prices') || '{}');
+    prices[courseId] = price;
+    localStorage.setItem('oncourses_custom_prices', JSON.stringify(prices));
+  } catch (err) {
+    console.warn('Failed to save custom price to localStorage', err);
+  }
+}
+
 export const COURSE_SEED_DETAILS: Record<string, RichCourseData> = {
   // Course 1: Python 3: Desde Cero hasta Inteligencia Artificial (COMPLETO 100%)
   python: {
@@ -455,6 +477,7 @@ export function enrichCourseData(course: Course): Course {
   const seed = COURSE_SEED_DETAILS[seedKey] || COURSE_SEED_DETAILS.python;
   const savedCover = getSavedCustomCover(canonicalId);
   const savedActive = getSavedActiveState(canonicalId);
+  const savedPrice = getSavedPrice(canonicalId);
 
   const sourceModules =
     course.modules && course.modules.length >= seed.modules.length ? course.modules : seed.modules;
@@ -471,6 +494,7 @@ export function enrichCourseData(course: Course): Course {
   return {
     ...course,
     id: canonicalId,
+    price: savedPrice !== null ? savedPrice : (course.price || '9.99'),
     cover_image: savedCover || course.cover_image || seed.cover_image,
     is_active: savedActive !== null ? savedActive : (course.is_active ?? true),
     description: course.description && course.description.length > 20 ? course.description : seed.description,
@@ -512,12 +536,13 @@ export function getFallbackCourse(id: number): Course {
   const seed = COURSE_SEED_DETAILS[seedKey] || COURSE_SEED_DETAILS.python;
   const savedCover = getSavedCustomCover(canonicalId);
   const savedActive = getSavedActiveState(canonicalId);
+  const savedPrice = getSavedPrice(canonicalId);
 
   return {
     id: canonicalId,
     title: title,
     slug: `curso-${canonicalId}`,
-    price: canonicalId % 2 === 0 ? '19.99' : '9.99',
+    price: savedPrice !== null ? savedPrice : (canonicalId % 2 === 0 ? '19.99' : '9.99'),
     cover_image: savedCover || seed.cover_image,
     category: 1,
     category_name: 'Desarrollo de Software',

@@ -10,6 +10,8 @@ import {
   saveCustomCover,
   getSavedActiveState,
   saveActiveState,
+  getSavedPrice,
+  saveCustomPrice,
 } from '../data/CourseSeedData';
 
 function readFileAsDataUrl(file: File): Promise<string> {
@@ -54,12 +56,14 @@ export class AxiosCourseRepository implements ICourseRepository {
           const bModLen = bCourse.modules?.length || 0;
           const savedCover = getSavedCustomCover(canonicalId);
           const savedActive = getSavedActiveState(canonicalId);
+          const savedPrice = getSavedPrice(canonicalId);
 
           const merged: Course = {
             ...fallback,
             ...bCourse,
             id: canonicalId,
             title: fallback.title, // Enforce clean canonical title
+            price: savedPrice !== null ? savedPrice : (bCourse.price || fallback.price),
             cover_image: savedCover || bCourse.cover_image || fallback.cover_image,
             is_active: savedActive !== null ? savedActive : (bCourse.is_active ?? true),
             modules: bModLen >= fallbackModLen ? bCourse.modules : fallback.modules,
@@ -88,6 +92,22 @@ export class AxiosCourseRepository implements ICourseRepository {
         allCourses = allCourses.filter((c) => Boolean(c.is_active) === targetActive);
       }
 
+      // Filter by max_price (e.g. max_price = 0 for free resources)
+      if (filters?.max_price !== undefined && filters?.max_price !== '') {
+        const maxP = parseFloat(String(filters.max_price));
+        if (!isNaN(maxP)) {
+          allCourses = allCourses.filter((c) => parseFloat(c.price || '0') <= maxP);
+        }
+      }
+
+      // Filter by min_price
+      if (filters?.min_price !== undefined && filters?.min_price !== '') {
+        const minP = parseFloat(String(filters.min_price));
+        if (!isNaN(minP)) {
+          allCourses = allCourses.filter((c) => parseFloat(c.price || '0') >= minP);
+        }
+      }
+
       return {
         results: allCourses,
         count: allCourses.length,
@@ -111,6 +131,20 @@ export class AxiosCourseRepository implements ICourseRepository {
       if (filters?.is_active !== undefined) {
         const targetActive = String(filters.is_active) === 'true';
         fallbackCourses = fallbackCourses.filter((c) => Boolean(c.is_active) === targetActive);
+      }
+
+      if (filters?.max_price !== undefined && filters?.max_price !== '') {
+        const maxP = parseFloat(String(filters.max_price));
+        if (!isNaN(maxP)) {
+          fallbackCourses = fallbackCourses.filter((c) => parseFloat(c.price || '0') <= maxP);
+        }
+      }
+
+      if (filters?.min_price !== undefined && filters?.min_price !== '') {
+        const minP = parseFloat(String(filters.min_price));
+        if (!isNaN(minP)) {
+          fallbackCourses = fallbackCourses.filter((c) => parseFloat(c.price || '0') >= minP);
+        }
       }
 
       return {
@@ -137,12 +171,14 @@ export class AxiosCourseRepository implements ICourseRepository {
       const backendTitleLower = (enriched.title || '').toLowerCase();
       const savedCover = getSavedCustomCover(targetId);
       const savedActive = getSavedActiveState(targetId);
+      const savedPrice = getSavedPrice(targetId);
 
       if (backendTitleLower.includes(targetTopicKeyword)) {
         return {
           ...enriched,
           id: targetId,
           title: fallback.title,
+          price: savedPrice !== null ? savedPrice : (enriched.price || fallback.price),
           cover_image: savedCover || enriched.cover_image || fallback.cover_image,
           is_active: savedActive !== null ? savedActive : (enriched.is_active ?? true),
           modules: enrichedModLen >= fallbackModLen ? enriched.modules : fallback.modules,
@@ -159,17 +195,25 @@ export class AxiosCourseRepository implements ICourseRepository {
     const newId = Date.now();
     let localCoverUrl = '';
     let fileObj: File | null = null;
+    let priceVal = '';
 
     if (course instanceof FormData) {
       const f = course.get('cover_image');
       if (f instanceof File) fileObj = f;
-    } else if (course && course.cover_image instanceof File) {
-      fileObj = course.cover_image;
+      const p = course.get('price');
+      if (p !== null) priceVal = String(p);
+    } else if (course && typeof course === 'object') {
+      if (course.cover_image instanceof File) fileObj = course.cover_image;
+      if (course.price !== undefined) priceVal = String(course.price);
     }
 
     if (fileObj) {
       localCoverUrl = await readFileAsDataUrl(fileObj);
       saveCustomCover(newId, localCoverUrl);
+    }
+
+    if (priceVal !== '') {
+      saveCustomPrice(newId, priceVal);
     }
 
     try {
@@ -200,6 +244,10 @@ export class AxiosCourseRepository implements ICourseRepository {
         saveCustomCover(enriched.id, localCoverUrl);
         enriched.cover_image = localCoverUrl;
       }
+      if (priceVal !== '') {
+        saveCustomPrice(enriched.id, priceVal);
+        enriched.price = priceVal;
+      }
       return enriched;
     } catch (error) {
       console.warn('Backend createCourse failed, creating local course instance', error);
@@ -210,6 +258,7 @@ export class AxiosCourseRepository implements ICourseRepository {
         ...fallback,
         id: newId,
         title: title,
+        price: priceVal || fallback.price,
         cover_image: localCoverUrl || fallback.cover_image,
       };
     }
@@ -220,6 +269,7 @@ export class AxiosCourseRepository implements ICourseRepository {
     let localCoverUrl = '';
     let fileObj: File | null = null;
     let isActiveValue: boolean | null = null;
+    let priceVal = '';
 
     if (course instanceof FormData) {
       const f = course.get('cover_image');
@@ -228,6 +278,8 @@ export class AxiosCourseRepository implements ICourseRepository {
       if (activeStr !== null) {
         isActiveValue = String(activeStr) === 'true';
       }
+      const p = course.get('price');
+      if (p !== null) priceVal = String(p);
     } else if (typeof course === 'object' && course !== null) {
       if (course.cover_image instanceof File) {
         fileObj = course.cover_image;
@@ -236,6 +288,9 @@ export class AxiosCourseRepository implements ICourseRepository {
         isActiveValue = course.is_active;
       } else if (typeof course.is_active === 'string') {
         isActiveValue = course.is_active === 'true';
+      }
+      if (course.price !== undefined) {
+        priceVal = String(course.price);
       }
     }
 
@@ -246,6 +301,10 @@ export class AxiosCourseRepository implements ICourseRepository {
 
     if (isActiveValue !== null) {
       saveActiveState(targetId, isActiveValue);
+    }
+
+    if (priceVal !== '') {
+      saveCustomPrice(targetId, priceVal);
     }
 
     try {
@@ -280,12 +339,17 @@ export class AxiosCourseRepository implements ICourseRepository {
         saveActiveState(targetId, isActiveValue);
         enriched.is_active = isActiveValue;
       }
+      if (priceVal !== '') {
+        saveCustomPrice(targetId, priceVal);
+        enriched.price = priceVal;
+      }
       return enriched;
     } catch (error) {
       console.warn(`Backend updateCourse failed for course ${targetId}, returning enriched local update`, error);
       const fallback = getFallbackCourse(targetId);
       const savedCover = getSavedCustomCover(targetId);
       const savedActive = getSavedActiveState(targetId);
+      const savedPrice = getSavedPrice(targetId);
 
       const plainFields: Record<string, any> = {};
       if (course instanceof FormData) {
@@ -304,6 +368,7 @@ export class AxiosCourseRepository implements ICourseRepository {
         ...fallback,
         ...plainFields,
         id: targetId,
+        price: priceVal !== '' ? priceVal : (savedPrice !== null ? savedPrice : fallback.price),
         cover_image: localCoverUrl || savedCover || fallback.cover_image,
         is_active: isActiveValue !== null ? isActiveValue : (savedActive !== null ? savedActive : fallback.is_active),
       };
