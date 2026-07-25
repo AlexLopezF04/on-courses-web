@@ -26,6 +26,7 @@ export const CourseDetailPage: React.FC = () => {
   const [course, setCourse] = useState<Course | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
   const [isEnrolled, setIsEnrolled] = useState(false);
+  const [enrollmentProgress, setEnrollmentProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [isEnrolling, setIsEnrolling] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -98,14 +99,33 @@ export const CourseDetailPage: React.FC = () => {
         if (isAuthenticated) {
           try {
             const enrollments = await getEnrollmentsUseCase.execute({ course: courseId });
-            setIsEnrolled(
-              Boolean(
-                (enrollments && enrollments.count > 0) ||
-                (enrollments && Array.isArray(enrollments.results) && enrollments.results.length > 0)
-              )
-            );
+            const match = enrollments?.results?.find((e: any) => e.course === courseId) || enrollments?.results?.[0];
+            
+            if (match) {
+              setIsEnrolled(true);
+              const prog = Math.round(parseFloat(match.total_progress || '0'));
+              setEnrollmentProgress(prog);
+            } else {
+              // Check local storage enrollment cache for current user
+              try {
+                const userKey = user?.username?.toLowerCase() || String(user?.id);
+                const storedCache = JSON.parse(localStorage.getItem('oncourses_user_enrollments') || '{}');
+                const userStored = storedCache[userKey] || [];
+                const cached = userStored.find((e: any) => e.course === courseId);
+
+                if (cached) {
+                  setIsEnrolled(true);
+                  const cachedProg = Math.round(parseFloat(cached.total_progress || '0'));
+                  setEnrollmentProgress(cachedProg);
+                } else {
+                  setIsEnrolled(false);
+                }
+              } catch {
+                setIsEnrolled(false);
+              }
+            }
           } catch (enrollErr) {
-            console.warn('Could not check enrollment status, defaulting to false', enrollErr);
+            console.warn('Could not check enrollment status', enrollErr);
             setIsEnrolled(false);
           }
         }
@@ -118,7 +138,7 @@ export const CourseDetailPage: React.FC = () => {
     };
 
     loadData();
-  }, [courseId, isAuthenticated]);
+  }, [courseId, isAuthenticated, user]);
 
   const handleOpenEditModal = () => {
     if (!course) return;
@@ -408,14 +428,17 @@ export const CourseDetailPage: React.FC = () => {
             </div>
 
             <div className="p-6 flex flex-col gap-6">
-              <div>
-                <span className="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider">Inversión única</span>
-                <div className="flex items-baseline gap-2 mt-1">
-                  <span className="text-3xl font-black text-slate-950 dark:text-white font-display">
-                    {parseFloat(course.price) === 0 ? 'Gratis' : `$${course.price}`}
-                  </span>
+              {/* Show Price ONLY if student is NOT enrolled and NOT in Admin/Professor management mode */}
+              {!isEnrolled && user?.role !== 'admin' && user?.role !== 'professor' && (
+                <div>
+                  <span className="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider">Inversión única</span>
+                  <div className="flex items-baseline gap-2 mt-1">
+                    <span className="text-3xl font-black text-slate-950 dark:text-white font-display">
+                      {parseFloat(course.price) === 0 ? 'Gratis' : `$${course.price}`}
+                    </span>
+                  </div>
                 </div>
-              </div>
+              )}
 
               {user?.role === 'admin' || user?.role === 'professor' ? (
                 <div className="flex flex-col gap-3 bg-amber-50 dark:bg-amber-950/40 border-2 border-slate-950 p-4 text-xs font-bold text-slate-950 dark:text-amber-300 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00b835]">
@@ -443,22 +466,42 @@ export const CourseDetailPage: React.FC = () => {
                   </div>
                 </div>
               ) : isEnrolled ? (
-                <div className="flex flex-col gap-3">
-                  <div className="flex items-center gap-2 justify-center py-2 px-3 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border-2 border-slate-950 text-xs font-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-                    <CheckCircle className="h-4 w-4 text-[#00cc33]" />
-                    <span>¡Ya estás inscrito en este curso!</span>
+                <div className="flex flex-col gap-4">
+                  {/* Replaced Price & Cart with Course Progress Card */}
+                  <div className="bg-emerald-50 dark:bg-emerald-950/40 border-2 border-slate-950 p-4 text-xs font-bold shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00b835]">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="flex items-center gap-1.5 text-emerald-800 dark:text-emerald-300 font-extrabold uppercase text-[11px]">
+                        <CheckCircle className="h-4 w-4 text-[#00cc33]" />
+                        Alumno Matriculado
+                      </span>
+                      <span className="text-[10px] font-mono font-black bg-[#00cc33] text-slate-950 px-2 py-0.5 border border-slate-950">
+                        {enrollmentProgress}% COMPLETADO
+                      </span>
+                    </div>
+
+                    {/* Progress Bar */}
+                    <div className="w-full bg-slate-200 dark:bg-slate-800 border border-slate-950 h-3 overflow-hidden rounded-none my-2.5">
+                      <div
+                        className="bg-[#00cc33] h-full transition-all duration-500"
+                        style={{ width: `${Math.max(enrollmentProgress, 5)}%` }}
+                      />
+                    </div>
+
+                    <p className="text-slate-600 dark:text-slate-300 text-xs font-medium mt-1">
+                      Acceso vitalicio activado. Tu factura electrónica fue autorizada y enviada a tu correo.
+                    </p>
                   </div>
-                  
+
                   {course.modules?.[0]?.lessons?.[0] ? (
                     <Link to={`/learn/${courseId}/lesson/${course.modules[0].lessons[0].id}`} className="w-full">
-                      <Button className="w-full flex items-center justify-center gap-2">
+                      <Button className="w-full flex items-center justify-center gap-2 py-3">
                         <Play className="h-4 w-4 fill-current" />
-                        Continuar Aprendizaje
+                        <span>Continuar Aprendizaje &rarr;</span>
                       </Button>
                     </Link>
                   ) : (
                     <Link to="/dashboard" className="w-full">
-                      <Button className="w-full">Ir al panel de estudiante</Button>
+                      <Button className="w-full py-3">Ir a Mi Panel de Estudiante</Button>
                     </Link>
                   )}
                 </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Course } from '@domain/entities/Course';
 import { Button } from '../Button';
-import { Printer, CheckCircle2, ArrowRight, Download, FileText } from 'lucide-react';
+import { Printer, CheckCircle2, ArrowRight, Download, FileText, Mail } from 'lucide-react';
 import { BillingDetails } from './PaymentCheckoutModal';
 
 export interface InvoiceModalProps {
@@ -62,6 +62,21 @@ export const InvoiceModal: React.FC<InvoiceModalProps> = ({
               <Printer className="h-3.5 w-3.5" />
               <span>Imprimir</span>
             </button>
+          </div>
+        </div>
+
+        {/* Email Invoice Dispatch Notification Banner */}
+        <div className="p-4 mx-8 mt-6 bg-emerald-50 border-2 border-slate-950 text-slate-950 text-xs font-bold shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] flex items-start gap-3 print:hidden">
+          <div className="p-2 bg-[#00cc33] text-slate-950 border border-slate-950 shrink-0">
+            <Mail className="h-5 w-5" />
+          </div>
+          <div>
+            <h4 className="font-extrabold text-sm text-slate-950">
+              ✉️ Factura Electrónica Enviada al Correo
+            </h4>
+            <p className="text-xs font-medium text-slate-700 mt-0.5">
+              Hemos enviado una copia digital autorizada en PDF y XML a: <span className="font-bold underline text-slate-950">{billing.billingEmail || 'tu correo registrado'}</span>.
+            </p>
           </div>
         </div>
 
