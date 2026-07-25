@@ -120,28 +120,18 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Brand Graphic Title Element */}
-        <div className="mt-16 pt-10 border-t-2 border-slate-200 dark:border-slate-800/80 w-full overflow-hidden flex flex-col items-center justify-center select-none py-6">
-          <div className="relative group flex items-center justify-center max-w-full px-2">
-            {/* Ambient Green Glow */}
-            <div className="absolute inset-0 bg-[#00cc33]/15 dark:bg-[#00ff41]/25 rounded-full blur-3xl pointer-events-none" />
-            
-            <div className="relative flex items-center gap-2 sm:gap-4">
-              <span className="font-mono font-black text-3xl sm:text-5xl md:text-7xl text-[#00cc33] dark:text-[#00ff41] drop-shadow-[0_2px_8px_rgba(0,204,51,0.4)]">
-                &lt;
-              </span>
-              <span
-                className="font-mono font-black text-5xl sm:text-7xl md:text-8xl lg:text-[10rem] tracking-tight uppercase leading-none text-slate-950 dark:text-white dark:bg-clip-text dark:text-transparent dark:bg-gradient-to-r dark:from-[#00ff41] dark:via-emerald-400 dark:to-[#00cc33] drop-shadow-[0_4px_16px_rgba(0,204,51,0.25)] dark:drop-shadow-[0_4px_24px_rgba(0,255,65,0.4)] transition-all duration-300"
-                style={{
-                  WebkitTextStroke: '2.5px #00cc33',
-                }}
-              >
-                ONCOURSES
-              </span>
-              <span className="font-mono font-black text-3xl sm:text-5xl md:text-7xl text-[#00cc33] dark:text-[#00ff41] drop-shadow-[0_2px_8px_rgba(0,204,51,0.4)]">
-                /&gt;
-              </span>
-            </div>
+        {/* Giant Brand Banner with Animated Matrix Grid Background */}
+        <div className="relative mt-16 py-10 px-4 border-2 border-slate-950 bg-slate-950 text-white shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_#00b835] overflow-hidden flex items-center justify-center select-none transition-all">
+          {/* Animated Matrix Grid background */}
+          <div className="animate-grid absolute inset-0 bg-[linear-gradient(rgba(0,255,65,0.24)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,65,0.16)_1px,transparent_1px)] bg-[size:36px_36px] pointer-events-none" />
+          
+          {/* Ambient Glow */}
+          <div className="absolute inset-0 bg-[#00cc33]/15 rounded-full blur-3xl pointer-events-none" />
+
+          {/* Brand Logo Text: "On" (White) + "Courses" (Vibrant Green) */}
+          <div className="relative z-10 font-display font-black text-5xl sm:text-7xl md:text-8xl lg:text-[9rem] tracking-tight uppercase leading-none text-center">
+            <span className="text-white drop-shadow-[0_4px_12px_rgba(255,255,255,0.25)]">On</span>
+            <span className="text-[#00cc33] dark:text-[#00ff41] drop-shadow-[0_4px_24px_rgba(0,255,65,0.5)]">Courses</span>
           </div>
         </div>
 
