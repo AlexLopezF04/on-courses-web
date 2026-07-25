@@ -37,6 +37,9 @@ export const Footer: React.FC = () => {
             </div>
             <Link 
               to="/courses" 
+              onClick={() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
               className="mt-4 inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#00cc33] hover:bg-[#00ff41] text-slate-950 font-sans font-bold text-xs uppercase tracking-wider border-2 border-slate-950 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00b835] hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all cursor-pointer w-fit"
             >
               <span>Ir al catálogo</span>
