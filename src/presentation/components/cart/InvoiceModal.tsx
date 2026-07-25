@@ -24,7 +24,7 @@ export const InvoiceModal: React.FC<InvoiceModalProps> = ({
   courses,
   billing,
   paymentMethod,
-  totalRaw,
+  totalRaw: _totalRaw,
   totalFinal,
   discountAmount,
   invoiceNumber,
@@ -149,8 +149,8 @@ export const InvoiceModal: React.FC<InvoiceModalProps> = ({
           <div className="flex justify-end pt-2">
             <div className="w-full max-w-xs border-2 border-slate-950 bg-slate-50 p-4 space-y-1.5 text-xs font-mono">
               <div className="flex justify-between text-slate-600">
-                <span>Subtotal Bruto:</span>
-                <span>${totalRaw.toFixed(2)} USD</span>
+                <span>Subtotal (sin IVA):</span>
+                <span>${subtotalBeforeTax.toFixed(2)} USD</span>
               </div>
 
               {discountAmount > 0 && (
@@ -162,7 +162,7 @@ export const InvoiceModal: React.FC<InvoiceModalProps> = ({
 
               {!isFree && (
                 <div className="flex justify-between text-slate-600">
-                  <span>IVA Incluido (15%):</span>
+                  <span>IVA (15%):</span>
                   <span>${taxAmount.toFixed(2)} USD</span>
                 </div>
               )}

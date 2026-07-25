@@ -26,7 +26,7 @@ export const PaymentCheckoutModal: React.FC<PaymentModalProps> = ({
   isOpen,
   onClose,
   courses,
-  totalRaw,
+  totalRaw: _totalRaw,
   totalFinal,
   discountAmount,
   appliedCoupon,
@@ -315,21 +315,21 @@ export const PaymentCheckoutModal: React.FC<PaymentModalProps> = ({
           {/* Pricing Breakdown Summary */}
           <div className="p-4 border-2 border-slate-950 bg-slate-100 dark:bg-slate-950 space-y-1.5 text-xs font-medium">
             <div className="flex justify-between text-slate-600 dark:text-slate-400">
-              <span>Subtotal Cursos:</span>
-              <span className="font-bold">${totalRaw.toFixed(2)} USD</span>
+              <span>Subtotal (sin IVA):</span>
+              <span className="font-bold font-mono">${subtotalBeforeTax.toFixed(2)} USD</span>
             </div>
 
             {discountPercent > 0 && (
               <div className="flex justify-between text-emerald-600 dark:text-emerald-400 font-bold">
                 <span>Descuento ({appliedCoupon}):</span>
-                <span>-${discountAmount.toFixed(2)} USD</span>
+                <span className="font-mono">-${discountAmount.toFixed(2)} USD</span>
               </div>
             )}
 
             {!isFree && (
-              <div className="flex justify-between text-slate-500 dark:text-slate-400">
-                <span>IVA Incluido (15%):</span>
-                <span className="font-bold">${taxAmount.toFixed(2)} USD</span>
+              <div className="flex justify-between text-slate-600 dark:text-slate-400">
+                <span>IVA (15%):</span>
+                <span className="font-bold font-mono">${taxAmount.toFixed(2)} USD</span>
               </div>
             )}
 
