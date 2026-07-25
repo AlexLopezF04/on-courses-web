@@ -120,8 +120,20 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
+        {/* Giant Brand Stroke Watermark (inspired by reference image) */}
+        <div className="mt-16 pt-8 border-t border-slate-200 dark:border-slate-850 w-full overflow-hidden flex justify-center items-center select-none pointer-events-none opacity-20 dark:opacity-30">
+          <span
+            className="font-display font-black text-6xl sm:text-8xl md:text-9xl lg:text-[12rem] tracking-tighter text-transparent uppercase leading-none whitespace-nowrap text-slate-900 dark:text-white"
+            style={{
+              WebkitTextStroke: '2.5px currentColor',
+            }}
+          >
+            oncourses
+          </span>
+        </div>
+
         {/* Bottom copyright line */}
-        <div className="mt-12 border-t border-slate-200 dark:border-slate-800 pt-8 flex items-center justify-center gap-2 text-xs font-bold text-slate-800 dark:text-slate-200">
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-2 text-xs font-bold text-slate-800 dark:text-slate-200 text-center">
           <div className="p-1 rounded-md bg-white dark:bg-slate-900 border border-slate-950 dark:border-slate-800 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_#00b835] flex items-center justify-center shrink-0">
             <Logo className="h-4 w-4 drop-shadow" />
           </div>
