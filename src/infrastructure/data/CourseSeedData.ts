@@ -1525,6 +1525,278 @@ Has completado con éxito el curso práctico de **Desarrollo iOS con Swift y Swi
         ]
       }
     ]
+  },
+
+  // Course: Flutter 3.24 & Dart desde Cero: Desarrollo Móvil Multiplataforma (COMPLETO 100%)
+  flutter: {
+    cover_image: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?q=80&w=1200&auto=format&fit=crop',
+    description: 'Manual de estudio profesional en desarrollo móvil multiplataforma para iOS y Android con Flutter 3.24 y Dart 3.5. Domina la sintaxis de Dart con Sound Null Safety, arquitectura de Widgets declarativos (Stateless y Stateful), gestión de estado con Provider/Riverpod, consumo de APIs REST con Dio y persistencia local.',
+    modules: [
+      {
+        id: 801,
+        course: 8,
+        order: 1,
+        title: 'Módulo 1: Fundamentos del Lenguaje Dart 3.5+ y Programación Reactiva',
+        description: 'Sintaxis de Dart, Sound Null Safety, clases, mixins, modificadores de clase y programación asíncrona con Futures y Streams.',
+        lessons: [
+          {
+            id: 8001,
+            module: 801,
+            order: 1,
+            title: 'Lección 1.1: Sintaxis Moderna de Dart, Null Safety y Tipos Primarios',
+            duration_seconds: 900,
+            content_text: `### 🎯 Manual Teórico-Práctico: Sintaxis de Dart 3.5 y Sound Null Safety
+
+Bienvenido a la primera guía de estudio del curso de **Flutter 3.24 & Dart desde Cero**. En esta lección aprenderás los fundamentos del lenguaje **Dart**, el motor que impulsa a Flutter para compilar a código nativo de ARM64 en iOS y Android.
+
+---
+
+#### 1. Inmutabilidad y Declaración de Variables en Dart
+
+- **\`final\`:** Variable cuyo valor se asigna una sola vez durante la ejecución.
+- **\`const\`:** Constante en tiempo de compilación. Las vistas de Flutter declaradas como \`const\` reducen el trabajo del motor gráfico Skia/Impeller.
+- **\`var\`:** Inferencia dinámica de tipo en tiempo de compilación.
+
+\`\`\`dart
+void main() {
+  const String appName = 'OnCourses Mobile';
+  final DateTime fechaInicio = DateTime.now();
+  var totalEstudiantes = 1500;
+  
+  print('Bienvenido a $appName. Inicio: $fechaInicio. Estudiantes: $totalEstudiantes');
+}
+\`\`\`
+
+---
+
+#### 2. Sound Null Safety en Dart
+
+Dart garantiza que las variables no puedan contener el valor \`null\` a menos que las declares explícitamente como opcionales con el símbolo **\`?\`**.
+
+\`\`\`dart
+// Variable no-nula (Garantizada por Dart)
+String correoObligatorio = 'alex@oncourses.app';
+
+// Variable opcional
+String? telefonoOpcional = null;
+
+// Operador Nil Coalescing '??'
+String telefonoFinal = telefonoOpcional ?? 'Sin teléfono registrado';
+
+// Acceso seguro con '?.'
+int? longitud = telefonoOpcional?.length;
+\`\`\`
+
+---
+
+#### 💡 Tabla de Operadores Null Safety en Dart
+
+| Operador | Nombre | Descripción de Funcionamiento |
+| --- | --- | --- |
+| **\`?\`** | Nullable Type | Indica que una variable puede contener \`null\`. |
+| **\`!\`** | Null Assertion | Fuerza a Dart a tratar un valor opcional como no-nulo (Usar con precaución). |
+| **\`??\`** | If-Null Operator | Retorna el valor de la izquierda si no es nulo, de lo contrario evalúa la derecha. |
+| **\`??=\`** | Assignment Operator | Asigna el valor solo si la variable actual es \`null\`. |`,
+            resources: ['https://dart.dev/language/null-safety']
+          },
+          {
+            id: 8002,
+            module: 801,
+            order: 2,
+            title: 'Lección 1.2: Programación Orientada a Objetos en Dart, Mixins y Modificadores (sealed, final, base)',
+            duration_seconds: 1050,
+            content_text: `### 🏛️ Manual de Estudio: POO Avanzada en Dart 3 y Mixins
+
+Dart 3 introdujo nuevos modificadores de clase para mejorar la seguridad del diseño de librerías y la arquitectura de datos.
+
+---
+
+#### 1. Constructores Nombrados y Reutilización con Mixins
+
+\`\`\`dart
+// Definición de un Mixin para añadir capacidad de loggeo
+mixin LoggerMixin {
+  void log(String mensaje) {
+    print('[LOG \${DateTime.now()}]: $mensaje');
+  }
+}
+
+// Clase base con constructor nombrado
+class CursoModel with LoggerMixin {
+  final int id;
+  final String titulo;
+  final double precio;
+
+  // Constructor const de alto rendimiento
+  const CursoModel({
+    required this.id,
+    required this.titulo,
+    required this.precio,
+  });
+
+  // Constructor nombrado para crear instancias gratuitas
+  CursoModel.gratuito({required this.id, required this.titulo}) : precio = 0.0;
+
+  void mostrarDetalle() {
+    log('Curso #$id: $titulo - USD $$precio');
+  }
+}
+\`\`\``,
+            resources: ['https://dart.dev/language/mixins']
+          },
+          {
+            id: 8003,
+            module: 801,
+            order: 3,
+            title: 'Lección 1.3: Asincronía en Dart: Futures, Streams y Async/Await',
+            duration_seconds: 960,
+            content_text: `### ⚡ Manual Práctico: Futures y Streams Reactivos en Dart
+
+Aprende a procesar operaciones asíncronas de red mediante **\`Future<T>\`** y flujos continuos de datos reactivos con **\`Stream<T>\`**.`,
+            resources: ['https://dart.dev/codelabs/async-await']
+          }
+        ]
+      },
+      {
+        id: 802,
+        course: 8,
+        order: 2,
+        title: 'Módulo 2: Arquitectura Flutter 3.24, Widgets y Gestión de Estado',
+        description: 'Construcción de árbol de widgets UI, layouts responsivos y arquitectura de estado con Provider.',
+        lessons: [
+          {
+            id: 8004,
+            module: 802,
+            order: 1,
+            title: 'Lección 2.1: El Árbol de Widgets de Flutter (StatelessWidget vs StatefulWidget)',
+            duration_seconds: 1100,
+            content_text: `### 💙 Manual Avanzado: Componentes UI con StatelessWidget y StatefulWidget
+
+En Flutter, absolutamente todo es un **Widget**. El motor gráfico redibuja las vistas con 60 a 120 fotogramas por segundo (FPS).
+
+---
+
+#### 1. Ejemplo de StatefulWidget con Contador
+
+\`\`\`dart
+import 'package:flutter/material.dart';
+
+class ContadorLeccionesWidget extends StatefulWidget {
+  final String tituloCurso;
+
+  const ContadorLeccionesWidget({Key? key, required this.tituloCurso}) : super(key: key);
+
+  @override
+  State<ContadorLeccionesWidget> createState() => _ContadorLeccionesWidgetState();
+}
+
+class _ContadorLeccionesWidgetState extends State<ContadorLeccionesWidget> {
+  int _contadorLecciones = 0;
+
+  void _incrementarLeccion() {
+    setState(() {
+      _contadorLecciones++;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 4,
+      margin: const EdgeInsets.all(16),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(widget.tituloCurso, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 12),
+            Text('Lecciones Vistas: $_contadorLecciones', style: const TextStyle(fontSize: 16, color: Colors.green)),
+            const SizedBox(height: 16),
+            ElevatedButton.icon(
+              onPressed: _incrementarLeccion,
+              icon: const Icon(Icons.check_circle),
+              label: const Text('Completar Lección'),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+\`\`\``,
+            resources: ['https://docs.flutter.dev/ui/widgets-intro']
+          },
+          {
+            id: 8005,
+            module: 802,
+            order: 2,
+            title: 'Lección 2.2: Layouts Avanzados en Flutter (Column, Row, Container, ListView, GridView)',
+            duration_seconds: 1250,
+            content_text: `### 🎨 Manual de Estudio: Layouts Adaptables y Listas Dinámicas en Flutter
+
+Aprende a estructurar pantallas móviles optimizadas para teléfonos y tablets utilizando pilas de layout y vistas desplegables eficientes.`,
+            resources: ['https://docs.flutter.dev/ui/layout']
+          },
+          {
+            id: 8006,
+            module: 802,
+            order: 3,
+            title: 'Lección 2.3: Gestión de Estado Avanzada con Provider y ChangeNotifier',
+            duration_seconds: 1020,
+            content_text: `### ⚡ Manual Práctico: Gestión de Estado Global con Provider en Flutter
+
+Separa la lógica de negocio de la capa de interfaz de usuario mediante el patrón **Provider / ChangeNotifier**.`,
+            resources: ['https://pub.dev/packages/provider']
+          }
+        ]
+      },
+      {
+        id: 803,
+        course: 8,
+        order: 3,
+        title: 'Módulo 3: Peticiones HTTP, Persistencia Local y Despliegue en App Store & Play Store',
+        description: 'Consumo de APIs REST con Dio/Http, almacenamiento local con SharedPreferences y publicación de apps.',
+        lessons: [
+          {
+            id: 8007,
+            module: 803,
+            order: 1,
+            title: 'Lección 3.1: Consumo de APIs REST con Dio / HTTP y Serialización JSON',
+            duration_seconds: 1150,
+            content_text: `### 🌐 Manual Teórico-Práctico: Peticiones de Red HTTP en Flutter
+
+Conexión asíncrona con servicios web REST utilizando el paquete \`http\` o \`dio\`.`,
+            resources: ['https://pub.dev/packages/http']
+          },
+          {
+            id: 8008,
+            module: 803,
+            order: 2,
+            title: 'Lección 3.2: Persistencia de Datos Local (SharedPreferences & SQLite)',
+            duration_seconds: 1100,
+            content_text: `### 💾 Manual Práctico: Almacenamiento Local de Preferencias y Caché
+
+Almacenamiento de tokens de autenticación y estados fuera de línea mediante **\`SharedPreferences\`**.`,
+            resources: ['https://pub.dev/packages/shared_preferences']
+          },
+          {
+            id: 8009,
+            module: 803,
+            order: 3,
+            title: 'Lección 3.3: Proyecto Integrador: App Móvil Completa de E-Learning Multiplataforma',
+            duration_seconds: 1600,
+            content_text: `### 🚀 Proyecto Integrador: Aplicación Flutter Multiplataforma
+
+Construcción y generación de paquetes APK/AAB para Android y Bundle para iOS.
+
+#### 🏆 ¡Felicidades!
+Has completado con éxito el curso práctico de **Flutter 3.24 & Dart desde Cero**.`,
+            resources: ['https://docs.flutter.dev/deployment/android']
+          }
+        ]
+      }
+    ]
   }
 };
 
@@ -1532,6 +1804,7 @@ Has completado con éxito el curso práctico de **Desarrollo iOS con Swift y Swi
 COURSE_SEED_DETAILS.sql = COURSE_SEED_DETAILS.postgresql;
 COURSE_SEED_DETAILS.ios = COURSE_SEED_DETAILS.swift;
 COURSE_SEED_DETAILS.nextjs = COURSE_SEED_DETAILS.react;
+COURSE_SEED_DETAILS.dart = COURSE_SEED_DETAILS.flutter;
 
 /**
  * Utility function to enrich any course from backend or fallback
@@ -1541,7 +1814,9 @@ export function enrichCourseData(course: Course): Course {
   const slugLower = (course.slug || '').toLowerCase();
 
   let seedKey = 'python';
-  if (titleLower.includes('react') || titleLower.includes('next') || slugLower.includes('react') || slugLower.includes('next') || course.id === 2) {
+  if (titleLower.includes('flutter') || titleLower.includes('dart') || slugLower.includes('flutter') || slugLower.includes('dart') || course.id === 8) {
+    seedKey = 'flutter';
+  } else if (titleLower.includes('react') || titleLower.includes('next') || slugLower.includes('react') || slugLower.includes('next') || course.id === 2) {
     seedKey = 'react';
   } else if (titleLower.includes('swift') || titleLower.includes('ios') || titleLower.includes('apple') || slugLower.includes('swift') || slugLower.includes('ios') || course.id === 7) {
     seedKey = 'swift';
@@ -1562,7 +1837,7 @@ export function enrichCourseData(course: Course): Course {
     seedKey = 'postgresql';
   }
 
-  const seed = COURSE_SEED_DETAILS[seedKey] || COURSE_SEED_DETAILS.react;
+  const seed = COURSE_SEED_DETAILS[seedKey] || COURSE_SEED_DETAILS.flutter;
 
   // Prefer seed.modules if backend has fewer modules than seed (e.g. 1 module vs 3 modules)
   const sourceModules =
@@ -1597,11 +1872,12 @@ export function getFallbackCourse(id: number): Course {
     5: 'PostgreSQL: Optimización de Consultas y Modelado',
     6: 'Fundamento de Bases de Datos - SQL',
     7: 'Desarrollo iOS con Swift y SwiftUI desde Cero',
+    8: 'Flutter 3.24 & Dart desde Cero: Desarrollo Móvil Multiplataforma',
   };
 
-  const title = titles[id] || (id === 2 ? 'React 19 & Next.js 15: Guía Práctica Fullstack' : `Curso #${id}: Desarrollo Web & Móvil`);
-  const seedKey = id === 1 ? 'python' : (id === 2 ? 'react' : (id === 7 ? 'swift' : 'postgresql'));
-  const seed = COURSE_SEED_DETAILS[seedKey] || COURSE_SEED_DETAILS.react;
+  const title = titles[id] || (id === 8 ? 'Flutter 3.24 & Dart desde Cero: Desarrollo Móvil Multiplataforma' : `Curso #${id}: Desarrollo Web & Móvil`);
+  const seedKey = id === 1 ? 'python' : (id === 2 ? 'react' : (id === 7 ? 'swift' : (id === 8 ? 'flutter' : 'postgresql')));
+  const seed = COURSE_SEED_DETAILS[seedKey] || COURSE_SEED_DETAILS.flutter;
 
   return {
     id: id,
@@ -1610,7 +1886,7 @@ export function getFallbackCourse(id: number): Course {
     price: id % 2 === 0 ? '19.99' : '9.99',
     cover_image: seed.cover_image,
     category: 1,
-    category_name: 'Desarrollo Web & React',
+    category_name: 'Desarrollo Móvil Multiplataforma',
     professor_name: 'Prof. Alex López',
     is_active: true,
     modules_count: seed.modules.length,
