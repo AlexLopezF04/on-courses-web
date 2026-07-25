@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { BookOpen, Info, Mailbox, Database, Code, Terminal, GitBranch, Building2, MapPin, ShieldCheck, X } from 'lucide-react';
+import { BookOpen, Info, Mailbox, Database, Code, Terminal, GitBranch, Building2, MapPin, ShieldCheck, ArrowRight, X } from 'lucide-react';
 import { Logo } from './Logo';
 import { LegalModal, PricingModal, AboutModal, NewsletterModal } from './FooterModals';
 
@@ -11,62 +11,63 @@ export const Footer: React.FC = () => {
   const [showNewsletterModal, setShowNewsletterModal] = useState(false);
 
   return (
-    <footer className="border-t border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-950 py-16 text-slate-600 dark:text-slate-400">
+    <footer className="border-t-2 border-slate-950 bg-slate-50 dark:border-slate-800 dark:bg-slate-950 py-16 text-slate-600 dark:text-slate-400 font-mono">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Col 1: Logo & Brand Info */}
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-2.5">
               <Logo className="h-9 w-9" />
-              <span className="font-display font-bold tracking-tight text-slate-900 dark:text-white text-xl">
+              <span className="font-display font-black tracking-tight text-slate-900 dark:text-white text-xl">
                 OnCourses
               </span>
             </div>
-            <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+            <p className="text-xs sm:text-sm font-mono text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
               Estudia desarrollo de software, algoritmos y bases de datos de manera premium y estructurada en OnCourses.
             </p>
-            <div className="flex flex-col gap-2.5 text-xs text-slate-500 dark:text-slate-400">
+            <div className="flex flex-col gap-2.5 text-xs font-mono font-bold text-slate-600 dark:text-slate-400">
               <div className="flex items-center gap-2">
-                <Building2 className="h-4 w-4 text-slate-400 shrink-0" />
+                <Building2 className="h-4 w-4 text-[#00cc33] shrink-0" />
                 <span>Universidad UTE</span>
               </div>
               <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-slate-400 shrink-0" />
+                <MapPin className="h-4 w-4 text-[#00cc33] shrink-0" />
                 <span>Tulcán, Ecuador</span>
               </div>
             </div>
             <Link 
               to="/courses" 
-              className="mt-4 inline-flex items-center justify-center h-[42px] px-5 w-fit rounded-xl border border-slate-350 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-850 transition-colors text-sm font-semibold shadow-sm"
+              className="mt-4 inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#00cc33] hover:bg-[#00ff41] text-slate-950 font-mono font-black text-xs uppercase tracking-wider border-2 border-slate-950 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00b835] hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all cursor-pointer w-fit"
             >
-              Ir al catálogo
+              <span>Ir al catálogo</span>
+              <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
 
           {/* Col 2: Plataforma */}
           <div className="flex flex-col gap-4">
-            <h3 className="font-display font-semibold text-slate-900 dark:text-white text-sm uppercase tracking-wider">
+            <h3 className="font-display font-black text-slate-900 dark:text-white text-sm uppercase tracking-wider">
               Plataforma
             </h3>
-            <div className="flex flex-col gap-2.5 text-sm">
-              <Link to="/courses" className="flex items-center gap-2 hover:text-brand-500 transition-colors">
+            <div className="flex flex-col gap-2.5 text-xs sm:text-sm font-mono font-bold">
+              <Link to="/courses" className="flex items-center gap-2 hover:text-[#00cc33] transition-colors">
                 <BookOpen className="h-4 w-4 text-emerald-500" />
                 <span>Cursos</span>
               </Link>
-              <Link to="/courses?max_price=0" className="flex items-center gap-2 hover:text-brand-500 transition-colors">
+              <Link to="/courses?max_price=0" className="flex items-center gap-2 hover:text-[#00cc33] transition-colors">
                 <Info className="h-4 w-4 text-brand-500" />
                 <span>Recursos Gratis</span>
               </Link>
               <button
                 onClick={() => setShowNewsletterModal(true)}
-                className="flex items-center gap-2 text-left hover:text-brand-500 transition-colors cursor-pointer"
+                className="flex items-center gap-2 text-left hover:text-[#00cc33] transition-colors cursor-pointer"
               >
                 <Mailbox className="h-4 w-4 text-pink-500" />
                 <span>Newsletter</span>
               </button>
               <button
                 onClick={() => setShowAboutModal(true)}
-                className="flex items-center gap-2 text-left hover:text-brand-500 transition-colors cursor-pointer"
+                className="flex items-center gap-2 text-left hover:text-[#00cc33] transition-colors cursor-pointer"
               >
                 <Info className="h-4 w-4 text-emerald-500" />
                 <span>Nosotros</span>
@@ -76,27 +77,27 @@ export const Footer: React.FC = () => {
 
           {/* Col 3: Cursos Temas */}
           <div className="flex flex-col gap-4">
-            <h3 className="font-display font-semibold text-slate-900 dark:text-white text-sm uppercase tracking-wider">
+            <h3 className="font-display font-black text-slate-900 dark:text-white text-sm uppercase tracking-wider">
               Cursos Destacados
             </h3>
-            <div className="flex flex-col gap-2.5 text-sm">
-              <Link to="/courses?search=terminal" className="flex items-center gap-2 hover:text-brand-500 transition-colors">
+            <div className="flex flex-col gap-2.5 text-xs sm:text-sm font-mono font-bold">
+              <Link to="/courses?search=terminal" className="flex items-center gap-2 hover:text-[#00cc33] transition-colors">
                 <Terminal className="h-4 w-4 text-emerald-500" />
                 <span>Bash y terminal</span>
               </Link>
-              <Link to="/courses?search=python" className="flex items-center gap-2 hover:text-brand-500 transition-colors">
+              <Link to="/courses?search=python" className="flex items-center gap-2 hover:text-[#00cc33] transition-colors">
                 <Code className="h-4 w-4 text-blue-500" />
                 <span>Python</span>
               </Link>
-              <Link to="/courses?search=javascript" className="flex items-center gap-2 hover:text-brand-500 transition-colors">
+              <Link to="/courses?search=javascript" className="flex items-center gap-2 hover:text-[#00cc33] transition-colors">
                 <Code className="h-4 w-4 text-yellow-500" />
                 <span>JavaScript</span>
               </Link>
-              <Link to="/courses?search=git" className="flex items-center gap-2 hover:text-brand-500 transition-colors">
+              <Link to="/courses?search=git" className="flex items-center gap-2 hover:text-[#00cc33] transition-colors">
                 <GitBranch className="h-4 w-4 text-brand-500" />
                 <span>Git y GitHub</span>
               </Link>
-              <Link to="/courses?search=sql" className="flex items-center gap-2 hover:text-brand-500 transition-colors">
+              <Link to="/courses?search=sql" className="flex items-center gap-2 hover:text-[#00cc33] transition-colors">
                 <Database className="h-4 w-4 text-orange-500" />
                 <span>SQL y bases de datos</span>
               </Link>
@@ -105,15 +106,15 @@ export const Footer: React.FC = () => {
 
           {/* Col 4: Información Legal */}
           <div className="flex flex-col gap-4">
-            <h3 className="font-display font-semibold text-slate-900 dark:text-white text-sm uppercase tracking-wider">
+            <h3 className="font-display font-black text-slate-900 dark:text-white text-sm uppercase tracking-wider">
               Información Legal
             </h3>
-            <div className="flex flex-col gap-2.5 text-sm">
+            <div className="flex flex-col gap-2.5 text-xs sm:text-sm font-mono font-bold">
               <button
                 onClick={() => setShowLegalModal(true)}
-                className="flex items-center gap-2 text-left hover:text-brand-500 transition-colors cursor-pointer"
+                className="flex items-center gap-2 text-left hover:text-[#00cc33] transition-colors cursor-pointer"
               >
-                <ShieldCheck className="h-4 w-4 text-brand-500" />
+                <ShieldCheck className="h-4 w-4 text-[#00cc33]" />
                 <span>Información Legal & Términos</span>
               </button>
             </div>
