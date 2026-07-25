@@ -96,36 +96,37 @@ export const CourseDetailPage: React.FC = () => {
         const categoriesData = await getCategoriesUseCase.execute({ page_size: 100 });
         setCategories(categoriesData.results || []);
 
-        if (isAuthenticated) {
+        if (isAuthenticated && user) {
+          let apiEnrollments: any[] = [];
           try {
-            const enrollments = await getEnrollmentsUseCase.execute({ course: courseId });
-            const match = enrollments?.results?.find((e: any) => e.course === courseId) || enrollments?.results?.[0];
-            
-            if (match) {
-              setIsEnrolled(true);
-              const prog = Math.round(parseFloat(match.total_progress || '0'));
-              setEnrollmentProgress(prog);
-            } else {
-              // Check local storage enrollment cache for current user
-              try {
-                const userKey = user?.username?.toLowerCase() || String(user?.id);
-                const storedCache = JSON.parse(localStorage.getItem('oncourses_user_enrollments') || '{}');
-                const userStored = storedCache[userKey] || [];
-                const cached = userStored.find((e: any) => e.course === courseId);
-
-                if (cached) {
-                  setIsEnrolled(true);
-                  const cachedProg = Math.round(parseFloat(cached.total_progress || '0'));
-                  setEnrollmentProgress(cachedProg);
-                } else {
-                  setIsEnrolled(false);
-                }
-              } catch {
-                setIsEnrolled(false);
-              }
-            }
+            const data = await getEnrollmentsUseCase.execute();
+            apiEnrollments = Array.isArray(data) ? data : data.results || [];
           } catch (enrollErr) {
-            console.warn('Could not check enrollment status', enrollErr);
+            console.warn('Could not fetch API enrollments', enrollErr);
+          }
+
+          let cachedEnrollments: any[] = [];
+          try {
+            const userKey = user.username?.toLowerCase() || String(user.id);
+            const storedCache = JSON.parse(localStorage.getItem('oncourses_user_enrollments') || '{}');
+            cachedEnrollments = storedCache[userKey] || [];
+          } catch (cacheErr) {
+            console.warn('Could not parse local enrollment cache', cacheErr);
+          }
+
+          const matchApi = apiEnrollments.find(
+            (e: any) => Number(e.course) === Number(courseId) || Number(e.course_data?.id) === Number(courseId)
+          );
+          const matchCache = cachedEnrollments.find(
+            (e: any) => Number(e.course) === Number(courseId) || Number(e.course_data?.id) === Number(courseId)
+          );
+
+          const matched = matchApi || matchCache;
+
+          if (matched) {
+            setIsEnrolled(true);
+            setEnrollmentProgress(Math.round(parseFloat(matched.total_progress || '0')));
+          } else {
             setIsEnrolled(false);
           }
         }
@@ -363,21 +364,31 @@ export const CourseDetailPage: React.FC = () => {
                         mod.lessons.map((lesson) => (
                           <div
                             key={lesson.id}
-                            className="px-5 py-3 flex justify-between items-center hover:bg-slate-50 dark:hover:bg-slate-800/40 text-sm"
+                            className="px-5 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:bg-slate-50 dark:hover:bg-slate-800/40 text-sm"
                           >
                             <div className="flex items-center gap-3">
-                              <div className="flex h-6 w-6 items-center justify-center border border-slate-950 bg-[#00cc33] text-slate-950 font-bold shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">
+                              <div className="flex h-6 w-6 items-center justify-center border border-slate-950 bg-[#00cc33] text-slate-950 font-bold shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] shrink-0">
                                 <Play className="h-3 w-3 fill-current" />
                               </div>
                               <span className="text-slate-800 dark:text-slate-200 font-bold">
                                 {lesson.title}
                               </span>
                             </div>
-                            {lesson.duration_seconds && (
-                              <span className="text-slate-500 dark:text-slate-400 text-xs font-mono font-bold">
-                                {Math.round(lesson.duration_seconds / 60)} min
-                              </span>
-                            )}
+                            <div className="flex items-center gap-3 shrink-0 self-end sm:self-auto">
+                              {lesson.duration_seconds && (
+                                <span className="text-slate-500 dark:text-slate-400 text-xs font-mono font-bold">
+                                  {Math.round(lesson.duration_seconds / 60)} min
+                                </span>
+                              )}
+                              {isEnrolled && (
+                                <Link
+                                  to={`/learn/${courseId}/lesson/${lesson.id}`}
+                                  className="px-2.5 py-1 bg-[#00cc33] hover:bg-[#00ff41] text-slate-950 font-mono font-black text-[11px] uppercase tracking-wider border border-slate-950 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all"
+                                >
+                                  Ver Tema &rarr;
+                                </Link>
+                              )}
+                            </div>
                           </div>
                         ))
                       ) : (

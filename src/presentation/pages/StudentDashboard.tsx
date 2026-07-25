@@ -4,6 +4,8 @@ import { Layout } from '../components/Layout';
 import { useAuthStore } from '../store/useAuthStore';
 import { getEnrollmentsUseCase } from '@infrastructure/factories/EnrollmentFactory';
 import { getCourseByIdUseCase } from '@infrastructure/factories/CourseFactory';
+import { getModulesUseCase } from '@infrastructure/factories/ModuleFactory';
+import { getLessonsUseCase } from '@infrastructure/factories/LessonFactory';
 import { Enrollment } from '@domain/entities/Enrollment';
 import { BookOpen, LayoutDashboard, PlayCircle, Trophy, Calendar } from 'lucide-react';
 import { Button } from '../components/Button';
@@ -58,10 +60,28 @@ export const StudentDashboard: React.FC = () => {
 
   const handleResumeCourse = async (courseId: number) => {
     try {
-      const courseDetails = await getCourseByIdUseCase.execute(courseId);
-      const firstLesson = courseDetails.modules?.[0]?.lessons?.[0];
-      if (firstLesson) {
-        navigate(`/learn/${courseId}/lesson/${firstLesson.id}`);
+      let firstLessonId: number | null = null;
+
+      try {
+        const modulesData = await getModulesUseCase.execute(courseId);
+        if (modulesData && modulesData.length > 0) {
+          const lessonsData = await getLessonsUseCase.execute(modulesData[0].id);
+          if (lessonsData && lessonsData.length > 0) {
+            lessonsData.sort((a, b) => a.order - b.order);
+            firstLessonId = lessonsData[0].id;
+          }
+        }
+      } catch (modErr) {
+        console.warn('Could not fetch modules for student dashboard redirect', modErr);
+      }
+
+      if (!firstLessonId) {
+        const courseDetails = await getCourseByIdUseCase.execute(courseId);
+        firstLessonId = courseDetails.modules?.[0]?.lessons?.[0]?.id || null;
+      }
+
+      if (firstLessonId) {
+        navigate(`/learn/${courseId}/lesson/${firstLessonId}`);
       } else {
         navigate(`/courses/${courseId}`);
       }
