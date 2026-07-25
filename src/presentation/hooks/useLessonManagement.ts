@@ -238,121 +238,6 @@ export const useLessonManagement = (courseIdStr?: string) => {
     }
   };
 
-  const handleSeedSQLCourseStructure = async () => {
-    if (!window.confirm('¿Deseas generar automáticamente los 6 Módulos y 42 Temas teóricos de Fundamentos SQL en este curso?')) {
-      return;
-    }
-
-    setFormLoading(true);
-    try {
-      const sqlModulesData = [
-        {
-          title: 'Módulo 1: Introducción a las Bases de Datos y el Lenguaje SQL',
-          order: 1,
-          lessons: [
-            { title: '1.1 ¿Qué es una Base de Datos Relacional (RDBMS)?', order: 1, content_text: '# 1.1 ¿Qué es una Base de Datos Relacional (RDBMS)?\nUn Sistema de Gestión de Bases de Datos Relacionales (RDBMS) organiza datos en tablas compuestas por filas y columnas...' },
-            { title: '1.2 Modelo Cliente-Servidor en Motores SQL', order: 2, content_text: '# 1.2 Modelo Cliente-Servidor en Motores SQL\nLos motores SQL modernos (PostgreSQL, MySQL) operan bajo el patrón Cliente-Servidor vía TCP/IP...' },
-            { title: '1.3 Clasificación del Lenguaje SQL (DDL, DML, DCL, TCL)', order: 3, content_text: '# 1.3 Clasificación del Lenguaje SQL\nSQL se divide en 4 sublenguajes principales: DDL, DML, DCL y TCL...' },
-            { title: '1.4 Tipos de Datos Fundamentales en SQL', order: 4, content_text: '# 1.4 Tipos de Datos Fundamentales\nConoce los tipos INTEGER, VARCHAR, DECIMAL, TIMESTAMP y BOOLEAN...' },
-            { title: '1.5 Tu Primera Sentencia SQL: SELECT', order: 5, content_text: '# 1.5 Tu Primera Sentencia SQL: SELECT\nLa instrucción SELECT se utiliza para recuperar datos o evaluar expresiones...' },
-            { title: '1.6 Entendiendo Tablas, Columnas y Esquemas', order: 6, content_text: '# 1.6 Anatomía de Tablas y Esquemas en SQL\nAprende cómo se jerarquizan los objetos dentro de la base de datos...' },
-            { title: '1.7 Buenas Prácticas de Sintaxis SQL', order: 7, content_text: '# 1.7 Buenas Prácticas de Sintaxis SQL\nEscribir código SQL legible y estandarizado con mayúsculas reservadas...' },
-          ],
-        },
-        {
-          title: 'Módulo 2: Consultas Básicas y Filtrado de Datos (DML)',
-          order: 2,
-          lessons: [
-            { title: '2.1 Filtrado de Filas con la Cláusula WHERE', order: 1, content_text: '# 2.1 Filtrado con WHERE\nFiltra registros específicos utilizando la cláusula WHERE...' },
-            { title: '2.2 Operadores Lógicos (AND, OR, NOT, LIKE, ILIKE)', order: 2, content_text: '# 2.2 Operadores Lógicos y de Comparación en SQL...' },
-            { title: '2.3 Rangos y Listas de Valores (BETWEEN e IN)', order: 3, content_text: '# 2.3 Rangos y Listas con BETWEEN e IN...' },
-            { title: '2.4 Manejo de Valores Ausentes con IS NULL e IS NOT NULL', order: 4, content_text: '# 2.4 Valores Ausentes (NULL) en SQL...' },
-            { title: '2.5 Ordenamiento de Resultados con ORDER BY (ASC / DESC)', order: 5, content_text: '# 2.5 Ordenamiento de Resultados con ORDER BY...' },
-            { title: '2.6 Paginación con LIMIT y OFFSET', order: 6, content_text: '# 2.6 Paginación con LIMIT y OFFSET...' },
-            { title: '2.7 Alias de Columnas y Tablas con AS', order: 7, content_text: '# 2.7 Alias de Columnas y Tablas con AS...' },
-          ],
-        },
-        {
-          title: 'Módulo 3: Funciones de Agregación y Agrupamiento',
-          order: 3,
-          lessons: [
-            { title: '3.1 Funciones de Agregación (COUNT, SUM, AVG, MIN, MAX)', order: 1, content_text: '# 3.1 Funciones de Agregación...' },
-            { title: '3.2 Agrupamiento de Datos con GROUP BY', order: 2, content_text: '# 3.2 Agrupamiento con GROUP BY...' },
-            { title: '3.3 Filtrar Grupos Agregados con HAVING', order: 3, content_text: '# 3.3 Filtrar Grupos con HAVING vs WHERE...' },
-            { title: '3.4 Eliminación de Duplicados con DISTINCT', order: 4, content_text: '# 3.4 Eliminación de Duplicados con DISTINCT...' },
-            { title: '3.5 Expresiones Condicionales con CASE ... WHEN', order: 5, content_text: '# 3.5 Lógica Condicional con CASE WHEN...' },
-            { title: '3.6 Funciones Matemáticas y de Cadenas en SQL', order: 6, content_text: '# 3.6 Manipulación de Texto y Matemáticas...' },
-            { title: '3.7 Operaciones con Fechas y Timestamps', order: 7, content_text: '# 3.7 Manejo de Fechas y Timestamps...' },
-          ],
-        },
-        {
-          title: 'Módulo 4: Relaciones entre Tablas y Combinaciones (JOINS)',
-          order: 4,
-          lessons: [
-            { title: '4.1 Primary Keys y Foreign Keys', order: 1, content_text: '# 4.1 Claves Primarias y Foráneas...' },
-            { title: '4.2 Uniones Internas con INNER JOIN', order: 2, content_text: '# 4.2 Uniones Internas con INNER JOIN...' },
-            { title: '4.3 Uniones Izquierdas y Derechas con LEFT / RIGHT JOIN', order: 3, content_text: '# 4.3 LEFT JOIN y RIGHT JOIN...' },
-            { title: '4.4 Uniones Completas con FULL OUTER JOIN', order: 4, content_text: '# 4.4 FULL OUTER JOIN...' },
-            { title: '4.5 Autouniones de Tablas con SELF JOIN', order: 5, content_text: '# 4.5 SELF JOIN...' },
-            { title: '4.6 Producto Cartesiano con CROSS JOIN', order: 6, content_text: '# 4.6 CROSS JOIN...' },
-            { title: '4.7 Operadores de Conjuntos (UNION, INTERSECT, EXCEPT)', order: 7, content_text: '# 4.7 UNION, INTERSECT y EXCEPT...' },
-          ],
-        },
-        {
-          title: 'Módulo 5: Diseño de Modelos Relacionales (DDL & DML)',
-          order: 5,
-          lessons: [
-            { title: '5.1 Creación de Tablas con CREATE TABLE y Constraints', order: 1, content_text: '# 5.1 CREATE TABLE y Restricciones...' },
-            { title: '5.2 Inserción de Registros con INSERT INTO', order: 2, content_text: '# 5.2 INSERT INTO...' },
-            { title: '5.3 Actualización Segura con UPDATE', order: 3, content_text: '# 5.3 UPDATE...' },
-            { title: '5.4 Eliminación con DELETE vs TRUNCATE', order: 4, content_text: '# 5.4 DELETE vs TRUNCATE...' },
-            { title: '5.5 Modificación de Estructuras con ALTER TABLE', order: 5, content_text: '# 5.5 ALTER TABLE...' },
-            { title: '5.6 Destrucción de Objetos con DROP TABLE', order: 6, content_text: '# 5.6 DROP TABLE...' },
-            { title: '5.7 Integridad Referencial y ON DELETE CASCADE', order: 7, content_text: '# 5.7 ON DELETE CASCADE...' },
-          ],
-        },
-        {
-          title: 'Módulo 6: Conceptos Avanzados: Transacciones, Índices y Vistas',
-          order: 6,
-          lessons: [
-            { title: '6.1 Propiedades ACID en RDBMS', order: 1, content_text: '# 6.1 Propiedades ACID...' },
-            { title: '6.2 Control de Transacciones (BEGIN, COMMIT, ROLLBACK)', order: 2, content_text: '# 6.2 Transacciones en SQL...' },
-            { title: '6.3 Optimización de Consultas con CREATE INDEX', order: 3, content_text: '# 6.3 Índices en SQL...' },
-            { title: '6.4 Vistas Guardadas con CREATE VIEW', order: 4, content_text: '# 6.4 CREATE VIEW...' },
-            { title: '6.5 Subconsultas (Subqueries) Anidadas y Correlacionadas', order: 5, content_text: '# 6.5 Subconsultas Anidadas...' },
-            { title: '6.6 Funciones de Ventana (Window Functions)', order: 6, content_text: '# 6.6 Window Functions (ROW_NUMBER, OVER)...' },
-            { title: '6.7 Proyecto Integrador Final: Modelado E-commerce', order: 7, content_text: '# 6.7 Proyecto Integrador Final...' },
-          ],
-        },
-      ];
-
-      for (const mod of sqlModulesData) {
-        const createdMod = await createModuleUseCase.execute({
-          course: idCourse,
-          title: mod.title,
-          order: mod.order,
-        });
-
-        for (const les of mod.lessons) {
-          await createLessonUseCase.execute({
-            title: les.title,
-            order: les.order,
-            content_text: les.content_text,
-            module: createdMod.id,
-          });
-        }
-      }
-
-      setSuccessMessage('🎉 ¡Se crearon con éxito los 6 Módulos y 42 Temas Teóricos para este curso!');
-      loadCourseDetails();
-      setTimeout(() => setSuccessMessage(null), 5000);
-    } catch (err: any) {
-      alert(err.message || 'Error al sembrar el temario de SQL');
-    } finally {
-      setFormLoading(false);
-    }
-  };
-
   return {
     idCourse,
     course,
@@ -396,6 +281,5 @@ export const useLessonManagement = (courseIdStr?: string) => {
     handleOpenEditLesson,
     handleSaveLesson,
     handleDeleteLesson,
-    handleSeedSQLCourseStructure,
   };
 };

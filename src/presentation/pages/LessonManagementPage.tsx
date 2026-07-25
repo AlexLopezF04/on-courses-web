@@ -9,7 +9,7 @@ import { LessonsList } from '../components/lesson-management/LessonsList';
 import { LessonModal } from '../components/lesson-management/LessonModal';
 import { SingleLessonPreviewModal } from '../components/lesson-management/SingleLessonPreviewModal';
 import { ConfirmModal } from '../components/ConfirmModal';
-import { ArrowLeft, Plus, CheckCircle, Eye, Zap } from 'lucide-react';
+import { ArrowLeft, Plus, CheckCircle, Eye } from 'lucide-react';
 import { Loader } from '../components/Loader';
 import { Lesson } from '@domain/entities/Lesson';
 
@@ -64,7 +64,6 @@ export const LessonManagementPage: React.FC = () => {
     handleOpenEditLesson,
     handleSaveLesson,
     handleDeleteLesson,
-    handleSeedSQLCourseStructure,
   } = useLessonManagement(courseId);
 
   return (
@@ -89,17 +88,6 @@ export const LessonManagementPage: React.FC = () => {
           </div>
 
           <div className="flex flex-wrap items-center gap-2.5 shrink-0">
-            {/* Template Generator Action */}
-            <button
-              type="button"
-              onClick={handleSeedSQLCourseStructure}
-              className="px-3.5 py-2 bg-amber-400 hover:bg-amber-300 text-slate-950 font-sans font-bold text-xs uppercase tracking-wider border-2 border-slate-950 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all cursor-pointer inline-flex items-center gap-1.5"
-              title="Generar automáticamente los 6 Módulos y 42 Temas Teóricos de SQL"
-            >
-              <Zap className="h-4 w-4 text-slate-950 fill-slate-950" />
-              <span>Cargar Temario SQL (42 Temas)</span>
-            </button>
-
             {/* Student View Action */}
             <button
               type="button"
