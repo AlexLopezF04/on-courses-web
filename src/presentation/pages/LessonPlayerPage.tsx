@@ -12,6 +12,7 @@ import { Lesson } from '@domain/entities/Lesson';
 import { GraduationCap, ArrowLeft, CheckCircle, ChevronRight, Play, BookOpen, FileText, CheckSquare, Sparkles } from 'lucide-react';
 import { Loader } from '../components/Loader';
 import { Button } from '../components/Button';
+import { useAuthStore } from '../store/useAuthStore';
 import { useThemeStore } from '../store/useThemeStore';
 import { sanitizeUrl } from '../utils/sanitize-url';
 import { MarkdownRenderer } from '../components/MarkdownRenderer';
@@ -19,7 +20,11 @@ import { MarkdownRenderer } from '../components/MarkdownRenderer';
 export const LessonPlayerPage: React.FC = () => {
   const { courseId, lessonId } = useParams<{ courseId: string; lessonId: string }>();
   const navigate = useNavigate();
+  const { user } = useAuthStore();
   const { theme, toggleTheme } = useThemeStore();
+
+  const isAdminOrProfessor = user?.role === 'admin' || user?.role === 'professor';
+  const backTarget = isAdminOrProfessor ? `/admin/courses/${courseId}/lessons` : '/dashboard';
 
   const [course, setCourse] = useState<Course | null>(null);
   const [currentLesson, setCurrentLesson] = useState<Lesson | null>(null);
@@ -173,9 +178,9 @@ export const LessonPlayerPage: React.FC = () => {
       <aside className="w-80 border-r border-slate-200 dark:border-slate-850 bg-white dark:bg-slate-900 flex flex-col h-full shrink-0">
         <div className="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center gap-3">
           <Link
-            to="/dashboard"
+            to={backTarget}
             className="p-2 border-2 border-slate-950 bg-white dark:bg-slate-950 text-slate-950 dark:text-white font-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-brand-400 hover:text-slate-950 transition-all cursor-pointer shrink-0"
-            title="Volver a Mi Panel"
+            title={isAdminOrProfessor ? 'Volver a Gestión del Temario' : 'Volver a Mi Panel'}
           >
             <ArrowLeft className="h-4 w-4" />
           </Link>
@@ -243,8 +248,8 @@ export const LessonPlayerPage: React.FC = () => {
             >
               {theme === 'dark' ? <FileText className="h-5 w-5" /> : <Sparkles className="h-5 w-5" />}
             </button>
-            <Link to="/dashboard">
-              <Button size="sm" variant="secondary">Cerrar</Button>
+            <Link to={backTarget}>
+              <Button size="sm" variant="secondary">Cerrar Reproductor</Button>
             </Link>
           </div>
         </header>
