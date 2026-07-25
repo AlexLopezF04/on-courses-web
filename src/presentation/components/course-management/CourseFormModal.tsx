@@ -56,8 +56,29 @@ export const CourseFormModal: React.FC<CourseFormModalProps> = ({
       <div className="w-full max-w-lg border-2 border-slate-950 bg-white p-8 text-slate-950 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_#00b835] relative my-8">
         <h3 className="font-display text-xl font-black text-slate-950 mb-6 pb-2 border-b-2 border-slate-950 flex justify-between items-center">
           <span>{isEditing ? 'Editar Curso' : 'Crear Nuevo Curso'}</span>
-          <span className="text-xs font-mono bg-brand-400 text-slate-950 px-2 py-0.5 border border-slate-950">CURSO</span>
+          <span className="text-xs font-mono bg-[#00cc33] text-slate-950 px-2 py-0.5 border border-slate-950 font-bold">
+            CURSO #{category || 'NUEVO'}
+          </span>
         </h3>
+
+        {isEditing && (
+          <div className="mb-6 p-3 bg-[#00cc33]/15 border-2 border-slate-950 flex items-center justify-between gap-3 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
+            <div className="text-xs font-bold text-slate-950">
+              <span>📚 ¿Quieres agregar o editar las lecciones y módulos de este curso?</span>
+            </div>
+            <a
+              href={`/admin/courses/${slug ? slug : '1'}/lessons`}
+              onClick={(e) => {
+                // Navigate cleanly
+                e.preventDefault();
+                window.location.href = `/admin/courses/${slug}/lessons`;
+              }}
+              className="px-3 py-1.5 bg-[#00cc33] hover:bg-[#00ff41] text-slate-950 font-mono font-black text-[11px] uppercase border border-slate-950 shadow-[1.5px_1.5px_0px_0px_rgba(0,0,0,1)] shrink-0"
+            >
+              Ir a Lecciones ↗
+            </a>
+          </div>
+        )}
 
         {error && (
           <div className="flex items-start gap-2.5 bg-rose-50 border-2 border-rose-500 p-3 text-xs font-bold text-rose-900 mb-6">

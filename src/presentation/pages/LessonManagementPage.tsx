@@ -62,6 +62,7 @@ export const LessonManagementPage: React.FC = () => {
     handleOpenEditLesson,
     handleSaveLesson,
     handleDeleteLesson,
+    handleSeedSQLCourseStructure,
   } = useLessonManagement(courseId);
 
   return (
@@ -77,7 +78,7 @@ export const LessonManagementPage: React.FC = () => {
         </Link>
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-2">
           <div>
-            <span className="text-xs font-semibold uppercase tracking-wider text-brand-500 block">
+            <span className="text-xs font-semibold uppercase tracking-wider text-[#00cc33] block">
               Temario de Curso:
             </span>
             <h1 className="font-display text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mt-1">
@@ -86,6 +87,14 @@ export const LessonManagementPage: React.FC = () => {
           </div>
 
           <div className="flex flex-wrap items-center gap-2 shrink-0">
+            <button
+              type="button"
+              onClick={handleSeedSQLCourseStructure}
+              className="px-3.5 py-2 bg-amber-400 hover:bg-amber-300 text-slate-950 font-mono font-black text-xs uppercase tracking-wider border-2 border-slate-950 shadow-[2.5px_2.5px_0px_0px_rgba(0,0,0,1)] transition-all cursor-pointer flex items-center gap-1.5"
+              title="Generar automáticamente los 6 Módulos y 42 Temas Teóricos de SQL"
+            >
+              <span>⚡ Cargar Temario Estándar SQL (6 Módulos / 42 Temas)</span>
+            </button>
             <Button
               variant="outline"
               onClick={() => {
