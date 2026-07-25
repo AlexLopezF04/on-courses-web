@@ -120,16 +120,29 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Giant Brand Stroke Watermark (inspired by reference image) */}
-        <div className="mt-16 pt-8 border-t border-slate-200 dark:border-slate-850 w-full overflow-hidden flex justify-center items-center select-none pointer-events-none opacity-20 dark:opacity-30">
-          <span
-            className="font-display font-black text-6xl sm:text-8xl md:text-9xl lg:text-[12rem] tracking-tighter text-transparent uppercase leading-none whitespace-nowrap text-slate-900 dark:text-white"
-            style={{
-              WebkitTextStroke: '2.5px currentColor',
-            }}
-          >
-            oncourses
-          </span>
+        {/* Brand Graphic Title Element */}
+        <div className="mt-16 pt-10 border-t-2 border-slate-200 dark:border-slate-800/80 w-full overflow-hidden flex flex-col items-center justify-center select-none py-6">
+          <div className="relative group flex items-center justify-center max-w-full px-2">
+            {/* Ambient Green Glow */}
+            <div className="absolute inset-0 bg-[#00cc33]/15 dark:bg-[#00ff41]/25 rounded-full blur-3xl pointer-events-none" />
+            
+            <div className="relative flex items-center gap-2 sm:gap-4">
+              <span className="font-mono font-black text-3xl sm:text-5xl md:text-7xl text-[#00cc33] dark:text-[#00ff41] drop-shadow-[0_2px_8px_rgba(0,204,51,0.4)]">
+                &lt;
+              </span>
+              <span
+                className="font-mono font-black text-5xl sm:text-7xl md:text-8xl lg:text-[10rem] tracking-tight uppercase leading-none text-slate-950 dark:text-white dark:bg-clip-text dark:text-transparent dark:bg-gradient-to-r dark:from-[#00ff41] dark:via-emerald-400 dark:to-[#00cc33] drop-shadow-[0_4px_16px_rgba(0,204,51,0.25)] dark:drop-shadow-[0_4px_24px_rgba(0,255,65,0.4)] transition-all duration-300"
+                style={{
+                  WebkitTextStroke: '2.5px #00cc33',
+                }}
+              >
+                ONCOURSES
+              </span>
+              <span className="font-mono font-black text-3xl sm:text-5xl md:text-7xl text-[#00cc33] dark:text-[#00ff41] drop-shadow-[0_2px_8px_rgba(0,204,51,0.4)]">
+                /&gt;
+              </span>
+            </div>
+          </div>
         </div>
 
         {/* Bottom copyright line */}
