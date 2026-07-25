@@ -162,16 +162,19 @@ export const CourseDetailPage: React.FC = () => {
     setFormError(null);
 
     try {
-      const updated = await updateCourseUseCase.execute(course.id, {
-        category: formCategory ? Number(formCategory) : undefined,
-        title: formTitle,
-        description: formDescription,
-        price: formPrice,
-        slug: formSlug,
-        is_active: formIsActive,
-        cover_image: formCoverImage || undefined,
-      });
+      const formData = new FormData();
+      if (formCategory) formData.append('category', String(formCategory));
+      formData.append('title', formTitle.trim());
+      formData.append('description', formDescription.trim());
+      formData.append('price', formPrice);
+      formData.append('slug', formSlug.trim());
+      formData.append('is_active', String(formIsActive));
 
+      if (formCoverImage instanceof File) {
+        formData.append('cover_image', formCoverImage);
+      }
+
+      const updated = await updateCourseUseCase.execute(course.id, formData);
       setCourse(updated);
       setShowEditModal(false);
     } catch (err: any) {
