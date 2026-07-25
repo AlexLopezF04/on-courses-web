@@ -3,6 +3,7 @@ import { Module } from '@domain/entities/Module';
 import { Input } from '../Input';
 import { Button } from '../Button';
 import { ShieldAlert, FileCode2, Terminal, BookOpen, Code2 } from 'lucide-react';
+import { CodeBlockWithCopy } from '../CodeBlockWithCopy';
 
 interface LessonModalProps {
   isOpen: boolean;
@@ -11,6 +12,7 @@ interface LessonModalProps {
   title: string;
   content: string;
   videoUrl: string;
+  durationMinutes?: string;
   order: string;
   moduleId: number | '';
   loading: boolean;
@@ -18,6 +20,7 @@ interface LessonModalProps {
   onTitleChange: (val: string) => void;
   onContentChange: (val: string) => void;
   onVideoUrlChange: (val: string) => void;
+  onDurationMinutesChange?: (val: string) => void;
   onOrderChange: (val: string) => void;
   onModuleChange: (val: number | '') => void;
   onClose: () => void;
@@ -31,6 +34,7 @@ export const LessonModal: React.FC<LessonModalProps> = ({
   title,
   content,
   videoUrl,
+  durationMinutes = '15',
   order,
   moduleId,
   loading,
@@ -38,6 +42,7 @@ export const LessonModal: React.FC<LessonModalProps> = ({
   onTitleChange,
   onContentChange,
   onVideoUrlChange,
+  onDurationMinutesChange,
   onOrderChange,
   onModuleChange,
   onClose,
@@ -215,17 +220,11 @@ Consulta los enlaces oficiales para profundizar en los conceptos avanzados.`;
                 content.split('```').map((block, i) => {
                   if (i % 2 === 1) {
                     const lines = block.trim().split('\n');
-                    const lang = lines[0].match(/^[a-z]+/i) ? lines[0] : 'code';
+                    const lang = lines[0].match(/^[a-z]+/i) ? lines[0] : 'sql';
                     const codeContent = lines[0].match(/^[a-z]+/i) ? lines.slice(1).join('\n') : block;
 
                     return (
-                      <div key={i} className="my-4 border-2 border-slate-950 bg-slate-950 text-emerald-400 p-4 font-mono text-xs shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00b835] overflow-x-auto">
-                        <div className="flex justify-between items-center pb-2 mb-2 border-b border-slate-800 text-[10px] text-slate-400 uppercase font-bold">
-                          <span>{lang}</span>
-                          <span>Console Output</span>
-                        </div>
-                        <pre className="whitespace-pre-wrap">{codeContent.trim()}</pre>
-                      </div>
+                      <CodeBlockWithCopy key={i} code={codeContent} language={lang} />
                     );
                   }
 
@@ -272,7 +271,7 @@ Consulta los enlaces oficiales para profundizar en los conceptos avanzados.`;
         ) : (
           /* Editor Form */
           <form onSubmit={onSubmit} className="flex flex-col gap-4">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
               <div className="sm:col-span-2 flex flex-col gap-1.5">
                 <label className="text-xs font-extrabold uppercase tracking-wider text-slate-800 dark:text-slate-200">
                   Sección Asociada (Módulo) *
@@ -292,6 +291,16 @@ Consulta los enlaces oficiales para profundizar en los conceptos avanzados.`;
                   ))}
                 </select>
               </div>
+
+              <Input
+                label="Duración (Min) *"
+                type="number"
+                placeholder="15"
+                value={durationMinutes}
+                onChange={(e) => onDurationMinutesChange?.(e.target.value)}
+                disabled={loading}
+                required
+              />
 
               <Input
                 label="Orden *"

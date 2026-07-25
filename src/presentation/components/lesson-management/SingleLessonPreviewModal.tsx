@@ -3,6 +3,7 @@ import { Lesson } from '@domain/entities/Lesson';
 import { X, Play, FileText, ArrowRight, BookOpen, Clock } from 'lucide-react';
 import { Button } from '../Button';
 import { sanitizeUrl } from '../../utils/sanitize-url';
+import { CodeBlockWithCopy } from '../CodeBlockWithCopy';
 
 interface SingleLessonPreviewModalProps {
   isOpen: boolean;
@@ -123,17 +124,11 @@ export const SingleLessonPreviewModal: React.FC<SingleLessonPreviewModalProps> =
                   if (i % 2 === 1) {
                     // Code Block
                     const lines = block.trim().split('\n');
-                    const lang = lines[0].match(/^[a-z]+/i) ? lines[0] : 'code';
+                    const lang = lines[0].match(/^[a-z]+/i) ? lines[0] : 'sql';
                     const codeContent = lines[0].match(/^[a-z]+/i) ? lines.slice(1).join('\n') : block;
 
                     return (
-                      <div key={i} className="my-4 border-2 border-slate-950 bg-slate-950 text-emerald-400 p-4 font-mono text-xs shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00b835] overflow-x-auto">
-                        <div className="flex justify-between items-center pb-2 mb-2 border-b border-slate-800 text-[10px] text-slate-400 uppercase font-bold">
-                          <span>{lang}</span>
-                          <span>Console Code Sandbox</span>
-                        </div>
-                        <pre className="whitespace-pre-wrap">{codeContent.trim()}</pre>
-                      </div>
+                      <CodeBlockWithCopy key={i} code={codeContent} language={lang} />
                     );
                   }
 

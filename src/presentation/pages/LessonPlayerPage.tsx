@@ -14,6 +14,7 @@ import { Loader } from '../components/Loader';
 import { Button } from '../components/Button';
 import { useThemeStore } from '../store/useThemeStore';
 import { sanitizeUrl } from '../utils/sanitize-url';
+import { CodeBlockWithCopy } from '../components/CodeBlockWithCopy';
 
 export const LessonPlayerPage: React.FC = () => {
   const { courseId, lessonId } = useParams<{ courseId: string; lessonId: string }>();
@@ -314,17 +315,11 @@ export const LessonPlayerPage: React.FC = () => {
                   if (i % 2 === 1) {
                     // Code block
                     const lines = block.trim().split('\n');
-                    const lang = lines[0].match(/^[a-z]+/i) ? lines[0] : 'code';
+                    const lang = lines[0].match(/^[a-z]+/i) ? lines[0] : 'sql';
                     const codeContent = lines[0].match(/^[a-z]+/i) ? lines.slice(1).join('\n') : block;
 
                     return (
-                      <div key={i} className="my-6 border-2 border-slate-950 bg-slate-950 text-emerald-400 p-4 font-mono text-xs shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00b835] overflow-x-auto">
-                        <div className="flex justify-between items-center pb-2 mb-2 border-b border-slate-800 text-[10px] text-slate-400 uppercase font-bold">
-                          <span>{lang}</span>
-                          <span>OnCourses Console</span>
-                        </div>
-                        <pre className="whitespace-pre-wrap">{codeContent.trim()}</pre>
-                      </div>
+                      <CodeBlockWithCopy key={i} code={codeContent} language={lang} />
                     );
                   }
 

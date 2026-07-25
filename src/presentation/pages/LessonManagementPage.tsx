@@ -39,6 +39,8 @@ export const LessonManagementPage: React.FC = () => {
     setFormLessonContent,
     formLessonVideoUrl,
     setFormLessonVideoUrl,
+    formLessonDurationMinutes,
+    setFormLessonDurationMinutes,
     formLessonOrder,
     setFormLessonOrder,
     formLessonModule,
@@ -235,6 +237,7 @@ export const LessonManagementPage: React.FC = () => {
         title={formLessonTitle}
         content={formLessonContent}
         videoUrl={formLessonVideoUrl}
+        durationMinutes={formLessonDurationMinutes}
         order={formLessonOrder}
         moduleId={formLessonModule}
         loading={formLoading}
@@ -242,6 +245,7 @@ export const LessonManagementPage: React.FC = () => {
         onTitleChange={setFormLessonTitle}
         onContentChange={setFormLessonContent}
         onVideoUrlChange={setFormLessonVideoUrl}
+        onDurationMinutesChange={setFormLessonDurationMinutes}
         onOrderChange={setFormLessonOrder}
         onModuleChange={setFormLessonModule}
         onClose={() => setShowLessonModal(false)}

@@ -36,6 +36,7 @@ export const useLessonManagement = (courseIdStr?: string) => {
   const [formLessonTitle, setFormLessonTitle] = useState('');
   const [formLessonContent, setFormLessonContent] = useState('');
   const [formLessonVideoUrl, setFormLessonVideoUrl] = useState('');
+  const [formLessonDurationMinutes, setFormLessonDurationMinutes] = useState('15');
   const [formLessonOrder, setFormLessonOrder] = useState('0');
   const [formLessonModule, setFormLessonModule] = useState<number | ''>('');
 
@@ -164,6 +165,7 @@ export const useLessonManagement = (courseIdStr?: string) => {
     setFormLessonTitle('');
     setFormLessonContent('');
     setFormLessonVideoUrl('');
+    setFormLessonDurationMinutes('15');
     setFormLessonOrder('0');
     setFormLessonModule(selectedModuleId || '');
     setFormError(null);
@@ -176,6 +178,7 @@ export const useLessonManagement = (courseIdStr?: string) => {
     setFormLessonTitle(lesson.title);
     setFormLessonContent(lesson.content_text || '');
     setFormLessonVideoUrl(lesson.video_url || '');
+    setFormLessonDurationMinutes(String(lesson.duration_seconds ? Math.round(lesson.duration_seconds / 60) : 15));
     setFormLessonOrder(String(lesson.order));
     setFormLessonModule(lesson.module);
     setFormError(null);
@@ -196,6 +199,7 @@ export const useLessonManagement = (courseIdStr?: string) => {
       title: formLessonTitle,
       content_text: formLessonContent,
       video_url: formLessonVideoUrl || undefined,
+      duration_seconds: (Number(formLessonDurationMinutes) || 15) * 60,
       order: Number(formLessonOrder),
       module: Number(formLessonModule),
     };
@@ -366,6 +370,8 @@ export const useLessonManagement = (courseIdStr?: string) => {
     setFormLessonContent,
     formLessonVideoUrl,
     setFormLessonVideoUrl,
+    formLessonDurationMinutes,
+    setFormLessonDurationMinutes,
     formLessonOrder,
     setFormLessonOrder,
     formLessonModule,
