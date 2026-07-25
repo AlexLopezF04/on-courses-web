@@ -120,18 +120,21 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Giant Brand Banner with Animated Matrix Grid Background */}
-        <div className="relative mt-16 py-10 px-4 border-2 border-slate-950 bg-slate-950 text-white shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_#00b835] overflow-hidden flex items-center justify-center select-none transition-all">
-          {/* Animated Matrix Grid background */}
-          <div className="animate-grid absolute inset-0 bg-[linear-gradient(rgba(0,255,65,0.24)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,65,0.16)_1px,transparent_1px)] bg-[size:36px_36px] pointer-events-none" />
+        {/* Giant Brand Banner with Theme Toggle Support & Interactive Hover Motion */}
+        <div className="group relative mt-16 py-10 px-4 border-2 border-slate-950 dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-950 dark:text-white shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_#00b835] overflow-hidden flex items-center justify-center select-none transition-all duration-300 hover:translate-x-[-3px] hover:translate-y-[-3px] hover:shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[10px_10px_0px_0px_#00b835] cursor-pointer">
+          {/* Light mode grid */}
+          <div className="block dark:hidden animate-grid transition-none absolute inset-0 bg-[linear-gradient(rgba(0,200,50,0.18)_1px,transparent_1px),linear-gradient(90deg,rgba(0,200,50,0.12)_1px,transparent_1px)] bg-[size:36px_36px] pointer-events-none" />
+
+          {/* Dark mode grid */}
+          <div className="hidden dark:block animate-grid transition-none absolute inset-0 bg-[linear-gradient(rgba(0,255,65,0.25)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,65,0.16)_1px,transparent_1px)] bg-[size:36px_36px] pointer-events-none" />
           
           {/* Ambient Glow */}
-          <div className="absolute inset-0 bg-[#00cc33]/15 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute inset-0 bg-[#00cc33]/10 dark:bg-[#00ff41]/15 rounded-full blur-3xl pointer-events-none group-hover:scale-110 transition-transform duration-300" />
 
-          {/* Brand Logo Text: "On" (White) + "Courses" (Vibrant Green) */}
-          <div className="relative z-10 font-display font-black text-5xl sm:text-7xl md:text-8xl lg:text-[9rem] tracking-tight uppercase leading-none text-center">
-            <span className="text-white drop-shadow-[0_4px_12px_rgba(255,255,255,0.25)]">On</span>
-            <span className="text-[#00cc33] dark:text-[#00ff41] drop-shadow-[0_4px_24px_rgba(0,255,65,0.5)]">Courses</span>
+          {/* Brand Logo Text with Hover Micro-Movement */}
+          <div className="relative z-10 font-display font-black text-5xl sm:text-7xl md:text-8xl lg:text-[9rem] tracking-tight uppercase leading-none text-center transition-transform duration-300 group-hover:scale-[1.02]">
+            <span className="text-slate-950 dark:text-white transition-colors duration-200">On</span>
+            <span className="text-[#00aa2e] dark:text-[#00ff41] drop-shadow-[0_4px_16px_rgba(0,204,51,0.3)] dark:drop-shadow-[0_4px_24px_rgba(0,255,65,0.5)] transition-colors duration-200">Courses</span>
           </div>
         </div>
 
