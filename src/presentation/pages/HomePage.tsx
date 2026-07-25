@@ -136,11 +136,7 @@ export const HomePage: React.FC = () => {
 
             {/* Left column */}
             <div className="flex-1 text-center lg:text-left">
-              {/* Badge */}
-              <div className="inline-flex items-center gap-2 bg-brand-100 dark:bg-brand-600/20 border border-brand-200 dark:border-brand-500/30 text-brand-700 dark:text-brand-400 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-6">
-                <Sparkles className="h-3.5 w-3.5" />
-                Plataforma de Aprendizaje Tecnológico
-              </div>
+
 
               {/* Headline */}
               <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.05] mb-4">
