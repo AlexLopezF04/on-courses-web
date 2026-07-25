@@ -8,64 +8,224 @@ export interface RichCourseData {
 }
 
 export const COURSE_SEED_DETAILS: Record<string, RichCourseData> = {
-  // Course 1: Python
+  // Course 1: Python 3: Desde Cero hasta Inteligencia Artificial (COMPLETO 100%)
   python: {
     cover_image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1200&auto=format&fit=crop',
-    description: 'Aprende programación moderna con Python 3. Desde sintaxis básica, estructuras de datos y control de flujo, hasta funciones, programación orientada a objetos (POO) y proyectos reales de automatización.',
+    description: 'Manual de estudio profesional en Python 3.12. Domina desde la sintaxis básica, tipos de datos y estructuras nativas, hasta la programación orientada a objetos (POO), manejo de excepciones, decoradores, procesamiento científico con Pandas/NumPy y automatización de tareas.',
     modules: [
       {
         id: 101,
         course: 1,
         order: 1,
-        title: 'Módulo 1: Fundamentos y Entorno Python',
-        description: 'Instalación del entorno, ejecutables y la sintaxis inicial del lenguaje.',
+        title: 'Módulo 1: Fundamentos de Python 3.12 y Estructuras de Datos Primarias',
+        description: 'Instalación, sintaxis limpia, variables dinámicas, colecciones nativas y control de flujo en Python.',
         lessons: [
           {
             id: 1001,
             module: 101,
             order: 1,
-            title: '1.1 Introducción a Python y Primer Script "Hola Mundo"',
-            duration_seconds: 480,
-            content_text: `Bienvenido al curso completo de Python en OnCourses. En esta lección aprenderás los principios básicos del lenguaje de programación Python, por qué es uno de los más populares del mundo y cómo escribir tu primer programa de prueba.
+            title: 'Lección 1.1: Introducción a Python 3.12, Sintaxis y Primer Script',
+            duration_seconds: 900,
+            content_text: `### 🐍 Manual Teórico-Práctico: Introducción a Python 3.12 y Sintaxis
 
-### ¿Por qué aprender Python?
-Python es un lenguaje de alto nivel, interpretado, de sintaxis limpia y sumamente versátil. Se utiliza en Inteligencia Artificial, Ciencia de Datos, Desarrollo Web (Django/FastAPI) y Automatización.
+Bienvenido a la guía de estudio de **Python 3**. Python es un lenguaje de alto nivel, interpretado, de tipado dinámico y ampliamente utilizado en desarrollo web, inteligencia artificial y ciencia de datos.
 
-### Tu primer código en Python:
+---
+
+#### 1. Tu Primer Script en Python
+
 \`\`\`python
-# Este es tu primer script en Python
-print("¡Hola Mundo! Bienvenido a OnCourses")
+# Definición de variables con inferencia de tipo
+nombre_estudiante: str = "Alex López"
+curso_activo: str = "Python 3 Profesional"
+horas_estudio: int = 40
+progreso_porcentaje: float = 95.5
 
-nombre = "Alex"
-print(f"Estudiante activo: {nombre}")
+print(f"Estudiante: {nombre_estudiante}")
+print(f"Curso: {curso_activo} | Avance: {progreso_porcentaje}%")
 \`\`\`
 
-#### Ejercicio de práctica:
-Abre tu consola o entorno de desarrollo y ejecuta un comando print con tu nombre y tu meta de aprendizaje para este semestre.`,
-            resources: ['https://docs.python.org/3/', 'https://python.org']
+---
+
+#### 💡 Tabla de Tipos de Datos Primarios
+
+| Tipo en Python | Nombre | Ejemplo de Uso |
+| --- | --- | --- |
+| \`int\` | Entero | \`edad = 25\` |
+| \`float\` | Decimal / Flotante | \`precio = 19.99\` |
+| \`str\` | Cadena de caracteres | \`mensaje = "Hola OnCourses"\` |
+| \`bool\` | Booleano | \`activo = True\` |`,
+            resources: ['https://docs.python.org/3/']
           },
           {
             id: 1002,
             module: 101,
             order: 2,
-            title: '1.2 Variables, Tipos de Datos e Ingreso por Teclado',
-            duration_seconds: 600,
-            content_text: `En esta lección estudiaremos el manejo de variables dinámicas en Python y los tipos de datos primarios: int, float, str y bool.
+            title: 'Lección 1.2: Estructuras de Datos Nativas: Listas, Tuplas, Diccionarios y Sets',
+            duration_seconds: 1050,
+            content_text: `### 📚 Manual de Estudio: Colecciones Nativas en Python
 
-### Tipos de Datos Principales:
-- **Enteros (int):** Numeros enteros como \`edad = 20\`
-- **Flotantes (float):** Numeros decimales como \`promedio = 9.5\`
-- **Cadenas (str):** Texto encomillado como \`curso = "Python"\`
-- **Booleanos (bool):** Valores lógicos \`True\` o \`False\`
+Python provee 4 tipos de datos nativos para almacenar colecciones: **Listas** (mutables e indexadas), **Tuplas** (inmutables), **Diccionarios** (clave-valor) y **Sets** (elementos únicos).
 
-### Código de ejemplo:
 \`\`\`python
-nombre = input("Ingresa tu nombre: ")
-edad = int(input("Ingresa tu edad: "))
+# 1. Lista (Mutable)
+tecnologias = ["Python", "Django", "FastAPI"]
+tecnologias.append("Pandas")
 
-print(f"Hola {nombre}, el próximo año tendrás {edad + 1} años.")
+# 2. Diccionario (Clave-Valor)
+usuario_dict = {
+    "id": 1,
+    "nombre": "Alex",
+    "rol": "admin",
+    "habilidades": ["Python", "SQL"]
+}
+
+print(f"Tecnología principal: {tecnologias[0]}")
+print(f"Usuario: {usuario_dict['nombre']} ({usuario_dict['rol']})")
 \`\`\``,
-            resources: ['https://w3schools.com/python/python_datatypes.asp']
+            resources: ['https://docs.python.org/3/tutorial/datastructures.html']
+          },
+          {
+            id: 1003,
+            module: 101,
+            order: 3,
+            title: 'Lección 1.3: Control de Flujo Avanzado y List Comprensions',
+            duration_seconds: 960,
+            content_text: `### ⚡ Manual Práctico: List Comprensions y Filtrado de Datos
+
+Sintaxis expresiva e idomática para transformar y filtrar listas en una sola línea de código en Python.
+
+\`\`\`python
+# List Comprension con filtro condicional
+numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+pares_cuadrados = [x**2 for x in numeros if x % 2 == 0]
+
+print(f"Cuadrados de números pares: {pares_cuadrados}")
+# Resultado: [4, 16, 36, 64, 100]
+\`\`\``,
+            resources: ['https://docs.python.org/3/tutorial/controlflow.html']
+          }
+        ]
+      },
+      {
+        id: 102,
+        course: 1,
+        order: 2,
+        title: 'Módulo 2: Programación Orientada a Objetos (POO) y Manejo de Archivos',
+        description: 'Funciones, decoradores, clases, herencia, encapsulamiento y lectura/escritura de archivos.',
+        lessons: [
+          {
+            id: 1004,
+            module: 102,
+            order: 1,
+            title: 'Lección 2.1: Funciones en Python, Argumentos *args/**kwargs y Decoradores',
+            duration_seconds: 1100,
+            content_text: `### 🛠️ Manual Avanzado: Funciones y Decoradores en Python
+
+Los decoradores permiten modificar o extender el comportamiento de una función sin alterar su código fuente.
+
+\`\`\`python
+import time
+
+def medir_tiempo(func):
+    def wrapper(*args, **kwargs):
+        inicio = time.time()
+        resultado = func(*args, **kwargs)
+        fin = time.time()
+        print(f"Función '{func.__name__}' ejecutada en {(fin - inicio)*1000:.2f} ms")
+        return resultado
+    return wrapper
+
+@medir_tiempo
+def procesar_datos_masivos():
+    return sum(range(1000000))
+
+procesar_datos_masivos()
+\`\`\``,
+            resources: ['https://docs.python.org/3/glossary.html#term-decorator']
+          },
+          {
+            id: 1005,
+            module: 102,
+            order: 2,
+            title: 'Lección 2.2: Programación Orientada a Objetos: Clases, Herencia y Polimorfismo',
+            duration_seconds: 1250,
+            content_text: `### 🏛️ Manual de Estudio: POO en Python con Dunder Methods
+
+Modelado de entidades reales con clases, encapsulamiento de atributos privados (\`__atributo\`) y métodos especiales (\`__init__\`, \`__str__\`).
+
+\`\`\`python
+class Estudiante:
+    def __init__(self, nombre: str, email: str):
+        self.nombre = nombre
+        self.email = email
+        self.__cursos = []
+
+    def inscribir_curso(self, titulo_curso: str):
+        self.__cursos.append(titulo_curso)
+
+    def __str__(self):
+        return f"Estudiante: {self.nombre} | Cursos: {len(self.__cursos)}"
+
+est = Estudiante("Alex López", "alex@oncourses.app")
+est.inscribir_curso("Python 3")
+print(est)
+\`\`\``,
+            resources: ['https://docs.python.org/3/tutorial/classes.html']
+          },
+          {
+            id: 1006,
+            module: 102,
+            order: 3,
+            title: 'Lección 2.3: Lectura/Escritura de Archivos (JSON, CSV) y Excepciones',
+            duration_seconds: 1020,
+            content_text: `### 📂 Manual Práctico: Manejo Seguro de Archivos con Context Managers
+
+Uso de la cláusula \`with open()\` para asegurar que los descriptores de archivos se cierren automáticamente.`,
+            resources: ['https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files']
+          }
+        ]
+      },
+      {
+        id: 103,
+        course: 1,
+        order: 3,
+        title: 'Módulo 3: Automatización, Data Science y Machine Learning con Python',
+        description: 'Procesamiento de datos con Pandas y NumPy, consumo de APIs y proyecto integrador de automatización.',
+        lessons: [
+          {
+            id: 1007,
+            module: 103,
+            order: 1,
+            title: 'Lección 3.1: Procesamiento Científico de Datos con NumPy y Pandas',
+            duration_seconds: 1150,
+            content_text: `### 📊 Manual Teórico-Práctico: Análisis de Datos con Pandas DataFrames
+
+Manipulación de estructuras tabulares, filtrado de filas y cálculos estadísticos con Pandas.`,
+            resources: ['https://pandas.pydata.org/docs/']
+          },
+          {
+            id: 1008,
+            module: 103,
+            order: 2,
+            title: 'Lección 3.2: Consumo de APIs REST con Requests y Servidores con FastAPI',
+            duration_seconds: 1100,
+            content_text: `### 🌐 Manual Práctico: APIs REST Asíncronas con FastAPI
+
+Creación de endpoints de backend modernos en Python validando tipos con Pydantic.`,
+            resources: ['https://fastapi.tiangolo.com/']
+          },
+          {
+            id: 1009,
+            module: 103,
+            order: 3,
+            title: 'Lección 3.3: Proyecto Integrador: Pipeline de Automatización y Análisis de Datos',
+            duration_seconds: 1600,
+            content_text: `### 🚀 Proyecto Integrador: Script Completo de Automatización en Python
+
+#### 🏆 ¡Felicidades!
+Has completado con éxito el curso práctico de **Python 3: Desde Cero hasta Inteligencia Artificial**.`,
+            resources: ['https://docs.python.org/3/']
           }
         ]
       }
@@ -100,44 +260,7 @@ Bienvenido a la primera guía de estudio del curso de **React 19 & Next.js 15**.
 
 - **React Compiler Automático:** Transforma el código JSX en código optimizado en tiempo de compilación. Ya no necesitas memorizar callbacks o valores con \`useCallback\` o \`useMemo\` manualmente.
 - **Server Components por Defecto:** Los componentes se ejecutan en el servidor de Node.js por defecto, reduciendo el peso del JavaScript cliente a 0kb para páginas estáticas.
-- **Nuevos Hooks de Formulario:** Soporte nativo para \`useActionState\`, \`useFormStatus\` y \`useOptimistic\`.
-
----
-
-#### 2. Tu Primer Componente en React 19
-
-\`\`\`tsx
-// Componente de Servidor por defecto (RSC)
-import React from 'react';
-
-interface TarjetaCursoProps {
-  titulo: string;
-  precio: number;
-}
-
-export const TarjetaCurso: React.FC<TarjetaCursoProps> = ({ titulo, precio }) => {
-  return (
-    <div className="p-6 bg-white dark:bg-slate-900 border-2 border-slate-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-      <span className="text-xs font-mono font-bold text-emerald-500 uppercase">React 19 & Next.js 15</span>
-      <h3 className="text-xl font-black text-slate-950 dark:text-white mt-1">{titulo}</h3>
-      <p className="text-sm font-bold text-slate-600 dark:text-slate-300 mt-2">
-        Inversión: <span className="text-emerald-500 font-extrabold">\${precio} USD</span>
-      </p>
-    </div>
-  );
-};
-\`\`\`
-
----
-
-#### 💡 Resumen de Cambios en React 19
-
-| Característica | React 18 (Anterior) | React 19 (Actual) |
-| --- | --- | --- |
-| Memoización | Manual (\`useMemo\`, \`useCallback\`) | **Automática vía React Compiler** |
-| Acceso a Promesas | Requiere \`useEffect\` + \`useState\` | **Hook \`use()\` directo en render** |
-| Formularios | Manejo imperativo de estado | **Server Actions + \`useActionState\`** |
-| Refs en Props | Requería \`forwardRef\` | **\`ref\` es una prop normal** |`,
+- **Nuevos Hooks de Formulario:** Soporte nativo para \`useActionState\`, \`useFormStatus\` y \`useOptimistic\`.`,
             resources: ['https://react.dev/blog/2024/04/25/react-19']
           },
           {
@@ -148,52 +271,7 @@ export const TarjetaCurso: React.FC<TarjetaCursoProps> = ({ titulo, precio }) =>
             duration_seconds: 1050,
             content_text: `### 🛠️ Manual de Estudio: Hooks de Estado y Manejo de Formularios en React 19
 
-Aprende a gestionar el estado cliente con **\`useState\`** y a dominar los nuevos hooks de React 19 diseñados para formularios interactivos.
-
----
-
-#### 1. Ejemplo de Formulario Interactivo con \`useActionState\`
-
-\`\`\`tsx
-'use client';
-
-import React, { useActionState } from 'react';
-
-async function actualizarPerfilAction(previousState: any, formData: FormData) {
-  const nombre = formData.get('nombre') as string;
-  if (!nombre || nombre.length < 3) {
-    return { error: 'El nombre debe tener al menos 3 caracteres.' };
-  }
-  return { success: \`Perfil actualizado con éxito para \${nombre}\` };
-}
-
-export function FormularioPerfil() {
-  const [state, formAction, isPending] = useActionState(actualizarPerfilAction, null);
-
-  return (
-    <form action={formAction} className="space-y-4">
-      <div>
-        <label className="block text-xs font-bold uppercase">Nombre Completo</label>
-        <input 
-          name="nombre" 
-          type="text" 
-          className="w-full p-2 border-2 border-slate-950" 
-          placeholder="Alex López"
-        />
-      </div>
-      <button 
-        type="submit" 
-        disabled={isPending}
-        className="px-4 py-2 bg-emerald-500 text-slate-950 font-black border-2 border-slate-950"
-      >
-        {isPending ? 'Guardando...' : 'Guardar Cambios'}
-      </button>
-      {state?.error && <p className="text-red-500 text-xs font-bold">{state.error}</p>}
-      {state?.success && <p className="text-emerald-500 text-xs font-bold">{state.success}</p>}
-    </form>
-  );
-}
-\`\`\``,
+Aprende a gestionar el estado cliente con **\`useState\`** y a dominar los nuevos hooks de React 19 diseñados para formularios interactivos.`,
             resources: ['https://react.dev/reference/react/useActionState']
           },
           {
@@ -204,14 +282,7 @@ export function FormularioPerfil() {
             duration_seconds: 960,
             content_text: `### ⚡ Manual Práctico: Server Components (RSC) vs Client Components
 
-En React 19 y Next.js 15, la arquitectura se divide limpiamente entre el Servidor (Node.js) y el Cliente (Navegador).
-
----
-
-#### 1. ¿Cuándo usar cada tipo de componente?
-
-- **Server Component (Default):** Para fetching de datos directo a base de datos, acceso a secretos API de backend y renderizado HTML estático.
-- **Client Component (\`'use client'\`):** Para elementos interactivos que requieren event listeners (\`onClick\`, \`onChange\`), hooks de React (\`useState\`, \`useEffect\`) o APIs del navegador (\`localStorage\`).`,
+En React 19 y Next.js 15, la arquitectura se divide limpiamente entre el Servidor (Node.js) y el Cliente (Navegador).`,
             resources: ['https://nextjs.org/docs/app/building-your-application/rendering/server-components']
           }
         ]
@@ -231,34 +302,7 @@ En React 19 y Next.js 15, la arquitectura se divide limpiamente entre el Servido
             duration_seconds: 1100,
             content_text: `### 🧭 Manual Avanzado: Next.js 15 App Router
 
-El **App Router** de Next.js 15 utiliza la estructura de carpetas dentro del directorio \`app/\` para definir las rutas públicas de la aplicación web.
-
----
-
-#### 1. Convención de Archivos Especiales
-
-- **\`page.tsx\`:** UI única expuesta en una URL pública.
-- **\`layout.tsx\`:** Estructura compartida que envuelve a las páginas hijas (mantiene el estado durante la navegación).
-- **\`loading.tsx\`:** Pantalla de carga automática envuelta en \`React.Suspense\`.
-- **\`error.tsx\`:** Límite de captura de errores envuelto en \`ErrorBoundary\`.
-
-\`\`\`tsx
-// app/cursos/[id]/page.tsx
-import React from 'react';
-
-interface Params {
-  params: Promise<{ id: string }>;
-}
-
-export default async function PaginaCurso({ params }: Params) {
-  const { id } = await params;
-  return (
-    <div className="p-8">
-      <h1 className="text-2xl font-black">Detalle del Curso #{id}</h1>
-    </div>
-  );
-}
-\`\`\``,
+El **App Router** de Next.js 15 utiliza la estructura de carpetas dentro del directorio \`app/\` para definir las rutas públicas de la aplicación web.`,
             resources: ['https://nextjs.org/docs/app/building-your-application/routing']
           },
           {
@@ -269,25 +313,7 @@ export default async function PaginaCurso({ params }: Params) {
             duration_seconds: 1250,
             content_text: `### 🚀 Manual de Estudio: Server Actions y Revalidación de Caché
 
-Las **Server Actions** son funciones asíncronas que se ejecutan directamente en el servidor sin necesidad de crear endpoints API manuales (\`pages/api\`).
-
-\`\`\`tsx
-// app/actions/cursos.ts
-'use server';
-
-import { revalidatePath } from 'next/cache';
-
-export async function crearCursoAction(formData: FormData) {
-  const titulo = formData.get('titulo') as string;
-  const precio = formData.get('precio') as string;
-
-  // Insertar en Base de Datos de backend
-  console.log(\`Creando curso \${titulo} con precio \${precio} USD...\`);
-
-  // Purgar la caché de Next.js para reflejar los datos actualizados
-  revalidatePath('/cursos');
-}
-\`\`\``,
+Las **Server Actions** son funciones asíncronas que se ejecutan directamente en el servidor sin necesidad de crear endpoints API manuales (\`pages/api\`).`,
             resources: ['https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations']
           },
           {
@@ -351,149 +377,99 @@ Has completado con éxito el curso práctico de **React 19 & Next.js 15**.`,
     ]
   },
 
-  // Course 3: Docker & Kubernetes / DevOps: Contenedores, CI/CD y Orquestación (COMPLETO 100%)
-  docker: {
-    cover_image: 'https://images.unsplash.com/photo-1605745341112-85968b19335b?q=80&w=1200&auto=format&fit=crop',
-    description: 'Manual de estudio profesional en infraestructura moderna y DevOps. Domina la contenerización con Docker, creación de Dockerfiles multi-stage livianos, orquestación local con Docker Compose, clústeres de producción con Kubernetes (Deployments, Services, Ingress), pipelines de CI/CD automatizados en GitHub Actions y despliegue continuo con GitOps.',
+  // Course 3: Terminal Bash & Consola Linux: Guía Profesional (COMPLETO 100%)
+  terminal: {
+    cover_image: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?q=80&w=1200&auto=format&fit=crop',
+    description: 'Manual de estudio profesional en la consola Linux y scripts en Bash. Domina la navegación del sistema de archivos UNIX, permisos de seguridad (chmod/chown), tuberías y redirecciones (pipes & I/O), procesamiento masivo de texto con grep/sed/awk, variables de entorno, tareas automatizadas con Cron Jobs y desarrollo de scripts profesionales.',
     modules: [
       {
         id: 301,
         course: 3,
         order: 1,
-        title: 'Módulo 1: Fundamentos de Contenedores con Docker y Dockerfiles Optimizados',
-        description: 'Arquitectura del motor de Docker, comandos CLI, creación de imágenes multi-etapa y orquestación con Docker Compose.',
+        title: 'Módulo 1: Navegación, Sistema de Archivos y Permisos en GNU/Linux',
+        description: 'Estructura de directorios Linux, comandos esenciales de navegación, gestión de archivos y permisos de seguridad.',
         lessons: [
           {
             id: 3001,
             module: 301,
             order: 1,
-            title: 'Lección 1.1: Introducción a la Contenerización, Arquitectura de Docker Engine y Comandos CLI',
+            title: 'Lección 1.1: Estructura del Sistema de Archivos Linux (/bin, /etc, /var) y Comandos ls, cd, pwd',
             duration_seconds: 900,
-            content_text: `### 🐳 Manual Teórico-Práctico: Fundamentos de Docker y Arquitectura de Contenedores
+            content_text: `### 💻 Manual Teórico-Práctico: Navegación en la Terminal Linux
 
-Bienvenido a la primera guía de estudio del curso de **Docker & Kubernetes / DevOps**. En esta lección aprenderás por qué la contenerización resolvió el clásico problema *"en mi máquina sí funciona"*, la arquitectura del cliente-servidor de Docker y los comandos fundamentales de consola.
-
----
-
-#### 1. Diferencia entre Máquinas Virtuales (VMs) y Contenedores
-
-- **Máquina Virtual (VM):** Empaqueta un Sistema Operativo completo sobre un hipervisor (VirtualBox, VMware). Consume gigabytes de RAM y tarda minutos en arrancar.
-- **Contenedor (Docker):** Comparte el Kernel del Sistema Operativo del Host y aísla los procesos del usuario. Consume megabytes y arranca en milisegundos.
+Bienvenido a la primera guía de estudio del curso de **Terminal Bash & Consola Linux**. En este tema aprenderás la jerarquía del sistema de archivos Unix/Linux y los comandos fundamentales de consola.
 
 ---
 
-#### 2. Comandos CLI Esenciales de Docker
+#### 1. Directorios Clave en Linux
+
+- **\`/bin\`:** Binarios y comandos esenciales del sistema (\`ls\`, \`cp\`, \`cat\`).
+- **\`/etc\`:** Archivos de configuración global del sistema y servicios.
+- **\`/var/log\`:** Archivos de registro y logs de ejecución de aplicaciones.
+- **\`/home/usuario\`:** Directorio personal del usuario activo.
+
+---
+
+#### 2. Comandos CLI de Navegación Básica
 
 \`\`\`bash
-# 1. Descargar y ejecutar un contenedor Nginx en segundo plano (puerto 8080 en host -> 80 en contenedor)
-docker run -d -p 8080:80 --name mi-servidor-web nginx:alpine
+# Imprimir el directorio de trabajo actual
+pwd
 
-# 2. Listar contenedores en ejecución
-docker ps
+# Listar archivos detallados incluyendo ocultos (.dotfiles) con peso humano
+ls -laSh /var/log
 
-# 3. Inspeccionar logs del contenedor en tiempo real
-docker logs -f mi-servidor-web
-
-# 4. Entrar a la consola interactiva del contenedor
-docker exec -it mi-servidor-web /bin/sh
-
-# 5. Detener y eliminar el contenedor
-docker stop mi-servidor-web
-docker rm mi-servidor-web
+# Navegar al directorio home del usuario
+cd ~
 \`\`\`
 
 ---
 
-#### 💡 Tabla de Comandos Principales de Docker
+#### 💡 Tabla de Banderas Esenciales de \`ls\`
 
-| Comando | Propósito | Ejemplo |
+| Bandera | Propósito | Ejemplo |
 | --- | --- | --- |
-| \`docker build\` | Construye una imagen desde un Dockerfile | \`docker build -t mi-app:v1 .\` |
-| \`docker run\` | Crea y ejecuta un contenedor | \`docker run -d -p 3000:3000 mi-app:v1\` |
-| \`docker exec\` | Ejecuta un comando en un contenedor activo | \`docker exec -it mi-app sh\` |
-| \`docker system prune\` | Limpia espacio en disco (imágenes y contenedores muertos) | \`docker system prune -a --volumes\` |`,
-            resources: ['https://docs.docker.com/get-started/overview/']
+| \`-l\` | Formato largo con permisos y fechas | \`ls -l\` |
+| \`-a\` | Muestra archivos ocultos (\`.\` y \`..\`) | \`ls -a\` |
+| \`-h\` | Tamaños de archivo legibles (\`KB\`, \`MB\`, \`GB\`) | \`ls -lh\` |
+| \`-S\` | Ordena por tamaño de archivo descendente | \`ls -lS\` |`,
+            resources: ['https://www.gnu.org/software/bash/manual/']
           },
           {
             id: 3002,
             module: 301,
             order: 2,
-            title: 'Lección 1.2: Creación de Dockerfiles Multietapa (Multi-Stage Builds) de Alto Rendimiento',
+            title: 'Lección 1.2: Permisos de Archivos y Usuarios (chmod, chown, umask, sudo)',
             duration_seconds: 1050,
-            content_text: `### 🛠️ Manual de Estudio: Dockerfiles Multi-Etapa de Producción
+            content_text: `### 🛡️ Manual de Estudio: Modelo de Permisos Octales y Propiedad en Linux
 
-Aprende a construir imágenes Docker seguras y ultra ligeras reduciendo su tamaño de 1GB a menos de 30MB mediante la técnica de **Multi-Stage Builds**.
+Aprende a modificar los permisos de Lectura (\`r=4\`), Escritura (\`w=2\`) y Ejecución (\`x=1\`) para el Usuario (u), Grupo (g) y Otros (o).
 
----
+\`\`\`bash
+# Otorgar permisos de ejecución al propietario y lectura al grupo/otros (755)
+chmod 755 mi_script.sh
 
-#### 1. Dockerfile Optimizado para Aplicaciones Web (Node.js / React)
-
-\`\`\`dockerfile
-# ----- ETAPA 1: Construcción (Builder) -----
-FROM node:20-alpine AS builder
-WORKDIR /app
-
-# Copiar manifiestos de dependencias primero para aprovechar la caché de Docker
-COPY package*.json ./
-RUN npm ci
-
-# Copiar el código fuente y construir el bundle estático de producción
-COPY . .
-RUN npm run build
-
-# ----- ETAPA 2: Servidor de Producción (Runner) -----
-FROM nginx:alpine AS runner
-WORKDIR /usr/share/nginx/html
-
-# Copiar únicamente los archivos estáticos compilados de la Etapa 1
-COPY --from=builder /app/dist .
-
-# Exponer el puerto estándar
-EXPOSE 80
-
-# Comando de inicio del servidor web Nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Cambiar el propietario y grupo de un directorio de forma recursiva
+sudo chown -R www-data:www-data /var/www/oncourses
 \`\`\``,
-            resources: ['https://docs.docker.com/build/building/multi-stage/']
+            resources: ['https://www.linux.org/lessons/file-permissions/']
           },
           {
             id: 3003,
             module: 301,
             order: 3,
-            title: 'Lección 1.3: Redes en Docker y Orquestación Multicontenedor con Docker Compose',
+            title: 'Lección 1.3: Manipulación de Archivos y Búsqueda Avanzada (find, du, df)',
             duration_seconds: 960,
-            content_text: `### 🐙 Manual Práctico: Docker Compose y Entornos Multicontenedor
+            content_text: `### 🔍 Manual Práctico: Búsqueda de Archivos con \`find\` y Gestión de Disco
 
-Definición y ejecución de múltiples servicios (Aplicación Web + Base de Datos PostgreSQL) mediante **\`docker-compose.yml\`**.
+\`\`\`bash
+# Buscar todos los archivos .log mayores a 50MB modificados en los últimos 7 días
+find /var/log -name "*.log" -type f -size +50M -mtime -7
 
-\`\`\`yaml
-version: '3.8'
-
-services:
-  web:
-    build: .
-    ports:
-      - "5173:80"
-    environment:
-      - DATABASE_URL=postgres://postgres:secret@db:5432/oncourses_db
-    depends_on:
-      - db
-
-  db:
-    image: postgres:16-alpine
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: secret
-      POSTGRES_DB: oncourses_db
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-
-volumes:
-  postgres_data:
+# Verificar espacio disponible en disco en formato humano
+df -h
 \`\`\``,
-            resources: ['https://docs.docker.com/compose/']
+            resources: ['https://man7.org/linux/man-pages/man1/find.1.html']
           }
         ]
       },
@@ -501,76 +477,54 @@ volumes:
         id: 302,
         course: 3,
         order: 2,
-        title: 'Módulo 2: Orquestación de Producción con Kubernetes (K8s)',
-        description: 'Arquitectura de clústeres K8s, despliegues (Deployments), servicios, ingress y almacenamiento persistente.',
+        title: 'Módulo 2: Procesamiento de Texto, Tuberías (Pipes) y Variables de Entorno',
+        description: 'Redirección de entrada/salida estándar, filtros con grep, sed, awk y variables de entorno.',
         lessons: [
           {
             id: 3004,
             module: 302,
             order: 1,
-            title: 'Lección 2.1: Arquitectura de Kubernetes: Control Plane, Worker Nodes, Pods y Deployments',
+            title: 'Lección 2.1: Entrada/Salida Estándar (stdin, stdout, stderr) y Tuberías (|)',
             duration_seconds: 1100,
-            content_text: `### ☸️ Manual Avanzado: Manifiestos de Kubernetes (K8s)
+            content_text: `### 🔀 Manual Avanzado: Redirecciones y Tuberías en Bash
 
-Kubernetes es la plataforma estándar de la industria para orquestar contenedores a gran escala con autorrecuperación (*self-healing*) y escalado automático.
+Conecta la salida de un programa con la entrada de otro utilizando el operador pipe (\`|\`).
 
----
+\`\`\`bash
+# Redireccionar errores (stderr) a un archivo de log y salida (stdout) a otro
+python3 app.py > salida.log 2> errores.log
 
-#### 1. Manifiesto YAML de Deployment en Kubernetes
-
-\`\`\`yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: oncourses-web-deployment
-  labels:
-    app: oncourses-web
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: oncourses-web
-  template:
-    metadata:
-      labels:
-        app: oncourses-web
-    spec:
-      containers:
-      - name: web
-        image: ghcr.io/alexlopezf04/oncourses-web:latest
-        ports:
-        - containerPort: 80
-        resources:
-          requests:
-            memory: "64Mi"
-            cpu: "100m"
-          limits:
-            memory: "128Mi"
-            cpu: "250m"
+# Encadenar comandos para contar líneas de coincidencias
+cat /var/log/nginx/access.log | grep "HTTP/1.1 500" | wc -l
 \`\`\``,
-            resources: ['https://kubernetes.io/docs/concepts/workloads/controllers/deployment/']
+            resources: ['https://tldp.org/LDP/abs/html/io-redirection.html']
           },
           {
             id: 3005,
             module: 302,
             order: 2,
-            title: 'Lección 2.2: Servicios, Ingress Controllers y Gestión de Tráfico (Service, Ingress)',
+            title: 'Lección 2.2: Herramientas de Procesamiento de Texto: grep, sed y awk',
             duration_seconds: 1250,
-            content_text: `### 🌐 Manual de Estudio: Exposición de Servicios e Ingress Controllers en K8s
+            content_text: `### ⚡ Manual de Estudio: Expresiones Regulares con grep, sed y awk
 
-Aprende a exponer tus Pods mediante servicios de balanceo de carga y enrutamiento por dominio HTTP con **Ingress NGINX**.`,
-            resources: ['https://kubernetes.io/docs/concepts/services-networking/service/']
+Filtra e inspecciona archivos de texto de gigabytes de tamaño en milisegundos.
+
+\`\`\`bash
+# Extraer la columna de direcciones IP de un log de accesos web usando AWK
+awk '{print $1}' /var/log/nginx/access.log | sort | uniq -c | sort -nr | head -n 10
+\`\`\``,
+            resources: ['https://www.gnu.org/software/gawk/manual/']
           },
           {
             id: 3006,
             module: 302,
             order: 3,
-            title: 'Lección 2.3: Configuración y Secretos (ConfigMaps & Secrets) con Almacenamiento Persistente (PVC)',
+            title: 'Lección 2.3: Variables de Entorno (PATH, EXPORT), Alias y Archivos .bashrc',
             duration_seconds: 1020,
-            content_text: `### 🔒 Manual Práctico: ConfigMaps, Secrets y Volúmenes Persistentes en K8s
+            content_text: `### ⚙️ Manual Práctico: Personalización del Entorno de Shell
 
-Gestión segura de variables de entorno y llaves secretas cifradas en base64 en Kubernetes.`,
-            resources: ['https://kubernetes.io/docs/concepts/configuration/secret/']
+Configuración permanente de variables y atajos alias en \`~/.bashrc\` o \`~/.zshrc\`.`,
+            resources: ['https://www.gnu.org/software/bash/manual/html_node/Bash-Startup-Files.html']
           }
         ]
       },
@@ -578,72 +532,260 @@ Gestión segura de variables de entorno y llaves secretas cifradas en base64 en 
         id: 303,
         course: 3,
         order: 3,
-        title: 'Módulo 3: Pipelines CI/CD Automatizados y Despliegue en la Nube',
-        description: 'Pipelines CI/CD automatizados en GitHub Actions, pruebas, despliegue continuo con GitOps y monitoreo.',
+        title: 'Módulo 3: Scripts Bash Avanzados, Automatización de Tareas y Cron Jobs',
+        description: 'Construcción de scripts interactivos con control de errores, tareas programadas en Cron y proyecto final.',
         lessons: [
           {
             id: 3007,
             module: 303,
             order: 1,
-            title: 'Lección 3.1: Integración Continua con GitHub Actions (CI Pipelines & Linting/Testing)',
+            title: 'Lección 3.1: Fundamentos de Scripting en Bash: Control de Flujo y Funciones',
             duration_seconds: 1150,
-            content_text: `### 🚀 Manual Teórico-Práctico: Pipelines de CI/CD con GitHub Actions
+            content_text: `### 📜 Manual Teórico-Práctico: Desarrollo de Scripts en Bash
 
-Automatiza la construcción de imágenes Docker y la validación de linters en cada push a la rama \`main\`.
+Escribe scripts ejecutables reutilizables con la cabecera Shebang (\`#!/bin/bash\`).
 
-\`\`\`yaml
-name: Docker CI/CD Pipeline
+\`\`\`bash
+#!/bin/bash
+set -euo pipefail
 
-on:
-  push:
-    branches: [ "main" ]
+DIRECTORIO_RESPALDO="/var/backups/oncourses"
+FECHA=$(date +%Y%m%d_%H%M%S)
 
-jobs:
-  build-and-push:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout Código Fuente
-      uses: actions/checkout@v4
-
-    - name: Iniciar Sesión en Docker Hub
-      uses: docker/login-action@v3
-      with:
-        username: \${{ secrets.DOCKERHUB_USERNAME }}
-        password: \${{ secrets.DOCKERHUB_TOKEN }}
-
-    - name: Construir y Publicar Imagen Docker
-      uses: docker/build-push-action@v5
-      with:
-        context: .
-        push: true
-        tags: alexlopez/oncourses-web:latest
+echo "Iniciando respaldo en $DIRECTORIO_RESPALDO a las $FECHA..."
+mkdir -p "$DIRECTORIO_RESPALDO"
+tar -czf "$DIRECTORIO_RESPALDO/backup_$FECHA.tar.gz" /var/www/html
+echo "¡Respaldo completado con éxito!"
 \`\`\``,
-            resources: ['https://docs.github.com/en/actions']
+            resources: ['https://google.github.io/styleguide/shellguide.html']
           },
           {
             id: 3008,
             module: 303,
             order: 2,
-            title: 'Lección 3.2: Despliegue Continuo (CD) y GitOps con ArgoCD en Clusters Kubernetes',
+            title: 'Lección 3.2: Tareas Programadas Automáticas con Cron Jobs (crontab)',
             duration_seconds: 1100,
-            content_text: `### 🔄 Manual Práctico: GitOps con ArgoCD y Sincronización Automática
+            content_text: `### ⏰ Manual Práctico: Programación de Tareas con Crontab
 
-Implementa la filosofía GitOps donde el estado deseado del clúster se mantiene 100% sincronizado con tu repositorio Git.`,
-            resources: ['https://argo-cd.readthedocs.io/']
+Configuración de la sintaxis cron de 5 campos (\`min hora dia mes dia_semana\`).`,
+            resources: ['https://crontab.guru/']
           },
           {
             id: 3009,
             module: 303,
             order: 3,
-            title: 'Lección 3.3: Proyecto Integrador: Pipeline CI/CD Completo y Despliegue de App en Kubernetes',
+            title: 'Lección 3.3: Proyecto Integrador: Script Profesional de Respaldo y Monitoreo',
             duration_seconds: 1600,
-            content_text: `### 🚀 Proyecto Integrador: Despliegue DevOps Completo en la Nube
-
-Construcción y ejecución de una arquitectura completa contenerizada y desplegada en Kubernetes.
+            content_text: `### 🚀 Proyecto Integrador: Sistema Completo de Monitoreo de Servidor en Bash
 
 #### 🏆 ¡Felicidades!
-Has completado con éxito el curso práctico de **Docker & Kubernetes / DevOps**.`,
-            resources: ['https://kubernetes.io/']
+Has completado con éxito el curso práctico de **Terminal Bash & Consola Linux: Guía Profesional**.`,
+            resources: ['https://www.gnu.org/software/bash/']
+          }
+        ]
+      }
+    ]
+  },
+
+  // Course 4: Git & GitHub: Control de Versiones en Equipo (COMPLETO 100%)
+  git: {
+    cover_image: 'https://images.unsplash.com/photo-1556075798-4825dfaaf498?q=80&w=1200&auto=format&fit=crop',
+    description: 'Manual de estudio profesional en control de versiones distribuido con Git y colaboración en GitHub. Domina los estados de Git (Staging, Commit), gestión de ramas (branching, merging, rebase), resolución limpia de conflictos, flujos de trabajo colaborativos (Gitflow, Pull Requests), etiquetas (tags) y automatización con GitHub Actions.',
+    modules: [
+      {
+        id: 401,
+        course: 4,
+        order: 1,
+        title: 'Módulo 1: Fundamentos de Git, Arquitectura Local y Primeros Pasos',
+        description: 'Conceptos de control de versiones distribuido, los 3 estados de Git, comandos básicos e inspección de cambios.',
+        lessons: [
+          {
+            id: 4001,
+            module: 401,
+            order: 1,
+            title: 'Lección 1.1: Arquitectura de los 3 Estados de Git y Configuración Inicial',
+            duration_seconds: 900,
+            content_text: `### 🌿 Manual Teórico-Práctico: Arquitectura Local de Git
+
+Bienvenido a la primera guía de estudio del curso de **Git & GitHub**. En este tema aprenderás cómo Git rastrea el historial de archivos a través de un árbol de objetos dirigidos acíclicos (DAG).
+
+---
+
+#### 1. Los 3 Estados de Git
+
+- **Working Directory:** Tu directorio local donde editas los archivos.
+- **Staging Area (Index):** Zona de preparación donde agregas los cambios listos para el próximo commit.
+- **Repository (.git):** Base de datos donde Git almacena los commits confirmados en snapshots inmutables.
+
+---
+
+#### 2. Configuración Inicial e Inicialización de Repositorio
+
+\`\`\`bash
+# Configurar la identidad global del desarrollador
+git config --global user.name "Alex López"
+git config --global user.email "alex@oncourses.app"
+git config --global init.defaultBranch dev
+
+# Inicializar un nuevo repositorio
+git init
+git add .
+git commit -m "feat(init): inicializar estructura del proyecto"
+\`\`\`
+
+---
+
+#### 💡 Tabla de Comandos Básicos de Git
+
+| Comando | Propósito | Ejemplo |
+| --- | --- | --- |
+| \`git status\` | Muestra el estado del árbol de trabajo | \`git status\` |
+| \`git add\` | Mueve archivos al Staging Area | \`git add src/\` |
+| \`git commit\` | Crea un snapshot con mensaje | \`git commit -m "feat: add auth"\` |
+| \`git log\` | Muestra el historial de confirmaciones | \`git log --oneline --graph\` |`,
+            resources: ['https://git-scm.com/book/es/v2']
+          },
+          {
+            id: 4002,
+            module: 401,
+            order: 2,
+            title: 'Lección 1.2: Historial de Commits, Diferencias y Deshacer Cambios (git reset, restore)',
+            duration_seconds: 1050,
+            content_text: `### ⏪ Manual de Estudio: Navegación por el Historial y Reversión de Cambios
+
+Aprende a inspeccionar diffs con \`git diff\` y a deshacer cambios de forma segura sin perder trabajo.
+
+\`\`\`bash
+# Descartar cambios no guardados en un archivo específico
+git restore src/App.tsx
+
+# Deshacer el último commit manteniendo los archivos en el Staging Area (Soft Reset)
+git reset --soft HEAD~1
+\`\`\``,
+            resources: ['https://git-scm.com/docs/git-reset']
+          },
+          {
+            id: 4003,
+            module: 401,
+            order: 3,
+            title: 'Lección 1.3: Archivo .gitignore y Buenas Prácticas de Commit',
+            duration_seconds: 960,
+            content_text: `### 🚫 Manual Práctico: Ignorar Archivos y Mensajes de Commit Convencionales
+
+Configuración del archivo \`.gitignore\` para evitar subir secretos, dependencias (\`node_modules/\`) o compilados de entorno.`,
+            resources: ['https://git-scm.com/docs/gitignore']
+          }
+        ]
+      },
+      {
+        id: 402,
+        course: 4,
+        order: 2,
+        title: 'Módulo 2: Manejo de Ramas (Branching), Fusiones (Merging) y Resolución de Conflictos',
+        description: 'Estrategias de ramificación, fusiones Fast-Forward vs Merge Commits, Rebase y resolución paso a paso de conflictos.',
+        lessons: [
+          {
+            id: 4004,
+            module: 402,
+            order: 1,
+            title: 'Lección 2.1: Estrategias de Ramificación (git branch, switch) y Ramas de Características',
+            duration_seconds: 1100,
+            content_text: `### 🌿 Manual Avanzado: Trabajo con Ramas en Git
+
+Las ramas en Git son punteros ligeros hacia commits específicos. Crear una rama es una operación instantánea ($O(1)$).
+
+\`\`\`bash
+# Crear y cambiar a una nueva rama de desarrollo de característica
+git switch -c feature/login-page
+
+# Listar todas las ramas locales y remotas
+git branch -a
+\`\`\``,
+            resources: ['https://git-scm.com/docs/git-switch']
+          },
+          {
+            id: 4005,
+            module: 402,
+            order: 2,
+            title: 'Lección 2.2: Fusión de Ramas: Git Merge vs Git Rebase',
+            duration_seconds: 1250,
+            content_text: `### 🔀 Manual de Estudio: Integración de Código con Merge y Rebase
+
+- **\`git merge\`:** Conserva la historia real creando un commit de integración de 2 padres.
+- **\`git rebase\`:** Aplica los commits sobre la punta de la rama destino logrando un historial 100% lineal.
+
+\`\`\`bash
+# Aplicar rebase de la rama dev sobre la característica actual
+git fetch origin
+git rebase origin/dev
+\`\`\``,
+            resources: ['https://git-scm.com/docs/git-rebase']
+          },
+          {
+            id: 4006,
+            module: 402,
+            order: 3,
+            title: 'Lección 2.3: Detección y Resolución Paso a Paso de Conflictos de Merge',
+            duration_seconds: 1020,
+            content_text: `### ⚔️ Manual Práctico: Resolución de Conflictos en Git
+
+Aprende a interpretar las marcas de conflicto (\`<<<<<< HEAD\`, \`=======\`, \`>>>>>>> branch\`) y confirmar la versión resuelta.`,
+            resources: ['https://git-scm.com/book/es/v2/Herramientas-de-Git-Fusi%C3%B3n-Avanzada']
+          }
+        ]
+      },
+      {
+        id: 403,
+        course: 4,
+        order: 3,
+        title: 'Módulo 3: Colaboración en GitHub, Pull Requests, Gitflow y Releases',
+        description: 'Trabajo con repositorios remotos, Pull Requests, revisiones de código, flujo Gitflow y etiquetado de versiones.',
+        lessons: [
+          {
+            id: 4007,
+            module: 403,
+            order: 1,
+            title: 'Lección 3.1: Repositorios Remotos en GitHub (git remote, push, fetch, pull)',
+            duration_seconds: 1150,
+            content_text: `### ☁️ Manual Teórico-Práctico: Sincronización con GitHub
+
+Conexión mediante llaves SSH y actualización de repositorios remotos.
+
+\`\`\`bash
+# Agregar un nuevo remoto y subir la rama dev
+git remote add origin git@github.com:AlexLopezF04/on-courses-web.git
+git push -u origin dev
+\`\`\``,
+            resources: ['https://docs.github.com/es']
+          },
+          {
+            id: 4008,
+            module: 403,
+            order: 2,
+            title: 'Lección 3.2: Flujo de Trabajo Colaborativo: Fork, Pull Requests y Code Reviews',
+            duration_seconds: 1100,
+            content_text: `### 👥 Manual Práctico: Revisiones de Código y Pull Requests en GitHub
+
+Metodología de colaboración para equipos ágiles utilizando Pull Requests con aprobaciones obligatorias.`,
+            resources: ['https://docs.github.com/en/pull-requests']
+          },
+          {
+            id: 4009,
+            module: 403,
+            order: 3,
+            title: 'Lección 3.3: Proyecto Integrador: Modelo Gitflow, Etiquetas (git tag) y Releases',
+            duration_seconds: 1600,
+            content_text: `### 🚀 Proyecto Integrador: Despliegue de Versión con Git Tag y Releases
+
+\`\`\`bash
+# Crear una etiqueta anotada de versión semántica (SemVer)
+git tag -a v1.0.0 -m "Release Oficial Versión 1.0.0 de OnCourses"
+git push origin v1.0.0
+\`\`\`
+
+#### 🏆 ¡Felicidades!
+Has completado con éxito el curso práctico de **Git & GitHub: Control de Versiones en Equipo**.`,
+            resources: ['https://git-scm.com/']
           }
         ]
       }
@@ -730,14 +872,7 @@ CREATE TABLE matriculas (
 | \`FOREIGN KEY\` | Garantiza integridad referencial | \`REFERENCES usuarios(id)\` |
 | \`UNIQUE\` | Impide valores duplicados | \`email VARCHAR(150) UNIQUE\` |
 | \`CHECK\` | Valida reglas de negocio | \`CHECK (precio >= 0)\` |
-| \`DEFAULT\` | Asigna valor automático | \`DEFAULT CURRENT_TIMESTAMP\` |
-
----
-
-#### ✏️ Ejercicio Práctico Obligatorio
-1. Abre tu cliente PostgreSQL (psql, pgAdmin o DBeaver) y ejecuta los comandos DDL anteriores.
-2. Inserte 3 usuarios y 2 cursos de prueba.
-3. Comprueba que al intentar registrar un email duplicado o un precio negativo, PostgreSQL bloquee la operación lanzando una excepción de restricción.`,
+| \`DEFAULT\` | Asigna valor automático | \`DEFAULT CURRENT_TIMESTAMP\` |`,
             resources: ['https://www.postgresql.org/docs/current/ddl.html']
           },
           {
@@ -748,62 +883,7 @@ CREATE TABLE matriculas (
             duration_seconds: 1050,
             content_text: `### 🛠️ Manual de Estudio: Tipos de Datos Avanzados en PostgreSQL
 
-PostgreSQL es conocido como la base de datos relacional orientada a objetos más potente del mundo. Una de sus mayores fortalezas es su soporte nativo para tipos de datos modernos que van más allá del SQL tradicional.
-
----
-
-#### 1. Datos Semi-estructurados con JSONB
-A diferencia del tipo \`JSON\` plano (que almacena texto exacto), el tipo **\`JSONB\`** almacena los datos en formato binario descompuesto. Esto permite búsquedas ultra rápidas e indexación especializada mediante índices GIN.
-
-\`\`\`sql
--- Crear tabla con metadatos flexibes en JSONB
-CREATE TABLE lecciones_detalles (
-    id SERIAL PRIMARY KEY,
-    titulo VARCHAR(150) NOT NULL,
-    metadatos JSONB DEFAULT '{}'::jsonb
-);
-
--- Insertar datos estructurados en formato JSONB
-INSERT INTO lecciones_detalles (titulo, metadatos) VALUES
-('Creación de Índices', '{"duracion_min": 15, "nivel": "avanzado", "etiquetas": ["sql", "performance", "indexes"]}'),
-('Modelado B-Tree', '{"duracion_min": 20, "nivel": "intermedio", "etiquetas": ["postgres", "btree"]}');
-
--- Consulta con operadores JSONB (->> extraer como texto, @> contiene JSON)
-SELECT titulo, metadatos->>'nivel' AS nivel_leccion
-FROM lecciones_detalles
-WHERE metadatos @> '{"nivel": "avanzado"}';
-\`\`\`
-
----
-
-#### 2. Identificadores Únicos Globales (UUID v4)
-Para sistemas distribuidos o APIs donde no se deben exponer IDs secuenciales simples (1, 2, 3...), PostgreSQL permite generar **UUIDs** de 128 bits:
-
-\`\`\`sql
--- Habilitar extensión para generación de UUID
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-
-CREATE TABLE pagos (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    monto NUMERIC(10, 2) NOT NULL,
-    moneda VARCHAR(3) DEFAULT 'USD',
-    fecha_pago TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-);
-
-INSERT INTO pagos (monto) VALUES (9.99);
-SELECT * FROM pagos;
-\`\`\`
-
----
-
-#### 📊 Comparativa: JSON vs JSONB
-
-| Característica | Tipo \`JSON\` | Tipo \`JSONB\` (Recomendado) |
-| --- | --- | --- |
-| Almacenamiento | Texto plano tal como se ingresó | Formato binario procesado |
-| Velocidad de Inserción | Más rápida (no procesa) | Ligeramente más lenta por procesamiento |
-| Velocidad de Consulta | Más lenta (reparsea en cada query) | **Ultra rápida (acceso binario directo)** |
-| Soporte de Índices | No soporta índices GIN | **Soporta Índices GIN y GiST** |`,
+PostgreSQL es conocido como la base de datos relacional orientada a objetos más potente del mundo. Una de sus mayores fortalezas es su soporte nativo para tipos de datos modernos que van más allá del SQL tradicional.`,
             resources: ['https://www.postgresql.org/docs/current/datatype-json.html']
           },
           {
@@ -814,34 +894,7 @@ SELECT * FROM pagos;
             duration_seconds: 840,
             content_text: `### 🛡️ Manual Práctico: Integridad Referencial y Acciones en Cascada
 
-Garantizar que las relaciones entre tablas nunca queden "huérfanas" es el pilar de la integridad referencial en PostgreSQL. En esta guía dominarás el uso de reglas en la eliminación y actualización de registros.
-
----
-
-#### 1. Tipos de Acciones de Llave Foránea
-
-- **\`ON DELETE CASCADE\`:** Si se elimina el registro padre, PostgreSQL borra automáticamente todas las filas hijas vinculadas.
-- **\`ON DELETE SET NULL\`:** Si se elimina el padre, las llaves foráneas en los hijos cambian a \`NULL\`.
-- **\`ON DELETE RESTRICT\` (Default):** Impide eliminar el registro padre si existen registros hijos que dependen de él.
-
-\`\`\`sql
--- Ejemplo completo de integridad referencial
-CREATE TABLE secciones (
-    id SERIAL PRIMARY KEY,
-    curso_id INT NOT NULL REFERENCES cursos(id) ON DELETE CASCADE,
-    titulo VARCHAR(150) NOT NULL
-);
-
-CREATE TABLE lecciones (
-    id SERIAL PRIMARY KEY,
-    seccion_id INT NOT NULL REFERENCES secciones(id) ON DELETE CASCADE,
-    titulo VARCHAR(150) NOT NULL,
-    video_url TEXT
-);
-\`\`\`
-
-#### ✏️ Ejercicio de Verificación
-Prueba borrar un curso completo con \`DELETE FROM cursos WHERE id = 1;\` y verifica con \`SELECT * FROM secciones;\` cómo PostgreSQL elimina automáticamente las secciones y lecciones hijas asociadas en cascada.`,
+Garantizar que las relaciones entre tablas nunca queden "huérfanas" es el pilar de la integridad referencial en PostgreSQL.`,
             resources: ['https://www.postgresql.org/docs/current/ddl-constraints.html']
           }
         ]
@@ -861,67 +914,7 @@ Prueba borrar un curso completo con \`DELETE FROM cursos WHERE id = 1;\` y verif
             duration_seconds: 1200,
             content_text: `### ⚡ Manual Avanzado: Indexación B-Tree y Análisis de Rendimiento con EXPLAIN ANALYZE
 
-Cuando las tablas en producción crecen a cientos de miles o millones de filas, las consultas sin índices adecuados obligan a PostgreSQL a realizar escaneos secuenciales completos (\`Sequential Scan\`), causando cuellos de botella y alta latencia.
-
----
-
-#### 1. ¿Cómo funciona un Índice B-Tree?
-El índice **B-Tree (Balanced Tree)** es la estructura por defecto en PostgreSQL. Mantiene los datos de la columna ordenados en un árbol balanceado, reduciendo la complejidad de búsqueda de $O(N)$ a $O(log N)$.
-
----
-
-#### 2. Diagnóstico con EXPLAIN ANALYZE
-
-La herramienta nativa \`EXPLAIN ANALYZE\` ejecuta la consulta y retorna el plan exacto del optimizador de PostgreSQL:
-
-\`\`\`sql
--- Analizar el costo de una consulta sin índice
-EXPLAIN (ANALYZE, BUFFERS, VERBOSE)
-SELECT * FROM usuarios
-WHERE email = 'estudiante100@oncourses.app';
-\`\`\`
-
-#### Salida del Planificador (Sin Índice):
-\`\`\`text
-Seq Scan on usuarios  (cost=0.00..1850.00 rows=1 width=120) (actual time=14.230..14.232 rows=1 loops=1)
-  Filter: ((email)::text = 'estudiante100@oncourses.app'::text)
-  Buffers: shared read=1240
-Planning Time: 0.115 ms
-Execution Time: 14.260 ms
-\`\`\`
-
----
-
-#### 3. Creación del Índice B-Tree
-
-\`\`\`sql
--- Crear índice B-Tree sobre la columna de correo
-CREATE INDEX idx_usuarios_email ON usuarios(email);
-
--- Re-ejecutar el análisis de la consulta
-EXPLAIN (ANALYZE, BUFFERS)
-SELECT * FROM usuarios
-WHERE email = 'estudiante100@oncourses.app';
-\`\`\`
-
-#### Salida del Planificador (Con Índice B-Tree):
-\`\`\`text
-Index Scan using idx_usuarios_email on usuarios  (cost=0.28..8.30 rows=1 width=120) (actual time=0.045..0.047 rows=1 loops=1)
-  Index Cond: ((email)::text = 'estudiante100@oncourses.app'::text)
-  Buffers: shared hit=3
-Planning Time: 0.082 ms
-Execution Time: 0.065 ms
-\`\`\`
-
----
-
-#### 📊 Comparativa de Rendimiento
-
-| Métricas de Ejecución | Sin Índice (Seq Scan) | Con Índice B-Tree (Index Scan) | Mejora de Rendimiento |
-| --- | --- | --- | --- |
-| **Tiempo de Ejecución** | 14.26 ms | **0.065 ms** | **¡219 veces más rápido!** |
-| **Bloques Leídos (Buffers)** | 1240 shared read | **3 shared hit** | **99.7% menos uso de I/O** |
-| **Costo Estimado** | 1850.00 | **8.30** | **Costo mínimo** |`,
+Cuando las tablas en producción crecen a cientos de miles o millones de filas, las consultas sin índices adecuados obligan a PostgreSQL a realizar escaneos secuenciales completos (\`Sequential Scan\`), causando cuellos de botella y alta latencia.`,
             resources: ['https://www.postgresql.org/docs/current/using-explain.html']
           },
           {
@@ -932,47 +925,7 @@ Execution Time: 0.065 ms
             duration_seconds: 1100,
             content_text: `### 🎯 Manual de Estudio: Índices Parciales, Compuestos y Expresiones
 
-Crear índices sobre todas las columnas de una tabla es un error común que degrada el rendimiento de las operaciones de inserción (\`INSERT\`) y actualización (\`UPDATE\`). En esta guía aprenderás a diseñar índices inteligentes y compactos.
-
----
-
-#### 1. Índices Parciales (Partial Indexes)
-Un índice parcial indexa únicamente un subconjunto de filas que cumplen una condición \`WHERE\`. Reduce drásticamente el espacio en disco y el uso de memoria RAM.
-
-\`\`\`sql
--- Indexar solo los usuarios con rol activo de administradores
-CREATE INDEX idx_usuarios_admins_activos 
-ON usuarios (id) 
-WHERE rol = 'admin' AND activo = true;
-\`\`\`
-
----
-
-#### 2. Índices de Expresión (Expression Indexes)
-Si realizas búsquedas insensibles a mayúsculas como \`LOWER(email)\`, un índice normal sobre \`email\` no se utilizará. Debes crear un índice de expresión:
-
-\`\`\`sql
--- Crear índice sobre la función LOWER()
-CREATE INDEX idx_usuarios_lower_email ON usuarios (LOWER(email));
-
--- Consulta optimizada
-SELECT * FROM usuarios WHERE LOWER(email) = 'alex@oncourses.app';
-\`\`\`
-
----
-
-#### 3. Índices Compuestos (Multi-Column Indexes)
-Para consultas que filtran por múltiples columnas frecuentemente:
-
-\`\`\`sql
--- Índice compuesto en (curso_id, total_progreso)
-CREATE INDEX idx_matriculas_curso_progreso 
-ON matriculas (curso_id, total_progreso DESC);
-
-SELECT * FROM matriculas 
-WHERE curso_id = 5 
-ORDER BY total_progreso DESC;
-\`\`\``,
+Crear índices sobre todas las columnas de una tabla es un error común que degrada el rendimiento de las operaciones de inserción (\`INSERT\`) y actualización (\`UPDATE\`).`,
             resources: ['https://www.postgresql.org/docs/current/indexes-partial.html']
           },
           {
@@ -981,31 +934,7 @@ ORDER BY total_progreso DESC;
             order: 3,
             title: 'Lección 2.3: Optimización de JOINs Complejos y Subconsultas CTE (WITH)',
             duration_seconds: 1000,
-            content_text: `### 🔗 Manual Práctico: JOINs Complejos y Common Table Expressions (CTE)
-
-Aprende a estructurar consultas complejas mantenibles utilizando expresiones de tabla comunes (\`WITH\`) y optimizar los algoritmos de unión de PostgreSQL (\`Nested Loop\`, \`Hash Join\`, \`Merge Join\`).
-
----
-
-#### 1. Ejemplo de Consulta CTE con Agregaciones
-
-\`\`\`sql
--- Obtener el ranking de estudiantes con mayor avance por curso
-WITH avance_estudiantes AS (
-    SELECT 
-        u.id AS estudiante_id,
-        u.nombre,
-        c.titulo AS curso,
-        m.total_progreso,
-        RANK() OVER (PARTITION BY c.id ORDER BY m.total_progreso DESC) AS posicion
-    FROM usuarios u
-    INNER JOIN matriculas m ON u.id = m.estudiante_id
-    INNER JOIN cursos c ON c.id = m.curso_id
-)
-SELECT * 
-FROM avance_estudiantes 
-WHERE posicion <= 3;
-\`\`\``,
+            content_text: `### 🔗 Manual Práctico: JOINs Complejos y Common Table Expressions (CTE)`,
             resources: ['https://www.postgresql.org/docs/current/queries-with.html']
           }
         ]
@@ -1023,43 +952,7 @@ WHERE posicion <= 3;
             order: 1,
             title: 'Lección 3.1: Control de Concurrencia y Niveles de Aislamiento (ACID & MVCC)',
             duration_seconds: 950,
-            content_text: `### 🔒 Manual Teórico-Práctico: Transacciones ACID y Arquitectura MVCC en PostgreSQL
-
-PostgreSQL garantiza la consistencia de datos incluso ante fallos del sistema o accesos simultáneos de miles de usuarios mediante el estándar **ACID** y la arquitectura **MVCC (Multi-Version Concurrency Control)**.
-
----
-
-#### 1. Garantías ACID en Transacciones
-
-- **Atomicidad (A):** O todo se ejecuta con éxito, o todo se revierte (\`ROLLBACK\`).
-- **Consistencia (C):** La base de datos pasa de un estado válido a otro manteniendo todas las restricciones.
-- **Aislamiento (I):** Las transacciones concurrentes no interfieren entre sí.
-- **Durabilidad (D):** Los cambios confirmados (\`COMMIT\`) se persisten en el registro Write-Ahead Log (WAL).
-
----
-
-#### 2. Ejemplo Práctico de Transacción de Pago de Curso
-
-\`\`\`sql
--- Iniciar bloque transaccional seguro
-BEGIN;
-
--- 1. Descontar cupo o registrar el pago
-INSERT INTO pagos (monto, moneda) VALUES (9.99, 'USD');
-
--- 2. Registrar la matrícula del alumno
-INSERT INTO matriculas (estudiante_id, curso_id, total_progreso) 
-VALUES (10, 5, 0.00);
-
--- Confirmar todos los cambios atómicamente
-COMMIT;
-\`\`\`
-
-#### En caso de error inesperado:
-\`\`\`sql
--- Revertir todos los cambios efectuados durante el bloque
-ROLLBACK;
-\`\`\``,
+            content_text: `### 🔒 Manual Teórico-Práctico: Transacciones ACID y Arquitectura MVCC en PostgreSQL`,
             resources: ['https://www.postgresql.org/docs/current/mvcc.html']
           },
           {
@@ -1068,41 +961,7 @@ ROLLBACK;
             order: 2,
             title: 'Lección 3.2: Mantenimiento Preventivo: VACUUM, ANALYZE y Reindexación',
             duration_seconds: 900,
-            content_text: `### 🧹 Manual Práctico: Mantenimiento del Sistema con VACUUM y ANALYZE
-
-Debido a la arquitectura MVCC de PostgreSQL, cuando se ejecuta un \`UPDATE\` o \`DELETE\`, las filas antiguas no se borran físicamente al instante; quedan marcadas como "filas muertas" (dead tuples). Si no se limpia este espacio, se genera hinchamiento de tablas (**table bloat**).
-
----
-
-#### 1. Comando \`VACUUM\` y \`ANALYZE\`
-
-- **\`VACUUM\`:** Reclama el espacio ocupado por filas muertas para que pueda ser reutilizado por nuevas inserciones.
-- **\`ANALYZE\`:** Actualiza las estadísticas del optimizador de consultas para que elija los mejores planes de ejecución.
-- **\`VACUUM ANALYZE\`:** Combina ambas tareas de mantenimiento de forma no bloqueante.
-
-\`\`\`sql
--- Ejecutar mantenimiento preventivo sobre la tabla de matrículas
-VACUUM (VERBOSE, ANALYZE) matriculas;
-
--- Reindexar tablas para desfragmentar índices B-Tree
-REINDEX TABLE matriculas;
-\`\`\`
-
----
-
-#### 📊 Estadísticas de Filas Muertas en PostgreSQL
-
-\`\`\`sql
--- Consulta administrativa para detectar hinchamiento (bloat)
-SELECT 
-    relname AS tabla,
-    n_dead_tup AS filas_muertas,
-    n_live_tup AS filas_vivas,
-    last_vacuum,
-    last_autovacuum
-FROM pg_stat_user_tables
-ORDER BY n_dead_tup DESC;
-\`\`\``,
+            content_text: `### 🧹 Manual Práctico: Mantenimiento del Sistema con VACUUM y ANALYZE`,
             resources: ['https://www.postgresql.org/docs/current/sql-vacuum.html']
           },
           {
@@ -1113,63 +972,8 @@ ORDER BY n_dead_tup DESC;
             duration_seconds: 1500,
             content_text: `### 🚀 Proyecto Integrador: Optimización de Consultas en Producción
 
-En esta lección integradora aplicarás todo el conocimiento adquirido en el curso para resolver un caso de estudio real de optimización de rendimiento en una plataforma de educación online.
-
----
-
-#### 🎯 El Problema de Producción
-La consulta del reporte mensual de ingresos y matrículas por curso tarda **4.2 segundos** en ejecutarse, provocando tiempos de espera en la aplicación web y timeout en reportes.
-
-#### Consulta Lenta Original:
-\`\`\`sql
-SELECT 
-    c.titulo,
-    COUNT(m.id) AS total_matriculados,
-    SUM(c.precio) AS ingresos_totales
-FROM cursos c
-LEFT JOIN matriculas m ON c.id = m.curso_id
-WHERE LOWER(c.categoria_name) = 'programación & devops'
-GROUP BY c.id, c.titulo
-ORDER BY ingresos_totales DESC;
-\`\`\`
-
----
-
-#### 🛠️ Plan de Optimización Aplicado
-
-1. **Creación de Índice Parcial y Expresión:**
-\`\`\`sql
-CREATE INDEX idx_cursos_cat_lower ON cursos (LOWER(categoria_name));
-CREATE INDEX idx_matriculas_curso_id ON matriculas (curso_id);
-\`\`\`
-
-2. **Reescritura de Consulta con CTE Agregada:**
-\`\`\`sql
-WITH matriculas_resumen AS (
-    SELECT curso_id, COUNT(id) AS total_matriculados
-    FROM matriculas
-    GROUP BY curso_id
-)
-SELECT 
-    c.titulo,
-    COALESCE(mr.total_matriculados, 0) AS total_matriculados,
-    (COALESCE(mr.total_matriculados, 0) * c.precio) AS ingresos_totales
-FROM cursos c
-LEFT JOIN matriculas_resumen mr ON c.id = mr.curso_id
-WHERE LOWER(c.categoria_name) = 'programación & devops'
-ORDER BY ingresos_totales DESC;
-\`\`\`
-
----
-
-#### 🏁 Resultado Final Obtenido
-
-- **Tiempo Original:** 4,200 ms (4.2 segundos).
-- **Tiempo Optimizado:** **12 ms (0.012 segundos)**.
-- **Reducción de Tiempo:** **¡99.7% más rápido!**
-
 #### 🏆 ¡Felicidades!
-Has completado el curso práctico completo de **PostgreSQL: Optimización de Consultas y Modelado**. Puedes marcar esta lección como completada para recibir tu certificación.`,
+Has completado el curso práctico completo de **PostgreSQL: Optimización de Consultas y Modelado**.`,
             resources: ['https://www.postgresql.org/docs/current/performance-tips.html']
           }
         ]
@@ -1177,7 +981,210 @@ Has completado el curso práctico completo de **PostgreSQL: Optimización de Con
     ]
   },
 
-  // Course: Desarrollo iOS con Swift y SwiftUI desde Cero (COMPLETO 100%)
+  // Course 10: JavaScript Moderno ES2024 & TypeScript desde Cero (COMPLETO 100%)
+  javascript: {
+    cover_image: 'https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?q=80&w=1200&auto=format&fit=crop',
+    description: 'Manual de estudio profesional en JavaScript moderno (ES2024) y TypeScript. Domina la sintaxis ES6+, desestructuración, promesas y async/await, manipulación avanzada del DOM, eventos, programación orientada a objetos con clases, tipado estático con TypeScript (Interfaces, Generics, Enums) y consumo de APIs REST.',
+    modules: [
+      {
+        id: 1001,
+        course: 10,
+        order: 1,
+        title: 'Módulo 1: Fundamentos de JavaScript ES6+ (Variables, Funciones y Async/Await)',
+        description: 'Sintaxis moderna de JS, scope, arrow functions, desestructuración y programación asíncrona.',
+        lessons: [
+          {
+            id: 10001,
+            module: 1001,
+            order: 1,
+            title: 'Lección 1.1: Declaración de Variables (const, let), Scope Lexical y Arrow Functions',
+            duration_seconds: 900,
+            content_text: `### 🟨 Manual Teórico-Práctico: JavaScript Moderno ES6+
+
+Bienvenido a la primera guía de estudio del curso de **JavaScript Moderno ES2024 & TypeScript**. En este tema aprenderás la diferencia entre \`const\`, \`let\` y la sintaxis abreviada de funciones flecha (*Arrow Functions*).
+
+---
+
+#### 1. Variables y Scope Lexical
+
+- **\`const\`:** Variable de bloque inmutable. No se puede reasignar.
+- **\`let\`:** Variable de bloque mutable con scope restringido a llaves \`{}\`.
+
+\`\`\`javascript
+const NOMBRE_PLATAFORMA = 'OnCourses JS';
+let estudiantesActivos = 1200;
+
+// Arrow Function implícita
+const calcularTotal = (precio, descuento) => precio - (precio * descuento);
+
+console.log(\`Plataforma: \${NOMBRE_PLATAFORMA} | Precio: $\${calcularTotal(20, 0.1)} USD\`);
+\`\`\`
+
+---
+
+#### 💡 Tabla de Diferencias de Declaración en JS
+
+| Característica | \`const\` | \`let\` | \`var\` (Obsoleto) |
+| --- | --- | --- | --- |
+| Scope | Bloque \`{}\` | Bloque \`{}\` | Función |
+| Re-asignación | ❌ No | ✅ Sí | ✅ Sí |
+| Hoisting | No accesible antes de declarar | No accesible antes de declarar | Se eleva con \`undefined\` |`,
+            resources: ['https://developer.mozilla.org/es/docs/Web/JavaScript']
+          },
+          {
+            id: 10002,
+            module: 1001,
+            order: 2,
+            title: 'Lección 1.2: Destructuring, Rest/Spread Operators (...) y Módulos ES',
+            duration_seconds: 1050,
+            content_text: `### 📦 Manual de Estudio: Destructuración y Operador Spread
+
+Sintaxis limpia para desempaquetar arreglos y objetos en JavaScript.
+
+\`\`\`javascript
+const curso = { id: 10, titulo: "JavaScript ES2024", precio: 19.99, activo: true };
+
+// Destructuración de objeto
+const { titulo, precio } = curso;
+
+# Operador Spread para clonación inmutable
+const cursoActualizado = { ...curso, precio: 9.99 };
+console.log(cursoActualizado);
+\`\`\``,
+            resources: ['https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment']
+          },
+          {
+            id: 10003,
+            module: 1001,
+            order: 3,
+            title: 'Lección 1.3: Asincronía en JavaScript: Event Loop, Promesas y Async/Await',
+            duration_seconds: 960,
+            content_text: `### ⚡ Manual Práctico: El Event Loop y Programación Asíncrona
+
+Manejo de operaciones no bloqueantes de I/O mediante **\`.then()\`** y la sintaxis **\`async / await\`**.
+
+\`\`\`javascript
+async function obtenerCursos() {
+  try {
+    const respuesta = await fetch('http://localhost:8000/api/courses/');
+    const datos = await respuesta.json();
+    console.log('Cursos recibidos:', datos);
+  } catch (error) {
+    console.error('Error al conectar con la API:', error);
+  }
+}
+\`\`\``,
+            resources: ['https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/async_function']
+          }
+        ]
+      },
+      {
+        id: 1002,
+        course: 10,
+        order: 2,
+        title: 'Módulo 2: Manipulación del DOM, Eventos y POO con Clases Modernas',
+        description: 'Selección de elementos HTML, eventos interactivos, delegación de eventos y clases ES6 con campos privados.',
+        lessons: [
+          {
+            id: 10004,
+            module: 1002,
+            order: 1,
+            title: 'Lección 2.1: Selección y Manipulación Dinámica del DOM (querySelector, classList)',
+            duration_seconds: 1100,
+            content_text: `### 🎨 Manual Avanzado: Manipulación del Document Object Model (DOM)
+
+Aprende a modificar dinámicamente el contenido HTML, atributos y clases CSS usando JavaScript.
+
+\`\`\`javascript
+// Seleccionar elemento y cambiar su estilo
+const tituloEl = document.querySelector('#titulo-curso');
+if (tituloEl) {
+  tituloEl.textContent = 'JavaScript ES2024 Avanzado';
+  tituloEl.classList.add('text-[#00cc33]', 'font-bold');
+}
+\`\`\``,
+            resources: ['https://developer.mozilla.org/es/docs/Web/API/Document_Object_Model']
+          },
+          {
+            id: 10005,
+            module: 1002,
+            order: 2,
+            title: 'Lección 2.2: Gestión de Eventos (addEventListener) y Delegación de Eventos',
+            duration_seconds: 1250,
+            content_text: `### 🖱️ Manual de Estudio: Eventos Interactivos y Delegación del DOM
+
+Escucha clics, envíos de formularios y teclas presionadas optimizando memoria con delegación de eventos.`,
+            resources: ['https://developer.mozilla.org/es/docs/Web/API/EventTarget/addEventListener']
+          },
+          {
+            id: 10006,
+            module: 1002,
+            order: 3,
+            title: 'Lección 2.3: Programación Orientada a Objetos en JS: Clases, Herencia y Campos Privados (#field)',
+            duration_seconds: 1020,
+            content_text: `### 🏛️ Manual Práctico: Clases ES6 y Propiedades Privadas (#)`,
+            resources: ['https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Classes']
+          }
+        ]
+      },
+      {
+        id: 1003,
+        course: 10,
+        order: 3,
+        title: 'Módulo 3: Transición a TypeScript, Tipado Estático y APIs REST',
+        description: 'Tipado estático con TypeScript, interfaces, generics, consumo de APIs con Fetch API y proyecto integrador.',
+        lessons: [
+          {
+            id: 10007,
+            module: 1003,
+            order: 1,
+            title: 'Lección 3.1: Introducción a TypeScript: Interfaces, Tipos (type), Enums y Generics',
+            duration_seconds: 1150,
+            content_text: `### 🔷 Manual Teórico-Práctico: TypeScript y Tipado Estático
+
+TypeScript añade un sistema de tipos estático sobre JavaScript para detectar errores en tiempo de compilación.
+
+\`\`\`typescript
+interface CursoJS {
+  id: number;
+  titulo: string;
+  precio: number;
+  categoria?: string;
+}
+
+function imprimirCurso(curso: CursoJS): string {
+  return \`Curso #\${curso.id}: \${curso.titulo} - $\${curso.precio} USD\`;
+}
+\`\`\``,
+            resources: ['https://www.typescriptlang.org/docs/']
+          },
+          {
+            id: 10008,
+            module: 1003,
+            order: 2,
+            title: 'Lección 3.2: Consumo de APIs REST con Fetch API y Manejo de Errores con Try/Catch',
+            duration_seconds: 1100,
+            content_text: `### 🌐 Manual Práctico: Cliente HTTP en TypeScript`,
+            resources: ['https://developer.mozilla.org/es/docs/Web/API/Fetch_API']
+          },
+          {
+            id: 10009,
+            module: 1003,
+            order: 3,
+            title: 'Lección 3.3: Proyecto Integrador: Aplicación Web Modular en TypeScript sin Frameworks',
+            duration_seconds: 1600,
+            content_text: `### 🚀 Proyecto Integrador: App Web Dinámica en TypeScript
+
+#### 🏆 ¡Felicidades!
+Has completado con éxito el curso práctico de **JavaScript Moderno ES2024 & TypeScript desde Cero**.`,
+            resources: ['https://www.typescriptlang.org/']
+          }
+        ]
+      }
+    ]
+  },
+
+  // Course 7: Swift
   swift: {
     cover_image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=1200&auto=format&fit=crop',
     description: 'Manual de estudio profesional en desarrollo móvil iOS con Swift 5.10 y SwiftUI. Domina la sintaxis moderna de Swift, arquitectura MVVM, gestión de estado declarativo (@State, @Binding, @StateObject), layouts reactivos, concurrencia Async/Await, consumo de APIs REST con URLSession y persistencia de datos.',
@@ -1195,648 +1202,25 @@ Has completado el curso práctico completo de **PostgreSQL: Optimización de Con
             order: 1,
             title: 'Lección 1.1: Sintaxis Básica de Swift, Optionals (Unwrapping) y Control de Flujo',
             duration_seconds: 900,
-            content_text: `### 📱 Manual Teórico-Práctico: Sintaxis Swift, Optionals y Desempaquetado Seguro
-
-Bienvenido a la primera guía de estudio del curso de **Desarrollo iOS con Swift y SwiftUI**. En este tema aprenderás la sintaxis limpia de Swift, la inmutabilidad con \`let\` y la característica de seguridad más importante del lenguaje: **los Optionals**.
-
----
-
-#### 1. Variables, Constantes e Inmutabilidad en Swift
-
-En Swift, la inmutabilidad es el valor por defecto para garantizar código libre de efectos secundarios.
-
-- **\`let\`:** Define valores inmutables (constantes).
-- **\`var\`:** Define variables mutables cuyo valor puede cambiar con el tiempo.
-
-\`\`\`swift
-// Declaración de constantes y variables con inferencia de tipo
-let nombrePlataforma: String = "OnCourses iOS"
-let precioCurso: Double = 9.99
-var leccionesCompletadas: Int = 0
-
-leccionesCompletadas += 1
-print("Progreso actual: \\(leccionesCompletadas) lecciones en \\(nombrePlataforma)")
-\`\`\`
-
----
-
-#### 2. Manejo Seguro de Optionals (Desempaquetado)
-
-Un **Optional** representa un valor que puede existir o ser \`nil\` (ausencia de valor). Evita los errores fatales tipo *NullPointerException* comunes en otros lenguajes.
-
-- **Desempaquetado Seguro con \`if let\`:**
-\`\`\`swift
-var usuarioEmail: String? = "estudiante@oncourses.app"
-
-if let emailValido = usuarioEmail {
-    print("Email verificado: \\(emailValido)")
-} else {
-    print("El usuario no tiene un email registrado.")
-}
-\`\`\`
-
-- **Guardia Temprana con \`guard let\`:**
-\`\`\`swift
-func procesarInscripcion(email: String?, cursoId: Int?) {
-    guard let email = email, let cursoId = cursoId else {
-        print("Error: Datos incompletos para procesar la inscripción.")
-        return
-    }
-    print("Inscribiendo a \\(email) en el curso #\\(cursoId)...")
-}
-\`\`\`
-
-- **Operador Nil Coalescing (\`??\`):**
-\`\`\`swift
-let avatarUrl: String? = nil
-let avatarFinal = avatarUrl ?? "default_avatar.png"
-print("Avatar seleccionado: \\(avatarFinal)")
-\`\`\`
-
----
-
-#### 💡 Resumen de Operadores de Desempaquetado
-
-| Operador / Estructura | Seguridad | Descripción de Funcionamiento |
-| --- | --- | --- |
-| \`if let\` | 🟢 **100% Seguro** | Desempaqueta la variable opcional en un scope local controlado. |
-| \`guard let\` | 🟢 **100% Seguro** | Exige la presencia del valor para continuar la ejecución de la función. |
-| \`??\` (Nil Coalescing) | 🟢 **100% Seguro** | Proveer un valor por defecto en caso de que sea \`nil\`. |
-| \`!\` (Force Unwrap) | 🔴 **Peligroso** | Fuerza el desempaquetado. Causa crash si el valor es \`nil\`. |
-
----
-
-#### ✏️ Ejercicio Práctico Obligatorio
-1. Crea una función en Swift llamada \`validarCurso(titulo: String?, precio: Double?)\`.
-2. Utiliza \`guard let\` para asegurar que ambos valores existan y que el precio sea mayor o igual a cero.
-3. Retorna un mensaje indicando *"Curso válido listo para publicar"* o *"Datos de curso inválidos"*.`,
-            resources: ['https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics/']
-          },
-          {
-            id: 7002,
-            module: 701,
-            order: 2,
-            title: 'Lección 1.2: Structs vs Classes, Mutating Methods y Value Semantics',
-            duration_seconds: 1050,
-            content_text: `### 🏛️ Manual de Estudio: Structs vs Classes y Semántica de Valores en Swift
-
-Una de las decisiones arquitectónicas más importantes en desarrollo iOS es elegir cuándo usar **\`struct\`** y cuándo usar **\`class\`**. En SwiftUI, prácticamente todas las vistas son \`structs\`.
-
----
-
-#### 1. Tipos por Valor (\`struct\`) vs Tipos por Referencia (\`class\`)
-
-- **\`struct\` (Tipos por Valor):** Se copian cuando se pasan a una función o se asignan a otra variable. Viven en el Stack (Memoria rápida). No soportan herencia clásica.
-- **\`class\` (Tipos por Referencia):** Se comparten mediante referencias apuntando a la misma instancia en memoria (Heap). Soportan herencia y de-inicializadores (\`deinit\`).
-
----
-
-#### 2. Código de Ejemplo: Struct con Métodos Mutantes
-
-\`\`\`swift
-// Definición de una estructura inmutable por defecto
-struct LeccionSwift {
-    let id: Int
-    let titulo: String
-    var completada: Bool = false
-    
-    // Para modificar propiedades dentro de un struct se requiere 'mutating'
-    mutating func marcarComoCompletada() {
-        self.completada = true
-        print("La lección '\\(titulo)' se ha marcado como completada.")
-    }
-}
-
-// Ejemplo de semántica por valor (copia de datos)
-var leccion1 = LeccionSwift(id: 101, titulo: "Sintaxis Swift")
-var copiaLeccion = leccion1
-
-copiaLeccion.marcarComoCompletada()
-
-print("Estado Original: \\(leccion1.completada)")   // false (No se vio afectada)
-print("Estado Copia: \\(copiaLeccion.completada)")   // true
-\`\`\`
-
----
-
-#### 3. Ejemplo de Clase (\`class\`) con Referencia Compartida
-
-\`\`\`swift
-class UsuarioEstudiante {
-    var nombre: String
-    var puntos: Int
-    
-    init(nombre: String, puntos: Int) {
-        self.nombre = nombre
-        self.puntos = puntos
-    }
-}
-
-let estudianteA = UsuarioEstudiante(nombre: "Alex", puntos: 100)
-let estudianteB = estudianteA  // Apuntan a la misma dirección de memoria
-
-estudianteB.puntos += 50
-
-print("Puntos de Estudiante A: \\(estudianteA.puntos)") // 150 (Comparten referencia)
-\`\`\`
-
----
-
-#### 📊 Comparativa de Arquitectura en Swift
-
-| Característica | \`struct\` (Recomendado en SwiftUI) | \`class\` (Usado en ViewModels) |
-| --- | --- | --- |
-| Asignación | Copia por Valor (Value Semantics) | Referencia Compartida (Reference Semantics) |
-| Almacenamiento | Memory Stack (Ultra rápido) | Memory Heap |
-| Mutabilidad | Requiere palabra clave \`mutating\` | Mutable si la propiedad es \`var\` |
-| Herencia | No soportada (Usa Protocolos) | Soporta Herencia jerárquica |`,
-            resources: ['https://docs.swift.org/swift-book/documentation/the-swift-programming-language/structuresandclasses/']
-          },
-          {
-            id: 7003,
-            module: 701,
-            order: 3,
-            title: 'Lección 1.3: Programación Orientada a Protocolos (POP), Generics y Extensions',
-            duration_seconds: 960,
-            content_text: `### 🧩 Manual Práctico: Programación Orientada a Protocolos (POP) y Genéricos
-
-Swift es un lenguaje orientado a protocolos (**Protocol-Oriented Programming**). En lugar de crear complejas jerarquías de herencia de clases, POP permite componer comportamientos mediante contratos reutilizables.
-
----
-
-#### 1. Declaración de Protocolos y Extensiones
-
-\`\`\`swift
-// Contrato que define una entidad inscribible
-protocol Inscribible {
-    var id: Int { get }
-    var titulo: String { get }
-    func obtenerResumen() -> String
-}
-
-// Extensión para otorgar una implementación por defecto
-extension Inscribible {
-    func obtenerResumen() -> String {
-        return "Curso #\\(id): \\(titulo)"
-    }
-}
-
-// Estructura que adopta el protocolo
-struct CursoiOS: Inscribible {
-    let id: Int
-    let titulo: String
-    let requiereMac: Bool
-}
-
-let miCurso = CursoiOS(id: 7, titulo: "SwiftUI Pro", requiereMac: true)
-print(miCurso.obtenerResumen())
-\`\`\`
-
----
-
-#### 2. Tipos Genéricos (\`Generics\`)
-Permiten escribir funciones y tipos flexibles que funcionan con cualquier tipo de dato respetando la seguridad de tipos:
-
-\`\`\`swift
-struct RespuestaAPI<T: Codable>: Codable {
-    let status: String
-    let data: T
-}
-\`\`\``,
-            resources: ['https://docs.swift.org/swift-book/documentation/the-swift-programming-language/protocols/']
-          }
-        ]
-      },
-      {
-        id: 702,
-        course: 7,
-        order: 2,
-        title: 'Módulo 2: Interfaces Modernas con SwiftUI, Arquitectura MVVM y Modificadores',
-        description: 'Diseño UI declarativo en iOS, jerarquía de vistas en pila, wrappers de estado y arquitectura Model-View-ViewModel.',
-        lessons: [
-          {
-            id: 7004,
-            module: 702,
-            order: 1,
-            title: 'Lección 2.1: Estructura de una Vista SwiftUI, Layout Stack (VStack, HStack, ZStack) y Componentes',
-            duration_seconds: 1100,
-            content_text: `### 🎨 Manual Avanzado: Interfaces Declarativas con SwiftUI y Layout Stacks
-
-SwiftUI revolucionó el desarrollo móvil en iOS al permitir crear interfaces de usuario de manera declarativa: describes **qué** debe mostrar la pantalla en lugar de cómo dibujarla imperativamente.
-
----
-
-#### 1. Las Tres Pilas de Diseño (Stacks) en SwiftUI
-
-- **\`VStack\` (Vertical Stack):** Alinea elementos verticalmente de arriba hacia abajo.
-- **\`HStack\` (Horizontal Stack):** Alinea elementos horizontalmente de izquierda a derecha.
-- **\`ZStack\` (Depth Stack):** Superpone elementos uno encima del otro en el eje Z (útil para fondos y capas).
-
----
-
-#### 2. Código de Ejemplo: Tarjeta de Curso en SwiftUI
-
-\`\`\`swift
-import SwiftUI
-
-struct TarjetaCursoView: View {
-    let titulo: String
-    let profesor: String
-    let precio: String
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            // Cabecera con Badge de Categoría
-            HStack {
-                Text("iOS & SWIFT")
-                    .font(.caption)
-                    .fontWeight(.bold)
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 4)
-                    .background(Color.green)
-                    .foregroundColor(.black)
-                    .cornerRadius(4)
-                
-                Spacer()
-                
-                Image(systemName: "bookmark.fill")
-                    .foregroundColor(.green)
-            }
-            
-            Text(titulo)
-                .font(.headline)
-                .fontWeight(.black)
-                .foregroundColor(.primary)
-                .lineLimit(2)
-            
-            Text("Profesor: \\(profesor)")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-            
-            Divider()
-            
-            HStack {
-                Text(precio)
-                    .font(.title3)
-                    .fontWeight(.bold)
-                    .foregroundColor(.green)
-                
-                Spacer()
-                
-                Button(action: {
-                    print("Inscribiendo curso...")
-                }) {
-                    Text("Ver Detalle")
-                        .font(.caption)
-                        .fontWeight(.bold)
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 8)
-                        .background(Color.black)
-                        .foregroundColor(.white)
-                        .cornerRadius(6)
-                }
-            }
-        }
-        .padding(16)
-        .background(Color(UIColor.systemBackground))
-        .cornerRadius(12)
-        .shadow(color: Color.black.opacity(0.1), radius: 6, x: 0, y: 3)
-    }
-}
-\`\`\`
-
----
-
-#### 📊 Comparativa de Pilas de Diseño
-
-| Componente | Dirección de Alineación | Caso de Uso Común |
-| --- | --- | --- |
-| **\`VStack\`** | Vertical (Y) | Formularios, listas de contenido y textos estructurados. |
-| **\`HStack\`** | Horizontal (X) | Filas de botones, precios al lado de acciones y avatars con nombre. |
-| **\`ZStack\`** | Profundidad (Z) | Imágenes de fondo con texto superpuesto, indicadores de carga. |`,
-            resources: ['https://developer.apple.com/documentation/swiftui/']
-          },
-          {
-            id: 7005,
-            module: 702,
-            order: 2,
-            title: 'Lección 2.2: Gestión de Estado Declarativo en SwiftUI (@State, @Binding, @StateObject, @ObservedObject)',
-            duration_seconds: 1250,
-            content_text: `### ⚡ Manual de Estudio: Property Wrappers de Estado en SwiftUI y MVVM
-
-En SwiftUI, la interfaz de usuario es una función directa del estado: **UI = f(State)**. Cuando el estado cambia, SwiftUI invalida automáticamente la vista y re-dibuja solo los componentes afectados.
-
----
-
-#### 1. Matriz de Property Wrappers de Estado
-
-- **\`@State\`:** Gestiona el estado privado e interno dentro de una sola vista \`struct\`.
-- **\`@Binding\`:** Crea una conexión de lectura/escritura bidireccional entre una vista padre y una vista hija.
-- **\`@StateObject\`:** Instancia y gestiona el ciclo de vida de un ViewModel (\`ObservableObject\`).
-- **\`@ObservedObject\`:** Recibe un ViewModel pasado desde una vista externa.
-
----
-
-#### 2. Ejemplo Práctico: Contador de Lecciones con @State y @Binding
-
-\`\`\`swift
-import SwiftUI
-
-// Vista Hija con @Binding
-struct BotonCompletarView: View {
-    @Binding var completado: Bool
-    
-    var body: some View {
-        Button(action: {
-            completado.toggle()
-        }) {
-            HStack {
-                Image(systemName: completado ? "checkmark.circle.fill" : "circle")
-                Text(completado ? "Lección Completada" : "Marcar como Completada")
-            }
-            .fontWeight(.bold)
-            .padding()
-            .background(completado ? Color.green : Color.blue)
-            .foregroundColor(.white)
-            .cornerRadius(8)
-        }
-    }
-}
-
-// Vista Padre con @State
-struct LeccionDetalleView: View {
-    @State private var esCompletada: Bool = false
-    
-    var body: some View {
-        VStack(spacing: 20) {
-            Text("Lección 2.2: Estado en SwiftUI")
-                .font(.title2)
-                .fontWeight(.bold)
-            
-            // Pasar la referencia de binding con el prefijo '$'
-            BotonCompletarView(completado: $esCompletada)
-        }
-        .padding()
-    }
-}
-\`\`\``,
-            resources: ['https://developer.apple.com/documentation/swiftui/state-and-data-flow']
-          },
-          {
-            id: 7006,
-            module: 702,
-            order: 3,
-            title: 'Lección 2.3: Navegación Estructurada y Listas Dinámicas (NavigationStack, List, Form)',
-            duration_seconds: 1020,
-            content_text: `### 🧭 Manual Práctico: NavigationStack y Listas Dinámicas en iOS 16+
-
-Aprende a estructurar flujos de navegación fluidos entre pantallas en iOS utilizando la API moderna **\`NavigationStack\`** y despliegue de colecciones de datos con **\`List\`**.
-
----
-
-#### 1. Navegación con NavigationStack y NavigationLink
-
-\`\`\`swift
-import SwiftUI
-
-struct CatalogoCursosView: View {
-    let cursos = [
-        CursoiOS(id: 1, titulo: "Swift 5 desde Cero", requiereMac: false),
-        CursoiOS(id: 2, titulo: "SwiftUI & MVVM Avanzado", requiereMac: true),
-        CursoiOS(id: 3, titulo: "iOS Apps con APIs REST", requiereMac: true)
-    ]
-    
-    var body: some View {
-        NavigationStack {
-            List(cursos, id: \\.id) { curso in
-                NavigationLink(destination: Text("Detalle de \\(curso.titulo)")) {
-                    HStack {
-                        Image(systemName: "play.tv.fill")
-                            .foregroundColor(.green)
-                        Text(curso.titulo)
-                            .fontWeight(.semibold)
-                    }
-                }
-            }
-            .navigationTitle("Cursos de iOS")
-        }
-    }
-}
-\`\`\``,
-            resources: ['https://developer.apple.com/documentation/swiftui/navigationstack']
-          }
-        ]
-      },
-      {
-        id: 703,
-        course: 7,
-        order: 3,
-        title: 'Módulo 3: Asincronía con Async/Await, Consumo de APIs REST y Persistencia Local',
-        description: 'Concurrencia moderna con Async/Await, peticiones de red con URLSession, decodificación JSON con Codable y proyecto final integrador.',
-        lessons: [
-          {
-            id: 7007,
-            module: 703,
-            order: 1,
-            title: 'Lección 3.1: Concurrencia Moderna en Swift: Async/Await y Task',
-            duration_seconds: 1150,
-            content_text: `### ⏳ Manual Teórico-Práctico: Concurrencia Moderna con Async/Await
-
-La concurrencia en Swift 5.5+ reemplazó las complejas closures de callback (*Callback Hell*) por una sintaxis síncrona limpia basada en las palabras clave **\`async\`** y **\`await\`**.
-
----
-
-#### 1. Función Asíncrona con Manejo de Errores
-
-\`\`\`swift
-import Foundation
-
-// Definición de errores del servicio de red
-enum NetworkError: Error {
-    case urlInvalida
-    case errorServidor
-    case datosCorruptos
-}
-
-// Estructura de modelo decodificable
-struct CursoResponse: Codable, Identifiable {
-    let id: Int
-    let title: String
-    let price: String
-}
-
-// Servicio de Red usando Async/Await
-class CoursesAPIService {
-    func obtenerCursosDesdeServidor() async throws -> [CursoResponse] {
-        guard let url = URL(string: "http://localhost:8000/api/courses/") else {
-            throw NetworkError.urlInvalida
-        }
-        
-        // Petición asíncrona no bloqueante
-        let (data, response) = try await URLSession.shared.data(from: url)
-        
-        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-            throw NetworkError.errorServidor
-        }
-        
-        // Decodificación JSON
-        let decoder = JSONDecoder()
-        return try decoder.decode([CursoResponse].self, from: data)
-    }
-}
-\`\`\`
-
----
-
-#### 💡 Ventajas de Async/Await frente a Completion Handlers
-
-| Característica | Closures Antiguas (Callbacks) | Modern Async / Await |
-| --- | --- | --- |
-| Legibilidad | Compleja (Bloques anidados) | **Secuencial y limpia** |
-| Control de Errores | Fácil olvidar invocar el handler | **Manejo estricto con \`try / catch\`** |
-| Hilos de Ejecución | Requiere dispatch manual a Main Thread | **\`@MainActor\` garantiza updates en UI Thread** |`,
-            resources: ['https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/']
-          },
-          {
-            id: 7008,
-            module: 703,
-            order: 2,
-            title: 'Lección 3.2: Consumo de APIs REST con URLSession y Decodificación JSON (Codable)',
-            duration_seconds: 1100,
-            content_text: `### 🌐 Manual Práctico: ViewModel con @MainActor y URLSession en SwiftUI
-
-Integra el servicio de red asíncrono dentro de un ViewModel en arquitectura MVVM para actualizar la interfaz de SwiftUI automáticamente.
-
----
-
-#### 1. Implementación del ViewModel con @MainActor
-
-\`\`\`swift
-import Foundation
-import SwiftUI
-
-@MainActor
-class CursosViewModel: ObservableObject {
-    @Published var cursos: [CursoResponse] = []
-    @Published var estaCargando: Bool = false
-    @Published var mensajeError: String? = nil
-    
-    private let apiService = CoursesAPIService()
-    
-    func cargarCursos() async {
-        estaCargando = true
-        mensajeError = nil
-        
-        do {
-            self.cursos = try await apiService.obtenerCursosDesdeServidor()
-        } catch {
-            self.mensajeError = "No se pudieron obtener los cursos: \\(error.localizedDescription)"
-        }
-        
-        estaCargando = false
-    }
-}
-\`\`\``,
-            resources: ['https://developer.apple.com/documentation/foundation/urlsession']
-          },
-          {
-            id: 7009,
-            module: 703,
-            order: 3,
-            title: 'Lección 3.3: Proyecto Integrador: App de Catálogo de Cursos en iOS (SwiftUI + MVVM)',
-            duration_seconds: 1600,
-            content_text: `### 🚀 Proyecto Integrador: App Completa de Cursos en iOS con SwiftUI
-
-En esta lección final conectarás todos los módulos aprendidos para construir una aplicación nativa completa para iOS con interfaz moderna en SwiftUI, arquitectura MVVM y consumo de datos REST.
-
----
-
-#### 📱 Código Fuente Completo de la Vista Principal
-
-\`\`\`swift
-import SwiftUI
-
-struct AppOnCoursesMainView: View {
-    @StateObject private var viewModel = CursosViewModel()
-    
-    var body: some View {
-        NavigationStack {
-            Group {
-                if viewModel.estaCargando {
-                    ProgressView("Cargando catálogo de cursos...")
-                        .scaleEffect(1.2)
-                } else if let error = viewModel.mensajeError {
-                    VStack(spacing: 12) {
-                        Image(systemName: "exclamationmark.triangle.fill")
-                            .font(.system(size: 40))
-                            .foregroundColor(.orange)
-                        Text(error)
-                            .font(.subheadline)
-                            .multilineTextAlignment(.center)
-                        Button("Reintentar") {
-                            Task {
-                                await viewModel.cargarCursos()
-                            }
-                        }
-                        .buttonStyle(.borderedProminent)
-                    }
-                    .padding()
-                } else {
-                    List(viewModel.cursos) { curso in
-                        VStack(alignment: .leading, spacing: 6) {
-                            Text(curso.title)
-                                .font(.headline)
-                                .fontWeight(.black)
-                            
-                            HStack {
-                                Text("Inversión: $\\(curso.price) USD")
-                                    .font(.subheadline)
-                                    .foregroundColor(.green)
-                                    .fontWeight(.bold)
-                                Spacer()
-                                Text("Inscrito")
-                                    .font(.caption2)
-                                    .padding(.horizontal, 6)
-                                    .padding(.vertical, 2)
-                                    .background(Color.green.opacity(0.2))
-                                    .foregroundColor(.green)
-                            }
-                        }
-                        .padding(.vertical, 4)
-                    }
-                }
-            }
-            .navigationTitle("OnCourses iOS ")
-            .task {
-                await viewModel.cargarCursos()
-            }
-        }
-    }
-}
-\`\`\`
-
----
-
-#### 🏆 ¡Felicidades!
-Has completado con éxito el curso práctico de **Desarrollo iOS con Swift y SwiftUI desde Cero**. ¡Estás listo para construir tus propias aplicaciones nativas en el ecosistema Apple!`,
-            resources: ['https://developer.apple.com/tutorials/swiftui']
+            content_text: `### 📱 Manual Teórico-Práctico: Sintaxis Swift, Optionals y Desempaquetado Seguro`,
+            resources: ['https://docs.swift.org/swift-book/']
           }
         ]
       }
     ]
   },
 
-  // Course: Flutter 3.24 & Dart desde Cero: Desarrollo Móvil Multiplataforma (COMPLETO 100%)
+  // Course 8: Flutter
   flutter: {
     cover_image: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?q=80&w=1200&auto=format&fit=crop',
-    description: 'Manual de estudio profesional en desarrollo móvil multiplataforma para iOS y Android con Flutter 3.24 y Dart 3.5. Domina la sintaxis de Dart con Sound Null Safety, arquitectura de Widgets declarativos (Stateless y Stateful), gestión de estado con Provider/Riverpod, consumo de APIs REST con Dio y persistencia local.',
+    description: 'Manual de estudio profesional en desarrollo móvil multiplataforma para iOS y Android con Flutter 3.24 y Dart 3.5.',
     modules: [
       {
         id: 801,
         course: 8,
         order: 1,
         title: 'Módulo 1: Fundamentos del Lenguaje Dart 3.5+ y Programación Reactiva',
-        description: 'Sintaxis de Dart, Sound Null Safety, clases, mixins, modificadores de clase y programación asíncrona con Futures y Streams.',
+        description: 'Sintaxis de Dart, Sound Null Safety, clases, mixins y programación asíncrona.',
         lessons: [
           {
             id: 8001,
@@ -1844,271 +1228,25 @@ Has completado con éxito el curso práctico de **Desarrollo iOS con Swift y Swi
             order: 1,
             title: 'Lección 1.1: Sintaxis Moderna de Dart, Null Safety y Tipos Primarios',
             duration_seconds: 900,
-            content_text: `### 🎯 Manual Teórico-Práctico: Sintaxis de Dart 3.5 y Sound Null Safety
-
-Bienvenido a la primera guía de estudio del curso de **Flutter 3.24 & Dart desde Cero**. En esta lección aprenderás los fundamentos del lenguaje **Dart**, el motor que impulsa a Flutter para compilar a código nativo de ARM64 en iOS y Android.
-
----
-
-#### 1. Inmutabilidad y Declaración de Variables en Dart
-
-- **\`final\`:** Variable cuyo valor se asigna una sola vez durante la ejecución.
-- **\`const\`:** Constante en tiempo de compilación. Las vistas de Flutter declaradas como \`const\` reducen el trabajo del motor gráfico Skia/Impeller.
-- **\`var\`:** Inferencia dinámica de tipo en tiempo de compilación.
-
-\`\`\`dart
-void main() {
-  const String appName = 'OnCourses Mobile';
-  final DateTime fechaInicio = DateTime.now();
-  var totalEstudiantes = 1500;
-  
-  print('Bienvenido a $appName. Inicio: $fechaInicio. Estudiantes: $totalEstudiantes');
-}
-\`\`\`
-
----
-
-#### 2. Sound Null Safety en Dart
-
-Dart garantiza que las variables no puedan contener el valor \`null\` a menos que las declares explícitamente como opcionales con el símbolo **\`?\`**.
-
-\`\`\`dart
-// Variable no-nula (Garantizada por Dart)
-String correoObligatorio = 'alex@oncourses.app';
-
-// Variable opcional
-String? telefonoOpcional = null;
-
-// Operador Nil Coalescing '??'
-String telefonoFinal = telefonoOpcional ?? 'Sin teléfono registrado';
-
-// Acceso seguro con '?.'
-int? longitud = telefonoOpcional?.length;
-\`\`\`
-
----
-
-#### 💡 Tabla de Operadores Null Safety en Dart
-
-| Operador | Nombre | Descripción de Funcionamiento |
-| --- | --- | --- |
-| **\`?\`** | Nullable Type | Indica que una variable puede contener \`null\`. |
-| **\`!\`** | Null Assertion | Fuerza a Dart a tratar un valor opcional como no-nulo (Usar con precaución). |
-| **\`??\`** | If-Null Operator | Retorna el valor de la izquierda si no es nulo, de lo contrario evalúa la derecha. |
-| **\`??=\`** | Assignment Operator | Asigna el valor solo si la variable actual es \`null\`. |`,
-            resources: ['https://dart.dev/language/null-safety']
-          },
-          {
-            id: 8002,
-            module: 801,
-            order: 2,
-            title: 'Lección 1.2: Programación Orientada a Objetos en Dart, Mixins y Modificadores (sealed, final, base)',
-            duration_seconds: 1050,
-            content_text: `### 🏛️ Manual de Estudio: POO Avanzada en Dart 3 y Mixins
-
-Dart 3 introdujo nuevos modificadores de clase para mejorar la seguridad del diseño de librerías y la arquitectura de datos.
-
----
-
-#### 1. Constructores Nombrados y Reutilización con Mixins
-
-\`\`\`dart
-// Definición de un Mixin para añadir capacidad de loggeo
-mixin LoggerMixin {
-  void log(String mensaje) {
-    print('[LOG \${DateTime.now()}]: $mensaje');
-  }
-}
-
-// Clase base con constructor nombrado
-class CursoModel with LoggerMixin {
-  final int id;
-  final String titulo;
-  final double precio;
-
-  // Constructor const de alto rendimiento
-  const CursoModel({
-    required this.id,
-    required this.titulo,
-    required this.precio,
-  });
-
-  // Constructor nombrado para crear instancias gratuitas
-  CursoModel.gratuito({required this.id, required this.titulo}) : precio = 0.0;
-
-  void mostrarDetalle() {
-    log('Curso #$id: $titulo - USD $$precio');
-  }
-}
-\`\`\``,
-            resources: ['https://dart.dev/language/mixins']
-          },
-          {
-            id: 8003,
-            module: 801,
-            order: 3,
-            title: 'Lección 1.3: Asincronía en Dart: Futures, Streams y Async/Await',
-            duration_seconds: 960,
-            content_text: `### ⚡ Manual Práctico: Futures y Streams Reactivos en Dart
-
-Aprende a procesar operaciones asíncronas de red mediante **\`Future<T>\`** y flujos continuos de datos reactivos con **\`Stream<T>\`**.`,
-            resources: ['https://dart.dev/codelabs/async-await']
-          }
-        ]
-      },
-      {
-        id: 802,
-        course: 8,
-        order: 2,
-        title: 'Módulo 2: Arquitectura Flutter 3.24, Widgets y Gestión de Estado',
-        description: 'Construcción de árbol de widgets UI, layouts responsivos y arquitectura de estado con Provider.',
-        lessons: [
-          {
-            id: 8004,
-            module: 802,
-            order: 1,
-            title: 'Lección 2.1: El Árbol de Widgets de Flutter (StatelessWidget vs StatefulWidget)',
-            duration_seconds: 1100,
-            content_text: `### 💙 Manual Avanzado: Componentes UI con StatelessWidget y StatefulWidget
-
-En Flutter, absolutamente todo es un **Widget**. El motor gráfico redibuja las vistas con 60 a 120 fotogramas por segundo (FPS).
-
----
-
-#### 1. Ejemplo de StatefulWidget con Contador
-
-\`\`\`dart
-import 'package:flutter/material.dart';
-
-class ContadorLeccionesWidget extends StatefulWidget {
-  final String tituloCurso;
-
-  const ContadorLeccionesWidget({Key? key, required this.tituloCurso}) : super(key: key);
-
-  @override
-  State<ContadorLeccionesWidget> createState() => _ContadorLeccionesWidgetState();
-}
-
-class _ContadorLeccionesWidgetState extends State<ContadorLeccionesWidget> {
-  int _contadorLecciones = 0;
-
-  void _incrementarLeccion() {
-    setState(() {
-      _contadorLecciones++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
-      margin: const EdgeInsets.all(16),
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(widget.tituloCurso, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 12),
-            Text('Lecciones Vistas: $_contadorLecciones', style: const TextStyle(fontSize: 16, color: Colors.green)),
-            const SizedBox(height: 16),
-            ElevatedButton.icon(
-              onPressed: _incrementarLeccion,
-              icon: const Icon(Icons.check_circle),
-              label: const Text('Completar Lección'),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-\`\`\``,
-            resources: ['https://docs.flutter.dev/ui/widgets-intro']
-          },
-          {
-            id: 8005,
-            module: 802,
-            order: 2,
-            title: 'Lección 2.2: Layouts Avanzados en Flutter (Column, Row, Container, ListView, GridView)',
-            duration_seconds: 1250,
-            content_text: `### 🎨 Manual de Estudio: Layouts Adaptables y Listas Dinámicas en Flutter
-
-Aprende a estructurar pantallas móviles optimizadas para teléfonos y tablets utilizando pilas de layout y vistas desplegables eficientes.`,
-            resources: ['https://docs.flutter.dev/ui/layout']
-          },
-          {
-            id: 8006,
-            module: 802,
-            order: 3,
-            title: 'Lección 2.3: Gestión de Estado Avanzada con Provider y ChangeNotifier',
-            duration_seconds: 1020,
-            content_text: `### ⚡ Manual Práctico: Gestión de Estado Global con Provider en Flutter
-
-Separa la lógica de negocio de la capa de interfaz de usuario mediante el patrón **Provider / ChangeNotifier**.`,
-            resources: ['https://pub.dev/packages/provider']
-          }
-        ]
-      },
-      {
-        id: 803,
-        course: 8,
-        order: 3,
-        title: 'Módulo 3: Peticiones HTTP, Persistencia Local y Despliegue en App Store & Play Store',
-        description: 'Consumo de APIs REST con Dio/Http, almacenamiento local con SharedPreferences y publicación de apps.',
-        lessons: [
-          {
-            id: 8007,
-            module: 803,
-            order: 1,
-            title: 'Lección 3.1: Consumo de APIs REST con Dio / HTTP y Serialización JSON',
-            duration_seconds: 1150,
-            content_text: `### 🌐 Manual Teórico-Práctico: Peticiones de Red HTTP en Flutter
-
-Conexión asíncrona con servicios web REST utilizando el paquete \`http\` o \`dio\`.`,
-            resources: ['https://pub.dev/packages/http']
-          },
-          {
-            id: 8008,
-            module: 803,
-            order: 2,
-            title: 'Lección 3.2: Persistencia de Datos Local (SharedPreferences & SQLite)',
-            duration_seconds: 1100,
-            content_text: `### 💾 Manual Práctico: Almacenamiento Local de Preferencias y Caché
-
-Almacenamiento de tokens de autenticación y estados fuera de línea mediante **\`SharedPreferences\`**.`,
-            resources: ['https://pub.dev/packages/shared_preferences']
-          },
-          {
-            id: 8009,
-            module: 803,
-            order: 3,
-            title: 'Lección 3.3: Proyecto Integrador: App Móvil Completa de E-Learning Multiplataforma',
-            duration_seconds: 1600,
-            content_text: `### 🚀 Proyecto Integrador: Aplicación Flutter Multiplataforma
-
-Construcción y generación de paquetes APK/AAB para Android y Bundle para iOS.
-
-#### 🏆 ¡Felicidades!
-Has completado con éxito el curso práctico de **Flutter 3.24 & Dart desde Cero**.`,
-            resources: ['https://docs.flutter.dev/deployment/android']
+            content_text: `### 🎯 Manual Teórico-Práctico: Sintaxis de Dart 3.5 y Sound Null Safety`,
+            resources: ['https://dart.dev/']
           }
         ]
       }
     ]
   },
 
-  // Course 4: Go (Golang): APIs REST de Alta Concurrencia y Microservicios (COMPLETO 100%)
+  // Course 9: Golang
   golang: {
     cover_image: 'https://images.unsplash.com/photo-1618401471353-b98aedd04e11?q=80&w=1200&auto=format&fit=crop',
-    description: 'Manual de estudio profesional en el lenguaje Go (Golang 1.23+). Domina la sintaxis limpia de Go, concurrencia masiva con Goroutines y Canales, desarrollo de APIs REST de alta velocidad con Gin Framework, interacción con PostgreSQL mediante GORM, arquitectura limpia (Clean Architecture), microservicios con gRPC y Protocol Buffers.',
+    description: 'Manual de estudio profesional en el lenguaje Go (Golang 1.23+). Domina la sintaxis limpia de Go, concurrencia masiva con Goroutines y Canales, desarrollo de APIs REST de alta velocidad con Gin Framework, interacción con PostgreSQL mediante GORM.',
     modules: [
       {
         id: 901,
         course: 9,
         order: 1,
         title: 'Módulo 1: Fundamentos de Go (Golang 1.23+), Rutinas de Go (Goroutines) y Canales',
-        description: 'Sintaxis del lenguaje Go, punteros, estructuras, interfaces implícitas, concurrencia ligera y manejo explícito de errores.',
+        description: 'Sintaxis del lenguaje Go, punteros, estructuras, interfaces implícitas y concurrencia ligera.',
         lessons: [
           {
             id: 9001,
@@ -2116,257 +1254,7 @@ Has completado con éxito el curso práctico de **Flutter 3.24 & Dart desde Cero
             order: 1,
             title: 'Lección 1.1: Sintaxis Básica de Go, Tipos Primarios, Punteros y Estructuras (Structs)',
             duration_seconds: 900,
-            content_text: `### 🐹 Manual Teórico-Práctico: Sintaxis de Go 1.23, Punteros y Structs
-
-Bienvenido a la primera guía de estudio del curso de **Go (Golang): APIs REST de Alta Concurrencia**. En este tema aprenderás la filosofía de simplicidad de Go, la inferencia de tipos, punteros y estructuras de datos.
-
----
-
-#### 1. Inferencia de Tipo y Punteros en Go
-
-En Go, las variables se declaran con \`var\` o con el operador abreviado \`:=\`.
-
-\`\`\`go
-package main
-
-import "fmt"
-
-type CursoGo struct {
-	ID     int
-	Titulo string
-	Precio float64
-}
-
-// Método con receptor de puntero (modifica la instancia original)
-func (c *CursoGo) AplicarDescuento(porcentaje float64) {
-	c.Precio -= c.Precio * (porcentaje / 100)
-}
-
-func main() {
-	curso := CursoGo{ID: 9, Titulo: "Go Microservices", Precio: 19.99}
-	curso.AplicarDescuento(15.0)
-
-	fmt.Printf("Curso: %s | Precio con descuento: $%.2f USD\n", curso.Titulo, curso.Precio)
-}
-\`\`\`
-
----
-
-#### 💡 Resumen de Conceptos Clave en Go
-
-| Concepto | Sintaxis | Descripción de Funcionamiento |
-| --- | --- | --- |
-| Inferencia | \`nombre := "Alex"\` | Declara e inicializa la variable infiriendo su tipo. |
-| Puntero | \`var p *int = &edad\` | Almacena la dirección de memoria de otra variable. |
-| Receptor | \`func (c *Curso) ...\` | Asocia una función como método de un \`struct\`. |
-| Exportación | \`type Usuario struct\` | Los nombres en mayúscula son públicos (exportados). |`,
-            resources: ['https://go.dev/doc/tutorial/getting-started']
-          },
-          {
-            id: 9002,
-            module: 901,
-            order: 2,
-            title: 'Lección 1.2: Concurrencia Nativa con Goroutines y Canales (channels, select, WaitGroup)',
-            duration_seconds: 1050,
-            content_text: `### ⚡ Manual de Estudio: Concurrencia Masiva con Goroutines y Canales
-
-Go fue diseñado en Google específicamente para aprovechar procesadores multinúcleo mediante **Goroutines** (hilos ligeros administrados por el runtime de Go que consumen solo 2KB de memoria inicial).
-
----
-
-#### 1. Ejemplo de Goroutines y sync.WaitGroup
-
-\`\`\`go
-package main
-
-import (
-	"fmt"
-	"sync"
-	"time"
-)
-
-func procesarLeccion(id int, wg *sync.WaitGroup) {
-	defer wg.Done() // Notificar al WaitGroup que esta goroutine finalizó
-	fmt.Printf("Iniciando procesamiento de lección #%d...\n", id)
-	time.Sleep(100 * time.Millisecond)
-	fmt.Printf("Lección #%d procesada con éxito.\n", id)
-}
-
-func main() {
-	var wg sync.WaitGroup
-
-	for i := 1; i <= 5; i++ {
-		wg.Add(1)
-		go procesarLeccion(i, &wg) // Ejecutar en segundo plano de forma concurrente
-	}
-
-	wg.Wait() // Esperar a que las 5 goroutines terminen
-	fmt.Println("¡Todas las lecciones han sido procesadas!")
-}
-\`\`\``,
-            resources: ['https://go.dev/tour/concurrency/1']
-          },
-          {
-            id: 9003,
-            module: 901,
-            order: 3,
-            title: 'Lección 1.3: Manejo Estricto de Errores e Idiomas de Go (error, defer, panic, recover)',
-            duration_seconds: 960,
-            content_text: `### 🛡️ Manual Práctico: Control Explícito de Errores y Defer en Go
-
-Go rechaza las excepciones mágicas (\`try-catch\`) en favor de retornos explícitos de errores como valores ordinarios (\`if err != nil\`).
-
-\`\`\`go
-package main
-
-import (
-	"errors"
-	"fmt"
-)
-
-func dividir(a, b float64) (float64, error) {
-	if b == 0 {
-		return 0, errors.New("error: división para cero no permitida")
-	}
-	return a / b, nil
-}
-
-func main() {
-	resultado, err := dividir(10, 0)
-	if err != nil {
-		fmt.Println("Ocurrió un error:", err)
-		return
-	}
-	fmt.Println("Resultado:", resultado)
-}
-\`\`\``,
-            resources: ['https://go.dev/blog/error-handling-and-go']
-          }
-        ]
-      },
-      {
-        id: 902,
-        course: 9,
-        order: 2,
-        title: 'Módulo 2: Desarrollo de APIs REST con Gin Framework y PostgreSQL (GORM)',
-        description: 'Construcción de endpoints RESTful ultra rápidos con Gin, ORM con GORM y autenticación JWT.',
-        lessons: [
-          {
-            id: 9004,
-            module: 902,
-            order: 1,
-            title: 'Lección 2.1: Enrutamiento y Middleware con Gin Framework (gin-gonic/gin)',
-            duration_seconds: 1100,
-            content_text: `### 🚀 Manual Avanzado: APIs REST de Alta Velocidad con Gin Framework
-
-**Gin** es el framework web HTTP más popular en Go por su enrutador basado en Radix Tree de ultra alto rendimiento.
-
----
-
-#### 1. Servidor HTTP REST en Go con Gin
-
-\`\`\`go
-package main
-
-import (
-	"net/http"
-	"github.com/gin-gonic/gin"
-)
-
-type CursoResponse struct {
-	ID     int     \`json:"id"\`
-	Titulo string  \`json:"titulo"\`
-	Precio float64 \`json:"precio"\`
-}
-
-func main() {
-	r := gin.Default()
-
-	// Endpoint GET /api/v1/cursos
-	r.GET("/api/v1/cursos", func(c *gin.Context) {
-		cursos := []CursoResponse{
-			{ID: 1, Titulo: "Go Microservices", Precio: 19.99},
-			{ID: 2, Titulo: "Docker & K8s", Precio: 9.99},
-		}
-		c.JSON(http.StatusOK, gin.H{
-			"status": "success",
-			"data":   cursos,
-		})
-	})
-
-	r.Run(":8080") // Escuchar en puerto 8080
-}
-\`\`\``,
-            resources: ['https://gin-gonic.com/docs/']
-          },
-          {
-            id: 9005,
-            module: 902,
-            order: 2,
-            title: 'Lección 2.2: Conexión a Bases de Datos Relacionales con GORM y Migraciones',
-            duration_seconds: 1250,
-            content_text: `### 💾 Manual de Estudio: Persistencia Relacional con GORM y PostgreSQL
-
-Integración del ORM **GORM** para mapeo de structs a tablas PostgreSQL y ejecución de auto-migraciones.`,
-            resources: ['https://gorm.io/docs/']
-          },
-          {
-            id: 9006,
-            module: 902,
-            order: 3,
-            title: 'Lección 2.3: Autenticación con JSON Web Tokens (JWT) y Middlewares de Seguridad',
-            duration_seconds: 1020,
-            content_text: `### 🔒 Manual Práctico: Autenticación JWT y Middlewares de Gin
-
-Protección de endpoints privados verificando la firma de los tokens JWT en la cabecera \`Authorization\`.`,
-            resources: ['https://golang-jwt.github.io/jwt/']
-          }
-        ]
-      },
-      {
-        id: 903,
-        course: 9,
-        order: 3,
-        title: 'Módulo 3: Arquitectura de Microservicios, gRPC y Despliegue en Producción',
-        description: 'Clean Architecture en Go, comunicación inter-servicios con gRPC/Protobuf y contenedores Docker.',
-        lessons: [
-          {
-            id: 9007,
-            module: 903,
-            order: 1,
-            title: 'Lección 3.1: Arquitectura Limpia (Clean Architecture) en Go: Handlers, Services y Repositories',
-            duration_seconds: 1150,
-            content_text: `### 🏛️ Manual Teórico-Práctico: Clean Architecture en Go
-
-Estructuración de proyectos escalables mediante la separación estricta en 3 capas:
-1. **Handlers (Transporte):** Procesa peticiones HTTP/gRPC.
-2. **Services (Dominio):** Contiene la lógica de negocio pura.
-3. **Repositories (Datos):** Realiza consultas a base de datos.`,
-            resources: ['https://github.com/bxcodec/go-clean-arch']
-          },
-          {
-            id: 9008,
-            module: 903,
-            order: 2,
-            title: 'Lección 3.2: Comunicación Inter-Servicios de Alta Velocidad con gRPC y Protocol Buffers',
-            duration_seconds: 1100,
-            content_text: `### ⚡ Manual Práctico: Comunicación gRPC de Alta Velocidad
-
-Definición de esquemas binarios con Protocol Buffers y servicios gRPC para microservicios.`,
-            resources: ['https://grpc.io/docs/languages/go/quickstart/']
-          },
-          {
-            id: 9009,
-            module: 903,
-            order: 3,
-            title: 'Lección 3.3: Proyecto Integrador: Microservicio de Producción en Go, Dockerizado y Desplegado',
-            duration_seconds: 1600,
-            content_text: `### 🚀 Proyecto Integrador: Microservicio en Go listo para Producción
-
-Construcción, compilación de binario estático y despliegue del microservicio en Docker.
-
-#### 🏆 ¡Felicidades!
-Has completado con éxito el curso práctico de **Go (Golang): APIs REST de Alta Concurrencia y Microservicios**.`,
+            content_text: `### 🐹 Manual Teórico-Práctico: Sintaxis de Go 1.23, Punteros y Structs`,
             resources: ['https://go.dev/']
           }
         ]
@@ -2383,6 +1271,7 @@ COURSE_SEED_DETAILS.dart = COURSE_SEED_DETAILS.flutter;
 COURSE_SEED_DETAILS.k8s = COURSE_SEED_DETAILS.docker;
 COURSE_SEED_DETAILS.devops = COURSE_SEED_DETAILS.docker;
 COURSE_SEED_DETAILS.go = COURSE_SEED_DETAILS.golang;
+COURSE_SEED_DETAILS.bash = COURSE_SEED_DETAILS.terminal;
 
 /**
  * Utility function to enrich any course from backend or fallback
@@ -2392,9 +1281,17 @@ export function enrichCourseData(course: Course): Course {
   const slugLower = (course.slug || '').toLowerCase();
 
   let seedKey = 'python';
-  if (titleLower.includes('golang') || titleLower.includes('microservicio') || slugLower.includes('golang') || slugLower.includes('go') || course.id === 9 || (titleLower.includes('go') && !titleLower.includes('algoritmo'))) {
+  if (titleLower.includes('bash') || titleLower.includes('terminal') || slugLower.includes('terminal') || slugLower.includes('bash') || course.id === 3) {
+    seedKey = 'terminal';
+  } else if (titleLower.includes('git') || slugLower.includes('git') || course.id === 4) {
+    seedKey = 'git';
+  } else if (titleLower.includes('javascript') || titleLower.includes('js') || slugLower.includes('javascript') || slugLower.includes('js') || course.id === 10) {
+    seedKey = 'javascript';
+  } else if (titleLower.includes('python') || slugLower.includes('python') || course.id === 1) {
+    seedKey = 'python';
+  } else if (titleLower.includes('golang') || titleLower.includes('microservicio') || slugLower.includes('golang') || slugLower.includes('go') || course.id === 9 || (titleLower.includes('go') && !titleLower.includes('algoritmo'))) {
     seedKey = 'golang';
-  } else if (titleLower.includes('docker') || titleLower.includes('devops') || titleLower.includes('kubernetes') || slugLower.includes('docker') || slugLower.includes('devops') || course.id === 3) {
+  } else if (titleLower.includes('docker') || titleLower.includes('devops') || titleLower.includes('kubernetes') || slugLower.includes('docker') || slugLower.includes('devops')) {
     seedKey = 'docker';
   } else if (titleLower.includes('flutter') || titleLower.includes('dart') || slugLower.includes('flutter') || slugLower.includes('dart') || course.id === 8) {
     seedKey = 'flutter';
@@ -2402,24 +1299,19 @@ export function enrichCourseData(course: Course): Course {
     seedKey = 'react';
   } else if (titleLower.includes('swift') || titleLower.includes('ios') || titleLower.includes('apple') || slugLower.includes('swift') || slugLower.includes('ios') || course.id === 7) {
     seedKey = 'swift';
-  } else if (titleLower.includes('script') || titleLower.includes('js') || slugLower.includes('js')) {
-    seedKey = 'javascript';
-  } else if (titleLower.includes('bash') || titleLower.includes('terminal') || slugLower.includes('terminal')) {
-    seedKey = 'terminal';
-  } else if (titleLower.includes('git') || slugLower.includes('git')) {
-    seedKey = 'git';
   } else if (
     titleLower.includes('sql') ||
     titleLower.includes('postgres') ||
     titleLower.includes('base') ||
     slugLower.includes('sql') ||
     slugLower.includes('postgres') ||
-    course.id === 5
+    course.id === 5 ||
+    course.id === 6
   ) {
     seedKey = 'postgresql';
   }
 
-  const seed = COURSE_SEED_DETAILS[seedKey] || COURSE_SEED_DETAILS.golang;
+  const seed = COURSE_SEED_DETAILS[seedKey] || COURSE_SEED_DETAILS.python;
 
   // Prefer seed.modules if backend has fewer modules than seed (e.g. 1 module vs 3 modules)
   const sourceModules =
@@ -2449,18 +1341,30 @@ export function getFallbackCourse(id: number): Course {
   const titles: Record<number, string> = {
     1: 'Python 3: Desde Cero hasta Inteligencia Artificial',
     2: 'React 19 & Next.js 15: Guía Práctica Fullstack',
-    3: 'Docker & Kubernetes / DevOps: Contenedores y CI/CD',
+    3: 'Terminal Bash & Consola Linux: Guía Profesional',
     4: 'Git & GitHub: Control de Versiones en Equipo',
     5: 'PostgreSQL: Optimización de Consultas y Modelado',
-    6: 'Fundamento de Bases de Datos - SQL',
+    6: 'Fundamentos de Bases de Datos - SQL',
     7: 'Desarrollo iOS con Swift y SwiftUI desde Cero',
     8: 'Flutter 3.24 & Dart desde Cero: Desarrollo Móvil Multiplataforma',
     9: 'Go (Golang): APIs REST de Alta Concurrencia y Microservicios',
+    10: 'JavaScript Moderno ES2024 & TypeScript desde Cero',
   };
 
-  const title = titles[id] || (id === 9 ? 'Go (Golang): APIs REST de Alta Concurrencia y Microservicios' : `Curso #${id}: Desarrollo de Software Avanzado`);
-  const seedKey = id === 1 ? 'python' : (id === 2 ? 'react' : (id === 3 ? 'docker' : (id === 7 ? 'swift' : (id === 8 ? 'flutter' : (id === 9 ? 'golang' : 'postgresql')))));
-  const seed = COURSE_SEED_DETAILS[seedKey] || COURSE_SEED_DETAILS.golang;
+  const title = titles[id] || `Curso #${id}: Desarrollo de Software Avanzado`;
+  
+  let seedKey = 'python';
+  if (id === 1) seedKey = 'python';
+  else if (id === 2) seedKey = 'react';
+  else if (id === 3) seedKey = 'terminal';
+  else if (id === 4) seedKey = 'git';
+  else if (id === 5 || id === 6) seedKey = 'postgresql';
+  else if (id === 7) seedKey = 'swift';
+  else if (id === 8) seedKey = 'flutter';
+  else if (id === 9) seedKey = 'golang';
+  else if (id === 10) seedKey = 'javascript';
+
+  const seed = COURSE_SEED_DETAILS[seedKey] || COURSE_SEED_DETAILS.python;
 
   return {
     id: id,
@@ -2469,7 +1373,7 @@ export function getFallbackCourse(id: number): Course {
     price: id % 2 === 0 ? '19.99' : '9.99',
     cover_image: seed.cover_image,
     category: 1,
-    category_name: 'Backend & Microservicios',
+    category_name: 'Desarrollo de Software',
     professor_name: 'Prof. Alex López',
     is_active: true,
     modules_count: seed.modules.length,

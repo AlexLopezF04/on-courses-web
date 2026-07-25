@@ -84,23 +84,23 @@ export const Footer: React.FC = () => {
               Cursos Destacados
             </h3>
             <div className="flex flex-col gap-2.5 text-xs sm:text-sm font-sans font-semibold">
-              <Link to="/courses?search=terminal" className="flex items-center gap-2 hover:text-[#00cc33] transition-colors">
+              <Link to="/courses/3" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center gap-2 hover:text-[#00cc33] transition-colors">
                 <Terminal className="h-4 w-4 text-emerald-500" />
                 <span>Bash y terminal</span>
               </Link>
-              <Link to="/courses?search=python" className="flex items-center gap-2 hover:text-[#00cc33] transition-colors">
+              <Link to="/courses/1" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center gap-2 hover:text-[#00cc33] transition-colors">
                 <Code className="h-4 w-4 text-blue-500" />
                 <span>Python</span>
               </Link>
-              <Link to="/courses?search=javascript" className="flex items-center gap-2 hover:text-[#00cc33] transition-colors">
+              <Link to="/courses/10" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center gap-2 hover:text-[#00cc33] transition-colors">
                 <Code className="h-4 w-4 text-yellow-500" />
                 <span>JavaScript</span>
               </Link>
-              <Link to="/courses?search=git" className="flex items-center gap-2 hover:text-[#00cc33] transition-colors">
+              <Link to="/courses/4" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center gap-2 hover:text-[#00cc33] transition-colors">
                 <GitBranch className="h-4 w-4 text-brand-500" />
                 <span>Git y GitHub</span>
               </Link>
-              <Link to="/courses?search=sql" className="flex items-center gap-2 hover:text-[#00cc33] transition-colors">
+              <Link to="/courses/5" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center gap-2 hover:text-[#00cc33] transition-colors">
                 <Database className="h-4 w-4 text-orange-500" />
                 <span>SQL y bases de datos</span>
               </Link>
