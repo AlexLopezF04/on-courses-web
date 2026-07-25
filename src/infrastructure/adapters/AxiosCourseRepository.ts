@@ -82,6 +82,12 @@ export class AxiosCourseRepository implements ICourseRepository {
         );
       }
 
+      // Filter by is_active state if specified in params (e.g. public homepage or catalog)
+      if (filters?.is_active !== undefined) {
+        const targetActive = String(filters.is_active) === 'true';
+        allCourses = allCourses.filter((c) => Boolean(c.is_active) === targetActive);
+      }
+
       return {
         results: allCourses,
         count: allCourses.length,
@@ -91,6 +97,7 @@ export class AxiosCourseRepository implements ICourseRepository {
     } catch (error) {
       console.warn('Backend getCourses failed, returning master seed catalog 1..10', error);
       let fallbackCourses = seedCatalogIds.map((id) => getFallbackCourse(id));
+
       if (filters?.search) {
         const query = String(filters.search).toLowerCase();
         fallbackCourses = fallbackCourses.filter(
@@ -100,6 +107,12 @@ export class AxiosCourseRepository implements ICourseRepository {
             (c.slug || '').toLowerCase().includes(query)
         );
       }
+
+      if (filters?.is_active !== undefined) {
+        const targetActive = String(filters.is_active) === 'true';
+        fallbackCourses = fallbackCourses.filter((c) => Boolean(c.is_active) === targetActive);
+      }
+
       return {
         results: fallbackCourses,
         count: fallbackCourses.length,
