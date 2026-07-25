@@ -9,19 +9,17 @@ import {
 } from '@infrastructure/factories/LessonProgressFactory';
 import { Course } from '@domain/entities/Course';
 import { Lesson } from '@domain/entities/Lesson';
-import { GraduationCap, ArrowLeft, CheckCircle, ChevronRight, Play, BookOpen, FileText, CheckSquare, Sparkles } from 'lucide-react';
+import { GraduationCap, ArrowLeft, CheckCircle, ChevronRight, Play, BookOpen, CheckSquare } from 'lucide-react';
 import { Loader } from '../components/Loader';
 import { Button } from '../components/Button';
 import { useAuthStore } from '../store/useAuthStore';
-import { useThemeStore } from '../store/useThemeStore';
-import { sanitizeUrl } from '../utils/sanitize-url';
+import { getEmbedVideoUrl } from '../utils/sanitize-url';
 import { MarkdownRenderer } from '../components/MarkdownRenderer';
 
 export const LessonPlayerPage: React.FC = () => {
   const { courseId, lessonId } = useParams<{ courseId: string; lessonId: string }>();
   const navigate = useNavigate();
   const { user } = useAuthStore();
-  const { theme, toggleTheme } = useThemeStore();
 
   const isAdminOrProfessor = user?.role === 'admin' || user?.role === 'professor';
   const backTarget = isAdminOrProfessor ? `/admin/courses/${courseId}/lessons` : '/dashboard';
@@ -313,12 +311,6 @@ export const LessonPlayerPage: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-4">
-            <button
-              onClick={toggleTheme}
-              className="rounded-xl p-2.5 text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
-            >
-              {theme === 'dark' ? <FileText className="h-5 w-5" /> : <Sparkles className="h-5 w-5" />}
-            </button>
             <Link to={backTarget}>
               <Button size="sm" variant="secondary">Cerrar Reproductor</Button>
             </Link>
@@ -346,43 +338,38 @@ export const LessonPlayerPage: React.FC = () => {
               )}
             </div>
 
-            {/* Practical instructions / theoretical text */}
             {/* Embedded Video Player */}
-            {currentLesson.video_url && (
-              <div className="mb-8 overflow-hidden border-2 border-slate-950 bg-slate-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00b835]">
-                <div className="flex items-center justify-between px-4 py-2 bg-slate-900 border-b-2 border-slate-950 text-xs font-mono font-bold text-brand-400">
-                  <div className="flex items-center gap-2">
-                    <Play className="h-4 w-4 fill-current text-brand-400" />
-                    <span>CLASE EN VIDEO · ONCOURSES PLAYER</span>
-                  </div>
-                  <span className="text-[10px] text-slate-400">HD 1080p</span>
-                </div>
-                <div className="relative aspect-video bg-black">
-                  {currentLesson.video_url.includes('youtube') || currentLesson.video_url.includes('embed') ? (
-                    <iframe
-                      src={sanitizeUrl(currentLesson.video_url)}
-                      title={currentLesson.title}
-                      className="w-full h-full border-0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    />
-                  ) : (
-                    <div className="flex flex-col items-center justify-center h-full p-6 text-center text-slate-300">
-                      <Play className="h-12 w-12 text-brand-400 mb-3" />
-                      <p className="text-sm font-bold">Video de la clase disponible</p>
-                      <a
-                        href={sanitizeUrl(currentLesson.video_url)}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="mt-2 text-xs text-brand-400 underline font-mono"
-                      >
-                        Abrir video en nueva pestaña ↗
-                      </a>
+            {(() => {
+              const { isDirectVideo, embedUrl } = getEmbedVideoUrl(currentLesson.video_url);
+              return (
+                <div className="mb-8 overflow-hidden border-2 border-slate-950 bg-slate-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00b835]">
+                  <div className="flex items-center justify-between px-4 py-2 bg-slate-900 border-b-2 border-slate-950 text-xs font-mono font-bold text-brand-400">
+                    <div className="flex items-center gap-2">
+                      <Play className="h-4 w-4 fill-current text-brand-400" />
+                      <span>CLASE EN VIDEO · ONCOURSES PLAYER</span>
                     </div>
-                  )}
+                    <span className="text-[10px] text-slate-400">HD 1080p</span>
+                  </div>
+                  <div className="relative aspect-video bg-black">
+                    {isDirectVideo ? (
+                      <video
+                        src={embedUrl}
+                        controls
+                        className="w-full h-full object-contain"
+                      />
+                    ) : (
+                      <iframe
+                        src={embedUrl}
+                        title={currentLesson.title}
+                        className="w-full h-full border-0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    )}
+                  </div>
                 </div>
-              </div>
-            )}
+              );
+            })()}
             {/* Practical instructions / theoretical text */}
             <article className="prose dark:prose-invert max-w-none text-slate-700 dark:text-slate-300 leading-relaxed mb-8">
               {currentLesson.content_text ? (
