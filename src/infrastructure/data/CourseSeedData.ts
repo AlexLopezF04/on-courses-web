@@ -72,6 +72,285 @@ print(f"Hola {nombre}, el próximo año tendrás {edad + 1} años.")
     ]
   },
 
+  // Course 2: React 19 & Next.js 15: Guía Práctica Fullstack (COMPLETO 100%)
+  react: {
+    cover_image: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=1200&auto=format&fit=crop',
+    description: 'Manual de estudio profesional en desarrollo web moderno con React 19 y Next.js 15 App Router. Domina la arquitectura de React Server Components (RSC), mutaciones con Server Actions, estilizado de alto rendimiento con TailwindCSS v4, autenticación segura y despliegue continuo en Vercel.',
+    modules: [
+      {
+        id: 201,
+        course: 2,
+        order: 1,
+        title: 'Módulo 1: Fundamentos de React 19, JSX, Hooks y Server Components',
+        description: 'Compilador de React 19, componentes de servidor, manejo de estado moderno e integración de hooks.',
+        lessons: [
+          {
+            id: 2001,
+            module: 201,
+            order: 1,
+            title: 'Lección 1.1: Novedades de React 19, JSX y el Compilador de React (React Compiler)',
+            duration_seconds: 900,
+            content_text: `### ⚛️ Manual Teórico-Práctico: React 19 y la Era del React Compiler
+
+Bienvenido a la primera guía de estudio del curso de **React 19 & Next.js 15**. En este tema aprenderás las novedades fundamentales de React 19, la eliminación de la memoización manual (\`useMemo\` / \`useCallback\`) gracias al nuevo **React Compiler** y la sintaxis JSX.
+
+---
+
+#### 1. ¿Qué cambia en React 19?
+
+- **React Compiler Automático:** Transforma el código JSX en código optimizado en tiempo de compilación. Ya no necesitas memorizar callbacks o valores con \`useCallback\` o \`useMemo\` manualmente.
+- **Server Components por Defecto:** Los componentes se ejecutan en el servidor de Node.js por defecto, reduciendo el peso del JavaScript cliente a 0kb para páginas estáticas.
+- **Nuevos Hooks de Formulario:** Soporte nativo para \`useActionState\`, \`useFormStatus\` y \`useOptimistic\`.
+
+---
+
+#### 2. Tu Primer Componente en React 19
+
+\`\`\`tsx
+// Componente de Servidor por defecto (RSC)
+import React from 'react';
+
+interface TarjetaCursoProps {
+  titulo: string;
+  precio: number;
+}
+
+export const TarjetaCurso: React.FC<TarjetaCursoProps> = ({ titulo, precio }) => {
+  return (
+    <div className="p-6 bg-white dark:bg-slate-900 border-2 border-slate-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+      <span className="text-xs font-mono font-bold text-emerald-500 uppercase">React 19 & Next.js 15</span>
+      <h3 className="text-xl font-black text-slate-950 dark:text-white mt-1">{titulo}</h3>
+      <p className="text-sm font-bold text-slate-600 dark:text-slate-300 mt-2">
+        Inversión: <span className="text-emerald-500 font-extrabold">\${precio} USD</span>
+      </p>
+    </div>
+  );
+};
+\`\`\`
+
+---
+
+#### 💡 Resumen de Cambios en React 19
+
+| Característica | React 18 (Anterior) | React 19 (Actual) |
+| --- | --- | --- |
+| Memoización | Manual (\`useMemo\`, \`useCallback\`) | **Automática vía React Compiler** |
+| Acceso a Promesas | Requiere \`useEffect\` + \`useState\` | **Hook \`use()\` directo en render** |
+| Formularios | Manejo imperativo de estado | **Server Actions + \`useActionState\`** |
+| Refs en Props | Requería \`forwardRef\` | **\`ref\` es una prop normal** |`,
+            resources: ['https://react.dev/blog/2024/04/25/react-19']
+          },
+          {
+            id: 2002,
+            module: 201,
+            order: 2,
+            title: 'Lección 1.2: Hooks Esenciales (useState, useEffect, useActionState, useFormStatus)',
+            duration_seconds: 1050,
+            content_text: `### 🛠️ Manual de Estudio: Hooks de Estado y Manejo de Formularios en React 19
+
+Aprende a gestionar el estado cliente con **\`useState\`** y a dominar los nuevos hooks de React 19 diseñados para formularios interactivos.
+
+---
+
+#### 1. Ejemplo de Formulario Interactivo con \`useActionState\`
+
+\`\`\`tsx
+'use client';
+
+import React, { useActionState } from 'react';
+
+async function actualizarPerfilAction(previousState: any, formData: FormData) {
+  const nombre = formData.get('nombre') as string;
+  if (!nombre || nombre.length < 3) {
+    return { error: 'El nombre debe tener al menos 3 caracteres.' };
+  }
+  return { success: \`Perfil actualizado con éxito para \${nombre}\` };
+}
+
+export function FormularioPerfil() {
+  const [state, formAction, isPending] = useActionState(actualizarPerfilAction, null);
+
+  return (
+    <form action={formAction} className="space-y-4">
+      <div>
+        <label className="block text-xs font-bold uppercase">Nombre Completo</label>
+        <input 
+          name="nombre" 
+          type="text" 
+          className="w-full p-2 border-2 border-slate-950" 
+          placeholder="Alex López"
+        />
+      </div>
+      <button 
+        type="submit" 
+        disabled={isPending}
+        className="px-4 py-2 bg-emerald-500 text-slate-950 font-black border-2 border-slate-950"
+      >
+        {isPending ? 'Guardando...' : 'Guardar Cambios'}
+      </button>
+      {state?.error && <p className="text-red-500 text-xs font-bold">{state.error}</p>}
+      {state?.success && <p className="text-emerald-500 text-xs font-bold">{state.success}</p>}
+    </form>
+  );
+}
+\`\`\``,
+            resources: ['https://react.dev/reference/react/useActionState']
+          },
+          {
+            id: 2003,
+            module: 201,
+            order: 3,
+            title: 'Lección 1.3: Componentes de Servidor vs Componentes de Cliente (\'use client\')',
+            duration_seconds: 960,
+            content_text: `### ⚡ Manual Práctico: Server Components (RSC) vs Client Components
+
+En React 19 y Next.js 15, la arquitectura se divide limpiamente entre el Servidor (Node.js) y el Cliente (Navegador).
+
+---
+
+#### 1. ¿Cuándo usar cada tipo de componente?
+
+- **Server Component (Default):** Para fetching de datos directo a base de datos, acceso a secretos API de backend y renderizado HTML estático.
+- **Client Component (\`'use client'\`):** Para elementos interactivos que requieren event listeners (\`onClick\`, \`onChange\`), hooks de React (\`useState\`, \`useEffect\`) o APIs del navegador (\`localStorage\`).`,
+            resources: ['https://nextjs.org/docs/app/building-your-application/rendering/server-components']
+          }
+        ]
+      },
+      {
+        id: 202,
+        course: 2,
+        order: 2,
+        title: 'Módulo 2: Arquitectura Fullstack con Next.js 15 App Router y Server Actions',
+        description: 'Enrutamiento basado en archivos, componentes de maquetación (Layouts), Server Actions y TailwindCSS v4.',
+        lessons: [
+          {
+            id: 2004,
+            module: 202,
+            order: 1,
+            title: 'Lección 2.1: Enrutamiento Basado en Archivos en Next.js 15 (App Router, Layouts, Page)',
+            duration_seconds: 1100,
+            content_text: `### 🧭 Manual Avanzado: Next.js 15 App Router
+
+El **App Router** de Next.js 15 utiliza la estructura de carpetas dentro del directorio \`app/\` para definir las rutas públicas de la aplicación web.
+
+---
+
+#### 1. Convención de Archivos Especiales
+
+- **\`page.tsx\`:** UI única expuesta en una URL pública.
+- **\`layout.tsx\`:** Estructura compartida que envuelve a las páginas hijas (mantiene el estado durante la navegación).
+- **\`loading.tsx\`:** Pantalla de carga automática envuelta en \`React.Suspense\`.
+- **\`error.tsx\`:** Límite de captura de errores envuelto en \`ErrorBoundary\`.
+
+\`\`\`tsx
+// app/cursos/[id]/page.tsx
+import React from 'react';
+
+interface Params {
+  params: Promise<{ id: string }>;
+}
+
+export default async function PaginaCurso({ params }: Params) {
+  const { id } = await params;
+  return (
+    <div className="p-8">
+      <h1 className="text-2xl font-black">Detalle del Curso #{id}</h1>
+    </div>
+  );
+}
+\`\`\``,
+            resources: ['https://nextjs.org/docs/app/building-your-application/routing']
+          },
+          {
+            id: 2005,
+            module: 202,
+            order: 2,
+            title: 'Lección 2.2: Server Actions y Mutación de Datos de Formulario en Next.js 15',
+            duration_seconds: 1250,
+            content_text: `### 🚀 Manual de Estudio: Server Actions y Revalidación de Caché
+
+Las **Server Actions** son funciones asíncronas que se ejecutan directamente en el servidor sin necesidad de crear endpoints API manuales (\`pages/api\`).
+
+\`\`\`tsx
+// app/actions/cursos.ts
+'use server';
+
+import { revalidatePath } from 'next/cache';
+
+export async function crearCursoAction(formData: FormData) {
+  const titulo = formData.get('titulo') as string;
+  const precio = formData.get('precio') as string;
+
+  // Insertar en Base de Datos de backend
+  console.log(\`Creando curso \${titulo} con precio \${precio} USD...\`);
+
+  // Purgar la caché de Next.js para reflejar los datos actualizados
+  revalidatePath('/cursos');
+}
+\`\`\``,
+            resources: ['https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations']
+          },
+          {
+            id: 2006,
+            module: 202,
+            order: 3,
+            title: 'Lección 2.3: Estilizado Avanzado con TailwindCSS v4 y UI Neo-Brutalista',
+            duration_seconds: 1020,
+            content_text: `### 🎨 Manual Práctico: TailwindCSS v4 y Diseño Moderno
+
+TailwindCSS v4 ofrece un motor de compilación ultra rápido basado en Rust (**Oxide Engine**), eliminación de archivos de configuración pesados y variables CSS nativas.`,
+            resources: ['https://tailwindcss.com/docs']
+          }
+        ]
+      },
+      {
+        id: 203,
+        course: 2,
+        order: 3,
+        title: 'Módulo 3: Optimización, Autenticación y Despliegue en Producción',
+        description: 'Optimización de assets, autenticación con Auth.js v5 y despliegue continuo en Vercel.',
+        lessons: [
+          {
+            id: 2007,
+            module: 203,
+            order: 1,
+            title: 'Lección 3.1: Optimización de Imágenes, Fuentes (next/font) y SEO Dinámico',
+            duration_seconds: 1150,
+            content_text: `### ⚡ Manual Teórico-Práctico: Optimización de Assets y SEO Dinámico
+
+Aprende a lograr un puntaje de **100/100 en Google Lighthouse** utilizando las utilidades integradas de Next.js 15.`,
+            resources: ['https://nextjs.org/docs/app/building-your-application/optimizing/images']
+          },
+          {
+            id: 2008,
+            module: 203,
+            order: 2,
+            title: 'Lección 3.2: Autenticación Segura y Rutas Protegidas (Auth.js v5)',
+            duration_seconds: 1100,
+            content_text: `### 🔒 Manual Práctico: Autenticación con Auth.js v5 y Middleware
+
+Protección de rutas sensibles mediante \`middleware.ts\` y sesiones seguras basadas en JWT.`,
+            resources: ['https://authjs.dev/']
+          },
+          {
+            id: 2009,
+            module: 203,
+            order: 3,
+            title: 'Lección 3.3: Proyecto Integrador: Plataforma Fullstack de Cursos con Next.js 15, Vercel & Tailwind',
+            duration_seconds: 1600,
+            content_text: `### 🚀 Proyecto Integrador: Despliegue Fullstack en Vercel
+
+Construye y despliega la aplicación completa en Vercel con integración continua y variables de entorno seguras.
+
+#### 🏆 ¡Felicidades!
+Has completado con éxito el curso práctico de **React 19 & Next.js 15**.`,
+            resources: ['https://vercel.com/docs']
+          }
+        ]
+      }
+    ]
+  },
+
   // Course 5: PostgreSQL: Optimización de Consultas y Modelado (COMPLETO 100%)
   postgresql: {
     cover_image: 'https://images.unsplash.com/photo-1544383835-bda2bc66a55d?q=80&w=1200&auto=format&fit=crop',
@@ -1252,6 +1531,7 @@ Has completado con éxito el curso práctico de **Desarrollo iOS con Swift y Swi
 // Aliases for seed lookup
 COURSE_SEED_DETAILS.sql = COURSE_SEED_DETAILS.postgresql;
 COURSE_SEED_DETAILS.ios = COURSE_SEED_DETAILS.swift;
+COURSE_SEED_DETAILS.nextjs = COURSE_SEED_DETAILS.react;
 
 /**
  * Utility function to enrich any course from backend or fallback
@@ -1261,7 +1541,9 @@ export function enrichCourseData(course: Course): Course {
   const slugLower = (course.slug || '').toLowerCase();
 
   let seedKey = 'python';
-  if (titleLower.includes('swift') || titleLower.includes('ios') || titleLower.includes('apple') || slugLower.includes('swift') || slugLower.includes('ios') || course.id === 7) {
+  if (titleLower.includes('react') || titleLower.includes('next') || slugLower.includes('react') || slugLower.includes('next') || course.id === 2) {
+    seedKey = 'react';
+  } else if (titleLower.includes('swift') || titleLower.includes('ios') || titleLower.includes('apple') || slugLower.includes('swift') || slugLower.includes('ios') || course.id === 7) {
     seedKey = 'swift';
   } else if (titleLower.includes('script') || titleLower.includes('js') || slugLower.includes('js')) {
     seedKey = 'javascript';
@@ -1280,7 +1562,7 @@ export function enrichCourseData(course: Course): Course {
     seedKey = 'postgresql';
   }
 
-  const seed = COURSE_SEED_DETAILS[seedKey] || COURSE_SEED_DETAILS.swift;
+  const seed = COURSE_SEED_DETAILS[seedKey] || COURSE_SEED_DETAILS.react;
 
   // Prefer seed.modules if backend has fewer modules than seed (e.g. 1 module vs 3 modules)
   const sourceModules =
@@ -1309,7 +1591,7 @@ export function enrichCourseData(course: Course): Course {
 export function getFallbackCourse(id: number): Course {
   const titles: Record<number, string> = {
     1: 'Python 3: Desde Cero hasta Inteligencia Artificial',
-    2: 'JavaScript Moderno ES6+: Asincronía y DOM',
+    2: 'React 19 & Next.js 15: Guía Práctica Fullstack',
     3: 'Terminal Bash & Consola Linux: Guía Profesional',
     4: 'Git & GitHub: Control de Versiones en Equipo',
     5: 'PostgreSQL: Optimización de Consultas y Modelado',
@@ -1317,9 +1599,9 @@ export function getFallbackCourse(id: number): Course {
     7: 'Desarrollo iOS con Swift y SwiftUI desde Cero',
   };
 
-  const title = titles[id] || (id === 7 ? 'Desarrollo iOS con Swift y SwiftUI desde Cero' : `Curso #${id}: Desarrollo Móvil y Web`);
-  const seedKey = id === 1 ? 'python' : (id === 7 ? 'swift' : 'postgresql');
-  const seed = COURSE_SEED_DETAILS[seedKey] || COURSE_SEED_DETAILS.swift;
+  const title = titles[id] || (id === 2 ? 'React 19 & Next.js 15: Guía Práctica Fullstack' : `Curso #${id}: Desarrollo Web & Móvil`);
+  const seedKey = id === 1 ? 'python' : (id === 2 ? 'react' : (id === 7 ? 'swift' : 'postgresql'));
+  const seed = COURSE_SEED_DETAILS[seedKey] || COURSE_SEED_DETAILS.react;
 
   return {
     id: id,
@@ -1328,7 +1610,7 @@ export function getFallbackCourse(id: number): Course {
     price: id % 2 === 0 ? '19.99' : '9.99',
     cover_image: seed.cover_image,
     category: 1,
-    category_name: 'Desarrollo Móvil & iOS',
+    category_name: 'Desarrollo Web & React',
     professor_name: 'Prof. Alex López',
     is_active: true,
     modules_count: seed.modules.length,
