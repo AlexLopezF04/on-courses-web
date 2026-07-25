@@ -121,8 +121,13 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Bottom copyright line */}
-        <div className="mt-12 border-t border-slate-200 dark:border-slate-800 pt-8 text-center text-xs text-slate-400 dark:text-slate-600">
-          Desarrollado con ♡ desde Ecuador para el mundo. v1.0 &copy; 2024-{new Date().getFullYear()} OnCourses.
+        <div className="mt-12 border-t border-slate-200 dark:border-slate-800 pt-8 flex items-center justify-center gap-2 text-xs font-bold text-slate-800 dark:text-slate-200">
+          <div className="p-1 rounded-md bg-white dark:bg-slate-900 border border-slate-950 dark:border-slate-800 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_#00b835] flex items-center justify-center shrink-0">
+            <Logo className="h-4 w-4 drop-shadow" />
+          </div>
+          <span>
+            Desarrollado con ❤️ para todos mis Estudiantes. v1.0 &copy; 2024-{new Date().getFullYear()} OnCourses.
+          </span>
         </div>
       </div>
 
