@@ -11,7 +11,7 @@ export const Footer: React.FC = () => {
   const [showNewsletterModal, setShowNewsletterModal] = useState(false);
 
   return (
-    <footer className="border-t-2 border-slate-950 bg-slate-50 dark:border-slate-800 dark:bg-slate-950 py-16 text-slate-600 dark:text-slate-400 font-mono">
+    <footer className="border-t-2 border-slate-950 bg-slate-50 dark:border-slate-800 dark:bg-slate-950 py-16 text-slate-600 dark:text-slate-400 font-sans">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Col 1: Logo & Brand Info */}
@@ -22,10 +22,10 @@ export const Footer: React.FC = () => {
                 OnCourses
               </span>
             </div>
-            <p className="text-xs sm:text-sm font-mono text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
+            <p className="text-xs sm:text-sm font-sans text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
               Estudia desarrollo de software, algoritmos y bases de datos de manera premium y estructurada en OnCourses.
             </p>
-            <div className="flex flex-col gap-2.5 text-xs font-mono font-bold text-slate-600 dark:text-slate-400">
+            <div className="flex flex-col gap-2.5 text-xs font-sans font-bold text-slate-600 dark:text-slate-400">
               <div className="flex items-center gap-2">
                 <Building2 className="h-4 w-4 text-[#00cc33] shrink-0" />
                 <span>Universidad UTE</span>
@@ -37,7 +37,7 @@ export const Footer: React.FC = () => {
             </div>
             <Link 
               to="/courses" 
-              className="mt-4 inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#00cc33] hover:bg-[#00ff41] text-slate-950 font-mono font-black text-xs uppercase tracking-wider border-2 border-slate-950 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00b835] hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all cursor-pointer w-fit"
+              className="mt-4 inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#00cc33] hover:bg-[#00ff41] text-slate-950 font-sans font-bold text-xs uppercase tracking-wider border-2 border-slate-950 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00b835] hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all cursor-pointer w-fit"
             >
               <span>Ir al catálogo</span>
               <ArrowRight className="h-4 w-4" />
@@ -46,10 +46,10 @@ export const Footer: React.FC = () => {
 
           {/* Col 2: Plataforma */}
           <div className="flex flex-col gap-4">
-            <h3 className="font-display font-black text-slate-900 dark:text-white text-sm uppercase tracking-wider">
+            <h3 className="font-display font-extrabold text-slate-900 dark:text-white text-sm uppercase tracking-wider">
               Plataforma
             </h3>
-            <div className="flex flex-col gap-2.5 text-xs sm:text-sm font-mono font-bold">
+            <div className="flex flex-col gap-2.5 text-xs sm:text-sm font-sans font-semibold">
               <Link to="/courses" className="flex items-center gap-2 hover:text-[#00cc33] transition-colors">
                 <BookOpen className="h-4 w-4 text-emerald-500" />
                 <span>Cursos</span>
@@ -77,10 +77,10 @@ export const Footer: React.FC = () => {
 
           {/* Col 3: Cursos Temas */}
           <div className="flex flex-col gap-4">
-            <h3 className="font-display font-black text-slate-900 dark:text-white text-sm uppercase tracking-wider">
+            <h3 className="font-display font-extrabold text-slate-900 dark:text-white text-sm uppercase tracking-wider">
               Cursos Destacados
             </h3>
-            <div className="flex flex-col gap-2.5 text-xs sm:text-sm font-mono font-bold">
+            <div className="flex flex-col gap-2.5 text-xs sm:text-sm font-sans font-semibold">
               <Link to="/courses?search=terminal" className="flex items-center gap-2 hover:text-[#00cc33] transition-colors">
                 <Terminal className="h-4 w-4 text-emerald-500" />
                 <span>Bash y terminal</span>
@@ -106,10 +106,10 @@ export const Footer: React.FC = () => {
 
           {/* Col 4: Información Legal */}
           <div className="flex flex-col gap-4">
-            <h3 className="font-display font-black text-slate-900 dark:text-white text-sm uppercase tracking-wider">
+            <h3 className="font-display font-extrabold text-slate-900 dark:text-white text-sm uppercase tracking-wider">
               Información Legal
             </h3>
-            <div className="flex flex-col gap-2.5 text-xs sm:text-sm font-mono font-bold">
+            <div className="flex flex-col gap-2.5 text-xs sm:text-sm font-sans font-semibold">
               <button
                 onClick={() => setShowLegalModal(true)}
                 className="flex items-center gap-2 text-left hover:text-[#00cc33] transition-colors cursor-pointer"
