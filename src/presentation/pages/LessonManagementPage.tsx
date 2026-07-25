@@ -191,6 +191,7 @@ export const LessonManagementPage: React.FC = () => {
             selectedModuleId={selectedModuleId}
             isAdmin={isAdmin}
             onEdit={handleOpenEditLesson}
+            onCreateLesson={handleOpenCreateLesson}
             onPreview={(lesId) => {
               const target = lessons.find((l) => l.id === lesId) || null;
               setSelectedLessonForPreview(target);
