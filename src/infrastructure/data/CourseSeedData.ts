@@ -597,11 +597,661 @@ Has completado el curso práctico completo de **PostgreSQL: Optimización de Con
         ]
       }
     ]
+  },
+
+  // Course: Desarrollo iOS con Swift y SwiftUI desde Cero (COMPLETO 100%)
+  swift: {
+    cover_image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=1200&auto=format&fit=crop',
+    description: 'Manual de estudio profesional en desarrollo móvil iOS con Swift 5.10 y SwiftUI. Domina la sintaxis moderna de Swift, arquitectura MVVM, gestión de estado declarativo (@State, @Binding, @StateObject), layouts reactivos, concurrencia Async/Await, consumo de APIs REST con URLSession y persistencia de datos.',
+    modules: [
+      {
+        id: 701,
+        course: 7,
+        order: 1,
+        title: 'Módulo 1: Fundamentos de Swift 5.10+ y Programación Orientada a Protocolos',
+        description: 'Sintaxis del lenguaje Swift, tipado estático, desempaquetado seguro de optionals, structs, classes y arquitectura orientada a protocolos.',
+        lessons: [
+          {
+            id: 7001,
+            module: 701,
+            order: 1,
+            title: 'Lección 1.1: Sintaxis Básica de Swift, Optionals (Unwrapping) y Control de Flujo',
+            duration_seconds: 900,
+            content_text: `### 📱 Manual Teórico-Práctico: Sintaxis Swift, Optionals y Desempaquetado Seguro
+
+Bienvenido a la primera guía de estudio del curso de **Desarrollo iOS con Swift y SwiftUI**. En este tema aprenderás la sintaxis limpia de Swift, la inmutabilidad con \`let\` y la característica de seguridad más importante del lenguaje: **los Optionals**.
+
+---
+
+#### 1. Variables, Constantes e Inmutabilidad en Swift
+
+En Swift, la inmutabilidad es el valor por defecto para garantizar código libre de efectos secundarios.
+
+- **\`let\`:** Define valores inmutables (constantes).
+- **\`var\`:** Define variables mutables cuyo valor puede cambiar con el tiempo.
+
+\`\`\`swift
+// Declaración de constantes y variables con inferencia de tipo
+let nombrePlataforma: String = "OnCourses iOS"
+let precioCurso: Double = 9.99
+var leccionesCompletadas: Int = 0
+
+leccionesCompletadas += 1
+print("Progreso actual: \\(leccionesCompletadas) lecciones en \\(nombrePlataforma)")
+\`\`\`
+
+---
+
+#### 2. Manejo Seguro de Optionals (Desempaquetado)
+
+Un **Optional** representa un valor que puede existir o ser \`nil\` (ausencia de valor). Evita los errores fatales tipo *NullPointerException* comunes en otros lenguajes.
+
+- **Desempaquetado Seguro con \`if let\`:**
+\`\`\`swift
+var usuarioEmail: String? = "estudiante@oncourses.app"
+
+if let emailValido = usuarioEmail {
+    print("Email verificado: \\(emailValido)")
+} else {
+    print("El usuario no tiene un email registrado.")
+}
+\`\`\`
+
+- **Guardia Temprana con \`guard let\`:**
+\`\`\`swift
+func procesarInscripcion(email: String?, cursoId: Int?) {
+    guard let email = email, let cursoId = cursoId else {
+        print("Error: Datos incompletos para procesar la inscripción.")
+        return
+    }
+    print("Inscribiendo a \\(email) en el curso #\\(cursoId)...")
+}
+\`\`\`
+
+- **Operador Nil Coalescing (\`??\`):**
+\`\`\`swift
+let avatarUrl: String? = nil
+let avatarFinal = avatarUrl ?? "default_avatar.png"
+print("Avatar seleccionado: \\(avatarFinal)")
+\`\`\`
+
+---
+
+#### 💡 Resumen de Operadores de Desempaquetado
+
+| Operador / Estructura | Seguridad | Descripción de Funcionamiento |
+| --- | --- | --- |
+| \`if let\` | 🟢 **100% Seguro** | Desempaqueta la variable opcional en un scope local controlado. |
+| \`guard let\` | 🟢 **100% Seguro** | Exige la presencia del valor para continuar la ejecución de la función. |
+| \`??\` (Nil Coalescing) | 🟢 **100% Seguro** | Proveer un valor por defecto en caso de que sea \`nil\`. |
+| \`!\` (Force Unwrap) | 🔴 **Peligroso** | Fuerza el desempaquetado. Causa crash si el valor es \`nil\`. |
+
+---
+
+#### ✏️ Ejercicio Práctico Obligatorio
+1. Crea una función en Swift llamada \`validarCurso(titulo: String?, precio: Double?)\`.
+2. Utiliza \`guard let\` para asegurar que ambos valores existan y que el precio sea mayor o igual a cero.
+3. Retorna un mensaje indicando *"Curso válido listo para publicar"* o *"Datos de curso inválidos"*.`,
+            resources: ['https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics/']
+          },
+          {
+            id: 7002,
+            module: 701,
+            order: 2,
+            title: 'Lección 1.2: Structs vs Classes, Mutating Methods y Value Semantics',
+            duration_seconds: 1050,
+            content_text: `### 🏛️ Manual de Estudio: Structs vs Classes y Semántica de Valores en Swift
+
+Una de las decisiones arquitectónicas más importantes en desarrollo iOS es elegir cuándo usar **\`struct\`** y cuándo usar **\`class\`**. En SwiftUI, prácticamente todas las vistas son \`structs\`.
+
+---
+
+#### 1. Tipos por Valor (\`struct\`) vs Tipos por Referencia (\`class\`)
+
+- **\`struct\` (Tipos por Valor):** Se copian cuando se pasan a una función o se asignan a otra variable. Viven en el Stack (Memoria rápida). No soportan herencia clásica.
+- **\`class\` (Tipos por Referencia):** Se comparten mediante referencias apuntando a la misma instancia en memoria (Heap). Soportan herencia y de-inicializadores (\`deinit\`).
+
+---
+
+#### 2. Código de Ejemplo: Struct con Métodos Mutantes
+
+\`\`\`swift
+// Definición de una estructura inmutable por defecto
+struct LeccionSwift {
+    let id: Int
+    let titulo: String
+    var completada: Bool = false
+    
+    // Para modificar propiedades dentro de un struct se requiere 'mutating'
+    mutating func marcarComoCompletada() {
+        self.completada = true
+        print("La lección '\\(titulo)' se ha marcado como completada.")
+    }
+}
+
+// Ejemplo de semántica por valor (copia de datos)
+var leccion1 = LeccionSwift(id: 101, titulo: "Sintaxis Swift")
+var copiaLeccion = leccion1
+
+copiaLeccion.marcarComoCompletada()
+
+print("Estado Original: \\(leccion1.completada)")   // false (No se vio afectada)
+print("Estado Copia: \\(copiaLeccion.completada)")   // true
+\`\`\`
+
+---
+
+#### 3. Ejemplo de Clase (\`class\`) con Referencia Compartida
+
+\`\`\`swift
+class UsuarioEstudiante {
+    var nombre: String
+    var puntos: Int
+    
+    init(nombre: String, puntos: Int) {
+        self.nombre = nombre
+        self.puntos = puntos
+    }
+}
+
+let estudianteA = UsuarioEstudiante(nombre: "Alex", puntos: 100)
+let estudianteB = estudianteA  // Apuntan a la misma dirección de memoria
+
+estudianteB.puntos += 50
+
+print("Puntos de Estudiante A: \\(estudianteA.puntos)") // 150 (Comparten referencia)
+\`\`\`
+
+---
+
+#### 📊 Comparativa de Arquitectura en Swift
+
+| Característica | \`struct\` (Recomendado en SwiftUI) | \`class\` (Usado en ViewModels) |
+| --- | --- | --- |
+| Asignación | Copia por Valor (Value Semantics) | Referencia Compartida (Reference Semantics) |
+| Almacenamiento | Memory Stack (Ultra rápido) | Memory Heap |
+| Mutabilidad | Requiere palabra clave \`mutating\` | Mutable si la propiedad es \`var\` |
+| Herencia | No soportada (Usa Protocolos) | Soporta Herencia jerárquica |`,
+            resources: ['https://docs.swift.org/swift-book/documentation/the-swift-programming-language/structuresandclasses/']
+          },
+          {
+            id: 7003,
+            module: 701,
+            order: 3,
+            title: 'Lección 1.3: Programación Orientada a Protocolos (POP), Generics y Extensions',
+            duration_seconds: 960,
+            content_text: `### 🧩 Manual Práctico: Programación Orientada a Protocolos (POP) y Genéricos
+
+Swift es un lenguaje orientado a protocolos (**Protocol-Oriented Programming**). En lugar de crear complejas jerarquías de herencia de clases, POP permite componer comportamientos mediante contratos reutilizables.
+
+---
+
+#### 1. Declaración de Protocolos y Extensiones
+
+\`\`\`swift
+// Contrato que define una entidad inscribible
+protocol Inscribible {
+    var id: Int { get }
+    var titulo: String { get }
+    func obtenerResumen() -> String
+}
+
+// Extensión para otorgar una implementación por defecto
+extension Inscribible {
+    func obtenerResumen() -> String {
+        return "Curso #\\(id): \\(titulo)"
+    }
+}
+
+// Estructura que adopta el protocolo
+struct CursoiOS: Inscribible {
+    let id: Int
+    let titulo: String
+    let requiereMac: Bool
+}
+
+let miCurso = CursoiOS(id: 7, titulo: "SwiftUI Pro", requiereMac: true)
+print(miCurso.obtenerResumen())
+\`\`\`
+
+---
+
+#### 2. Tipos Genéricos (\`Generics\`)
+Permiten escribir funciones y tipos flexibles que funcionan con cualquier tipo de dato respetando la seguridad de tipos:
+
+\`\`\`swift
+struct RespuestaAPI<T: Codable>: Codable {
+    let status: String
+    let data: T
+}
+\`\`\``,
+            resources: ['https://docs.swift.org/swift-book/documentation/the-swift-programming-language/protocols/']
+          }
+        ]
+      },
+      {
+        id: 702,
+        course: 7,
+        order: 2,
+        title: 'Módulo 2: Interfaces Modernas con SwiftUI, Arquitectura MVVM y Modificadores',
+        description: 'Diseño UI declarativo en iOS, jerarquía de vistas en pila, wrappers de estado y arquitectura Model-View-ViewModel.',
+        lessons: [
+          {
+            id: 7004,
+            module: 702,
+            order: 1,
+            title: 'Lección 2.1: Estructura de una Vista SwiftUI, Layout Stack (VStack, HStack, ZStack) y Componentes',
+            duration_seconds: 1100,
+            content_text: `### 🎨 Manual Avanzado: Interfaces Declarativas con SwiftUI y Layout Stacks
+
+SwiftUI revolucionó el desarrollo móvil en iOS al permitir crear interfaces de usuario de manera declarativa: describes **qué** debe mostrar la pantalla en lugar de cómo dibujarla imperativamente.
+
+---
+
+#### 1. Las Tres Pilas de Diseño (Stacks) en SwiftUI
+
+- **\`VStack\` (Vertical Stack):** Alinea elementos verticalmente de arriba hacia abajo.
+- **\`HStack\` (Horizontal Stack):** Alinea elementos horizontalmente de izquierda a derecha.
+- **\`ZStack\` (Depth Stack):** Superpone elementos uno encima del otro en el eje Z (útil para fondos y capas).
+
+---
+
+#### 2. Código de Ejemplo: Tarjeta de Curso en SwiftUI
+
+\`\`\`swift
+import SwiftUI
+
+struct TarjetaCursoView: View {
+    let titulo: String
+    let profesor: String
+    let precio: String
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            // Cabecera con Badge de Categoría
+            HStack {
+                Text("iOS & SWIFT")
+                    .font(.caption)
+                    .fontWeight(.bold)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .background(Color.green)
+                    .foregroundColor(.black)
+                    .cornerRadius(4)
+                
+                Spacer()
+                
+                Image(systemName: "bookmark.fill")
+                    .foregroundColor(.green)
+            }
+            
+            Text(titulo)
+                .font(.headline)
+                .fontWeight(.black)
+                .foregroundColor(.primary)
+                .lineLimit(2)
+            
+            Text("Profesor: \\(profesor)")
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+            
+            Divider()
+            
+            HStack {
+                Text(precio)
+                    .font(.title3)
+                    .fontWeight(.bold)
+                    .foregroundColor(.green)
+                
+                Spacer()
+                
+                Button(action: {
+                    print("Inscribiendo curso...")
+                }) {
+                    Text("Ver Detalle")
+                        .font(.caption)
+                        .fontWeight(.bold)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 8)
+                        .background(Color.black)
+                        .foregroundColor(.white)
+                        .cornerRadius(6)
+                }
+            }
+        }
+        .padding(16)
+        .background(Color(UIColor.systemBackground))
+        .cornerRadius(12)
+        .shadow(color: Color.black.opacity(0.1), radius: 6, x: 0, y: 3)
+    }
+}
+\`\`\`
+
+---
+
+#### 📊 Comparativa de Pilas de Diseño
+
+| Componente | Dirección de Alineación | Caso de Uso Común |
+| --- | --- | --- |
+| **\`VStack\`** | Vertical (Y) | Formularios, listas de contenido y textos estructurados. |
+| **\`HStack\`** | Horizontal (X) | Filas de botones, precios al lado de acciones y avatars con nombre. |
+| **\`ZStack\`** | Profundidad (Z) | Imágenes de fondo con texto superpuesto, indicadores de carga. |`,
+            resources: ['https://developer.apple.com/documentation/swiftui/']
+          },
+          {
+            id: 7005,
+            module: 702,
+            order: 2,
+            title: 'Lección 2.2: Gestión de Estado Declarativo en SwiftUI (@State, @Binding, @StateObject, @ObservedObject)',
+            duration_seconds: 1250,
+            content_text: `### ⚡ Manual de Estudio: Property Wrappers de Estado en SwiftUI y MVVM
+
+En SwiftUI, la interfaz de usuario es una función directa del estado: **UI = f(State)**. Cuando el estado cambia, SwiftUI invalida automáticamente la vista y re-dibuja solo los componentes afectados.
+
+---
+
+#### 1. Matriz de Property Wrappers de Estado
+
+- **\`@State\`:** Gestiona el estado privado e interno dentro de una sola vista \`struct\`.
+- **\`@Binding\`:** Crea una conexión de lectura/escritura bidireccional entre una vista padre y una vista hija.
+- **\`@StateObject\`:** Instancia y gestiona el ciclo de vida de un ViewModel (\`ObservableObject\`).
+- **\`@ObservedObject\`:** Recibe un ViewModel pasado desde una vista externa.
+
+---
+
+#### 2. Ejemplo Práctico: Contador de Lecciones con @State y @Binding
+
+\`\`\`swift
+import SwiftUI
+
+// Vista Hija con @Binding
+struct BotonCompletarView: View {
+    @Binding var completado: Bool
+    
+    var body: some View {
+        Button(action: {
+            completado.toggle()
+        }) {
+            HStack {
+                Image(systemName: completado ? "checkmark.circle.fill" : "circle")
+                Text(completado ? "Lección Completada" : "Marcar como Completada")
+            }
+            .fontWeight(.bold)
+            .padding()
+            .background(completado ? Color.green : Color.blue)
+            .foregroundColor(.white)
+            .cornerRadius(8)
+        }
+    }
+}
+
+// Vista Padre con @State
+struct LeccionDetalleView: View {
+    @State private var esCompletada: Bool = false
+    
+    var body: some View {
+        VStack(spacing: 20) {
+            Text("Lección 2.2: Estado en SwiftUI")
+                .font(.title2)
+                .fontWeight(.bold)
+            
+            // Pasar la referencia de binding con el prefijo '$'
+            BotonCompletarView(completado: $esCompletada)
+        }
+        .padding()
+    }
+}
+\`\`\``,
+            resources: ['https://developer.apple.com/documentation/swiftui/state-and-data-flow']
+          },
+          {
+            id: 7006,
+            module: 702,
+            order: 3,
+            title: 'Lección 2.3: Navegación Estructurada y Listas Dinámicas (NavigationStack, List, Form)',
+            duration_seconds: 1020,
+            content_text: `### 🧭 Manual Práctico: NavigationStack y Listas Dinámicas en iOS 16+
+
+Aprende a estructurar flujos de navegación fluidos entre pantallas en iOS utilizando la API moderna **\`NavigationStack\`** y despliegue de colecciones de datos con **\`List\`**.
+
+---
+
+#### 1. Navegación con NavigationStack y NavigationLink
+
+\`\`\`swift
+import SwiftUI
+
+struct CatalogoCursosView: View {
+    let cursos = [
+        CursoiOS(id: 1, titulo: "Swift 5 desde Cero", requiereMac: false),
+        CursoiOS(id: 2, titulo: "SwiftUI & MVVM Avanzado", requiereMac: true),
+        CursoiOS(id: 3, titulo: "iOS Apps con APIs REST", requiereMac: true)
+    ]
+    
+    var body: some View {
+        NavigationStack {
+            List(cursos, id: \\.id) { curso in
+                NavigationLink(destination: Text("Detalle de \\(curso.titulo)")) {
+                    HStack {
+                        Image(systemName: "play.tv.fill")
+                            .foregroundColor(.green)
+                        Text(curso.titulo)
+                            .fontWeight(.semibold)
+                    }
+                }
+            }
+            .navigationTitle("Cursos de iOS")
+        }
+    }
+}
+\`\`\``,
+            resources: ['https://developer.apple.com/documentation/swiftui/navigationstack']
+          }
+        ]
+      },
+      {
+        id: 703,
+        course: 7,
+        order: 3,
+        title: 'Módulo 3: Asincronía con Async/Await, Consumo de APIs REST y Persistencia Local',
+        description: 'Concurrencia moderna con Async/Await, peticiones de red con URLSession, decodificación JSON con Codable y proyecto final integrador.',
+        lessons: [
+          {
+            id: 7007,
+            module: 703,
+            order: 1,
+            title: 'Lección 3.1: Concurrencia Moderna en Swift: Async/Await y Task',
+            duration_seconds: 1150,
+            content_text: `### ⏳ Manual Teórico-Práctico: Concurrencia Moderna con Async/Await
+
+La concurrencia en Swift 5.5+ reemplazó las complejas closures de callback (*Callback Hell*) por una sintaxis síncrona limpia basada en las palabras clave **\`async\`** y **\`await\`**.
+
+---
+
+#### 1. Función Asíncrona con Manejo de Errores
+
+\`\`\`swift
+import Foundation
+
+// Definición de errores del servicio de red
+enum NetworkError: Error {
+    case urlInvalida
+    case errorServidor
+    case datosCorruptos
+}
+
+// Estructura de modelo decodificable
+struct CursoResponse: Codable, Identifiable {
+    let id: Int
+    let title: String
+    let price: String
+}
+
+// Servicio de Red usando Async/Await
+class CoursesAPIService {
+    func obtenerCursosDesdeServidor() async throws -> [CursoResponse] {
+        guard let url = URL(string: "http://localhost:8000/api/courses/") else {
+            throw NetworkError.urlInvalida
+        }
+        
+        // Petición asíncrona no bloqueante
+        let (data, response) = try await URLSession.shared.data(from: url)
+        
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            throw NetworkError.errorServidor
+        }
+        
+        // Decodificación JSON
+        let decoder = JSONDecoder()
+        return try decoder.decode([CursoResponse].self, from: data)
+    }
+}
+\`\`\`
+
+---
+
+#### 💡 Ventajas de Async/Await frente a Completion Handlers
+
+| Característica | Closures Antiguas (Callbacks) | Modern Async / Await |
+| --- | --- | --- |
+| Legibilidad | Compleja (Bloques anidados) | **Secuencial y limpia** |
+| Control de Errores | Fácil olvidar invocar el handler | **Manejo estricto con \`try / catch\`** |
+| Hilos de Ejecución | Requiere dispatch manual a Main Thread | **\`@MainActor\` garantiza updates en UI Thread** |`,
+            resources: ['https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/']
+          },
+          {
+            id: 7008,
+            module: 703,
+            order: 2,
+            title: 'Lección 3.2: Consumo de APIs REST con URLSession y Decodificación JSON (Codable)',
+            duration_seconds: 1100,
+            content_text: `### 🌐 Manual Práctico: ViewModel con @MainActor y URLSession en SwiftUI
+
+Integra el servicio de red asíncrono dentro de un ViewModel en arquitectura MVVM para actualizar la interfaz de SwiftUI automáticamente.
+
+---
+
+#### 1. Implementación del ViewModel con @MainActor
+
+\`\`\`swift
+import Foundation
+import SwiftUI
+
+@MainActor
+class CursosViewModel: ObservableObject {
+    @Published var cursos: [CursoResponse] = []
+    @Published var estaCargando: Bool = false
+    @Published var mensajeError: String? = nil
+    
+    private let apiService = CoursesAPIService()
+    
+    func cargarCursos() async {
+        estaCargando = true
+        mensajeError = nil
+        
+        do {
+            self.cursos = try await apiService.obtenerCursosDesdeServidor()
+        } catch {
+            self.mensajeError = "No se pudieron obtener los cursos: \\(error.localizedDescription)"
+        }
+        
+        estaCargando = false
+    }
+}
+\`\`\``,
+            resources: ['https://developer.apple.com/documentation/foundation/urlsession']
+          },
+          {
+            id: 7009,
+            module: 703,
+            order: 3,
+            title: 'Lección 3.3: Proyecto Integrador: App de Catálogo de Cursos en iOS (SwiftUI + MVVM)',
+            duration_seconds: 1600,
+            content_text: `### 🚀 Proyecto Integrador: App Completa de Cursos en iOS con SwiftUI
+
+En esta lección final conectarás todos los módulos aprendidos para construir una aplicación nativa completa para iOS con interfaz moderna en SwiftUI, arquitectura MVVM y consumo de datos REST.
+
+---
+
+#### 📱 Código Fuente Completo de la Vista Principal
+
+\`\`\`swift
+import SwiftUI
+
+struct AppOnCoursesMainView: View {
+    @StateObject private var viewModel = CursosViewModel()
+    
+    var body: some View {
+        NavigationStack {
+            Group {
+                if viewModel.estaCargando {
+                    ProgressView("Cargando catálogo de cursos...")
+                        .scaleEffect(1.2)
+                } else if let error = viewModel.mensajeError {
+                    VStack(spacing: 12) {
+                        Image(systemName: "exclamationmark.triangle.fill")
+                            .font(.system(size: 40))
+                            .foregroundColor(.orange)
+                        Text(error)
+                            .font(.subheadline)
+                            .multilineTextAlignment(.center)
+                        Button("Reintentar") {
+                            Task {
+                                await viewModel.cargarCursos()
+                            }
+                        }
+                        .buttonStyle(.borderedProminent)
+                    }
+                    .padding()
+                } else {
+                    List(viewModel.cursos) { curso in
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text(curso.title)
+                                .font(.headline)
+                                .fontWeight(.black)
+                            
+                            HStack {
+                                Text("Inversión: $\\(curso.price) USD")
+                                    .font(.subheadline)
+                                    .foregroundColor(.green)
+                                    .fontWeight(.bold)
+                                Spacer()
+                                Text("Inscrito")
+                                    .font(.caption2)
+                                    .padding(.horizontal, 6)
+                                    .padding(.vertical, 2)
+                                    .background(Color.green.opacity(0.2))
+                                    .foregroundColor(.green)
+                            }
+                        }
+                        .padding(.vertical, 4)
+                    }
+                }
+            }
+            .navigationTitle("OnCourses iOS ")
+            .task {
+                await viewModel.cargarCursos()
+            }
+        }
+    }
+}
+\`\`\`
+
+---
+
+#### 🏆 ¡Felicidades!
+Has completado con éxito el curso práctico de **Desarrollo iOS con Swift y SwiftUI desde Cero**. ¡Estás listo para construir tus propias aplicaciones nativas en el ecosistema Apple!`,
+            resources: ['https://developer.apple.com/tutorials/swiftui']
+          }
+        ]
+      }
+    ]
   }
 };
 
 // Aliases for seed lookup
 COURSE_SEED_DETAILS.sql = COURSE_SEED_DETAILS.postgresql;
+COURSE_SEED_DETAILS.ios = COURSE_SEED_DETAILS.swift;
 
 /**
  * Utility function to enrich any course from backend or fallback
@@ -611,7 +1261,9 @@ export function enrichCourseData(course: Course): Course {
   const slugLower = (course.slug || '').toLowerCase();
 
   let seedKey = 'python';
-  if (titleLower.includes('script') || titleLower.includes('js') || slugLower.includes('js')) {
+  if (titleLower.includes('swift') || titleLower.includes('ios') || titleLower.includes('apple') || slugLower.includes('swift') || slugLower.includes('ios') || course.id === 7) {
+    seedKey = 'swift';
+  } else if (titleLower.includes('script') || titleLower.includes('js') || slugLower.includes('js')) {
     seedKey = 'javascript';
   } else if (titleLower.includes('bash') || titleLower.includes('terminal') || slugLower.includes('terminal')) {
     seedKey = 'terminal';
@@ -628,7 +1280,7 @@ export function enrichCourseData(course: Course): Course {
     seedKey = 'postgresql';
   }
 
-  const seed = COURSE_SEED_DETAILS[seedKey] || COURSE_SEED_DETAILS.postgresql;
+  const seed = COURSE_SEED_DETAILS[seedKey] || COURSE_SEED_DETAILS.swift;
 
   // Prefer seed.modules if backend has fewer modules than seed (e.g. 1 module vs 3 modules)
   const sourceModules =
@@ -662,11 +1314,12 @@ export function getFallbackCourse(id: number): Course {
     4: 'Git & GitHub: Control de Versiones en Equipo',
     5: 'PostgreSQL: Optimización de Consultas y Modelado',
     6: 'Fundamento de Bases de Datos - SQL',
+    7: 'Desarrollo iOS con Swift y SwiftUI desde Cero',
   };
 
-  const title = titles[id] || `PostgreSQL: Optimización de Consultas y Modelado (Curso #${id})`;
-  const seedKey = id === 1 ? 'python' : 'postgresql';
-  const seed = COURSE_SEED_DETAILS[seedKey] || COURSE_SEED_DETAILS.postgresql;
+  const title = titles[id] || (id === 7 ? 'Desarrollo iOS con Swift y SwiftUI desde Cero' : `Curso #${id}: Desarrollo Móvil y Web`);
+  const seedKey = id === 1 ? 'python' : (id === 7 ? 'swift' : 'postgresql');
+  const seed = COURSE_SEED_DETAILS[seedKey] || COURSE_SEED_DETAILS.swift;
 
   return {
     id: id,
@@ -675,7 +1328,7 @@ export function getFallbackCourse(id: number): Course {
     price: id % 2 === 0 ? '19.99' : '9.99',
     cover_image: seed.cover_image,
     category: 1,
-    category_name: 'Bases de Datos & SQL',
+    category_name: 'Desarrollo Móvil & iOS',
     professor_name: 'Prof. Alex López',
     is_active: true,
     modules_count: seed.modules.length,
