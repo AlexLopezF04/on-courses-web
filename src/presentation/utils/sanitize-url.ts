@@ -18,14 +18,14 @@ export function sanitizeUrl(url?: string): string {
 
 /**
  * Convierte URLs de video en reproductores HTML5 directos (.mp4) o iFrames incrustados (YouTube/Vimeo).
- * Soporta archivos de video locales (/videos/leccion.mp4), CDN o enlaces directos.
+ * Usa la copia física local del video MP4 guardada en /videos/sql_lesson_1.mp4.
  */
 export function getEmbedVideoUrl(url?: string): { isEmbed: boolean; isDirectVideo: boolean; embedUrl: string } {
-  // Video HTML5 directo de alta definición (se reproduce nativamente con 1-clic y sin restricciones de iframe)
-  const FALLBACK_HTML5_VIDEO = 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4';
+  // Video MP4 local guardado físicamente en la carpeta public/videos/ del proyecto
+  const LOCAL_MP4_VIDEO = '/videos/sql_lesson_1.mp4';
 
   if (!url || !url.trim()) {
-    return { isEmbed: false, isDirectVideo: true, embedUrl: FALLBACK_HTML5_VIDEO };
+    return { isEmbed: false, isDirectVideo: true, embedUrl: LOCAL_MP4_VIDEO };
   }
 
   const trimmed = url.trim();
@@ -79,6 +79,6 @@ export function getEmbedVideoUrl(url?: string): { isEmbed: boolean; isDirectVide
     };
   }
 
-  // Default to native HTML5 direct video if URL is not a recognized YouTube/Vimeo embed
-  return { isEmbed: false, isDirectVideo: true, embedUrl: FALLBACK_HTML5_VIDEO };
+  // Default to local physical MP4 file for 100% reliable offline/online playback
+  return { isEmbed: false, isDirectVideo: true, embedUrl: LOCAL_MP4_VIDEO };
 }
