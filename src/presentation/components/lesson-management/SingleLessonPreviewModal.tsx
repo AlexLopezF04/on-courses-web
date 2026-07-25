@@ -2,7 +2,7 @@ import React from 'react';
 import { Lesson } from '@domain/entities/Lesson';
 import { X, Play, FileText, ArrowRight, BookOpen, Clock } from 'lucide-react';
 import { Button } from '../Button';
-import { sanitizeUrl } from '../../utils/sanitize-url';
+import { getEmbedVideoUrl } from '../../utils/sanitize-url';
 import { MarkdownRenderer } from '../MarkdownRenderer';
 
 interface SingleLessonPreviewModalProps {
@@ -76,40 +76,38 @@ export const SingleLessonPreviewModal: React.FC<SingleLessonPreviewModalProps> =
           </div>
 
           {/* Embedded Video (if present) */}
-          {lesson.video_url && (
-            <div className="border-2 border-slate-950 bg-slate-950 overflow-hidden shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00b835]">
-              <div className="bg-slate-900 px-4 py-2 text-xs font-mono font-bold text-[#00cc33] border-b border-slate-950 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Play className="h-4 w-4 fill-current" />
-                  <span>CLASE EN VIDEO · ONCOURSES PLAYER</span>
-                </div>
-                <span className="text-[10px] text-slate-400">HD 1080p</span>
-              </div>
-              <div className="relative aspect-video bg-black">
-                {lesson.video_url.includes('youtube') || lesson.video_url.includes('embed') ? (
-                  <iframe
-                    src={sanitizeUrl(lesson.video_url)}
-                    title={lesson.title}
-                    className="w-full h-full border-0"
-                    allowFullScreen
-                  />
-                ) : (
-                  <div className="flex flex-col items-center justify-center h-full p-6 text-center text-slate-300">
-                    <Play className="h-12 w-12 text-[#00cc33] mb-3" />
-                    <p className="text-sm font-bold">Video de la lección disponible</p>
-                    <a
-                      href={sanitizeUrl(lesson.video_url)}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="mt-2 text-xs text-[#00cc33] underline font-mono"
-                    >
-                      Abrir enlace de video ↗
-                    </a>
+          {lesson.video_url && (() => {
+            const { isDirectVideo, embedUrl } = getEmbedVideoUrl(lesson.video_url);
+            if (!embedUrl) return null;
+            return (
+              <div className="border-2 border-slate-950 bg-slate-950 overflow-hidden shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00b835]">
+                <div className="bg-slate-900 px-4 py-2 text-xs font-mono font-bold text-[#00cc33] border-b border-slate-950 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Play className="h-4 w-4 fill-current" />
+                    <span>CLASE EN VIDEO · ONCOURSES PLAYER</span>
                   </div>
-                )}
+                  <span className="text-[10px] text-slate-400">HD 1080p</span>
+                </div>
+                <div className="relative aspect-video bg-black flex items-center justify-center">
+                  {isDirectVideo ? (
+                    <video
+                      src={embedUrl}
+                      controls
+                      playsInline
+                      className="w-full h-full object-contain"
+                    />
+                  ) : (
+                    <iframe
+                      src={embedUrl}
+                      title={lesson.title}
+                      className="w-full h-full border-0"
+                      allowFullScreen
+                    />
+                  )}
+                </div>
               </div>
-            </div>
-          )}
+            );
+          })()}
 
           {/* Practical Manual / Content Text */}
           <div className="bg-white dark:bg-slate-950 border-2 border-slate-950 p-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00b835]">

@@ -341,14 +341,23 @@ export const LessonPlayerPage: React.FC = () => {
             {/* HTML5 Native Video / Embedded Video Player */}
             {(() => {
               const { isDirectVideo, embedUrl } = getEmbedVideoUrl(currentLesson.video_url);
+              if (!embedUrl) {
+                return (
+                  <div className="mb-8 p-6 border-2 border-slate-950 bg-slate-100 dark:bg-slate-900 text-center shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                    <Play className="h-10 w-10 text-slate-400 mx-auto mb-2" />
+                    <h4 className="font-extrabold text-sm text-slate-800 dark:text-slate-200">Video no asignado</h4>
+                    <p className="text-xs text-slate-500 mt-1">Esta lección no contiene un video asociado. Revisa el manual y guía teórica a continuación.</p>
+                  </div>
+                );
+              }
               return (
                 <div className="mb-8 overflow-hidden border-2 border-slate-950 bg-slate-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00b835]">
                   <div className="flex items-center justify-between px-4 py-2 bg-slate-900 border-b-2 border-slate-950 text-xs font-mono font-bold text-brand-400">
                     <div className="flex items-center gap-2">
                       <Play className="h-4 w-4 fill-current text-brand-400" />
-                      <span>REPRODUCTOR DE VIDEO HTML5 · ONCOURSES</span>
+                      <span>REPRODUCTOR DE VIDEO · ONCOURSES PLAYER</span>
                     </div>
-                    <span className="text-[10px] text-slate-400">REPRODUCCIÓN DIRECTA MP4 / HD</span>
+                    <span className="text-[10px] text-slate-400">HD 1080p</span>
                   </div>
                   <div className="relative aspect-video bg-black flex items-center justify-center">
                     {isDirectVideo ? (

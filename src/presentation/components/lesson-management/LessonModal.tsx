@@ -4,6 +4,7 @@ import { Input } from '../Input';
 import { Button } from '../Button';
 import { ShieldAlert, FileCode2, Terminal, BookOpen, Code2 } from 'lucide-react';
 import { MarkdownRenderer } from '../MarkdownRenderer';
+import { getEmbedVideoUrl } from '../../utils/sanitize-url';
 
 interface LessonModalProps {
   isOpen: boolean;
@@ -208,21 +209,34 @@ Consulta los enlaces oficiales para profundizar en los conceptos avanzados.`;
               </span>
             </div>
 
-            {videoUrl && (
-              <div className="border-2 border-slate-950 bg-black overflow-hidden shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-                <div className="bg-slate-900 px-3 py-1 text-[10px] font-mono text-emerald-400 border-b border-slate-800">
-                  ▶ VIDEO DE LA CLASE
+            {videoUrl && (() => {
+              const { isDirectVideo, embedUrl } = getEmbedVideoUrl(videoUrl);
+              if (!embedUrl) return null;
+              return (
+                <div className="border-2 border-slate-950 bg-black overflow-hidden shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                  <div className="bg-slate-900 px-3 py-1 text-[10px] font-mono text-emerald-400 border-b border-slate-800">
+                    ▶ VIDEO DE LA CLASE (PREVIEW)
+                  </div>
+                  <div className="aspect-video relative flex items-center justify-center">
+                    {isDirectVideo ? (
+                      <video
+                        src={embedUrl}
+                        controls
+                        playsInline
+                        className="w-full h-full object-contain"
+                      />
+                    ) : (
+                      <iframe
+                        src={embedUrl}
+                        title={title}
+                        className="w-full h-full border-0"
+                        allowFullScreen
+                      />
+                    )}
+                  </div>
                 </div>
-                <div className="aspect-video">
-                  <iframe
-                    src={videoUrl.replace('watch?v=', 'embed/')}
-                    title={title}
-                    className="w-full h-full border-0"
-                    allowFullScreen
-                  />
-                </div>
-              </div>
-            )}
+              );
+            })()}
 
             <article className="prose dark:prose-invert max-w-none text-xs sm:text-sm">
               {content ? (

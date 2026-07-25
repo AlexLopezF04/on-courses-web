@@ -17,15 +17,12 @@ export function sanitizeUrl(url?: string): string {
 }
 
 /**
- * Convierte URLs de video en reproductores HTML5 directos (.mp4) o iFrames incrustados (YouTube/Vimeo).
- * Usa la copia física local del video MP4 guardada en /videos/sql_lesson_1.mp4.
+ * Normaliza cualquier formato de URL de video (YouTube watch?v=, youtu.be/, Vimeo, MP4 directo o /videos/ local)
+ * a una URL de incrustación (embed) válida y segura. Si no hay URL o es inválida, retorna embedUrl como cadena vacía.
  */
 export function getEmbedVideoUrl(url?: string): { isEmbed: boolean; isDirectVideo: boolean; embedUrl: string } {
-  // Video MP4 local guardado físicamente en la carpeta public/videos/ del proyecto
-  const LOCAL_MP4_VIDEO = '/videos/sql_lesson_1.mp4';
-
   if (!url || !url.trim()) {
-    return { isEmbed: false, isDirectVideo: true, embedUrl: LOCAL_MP4_VIDEO };
+    return { isEmbed: false, isDirectVideo: false, embedUrl: '' };
   }
 
   const trimmed = url.trim();
@@ -79,6 +76,15 @@ export function getEmbedVideoUrl(url?: string): { isEmbed: boolean; isDirectVide
     };
   }
 
-  // Default to local physical MP4 file for 100% reliable offline/online playback
-  return { isEmbed: false, isDirectVideo: true, embedUrl: LOCAL_MP4_VIDEO };
+  // If it's a general HTTP(S) URL that starts with youtube/vimeo domain
+  if (/^https?:\/\/(www\.)?(youtube\.com|vimeo\.com)\//i.test(trimmed)) {
+    return {
+      isEmbed: true,
+      isDirectVideo: false,
+      embedUrl: sanitizeUrl(trimmed),
+    };
+  }
+
+  // Fallback final: si no se reconoce el patrón, no inventar ni forzar video
+  return { isEmbed: false, isDirectVideo: false, embedUrl: '' };
 }

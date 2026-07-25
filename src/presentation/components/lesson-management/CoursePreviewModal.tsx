@@ -4,6 +4,7 @@ import { Module } from '@domain/entities/Module';
 import { Lesson } from '@domain/entities/Lesson';
 import { X, Play, BookOpen, Clock, Award } from 'lucide-react';
 import { Button } from '../Button';
+import { getEmbedVideoUrl } from '../../utils/sanitize-url';
 
 interface CoursePreviewModalProps {
   isOpen: boolean;
@@ -30,17 +31,6 @@ export const CoursePreviewModal: React.FC<CoursePreviewModalProps> = ({
   if (!isOpen || !course) return null;
 
   const currentLesson = lessons.find((l) => l.id === selectedLessonId) || lessons[0];
-
-  const sanitizeUrl = (url?: string) => {
-    if (!url) return '';
-    if (url.includes('youtube.com/watch?v=')) {
-      return url.replace('watch?v=', 'embed/');
-    }
-    if (url.includes('youtu.be/')) {
-      return url.replace('youtu.be/', 'youtube.com/embed/');
-    }
-    return url;
-  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-6 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200 overflow-y-auto">
@@ -227,21 +217,34 @@ export const CoursePreviewModal: React.FC<CoursePreviewModalProps> = ({
                   </div>
 
                   {/* Video Player Preview if present */}
-                  {currentLesson.video_url && (
-                    <div className="border-2 border-slate-950 bg-black overflow-hidden shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00b835]">
-                      <div className="bg-slate-900 px-3 py-1 text-[10px] font-mono text-emerald-400 border-b border-slate-800">
-                        ▶ VIDEO DE LA CLASE
+                  {currentLesson.video_url && (() => {
+                    const { isDirectVideo, embedUrl } = getEmbedVideoUrl(currentLesson.video_url);
+                    if (!embedUrl) return null;
+                    return (
+                      <div className="border-2 border-slate-950 bg-black overflow-hidden shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00b835]">
+                        <div className="bg-slate-900 px-3 py-1 text-[10px] font-mono text-emerald-400 border-b border-slate-800">
+                          ▶ VIDEO DE LA CLASE
+                        </div>
+                        <div className="aspect-video relative flex items-center justify-center">
+                          {isDirectVideo ? (
+                            <video
+                              src={embedUrl}
+                              controls
+                              playsInline
+                              className="w-full h-full object-contain"
+                            />
+                          ) : (
+                            <iframe
+                              src={embedUrl}
+                              title={currentLesson.title}
+                              className="w-full h-full border-0"
+                              allowFullScreen
+                            />
+                          )}
+                        </div>
                       </div>
-                      <div className="aspect-video">
-                        <iframe
-                          src={sanitizeUrl(currentLesson.video_url)}
-                          title={currentLesson.title}
-                          className="w-full h-full border-0"
-                          allowFullScreen
-                        />
-                      </div>
-                    </div>
-                  )}
+                    );
+                  })()}
 
                   {/* Step-by-Step Manual & Code Block Render */}
                   <article className="prose dark:prose-invert max-w-none space-y-4 text-xs sm:text-sm">
