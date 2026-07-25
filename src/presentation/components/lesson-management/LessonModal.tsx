@@ -52,9 +52,18 @@ export const LessonModal: React.FC<LessonModalProps> = ({
 
   if (!isOpen) return null;
 
-  const insertTemplate = (type: 'manual' | 'code' | 'theory' | 'sublesson') => {
+  const insertTemplate = (type: 'manual' | 'code' | 'theory' | 'sublesson' | 'table') => {
     let templateText = '';
-    if (type === 'sublesson') {
+    if (type === 'table') {
+      templateText = `### 📊 Tabla Comparativa de Conceptos
+
+| Comando / Palabra Clave | Descripción del Funcionamiento | Ejemplo de Uso |
+| --- | --- | --- |
+| \`SELECT\` | Recupera columnas específicas de una o más tablas | \`SELECT * FROM usuarios;\` |
+| \`WHERE\` | Filtra registros que cumplen una condición lógica | \`WHERE edad >= 18\` |
+| \`JOIN\` | Combina filas de dos o más tablas basándose en una clave | \`INNER JOIN pedidos ON ...\` |
+| \`GROUP BY\` | Agrupa filas con los mismos valores para agregación | \`GROUP BY categoria_id\` |`;
+    } else if (type === 'sublesson') {
       templateText = `#### 📌 Sub-lección 1.1: Titulo del Sub-paso Específico
 Explicación detallada de esta sub-lección secundaria dentro del tema.
 
@@ -342,6 +351,13 @@ Consulta los enlaces oficiales para profundizar en los conceptos avanzados.`;
                 >
                   <BookOpen className="h-3.5 w-3.5 text-blue-600" />
                   <span>📖 Guía Teórica</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => insertTemplate('table')}
+                  className="inline-flex items-center gap-1 px-2 py-1 bg-white dark:bg-slate-900 border border-slate-950 text-[11px] font-bold text-slate-950 dark:text-white hover:bg-[#00cc33] hover:text-slate-950 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] cursor-pointer"
+                >
+                  <span>📊 Tabla Markdown</span>
                 </button>
               </div>
 

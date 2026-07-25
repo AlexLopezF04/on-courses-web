@@ -25,10 +25,11 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content }) =
           return <CodeBlockWithCopy key={index} code={code} language={lang} />;
         }
 
-        // Even index: regular Markdown text paragraphs, headers, lists, quotes
+        // Regular Markdown text processing
         const lines = block.split('\n');
         const elements: React.ReactNode[] = [];
         let currentList: { type: 'ul' | 'ol'; items: string[] } | null = null;
+        let currentTable: { headers: string[]; rows: string[][] } | null = null;
 
         const flushList = () => {
           if (currentList) {
@@ -53,13 +54,75 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content }) =
           }
         };
 
+        const flushTable = () => {
+          if (currentTable && currentTable.headers.length > 0) {
+            elements.push(
+              <div key={`table-${elements.length}`} className="my-6 overflow-x-auto border-2 border-slate-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00b835]">
+                <table className="w-full text-left border-collapse font-sans text-xs">
+                  <thead>
+                    <tr className="bg-slate-950 text-[#00ff41] border-b-2 border-slate-950 font-mono text-[11px] font-bold uppercase tracking-wider">
+                      {currentTable.headers.map((h, hIdx) => (
+                        <th key={hIdx} className="py-3 px-4 border-r border-slate-800 last:border-r-0">
+                          {formatInlineMarkdown(h)}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y border-t border-slate-950 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-medium">
+                    {currentTable.rows.map((r, rIdx) => (
+                      <tr key={rIdx} className="hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">
+                        {r.map((c, cIdx) => (
+                          <td key={cIdx} className="py-2.5 px-4 border-r border-slate-200 dark:border-slate-800 last:border-r-0">
+                            {formatInlineMarkdown(c)}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            );
+            currentTable = null;
+          }
+        };
+
+        const flushAll = () => {
+          flushList();
+          flushTable();
+        };
+
         lines.forEach((line, lineIdx) => {
           const trimmed = line.trim();
 
           if (!trimmed) {
-            flushList();
+            flushAll();
             return;
           }
+
+          // Markdown Table Row Detection
+          if (trimmed.startsWith('|') && trimmed.endsWith('|')) {
+            flushList(); // Table ends any list
+            const cells = trimmed
+              .split('|')
+              .slice(1, -1)
+              .map((c) => c.trim());
+
+            // Skip delimiter lines like | --- | --- |
+            const isDelimiter = cells.every((c) => /^:?-+:?$/.test(c));
+            if (isDelimiter) {
+              return;
+            }
+
+            if (!currentTable) {
+              currentTable = { headers: cells, rows: [] };
+            } else {
+              currentTable.rows.push(cells);
+            }
+            return;
+          }
+
+          // Non-table line flushes table
+          flushTable();
 
           // Unordered List (- or *)
           if (/^[-*]\s+/.test(trimmed)) {
@@ -149,7 +212,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content }) =
           );
         });
 
-        flushList();
+        flushAll();
 
         return <React.Fragment key={index}>{elements}</React.Fragment>;
       })}
@@ -157,6 +220,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content }) =
   );
 };
 
+// Inline Markdown parser for Bold, Italic, Inline Code and Links
 function formatInlineMarkdown(text: string): React.ReactNode {
   if (!text) return null;
 
@@ -172,26 +236,71 @@ function formatInlineMarkdown(text: string): React.ReactNode {
       );
     }
 
-    // Process bold **text** and italic *text*
-    const boldParts = part.split(/(\*\*[^*]+\*\*)/g);
+    // Process links [Label](url)
+    const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+    const linkMatches: Array<{ label: string; url: string; index: number; length: number }> = [];
+    let match;
 
-    return (
-      <React.Fragment key={i}>
-        {boldParts.map((bPart, j) => {
-          if (bPart.startsWith('**') && bPart.endsWith('**')) {
-            return <strong key={j} className="font-extrabold text-slate-950 dark:text-white">{bPart.slice(2, -2)}</strong>;
-          }
+    while ((match = linkRegex.exec(part)) !== null) {
+      linkMatches.push({
+        label: match[1],
+        url: match[2],
+        index: match.index,
+        length: match[0].length,
+      });
+    }
 
-          const italicParts = bPart.split(/(\*[^*]+\*)/g);
+    if (linkMatches.length > 0) {
+      const linkElements: React.ReactNode[] = [];
+      let lastIdx = 0;
 
-          return italicParts.map((iPart, k) => {
-            if (iPart.startsWith('*') && iPart.endsWith('*')) {
-              return <em key={k} className="italic text-slate-900 dark:text-slate-100">{iPart.slice(1, -1)}</em>;
-            }
-            return iPart;
-          });
-        })}
-      </React.Fragment>
-    );
+      linkMatches.forEach((m, mIdx) => {
+        if (m.index > lastIdx) {
+          linkElements.push(formatBoldItalics(part.substring(lastIdx, m.index), `${i}-${mIdx}-pre`));
+        }
+        linkElements.push(
+          <a
+            key={`${i}-${mIdx}-link`}
+            href={m.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#00cc33] dark:text-[#00ff41] font-bold underline hover:text-brand-500 transition-colors inline-flex items-center gap-0.5"
+          >
+            <span>{m.label}</span>
+            <span className="text-[10px]">↗</span>
+          </a>
+        );
+        lastIdx = m.index + m.length;
+      });
+
+      if (lastIdx < part.length) {
+        linkElements.push(formatBoldItalics(part.substring(lastIdx), `${i}-post`));
+      }
+
+      return <React.Fragment key={i}>{linkElements}</React.Fragment>;
+    }
+
+    return <React.Fragment key={i}>{formatBoldItalics(part, `${i}`)}</React.Fragment>;
+  });
+}
+
+function formatBoldItalics(text: string, keyPrefix: string): React.ReactNode {
+  if (!text) return null;
+
+  const boldParts = text.split(/(\*\*[^*]+\*\*)/g);
+
+  return boldParts.map((bPart, j) => {
+    if (bPart.startsWith('**') && bPart.endsWith('**')) {
+      return <strong key={`${keyPrefix}-b-${j}`} className="font-extrabold text-slate-950 dark:text-white">{bPart.slice(2, -2)}</strong>;
+    }
+
+    const italicParts = bPart.split(/(\*[^*]+\*)/g);
+
+    return italicParts.map((iPart, k) => {
+      if (iPart.startsWith('*') && iPart.endsWith('*')) {
+        return <em key={`${keyPrefix}-i-${j}-${k}`} className="italic text-slate-900 dark:text-slate-100">{iPart.slice(1, -1)}</em>;
+      }
+      return iPart;
+    });
   });
 }
