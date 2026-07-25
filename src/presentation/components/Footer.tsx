@@ -120,8 +120,8 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Giant Brand Banner with Green Retro Shadow Offset & Theme Toggle Support */}
-        <div className="group relative mt-16 py-10 px-4 border-2 border-slate-950 bg-white dark:bg-slate-950 text-slate-950 dark:text-white shadow-[6px_6px_0px_0px_#00b835] overflow-hidden flex items-center justify-center select-none transition-all duration-300 hover:translate-x-[-3px] hover:translate-y-[-3px] hover:shadow-[10px_10px_0px_0px_#00b835] cursor-pointer">
+        {/* Giant Brand Banner with Soft Mint Green Retro Shadow Offset & Theme Toggle Support */}
+        <div className="group relative mt-16 py-10 px-4 border-2 border-slate-950 bg-white dark:bg-slate-950 text-slate-950 dark:text-white shadow-[6px_6px_0px_0px_#86efac] dark:shadow-[6px_6px_0px_0px_#7effa0] overflow-hidden flex items-center justify-center select-none transition-all duration-300 hover:translate-x-[-3px] hover:translate-y-[-3px] hover:shadow-[10px_10px_0px_0px_#86efac] dark:hover:shadow-[10px_10px_0px_0px_#7effa0] cursor-pointer">
           {/* Light mode grid */}
           <div className="block dark:hidden animate-grid transition-none absolute inset-0 bg-[linear-gradient(rgba(0,200,50,0.18)_1px,transparent_1px),linear-gradient(90deg,rgba(0,200,50,0.12)_1px,transparent_1px)] bg-[size:36px_36px] pointer-events-none" />
 
