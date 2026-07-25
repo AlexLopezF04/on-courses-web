@@ -7,7 +7,7 @@ import { enrichCourseData, getFallbackCourse, getCanonicalCourseId } from '../da
 
 export class AxiosCourseRepository implements ICourseRepository {
   async getCourses(filters?: any): Promise<PaginatedResult<Course>> {
-    // Strictly IDs 1 through 10
+    // Master list of canonical seed course IDs strictly 1..10
     const seedCatalogIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
     try {
@@ -21,28 +21,31 @@ export class AxiosCourseRepository implements ICourseRepository {
 
       const enrichedBackend = rawResults.map(enrichCourseData);
 
-      // Master catalog map keyed by canonical IDs 1..10
+      // Master catalog map keyed strictly by 1..10
       const masterCoursesMap = new Map<number, Course>();
 
-      // 1. Populate all seed topics 1..10
+      // 1. Populate seed catalog 1..10 in canonical order
       for (const id of seedCatalogIds) {
         masterCoursesMap.set(id, getFallbackCourse(id));
       }
 
-      // 2. Insert/Enrich backend courses mapped to canonical ID 1..10
+      // 2. Safely merge backend courses IF they match the canonical topic
       for (const bCourse of enrichedBackend) {
         const canonicalId = getCanonicalCourseId(bCourse);
-        const fallback = getFallbackCourse(canonicalId);
-        const fallbackModLen = fallback.modules?.length || 0;
-        const bModLen = bCourse.modules?.length || 0;
+        if (canonicalId >= 1 && canonicalId <= 10) {
+          const fallback = getFallbackCourse(canonicalId);
+          const fallbackModLen = fallback.modules?.length || 0;
+          const bModLen = bCourse.modules?.length || 0;
 
-        const merged: Course = {
-          ...bCourse,
-          id: canonicalId,
-          title: fallback.title,
-          modules: bModLen >= fallbackModLen ? bCourse.modules : fallback.modules,
-        };
-        masterCoursesMap.set(canonicalId, merged);
+          const merged: Course = {
+            ...fallback,
+            ...bCourse,
+            id: canonicalId,
+            title: fallback.title, // Enforce clean canonical title
+            modules: bModLen >= fallbackModLen ? bCourse.modules : fallback.modules,
+          };
+          masterCoursesMap.set(canonicalId, merged);
+        }
       }
 
       let allCourses = Array.from(masterCoursesMap.values());
@@ -87,26 +90,32 @@ export class AxiosCourseRepository implements ICourseRepository {
   }
 
   async getCourseById(id: number): Promise<Course> {
-    const canonicalId = getCanonicalCourseId({ id, title: '' });
-    const targetId = canonicalId > 0 && canonicalId <= 10 ? canonicalId : id;
+    const targetId = id >= 1 && id <= 10 ? id : 1;
+    const fallback = getFallbackCourse(targetId);
+
     try {
       const response = await axiosClient.get(`/courses/${targetId}/`);
       const enriched = enrichCourseData(response.data);
-      const fallback = getFallbackCourse(targetId);
       const enrichedModLen = enriched.modules?.length || 0;
       const fallbackModLen = fallback.modules?.length || 0;
 
-      if (enrichedModLen >= fallbackModLen) {
-        return { ...enriched, id: targetId };
+      // Verify if backend course title matches the canonical topic for targetId
+      const targetTopicKeyword = fallback.title.split(' ')[0].toLowerCase();
+      const backendTitleLower = (enriched.title || '').toLowerCase();
+
+      if (backendTitleLower.includes(targetTopicKeyword)) {
+        return {
+          ...enriched,
+          id: targetId,
+          title: fallback.title,
+          modules: enrichedModLen >= fallbackModLen ? enriched.modules : fallback.modules,
+        };
       }
-      return {
-        ...enriched,
-        id: targetId,
-        modules: fallback.modules,
-      };
+      // If backend returned a different course topic at this ID, return canonical fallback
+      return fallback;
     } catch (error) {
-      console.warn(`Backend failed for course ${targetId}, using fallback seed data`, error);
-      return getFallbackCourse(targetId);
+      console.warn(`Backend failed for course ${targetId}, using canonical fallback seed data`, error);
+      return fallback;
     }
   }
 
