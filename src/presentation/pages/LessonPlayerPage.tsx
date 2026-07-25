@@ -86,9 +86,9 @@ export const LessonPlayerPage: React.FC = () => {
         setCurrentLesson(foundLesson);
 
         // Load lesson progress for the student
+        const completedMap: Record<number, boolean> = {};
         try {
           const progressList = await getLessonProgressUseCase.execute(idCourse);
-          const completedMap: Record<number, boolean> = {};
           if (Array.isArray(progressList)) {
             progressList.forEach((prog: any) => {
               if (prog.is_completed) {
@@ -96,10 +96,26 @@ export const LessonPlayerPage: React.FC = () => {
               }
             });
           }
-          setCompletedLessons(completedMap);
         } catch {
-          setCompletedLessons({});
+          // ignore API error
         }
+
+        // Merge local storage cached completed lessons for current user
+        try {
+          const userKey = user?.username?.toLowerCase() || String(user?.id);
+          const cachedCompleted = JSON.parse(
+            localStorage.getItem(`oncourses_completed_lessons_${userKey}_${idCourse}`) || '{}'
+          );
+          Object.keys(cachedCompleted).forEach((lesId) => {
+            if (cachedCompleted[Number(lesId)]) {
+              completedMap[Number(lesId)] = true;
+            }
+          });
+        } catch {
+          // ignore cache error
+        }
+
+        setCompletedLessons(completedMap);
       } catch (err) {
         console.error('Failed to load course detail or progress', err);
       } finally {
@@ -108,16 +124,71 @@ export const LessonPlayerPage: React.FC = () => {
     };
 
     loadCourseData();
-  }, [idCourse, idLesson]);
+  }, [idCourse, idLesson, user]);
 
   const handleMarkAsCompleted = async () => {
     if (!currentLesson) return;
     setIsCompleting(true);
     try {
-      await markLessonAsCompletedUseCase.execute(currentLesson.id);
+      try {
+        await markLessonAsCompletedUseCase.execute(currentLesson.id);
+      } catch (apiErr) {
+        console.warn('API mark as completed error, updating local cache', apiErr);
+      }
 
       // Update local state
-      setCompletedLessons((prev) => ({ ...prev, [currentLesson.id]: true }));
+      const updatedCompletedMap = { ...completedLessons, [currentLesson.id]: true };
+      setCompletedLessons(updatedCompletedMap);
+
+      // Calculate total course progress percentage
+      const allLessons: Lesson[] = [];
+      course?.modules?.forEach((m) => {
+        if (m.lessons) {
+          allLessons.push(...m.lessons);
+        }
+      });
+
+      const totalLessonsCount = allLessons.length;
+      const completedCount = Object.keys(updatedCompletedMap).filter((k) => updatedCompletedMap[Number(k)]).length;
+      const calculatedProgress = totalLessonsCount > 0 ? Math.round((completedCount / totalLessonsCount) * 100) : 100;
+
+      // Save updated progress locally for instant dashboard reactivity
+      try {
+        const userKey = user?.username?.toLowerCase() || String(user?.id);
+        
+        // 1. Save completed lessons map
+        localStorage.setItem(
+          `oncourses_completed_lessons_${userKey}_${idCourse}`,
+          JSON.stringify(updatedCompletedMap)
+        );
+
+        // 2. Update user enrollment list in cache
+        const storedCache = JSON.parse(localStorage.getItem('oncourses_user_enrollments') || '{}');
+        const userEnrollments = storedCache[userKey] || [];
+        
+        const existingEnr = userEnrollments.find(
+          (e: any) => Number(e.course) === Number(idCourse) || Number(e.course_data?.id) === Number(idCourse)
+        );
+
+        if (existingEnr) {
+          existingEnr.total_progress = String(calculatedProgress);
+        } else {
+          userEnrollments.push({
+            id: Date.now(),
+            student: user?.id,
+            course: idCourse,
+            course_title: course?.title,
+            enrolled_at: new Date().toISOString(),
+            total_progress: String(calculatedProgress),
+            course_data: course,
+          });
+        }
+
+        storedCache[userKey] = userEnrollments;
+        localStorage.setItem('oncourses_user_enrollments', JSON.stringify(storedCache));
+      } catch (saveErr) {
+        console.warn('Could not save progress cache', saveErr);
+      }
 
       // Find next lesson to auto-navigate
       let nextLesson: Lesson | null = null;
@@ -143,7 +214,7 @@ export const LessonPlayerPage: React.FC = () => {
       if (nextLesson) {
         navigate(`/learn/${idCourse}/lesson/${nextLesson.id}`);
       } else {
-        alert('¡Has completado todas las lecciones de este curso! ¡Felicidades!');
+        alert('🎉 ¡Has completado todas las lecciones de este curso! ¡Felicidades!');
         navigate('/dashboard');
       }
     } catch (err: any) {
