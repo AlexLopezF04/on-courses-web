@@ -9,7 +9,7 @@ import { LessonsList } from '../components/lesson-management/LessonsList';
 import { LessonModal } from '../components/lesson-management/LessonModal';
 import { SingleLessonPreviewModal } from '../components/lesson-management/SingleLessonPreviewModal';
 import { ConfirmModal } from '../components/ConfirmModal';
-import { ArrowLeft, Plus, CheckCircle, Eye } from 'lucide-react';
+import { ArrowLeft, Plus, CheckCircle, Eye, Zap } from 'lucide-react';
 import { Loader } from '../components/Loader';
 import { Lesson } from '@domain/entities/Lesson';
 
@@ -86,17 +86,31 @@ export const LessonManagementPage: React.FC = () => {
             </h1>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2 shrink-0">
+          <div className="flex flex-wrap items-center gap-2.5 shrink-0">
+            {/* Template Generator Action */}
             <button
               type="button"
               onClick={handleSeedSQLCourseStructure}
-              className="px-3.5 py-2 bg-amber-400 hover:bg-amber-300 text-slate-950 font-mono font-black text-xs uppercase tracking-wider border-2 border-slate-950 shadow-[2.5px_2.5px_0px_0px_rgba(0,0,0,1)] transition-all cursor-pointer flex items-center gap-1.5"
+              className="px-3.5 py-2 bg-amber-400 hover:bg-amber-300 text-slate-950 font-sans font-bold text-xs uppercase tracking-wider border-2 border-slate-950 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all cursor-pointer inline-flex items-center gap-1.5"
               title="Generar automáticamente los 6 Módulos y 42 Temas Teóricos de SQL"
             >
-              <span>⚡ Cargar Temario Estándar SQL (6 Módulos / 42 Temas)</span>
+              <Zap className="h-4 w-4 text-slate-950 fill-slate-950" />
+              <span>Cargar Temario SQL (42 Temas)</span>
             </button>
-            <Button
-              variant="outline"
+
+            {/* Student View Action */}
+            <button
+              type="button"
+              onClick={() => navigate(`/courses/${courseId}`)}
+              className="px-3.5 py-2 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-950 dark:text-white font-sans font-bold text-xs uppercase tracking-wider border-2 border-slate-950 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_#00b835] hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all cursor-pointer inline-flex items-center gap-1.5"
+            >
+              <Eye className="h-4 w-4 text-emerald-500" />
+              <span>Vista Previa Estudiante</span>
+            </button>
+
+            {/* Module Addition Action */}
+            <button
+              type="button"
               onClick={() => {
                 if (showModuleForm) {
                   setShowModuleForm(false);
@@ -104,21 +118,26 @@ export const LessonManagementPage: React.FC = () => {
                   handleOpenCreateModule();
                 }
               }}
+              className="px-3.5 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-950 dark:text-white font-sans font-bold text-xs uppercase tracking-wider border-2 border-slate-950 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all cursor-pointer inline-flex items-center gap-1.5"
             >
-              + Nueva Sección (Módulo)
-            </Button>
-            <Button
-              onClick={() => navigate(`/courses/${courseId}`)}
-              variant="secondary"
-              className="flex items-center gap-1.5"
+              <Plus className="h-4 w-4" />
+              <span>Nueva Sección (Módulo)</span>
+            </button>
+
+            {/* Primary Lesson Creation Action */}
+            <button
+              type="button"
+              onClick={handleOpenCreateLesson}
+              disabled={modules.length === 0}
+              className={`px-4 py-2 font-sans font-black text-xs uppercase tracking-wider border-2 border-slate-950 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00b835] transition-all inline-flex items-center gap-2 ${
+                modules.length === 0
+                  ? 'bg-slate-200 text-slate-400 border-slate-400 cursor-not-allowed opacity-60'
+                  : 'bg-[#00cc33] hover:bg-[#00ff41] text-slate-950 hover:translate-x-[-1px] hover:translate-y-[-1px] cursor-pointer'
+              }`}
             >
-              <Eye className="h-4 w-4" />
-              <span>👁️ Vista Previa Estudiante</span>
-            </Button>
-            <Button onClick={handleOpenCreateLesson} disabled={modules.length === 0} className="flex items-center gap-2">
-              <Plus className="h-5 w-5" />
-              Crear Nuevo Tema
-            </Button>
+              <Plus className="h-4.5 w-4.5" />
+              <span>Crear Nuevo Tema</span>
+            </button>
           </div>
         </div>
       </div>
