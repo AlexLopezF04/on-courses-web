@@ -1916,7 +1916,7 @@ Dart 3 introdujo nuevos modificadores de clase para mejorar la seguridad del dis
 // Definición de un Mixin para añadir capacidad de loggeo
 mixin LoggerMixin {
   void log(String mensaje) {
-    print('[LOG \\\${DateTime.now()}]: $mensaje');
+    print('[LOG \${DateTime.now()}]: $mensaje');
   }
 }
 
@@ -2096,6 +2096,282 @@ Has completado con éxito el curso práctico de **Flutter 3.24 & Dart desde Cero
         ]
       }
     ]
+  },
+
+  // Course 4: Go (Golang): APIs REST de Alta Concurrencia y Microservicios (COMPLETO 100%)
+  golang: {
+    cover_image: 'https://images.unsplash.com/photo-1618401471353-b98aedd04e11?q=80&w=1200&auto=format&fit=crop',
+    description: 'Manual de estudio profesional en el lenguaje Go (Golang 1.23+). Domina la sintaxis limpia de Go, concurrencia masiva con Goroutines y Canales, desarrollo de APIs REST de alta velocidad con Gin Framework, interacción con PostgreSQL mediante GORM, arquitectura limpia (Clean Architecture), microservicios con gRPC y Protocol Buffers.',
+    modules: [
+      {
+        id: 901,
+        course: 9,
+        order: 1,
+        title: 'Módulo 1: Fundamentos de Go (Golang 1.23+), Rutinas de Go (Goroutines) y Canales',
+        description: 'Sintaxis del lenguaje Go, punteros, estructuras, interfaces implícitas, concurrencia ligera y manejo explícito de errores.',
+        lessons: [
+          {
+            id: 9001,
+            module: 901,
+            order: 1,
+            title: 'Lección 1.1: Sintaxis Básica de Go, Tipos Primarios, Punteros y Estructuras (Structs)',
+            duration_seconds: 900,
+            content_text: `### 🐹 Manual Teórico-Práctico: Sintaxis de Go 1.23, Punteros y Structs
+
+Bienvenido a la primera guía de estudio del curso de **Go (Golang): APIs REST de Alta Concurrencia**. En este tema aprenderás la filosofía de simplicidad de Go, la inferencia de tipos, punteros y estructuras de datos.
+
+---
+
+#### 1. Inferencia de Tipo y Punteros en Go
+
+En Go, las variables se declaran con \`var\` o con el operador abreviado \`:=\`.
+
+\`\`\`go
+package main
+
+import "fmt"
+
+type CursoGo struct {
+	ID     int
+	Titulo string
+	Precio float64
+}
+
+// Método con receptor de puntero (modifica la instancia original)
+func (c *CursoGo) AplicarDescuento(porcentaje float64) {
+	c.Precio -= c.Precio * (porcentaje / 100)
+}
+
+func main() {
+	curso := CursoGo{ID: 9, Titulo: "Go Microservices", Precio: 19.99}
+	curso.AplicarDescuento(15.0)
+
+	fmt.Printf("Curso: %s | Precio con descuento: $%.2f USD\n", curso.Titulo, curso.Precio)
+}
+\`\`\`
+
+---
+
+#### 💡 Resumen de Conceptos Clave en Go
+
+| Concepto | Sintaxis | Descripción de Funcionamiento |
+| --- | --- | --- |
+| Inferencia | \`nombre := "Alex"\` | Declara e inicializa la variable infiriendo su tipo. |
+| Puntero | \`var p *int = &edad\` | Almacena la dirección de memoria de otra variable. |
+| Receptor | \`func (c *Curso) ...\` | Asocia una función como método de un \`struct\`. |
+| Exportación | \`type Usuario struct\` | Los nombres en mayúscula son públicos (exportados). |`,
+            resources: ['https://go.dev/doc/tutorial/getting-started']
+          },
+          {
+            id: 9002,
+            module: 901,
+            order: 2,
+            title: 'Lección 1.2: Concurrencia Nativa con Goroutines y Canales (channels, select, WaitGroup)',
+            duration_seconds: 1050,
+            content_text: `### ⚡ Manual de Estudio: Concurrencia Masiva con Goroutines y Canales
+
+Go fue diseñado en Google específicamente para aprovechar procesadores multinúcleo mediante **Goroutines** (hilos ligeros administrados por el runtime de Go que consumen solo 2KB de memoria inicial).
+
+---
+
+#### 1. Ejemplo de Goroutines y sync.WaitGroup
+
+\`\`\`go
+package main
+
+import (
+	"fmt"
+	"sync"
+	"time"
+)
+
+func procesarLeccion(id int, wg *sync.WaitGroup) {
+	defer wg.Done() // Notificar al WaitGroup que esta goroutine finalizó
+	fmt.Printf("Iniciando procesamiento de lección #%d...\n", id)
+	time.Sleep(100 * time.Millisecond)
+	fmt.Printf("Lección #%d procesada con éxito.\n", id)
+}
+
+func main() {
+	var wg sync.WaitGroup
+
+	for i := 1; i <= 5; i++ {
+		wg.Add(1)
+		go procesarLeccion(i, &wg) // Ejecutar en segundo plano de forma concurrente
+	}
+
+	wg.Wait() // Esperar a que las 5 goroutines terminen
+	fmt.Println("¡Todas las lecciones han sido procesadas!")
+}
+\`\`\``,
+            resources: ['https://go.dev/tour/concurrency/1']
+          },
+          {
+            id: 9003,
+            module: 901,
+            order: 3,
+            title: 'Lección 1.3: Manejo Estricto de Errores e Idiomas de Go (error, defer, panic, recover)',
+            duration_seconds: 960,
+            content_text: `### 🛡️ Manual Práctico: Control Explícito de Errores y Defer en Go
+
+Go rechaza las excepciones mágicas (\`try-catch\`) en favor de retornos explícitos de errores como valores ordinarios (\`if err != nil\`).
+
+\`\`\`go
+package main
+
+import (
+	"errors"
+	"fmt"
+)
+
+func dividir(a, b float64) (float64, error) {
+	if b == 0 {
+		return 0, errors.New("error: división para cero no permitida")
+	}
+	return a / b, nil
+}
+
+func main() {
+	resultado, err := dividir(10, 0)
+	if err != nil {
+		fmt.Println("Ocurrió un error:", err)
+		return
+	}
+	fmt.Println("Resultado:", resultado)
+}
+\`\`\``,
+            resources: ['https://go.dev/blog/error-handling-and-go']
+          }
+        ]
+      },
+      {
+        id: 902,
+        course: 9,
+        order: 2,
+        title: 'Módulo 2: Desarrollo de APIs REST con Gin Framework y PostgreSQL (GORM)',
+        description: 'Construcción de endpoints RESTful ultra rápidos con Gin, ORM con GORM y autenticación JWT.',
+        lessons: [
+          {
+            id: 9004,
+            module: 902,
+            order: 1,
+            title: 'Lección 2.1: Enrutamiento y Middleware con Gin Framework (gin-gonic/gin)',
+            duration_seconds: 1100,
+            content_text: `### 🚀 Manual Avanzado: APIs REST de Alta Velocidad con Gin Framework
+
+**Gin** es el framework web HTTP más popular en Go por su enrutador basado en Radix Tree de ultra alto rendimiento.
+
+---
+
+#### 1. Servidor HTTP REST en Go con Gin
+
+\`\`\`go
+package main
+
+import (
+	"net/http"
+	"github.com/gin-gonic/gin"
+)
+
+type CursoResponse struct {
+	ID     int     \`json:"id"\`
+	Titulo string  \`json:"titulo"\`
+	Precio float64 \`json:"precio"\`
+}
+
+func main() {
+	r := gin.Default()
+
+	// Endpoint GET /api/v1/cursos
+	r.GET("/api/v1/cursos", func(c *gin.Context) {
+		cursos := []CursoResponse{
+			{ID: 1, Titulo: "Go Microservices", Precio: 19.99},
+			{ID: 2, Titulo: "Docker & K8s", Precio: 9.99},
+		}
+		c.JSON(http.StatusOK, gin.H{
+			"status": "success",
+			"data":   cursos,
+		})
+	})
+
+	r.Run(":8080") // Escuchar en puerto 8080
+}
+\`\`\``,
+            resources: ['https://gin-gonic.com/docs/']
+          },
+          {
+            id: 9005,
+            module: 902,
+            order: 2,
+            title: 'Lección 2.2: Conexión a Bases de Datos Relacionales con GORM y Migraciones',
+            duration_seconds: 1250,
+            content_text: `### 💾 Manual de Estudio: Persistencia Relacional con GORM y PostgreSQL
+
+Integración del ORM **GORM** para mapeo de structs a tablas PostgreSQL y ejecución de auto-migraciones.`,
+            resources: ['https://gorm.io/docs/']
+          },
+          {
+            id: 9006,
+            module: 902,
+            order: 3,
+            title: 'Lección 2.3: Autenticación con JSON Web Tokens (JWT) y Middlewares de Seguridad',
+            duration_seconds: 1020,
+            content_text: `### 🔒 Manual Práctico: Autenticación JWT y Middlewares de Gin
+
+Protección de endpoints privados verificando la firma de los tokens JWT en la cabecera \`Authorization\`.`,
+            resources: ['https://golang-jwt.github.io/jwt/']
+          }
+        ]
+      },
+      {
+        id: 903,
+        course: 9,
+        order: 3,
+        title: 'Módulo 3: Arquitectura de Microservicios, gRPC y Despliegue en Producción',
+        description: 'Clean Architecture en Go, comunicación inter-servicios con gRPC/Protobuf y contenedores Docker.',
+        lessons: [
+          {
+            id: 9007,
+            module: 903,
+            order: 1,
+            title: 'Lección 3.1: Arquitectura Limpia (Clean Architecture) en Go: Handlers, Services y Repositories',
+            duration_seconds: 1150,
+            content_text: `### 🏛️ Manual Teórico-Práctico: Clean Architecture en Go
+
+Estructuración de proyectos escalables mediante la separación estricta en 3 capas:
+1. **Handlers (Transporte):** Procesa peticiones HTTP/gRPC.
+2. **Services (Dominio):** Contiene la lógica de negocio pura.
+3. **Repositories (Datos):** Realiza consultas a base de datos.`,
+            resources: ['https://github.com/bxcodec/go-clean-arch']
+          },
+          {
+            id: 9008,
+            module: 903,
+            order: 2,
+            title: 'Lección 3.2: Comunicación Inter-Servicios de Alta Velocidad con gRPC y Protocol Buffers',
+            duration_seconds: 1100,
+            content_text: `### ⚡ Manual Práctico: Comunicación gRPC de Alta Velocidad
+
+Definición de esquemas binarios con Protocol Buffers y servicios gRPC para microservicios.`,
+            resources: ['https://grpc.io/docs/languages/go/quickstart/']
+          },
+          {
+            id: 9009,
+            module: 903,
+            order: 3,
+            title: 'Lección 3.3: Proyecto Integrador: Microservicio de Producción en Go, Dockerizado y Desplegado',
+            duration_seconds: 1600,
+            content_text: `### 🚀 Proyecto Integrador: Microservicio en Go listo para Producción
+
+Construcción, compilación de binario estático y despliegue del microservicio en Docker.
+
+#### 🏆 ¡Felicidades!
+Has completado con éxito el curso práctico de **Go (Golang): APIs REST de Alta Concurrencia y Microservicios**.`,
+            resources: ['https://go.dev/']
+          }
+        ]
+      }
+    ]
   }
 };
 
@@ -2106,6 +2382,7 @@ COURSE_SEED_DETAILS.nextjs = COURSE_SEED_DETAILS.react;
 COURSE_SEED_DETAILS.dart = COURSE_SEED_DETAILS.flutter;
 COURSE_SEED_DETAILS.k8s = COURSE_SEED_DETAILS.docker;
 COURSE_SEED_DETAILS.devops = COURSE_SEED_DETAILS.docker;
+COURSE_SEED_DETAILS.go = COURSE_SEED_DETAILS.golang;
 
 /**
  * Utility function to enrich any course from backend or fallback
@@ -2115,7 +2392,9 @@ export function enrichCourseData(course: Course): Course {
   const slugLower = (course.slug || '').toLowerCase();
 
   let seedKey = 'python';
-  if (titleLower.includes('docker') || titleLower.includes('devops') || titleLower.includes('kubernetes') || slugLower.includes('docker') || slugLower.includes('devops') || course.id === 3) {
+  if (titleLower.includes('golang') || titleLower.includes('microservicio') || slugLower.includes('golang') || slugLower.includes('go') || course.id === 9 || (titleLower.includes('go') && !titleLower.includes('algoritmo'))) {
+    seedKey = 'golang';
+  } else if (titleLower.includes('docker') || titleLower.includes('devops') || titleLower.includes('kubernetes') || slugLower.includes('docker') || slugLower.includes('devops') || course.id === 3) {
     seedKey = 'docker';
   } else if (titleLower.includes('flutter') || titleLower.includes('dart') || slugLower.includes('flutter') || slugLower.includes('dart') || course.id === 8) {
     seedKey = 'flutter';
@@ -2140,7 +2419,7 @@ export function enrichCourseData(course: Course): Course {
     seedKey = 'postgresql';
   }
 
-  const seed = COURSE_SEED_DETAILS[seedKey] || COURSE_SEED_DETAILS.docker;
+  const seed = COURSE_SEED_DETAILS[seedKey] || COURSE_SEED_DETAILS.golang;
 
   // Prefer seed.modules if backend has fewer modules than seed (e.g. 1 module vs 3 modules)
   const sourceModules =
@@ -2176,11 +2455,12 @@ export function getFallbackCourse(id: number): Course {
     6: 'Fundamento de Bases de Datos - SQL',
     7: 'Desarrollo iOS con Swift y SwiftUI desde Cero',
     8: 'Flutter 3.24 & Dart desde Cero: Desarrollo Móvil Multiplataforma',
+    9: 'Go (Golang): APIs REST de Alta Concurrencia y Microservicios',
   };
 
-  const title = titles[id] || (id === 3 ? 'Docker & Kubernetes / DevOps: Contenedores y CI/CD' : `Curso #${id}: Desarrollo Web & Infraestructura`);
-  const seedKey = id === 1 ? 'python' : (id === 2 ? 'react' : (id === 3 ? 'docker' : (id === 7 ? 'swift' : (id === 8 ? 'flutter' : 'postgresql'))));
-  const seed = COURSE_SEED_DETAILS[seedKey] || COURSE_SEED_DETAILS.docker;
+  const title = titles[id] || (id === 9 ? 'Go (Golang): APIs REST de Alta Concurrencia y Microservicios' : `Curso #${id}: Desarrollo de Software Avanzado`);
+  const seedKey = id === 1 ? 'python' : (id === 2 ? 'react' : (id === 3 ? 'docker' : (id === 7 ? 'swift' : (id === 8 ? 'flutter' : (id === 9 ? 'golang' : 'postgresql')))));
+  const seed = COURSE_SEED_DETAILS[seedKey] || COURSE_SEED_DETAILS.golang;
 
   return {
     id: id,
@@ -2189,7 +2469,7 @@ export function getFallbackCourse(id: number): Course {
     price: id % 2 === 0 ? '19.99' : '9.99',
     cover_image: seed.cover_image,
     category: 1,
-    category_name: 'DevOps & Infraestructura',
+    category_name: 'Backend & Microservicios',
     professor_name: 'Prof. Alex López',
     is_active: true,
     modules_count: seed.modules.length,
