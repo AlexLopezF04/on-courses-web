@@ -30,7 +30,7 @@ export const LessonsList: React.FC<LessonsListProps> = ({
           <span>Temas del Módulo Seleccionado</span>
           <div className="flex items-center gap-2 shrink-0">
             <span className="text-xs font-mono bg-[#00cc33] text-slate-950 font-extrabold px-2.5 py-1 border border-slate-950 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">
-              {filtered.length} Lecciones
+              {filtered.length} {filtered.length === 1 ? 'Lección' : 'Lecciones'}
             </span>
             {onCreateLesson && (
               <button
@@ -43,7 +43,7 @@ export const LessonsList: React.FC<LessonsListProps> = ({
                 title="Crear una nueva lección/tema para este módulo"
               >
                 <Plus className="h-4 w-4" />
-                <span>+ Nueva Lección</span>
+                <span>Nueva Lección</span>
               </button>
             )}
           </div>
@@ -114,7 +114,7 @@ export const LessonsList: React.FC<LessonsListProps> = ({
                   className="px-4 py-2 bg-[#00cc33] hover:bg-[#00ff41] text-slate-950 font-mono font-black text-xs uppercase tracking-wider border-2 border-slate-950 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all flex items-center gap-2 cursor-pointer"
                 >
                   <Plus className="h-4 w-4" />
-                  <span>+ Crear la Primera Lección de este Módulo</span>
+                  <span>Crear la Primera Lección de este Módulo</span>
                 </button>
               )}
             </div>
