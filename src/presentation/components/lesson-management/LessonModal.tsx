@@ -310,15 +310,14 @@ Consulta los enlaces oficiales para profundizar en los conceptos avanzados.`;
 
             <div className="flex flex-col gap-1">
               <Input
-                label="Enlace de Video (Opcional si es Manual o Guía escrita)"
-                placeholder="https://www.youtube.com/watch?v=... (Dejar vacío si no requiere video)"
-                type="url"
+                label="Enlace de Video o Ruta MP4 (Opcional)"
+                placeholder="Ej: https://www.youtube.com/watch?v=... ó /videos/mi_clase.mp4"
                 value={videoUrl}
                 onChange={(e) => onVideoUrlChange(e.target.value)}
                 disabled={loading}
               />
               <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
-                💡 Para manuales paso a paso o tutoriales teóricos sin video, puedes dejar este campo en blanco.
+                💡 <strong>Configuración de Videos:</strong> Puedes pegar un enlace de YouTube, Vimeo, o la ruta de tu archivo de video subido (ej: <code className="bg-slate-200 dark:bg-slate-800 px-1 py-0.5 font-mono text-slate-900 dark:text-slate-100 font-bold">/videos/leccion_1.mp4</code>). Si aún no has grabado el video, déjalo en blanco para presentar la clase limpia como manual de estudio.
               </span>
             </div>
 
