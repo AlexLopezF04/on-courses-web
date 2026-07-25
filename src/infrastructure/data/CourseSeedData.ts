@@ -376,43 +376,40 @@ COURSE_SEED_DETAILS.devops = COURSE_SEED_DETAILS.docker;
 COURSE_SEED_DETAILS.go = COURSE_SEED_DETAILS.golang;
 COURSE_SEED_DETAILS.bash = COURSE_SEED_DETAILS.terminal;
 
+export function getCanonicalCourseId(course: { id: number; title?: string; slug?: string }): number {
+  const titleLower = (course.title || '').toLowerCase();
+  const slugLower = (course.slug || '').toLowerCase();
+
+  if (course.id === 1 || titleLower.includes('python') || slugLower.includes('python')) return 1;
+  if (course.id === 2 || titleLower.includes('react') || titleLower.includes('next') || slugLower.includes('react') || slugLower.includes('next')) return 2;
+  if (course.id === 3 || titleLower.includes('bash') || titleLower.includes('terminal') || slugLower.includes('terminal') || slugLower.includes('bash')) return 3;
+  if (course.id === 4 || titleLower.includes('git') || slugLower.includes('git')) return 4;
+  if (course.id === 5 || titleLower.includes('postgres') || slugLower.includes('postgres')) return 5;
+  if (course.id === 6 || (titleLower.includes('fundamento') && titleLower.includes('base'))) return 6;
+  if (course.id === 7 || titleLower.includes('swift') || titleLower.includes('ios') || slugLower.includes('swift') || slugLower.includes('ios')) return 7;
+  if (course.id === 8 || titleLower.includes('flutter') || titleLower.includes('dart') || slugLower.includes('flutter')) return 8;
+  if (course.id === 9 || titleLower.includes('golang') || titleLower.includes('microservicio') || slugLower.includes('golang') || (titleLower.includes('go') && !titleLower.includes('algoritmo'))) return 9;
+  if (course.id === 10 || titleLower.includes('javascript') || titleLower.includes('js') || slugLower.includes('javascript') || slugLower.includes('js')) return 10;
+
+  return course.id >= 1 && course.id <= 10 ? course.id : 1;
+}
+
 /**
  * Utility function to enrich any course from backend or fallback
  */
 export function enrichCourseData(course: Course): Course {
-  const titleLower = course.title.toLowerCase();
-  const slugLower = (course.slug || '').toLowerCase();
-
+  const canonicalId = getCanonicalCourseId(course);
   let seedKey = 'python';
-  if (titleLower.includes('bash') || titleLower.includes('terminal') || slugLower.includes('terminal') || slugLower.includes('bash') || course.id === 3 || course.id === 103) {
-    seedKey = 'terminal';
-  } else if (titleLower.includes('git') || slugLower.includes('git') || course.id === 4 || course.id === 104) {
-    seedKey = 'git';
-  } else if (titleLower.includes('javascript') || titleLower.includes('js') || slugLower.includes('javascript') || slugLower.includes('js') || course.id === 10 || course.id === 110) {
-    seedKey = 'javascript';
-  } else if (titleLower.includes('python') || slugLower.includes('python') || course.id === 1) {
-    seedKey = 'python';
-  } else if (titleLower.includes('golang') || titleLower.includes('microservicio') || slugLower.includes('golang') || slugLower.includes('go') || course.id === 9 || course.id === 109 || (titleLower.includes('go') && !titleLower.includes('algoritmo'))) {
-    seedKey = 'golang';
-  } else if (titleLower.includes('docker') || titleLower.includes('devops') || titleLower.includes('kubernetes') || slugLower.includes('docker') || slugLower.includes('devops')) {
-    seedKey = 'docker';
-  } else if (titleLower.includes('flutter') || titleLower.includes('dart') || slugLower.includes('flutter') || slugLower.includes('dart') || course.id === 8) {
-    seedKey = 'flutter';
-  } else if (titleLower.includes('react') || titleLower.includes('next') || slugLower.includes('react') || slugLower.includes('next') || course.id === 2) {
-    seedKey = 'react';
-  } else if (titleLower.includes('swift') || titleLower.includes('ios') || titleLower.includes('apple') || slugLower.includes('swift') || slugLower.includes('ios') || course.id === 7) {
-    seedKey = 'swift';
-  } else if (
-    titleLower.includes('sql') ||
-    titleLower.includes('postgres') ||
-    titleLower.includes('base') ||
-    slugLower.includes('sql') ||
-    slugLower.includes('postgres') ||
-    course.id === 5 ||
-    course.id === 6
-  ) {
-    seedKey = 'postgresql';
-  }
+
+  if (canonicalId === 1) seedKey = 'python';
+  else if (canonicalId === 2) seedKey = 'react';
+  else if (canonicalId === 3) seedKey = 'terminal';
+  else if (canonicalId === 4) seedKey = 'git';
+  else if (canonicalId === 5 || canonicalId === 6) seedKey = 'postgresql';
+  else if (canonicalId === 7) seedKey = 'swift';
+  else if (canonicalId === 8) seedKey = 'flutter';
+  else if (canonicalId === 9) seedKey = 'golang';
+  else if (canonicalId === 10) seedKey = 'javascript';
 
   const seed = COURSE_SEED_DETAILS[seedKey] || COURSE_SEED_DETAILS.python;
 
@@ -421,7 +418,7 @@ export function enrichCourseData(course: Course): Course {
 
   const cleanedModules = sourceModules.map((mod) => ({
     ...mod,
-    course: course.id,
+    course: canonicalId,
     lessons: (mod.lessons || []).map((les) => ({
       ...les,
       video_url: (les.video_url || '').includes('kUMe1FH4CHE') ? '' : les.video_url,
@@ -430,6 +427,7 @@ export function enrichCourseData(course: Course): Course {
 
   return {
     ...course,
+    id: canonicalId,
     cover_image: course.cover_image || seed.cover_image,
     description: course.description && course.description.length > 20 ? course.description : seed.description,
     modules: cleanedModules,
@@ -437,9 +435,10 @@ export function enrichCourseData(course: Course): Course {
 }
 
 /**
- * Generate full seed course for any ID if backend returns 403 or 404
+ * Generate full seed course for any ID 1..10
  */
 export function getFallbackCourse(id: number): Course {
+  const canonicalId = id >= 1 && id <= 10 ? id : 1;
   const titles: Record<number, string> = {
     1: 'Python 3: Desde Cero hasta Inteligencia Artificial',
     2: 'React 19 & Next.js 15: Guía Práctica Fullstack',
@@ -451,32 +450,28 @@ export function getFallbackCourse(id: number): Course {
     8: 'Flutter 3.24 & Dart desde Cero: Desarrollo Móvil Multiplataforma',
     9: 'Go (Golang): APIs REST de Alta Concurrencia y Microservicios',
     10: 'JavaScript Moderno ES2024 & TypeScript desde Cero',
-    103: 'Terminal Bash & Consola Linux: Guía Profesional',
-    104: 'Git & GitHub: Control de Versiones en Equipo',
-    109: 'Go (Golang): APIs REST de Alta Concurrencia y Microservicios',
-    110: 'JavaScript Moderno ES2024 & TypeScript desde Cero',
   };
 
-  const title = titles[id] || `Curso #${id}: Desarrollo de Software Avanzado`;
+  const title = titles[canonicalId] || `Curso #${canonicalId}: Desarrollo de Software Avanzado`;
   
   let seedKey = 'python';
-  if (id === 1 || title.toLowerCase().includes('python')) seedKey = 'python';
-  else if (id === 2 || title.toLowerCase().includes('react')) seedKey = 'react';
-  else if (id === 3 || id === 103 || title.toLowerCase().includes('terminal') || title.toLowerCase().includes('bash')) seedKey = 'terminal';
-  else if (id === 4 || id === 104 || title.toLowerCase().includes('git')) seedKey = 'git';
-  else if (id === 5 || id === 6 || title.toLowerCase().includes('postgres') || title.toLowerCase().includes('sql')) seedKey = 'postgresql';
-  else if (id === 7 || title.toLowerCase().includes('swift') || title.toLowerCase().includes('ios')) seedKey = 'swift';
-  else if (id === 8 || title.toLowerCase().includes('flutter')) seedKey = 'flutter';
-  else if (id === 9 || id === 109 || title.toLowerCase().includes('go')) seedKey = 'golang';
-  else if (id === 10 || id === 110 || title.toLowerCase().includes('javascript')) seedKey = 'javascript';
+  if (canonicalId === 1) seedKey = 'python';
+  else if (canonicalId === 2) seedKey = 'react';
+  else if (canonicalId === 3) seedKey = 'terminal';
+  else if (canonicalId === 4) seedKey = 'git';
+  else if (canonicalId === 5 || canonicalId === 6) seedKey = 'postgresql';
+  else if (canonicalId === 7) seedKey = 'swift';
+  else if (canonicalId === 8) seedKey = 'flutter';
+  else if (canonicalId === 9) seedKey = 'golang';
+  else if (canonicalId === 10) seedKey = 'javascript';
 
   const seed = COURSE_SEED_DETAILS[seedKey] || COURSE_SEED_DETAILS.python;
 
   return {
-    id: id,
+    id: canonicalId,
     title: title,
-    slug: `curso-${id}`,
-    price: id % 2 === 0 ? '19.99' : '9.99',
+    slug: `curso-${canonicalId}`,
+    price: canonicalId % 2 === 0 ? '19.99' : '9.99',
     cover_image: seed.cover_image,
     category: 1,
     category_name: 'Desarrollo de Software',
@@ -487,7 +482,7 @@ export function getFallbackCourse(id: number): Course {
     description: seed.description,
     modules: seed.modules.map((mod) => ({
       ...mod,
-      course: id,
+      course: canonicalId,
     })),
   };
 }
