@@ -3,7 +3,7 @@ import { Module } from '@domain/entities/Module';
 import { Input } from '../Input';
 import { Button } from '../Button';
 import { ShieldAlert, FileCode2, Terminal, BookOpen, Code2 } from 'lucide-react';
-import { CodeBlockWithCopy } from '../CodeBlockWithCopy';
+import { MarkdownRenderer } from '../MarkdownRenderer';
 
 interface LessonModalProps {
   isOpen: boolean;
@@ -215,46 +215,9 @@ Consulta los enlaces oficiales para profundizar en los conceptos avanzados.`;
               </div>
             )}
 
-            <article className="prose dark:prose-invert max-w-none space-y-4 text-xs sm:text-sm">
+            <article className="prose dark:prose-invert max-w-none text-xs sm:text-sm">
               {content ? (
-                content.split('```').map((block, i) => {
-                  if (i % 2 === 1) {
-                    const lines = block.trim().split('\n');
-                    const lang = lines[0].match(/^[a-z]+/i) ? lines[0] : 'sql';
-                    const codeContent = lines[0].match(/^[a-z]+/i) ? lines.slice(1).join('\n') : block;
-
-                    return (
-                      <CodeBlockWithCopy key={i} code={codeContent} language={lang} />
-                    );
-                  }
-
-                  return (
-                    <div key={i} className="space-y-3">
-                      {block.split('\n\n').map((para, j) => {
-                        if (para.startsWith('### ')) {
-                          return <h3 key={j} className="text-base font-black text-slate-950 dark:text-white mt-4 mb-1">{para.replace('### ', '')}</h3>;
-                        }
-                        if (para.startsWith('#### ')) {
-                          return (
-                            <div key={j} className="my-2 p-2 bg-amber-50 dark:bg-amber-950/40 border-l-4 border-amber-500 text-xs font-bold text-slate-900 dark:text-amber-200">
-                              {para.replace('#### ', '')}
-                            </div>
-                          );
-                        }
-                        if (para.split('\n').every(line => line.trim().startsWith('- ') || line.trim().startsWith('* '))) {
-                          return (
-                            <ul key={j} className="list-disc list-inside space-y-1 text-xs text-slate-800 dark:text-slate-200 font-medium pl-2">
-                              {para.split('\n').map((item, k) => (
-                                <li key={k}>{item.replace(/^[-*]\s+/, '')}</li>
-                              ))}
-                            </ul>
-                          );
-                        }
-                        return <p key={j} className="text-xs sm:text-sm leading-relaxed font-medium">{para}</p>;
-                      })}
-                    </div>
-                  );
-                })
+                <MarkdownRenderer content={content} />
               ) : (
                 <div className="p-6 border border-dashed border-slate-400 text-center text-slate-400 text-xs italic">
                   Escribe contenido en el editor para previsualizarlo aquí.

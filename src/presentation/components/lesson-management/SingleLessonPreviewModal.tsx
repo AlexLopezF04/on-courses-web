@@ -3,7 +3,7 @@ import { Lesson } from '@domain/entities/Lesson';
 import { X, Play, FileText, ArrowRight, BookOpen, Clock } from 'lucide-react';
 import { Button } from '../Button';
 import { sanitizeUrl } from '../../utils/sanitize-url';
-import { CodeBlockWithCopy } from '../CodeBlockWithCopy';
+import { MarkdownRenderer } from '../MarkdownRenderer';
 
 interface SingleLessonPreviewModalProps {
   isOpen: boolean;
@@ -118,47 +118,9 @@ export const SingleLessonPreviewModal: React.FC<SingleLessonPreviewModalProps> =
               Manual de Instrucciones & Contenido del Tema
             </h3>
 
-            <article className="prose dark:prose-invert max-w-none text-slate-800 dark:text-slate-200 text-xs sm:text-sm leading-relaxed space-y-4">
+            <article className="prose dark:prose-invert max-w-none text-slate-800 dark:text-slate-200 text-xs sm:text-sm leading-relaxed">
               {lesson.content_text ? (
-                lesson.content_text.split('```').map((block, i) => {
-                  if (i % 2 === 1) {
-                    // Code Block
-                    const lines = block.trim().split('\n');
-                    const lang = lines[0].match(/^[a-z]+/i) ? lines[0] : 'sql';
-                    const codeContent = lines[0].match(/^[a-z]+/i) ? lines.slice(1).join('\n') : block;
-
-                    return (
-                      <CodeBlockWithCopy key={i} code={codeContent} language={lang} />
-                    );
-                  }
-
-                  return (
-                    <div key={i} className="space-y-3">
-                      {block.split('\n\n').map((para, j) => {
-                        if (para.startsWith('### ')) {
-                          return <h3 key={j} className="text-base font-black text-slate-950 dark:text-white mt-4 mb-1">{para.replace('### ', '')}</h3>;
-                        }
-                        if (para.startsWith('#### ')) {
-                          return (
-                            <div key={j} className="my-2 p-2.5 bg-amber-50 dark:bg-amber-950/40 border-l-4 border-amber-500 text-xs font-bold text-slate-900 dark:text-amber-200">
-                              {para.replace('#### ', '')}
-                            </div>
-                          );
-                        }
-                        if (para.split('\n').every(line => line.trim().startsWith('- ') || line.trim().startsWith('* '))) {
-                          return (
-                            <ul key={j} className="list-disc list-inside space-y-1 text-xs text-slate-800 dark:text-slate-200 font-medium pl-2">
-                              {para.split('\n').map((item, k) => (
-                                <li key={k}>{item.replace(/^[-*]\s+/, '')}</li>
-                              ))}
-                            </ul>
-                          );
-                        }
-                        return <p key={j} className="text-xs sm:text-sm leading-relaxed font-medium">{para}</p>;
-                      })}
-                    </div>
-                  );
-                })
+                <MarkdownRenderer content={lesson.content_text} />
               ) : (
                 <div className="p-6 border border-dashed border-slate-300 dark:border-slate-800 text-center text-slate-400 text-xs italic">
                   Este tema no incluye manual de lectura o bloques de código estáticos.

@@ -14,7 +14,7 @@ import { Loader } from '../components/Loader';
 import { Button } from '../components/Button';
 import { useThemeStore } from '../store/useThemeStore';
 import { sanitizeUrl } from '../utils/sanitize-url';
-import { CodeBlockWithCopy } from '../components/CodeBlockWithCopy';
+import { MarkdownRenderer } from '../components/MarkdownRenderer';
 
 export const LessonPlayerPage: React.FC = () => {
   const { courseId, lessonId } = useParams<{ courseId: string; lessonId: string }>();
@@ -307,45 +307,10 @@ export const LessonPlayerPage: React.FC = () => {
                 </div>
               </div>
             )}
-
             {/* Practical instructions / theoretical text */}
-            <article className="prose dark:prose-invert max-w-none text-slate-700 dark:text-slate-300 leading-relaxed mb-8 space-y-6">
+            <article className="prose dark:prose-invert max-w-none text-slate-700 dark:text-slate-300 leading-relaxed mb-8">
               {currentLesson.content_text ? (
-                currentLesson.content_text.split('```').map((block, i) => {
-                  if (i % 2 === 1) {
-                    // Code block
-                    const lines = block.trim().split('\n');
-                    const lang = lines[0].match(/^[a-z]+/i) ? lines[0] : 'sql';
-                    const codeContent = lines[0].match(/^[a-z]+/i) ? lines.slice(1).join('\n') : block;
-
-                    return (
-                      <CodeBlockWithCopy key={i} code={codeContent} language={lang} />
-                    );
-                  }
-
-                  return (
-                    <div key={i} className="space-y-4">
-                      {block.split('\n\n').map((para, j) => {
-                        if (para.startsWith('### ')) {
-                          return <h3 key={j} className="text-lg font-black text-slate-950 dark:text-white mt-6 mb-2 flex items-center gap-2">{para.replace('### ', '')}</h3>;
-                        }
-                        if (para.startsWith('#### ')) {
-                          return <h4 key={j} className="text-sm font-extrabold text-slate-900 dark:text-slate-200 mt-4 mb-2">{para.replace('#### ', '')}</h4>;
-                        }
-                        if (para.split('\n').every(line => line.trim().startsWith('- ') || line.trim().startsWith('* '))) {
-                          return (
-                            <ul key={j} className="list-disc list-inside space-y-1.5 text-xs sm:text-sm text-slate-800 dark:text-slate-200 font-medium pl-2 my-3">
-                              {para.split('\n').map((item, k) => (
-                                <li key={k}>{item.replace(/^[-*]\s+/, '')}</li>
-                              ))}
-                            </ul>
-                          );
-                        }
-                        return <p key={j} className="text-xs sm:text-sm leading-relaxed text-slate-800 dark:text-slate-200 font-medium">{para}</p>;
-                      })}
-                    </div>
-                  );
-                })
+                <MarkdownRenderer content={currentLesson.content_text} />
               ) : (
                 <div className="p-8 border border-dashed border-slate-300 dark:border-slate-800 rounded-2xl text-center text-slate-400 text-sm">
                   Este tema no incluye material de lectura estático. Por favor consulta las referencias externas.
