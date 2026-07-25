@@ -351,6 +351,305 @@ Has completado con éxito el curso práctico de **React 19 & Next.js 15**.`,
     ]
   },
 
+  // Course 3: Docker & Kubernetes / DevOps: Contenedores, CI/CD y Orquestación (COMPLETO 100%)
+  docker: {
+    cover_image: 'https://images.unsplash.com/photo-1605745341112-85968b19335b?q=80&w=1200&auto=format&fit=crop',
+    description: 'Manual de estudio profesional en infraestructura moderna y DevOps. Domina la contenerización con Docker, creación de Dockerfiles multi-stage livianos, orquestación local con Docker Compose, clústeres de producción con Kubernetes (Deployments, Services, Ingress), pipelines de CI/CD automatizados en GitHub Actions y despliegue continuo con GitOps.',
+    modules: [
+      {
+        id: 301,
+        course: 3,
+        order: 1,
+        title: 'Módulo 1: Fundamentos de Contenedores con Docker y Dockerfiles Optimizados',
+        description: 'Arquitectura del motor de Docker, comandos CLI, creación de imágenes multi-etapa y orquestación con Docker Compose.',
+        lessons: [
+          {
+            id: 3001,
+            module: 301,
+            order: 1,
+            title: 'Lección 1.1: Introducción a la Contenerización, Arquitectura de Docker Engine y Comandos CLI',
+            duration_seconds: 900,
+            content_text: `### 🐳 Manual Teórico-Práctico: Fundamentos de Docker y Arquitectura de Contenedores
+
+Bienvenido a la primera guía de estudio del curso de **Docker & Kubernetes / DevOps**. En esta lección aprenderás por qué la contenerización resolvió el clásico problema *"en mi máquina sí funciona"*, la arquitectura del cliente-servidor de Docker y los comandos fundamentales de consola.
+
+---
+
+#### 1. Diferencia entre Máquinas Virtuales (VMs) y Contenedores
+
+- **Máquina Virtual (VM):** Empaqueta un Sistema Operativo completo sobre un hipervisor (VirtualBox, VMware). Consume gigabytes de RAM y tarda minutos en arrancar.
+- **Contenedor (Docker):** Comparte el Kernel del Sistema Operativo del Host y aísla los procesos del usuario. Consume megabytes y arranca en milisegundos.
+
+---
+
+#### 2. Comandos CLI Esenciales de Docker
+
+\`\`\`bash
+# 1. Descargar y ejecutar un contenedor Nginx en segundo plano (puerto 8080 en host -> 80 en contenedor)
+docker run -d -p 8080:80 --name mi-servidor-web nginx:alpine
+
+# 2. Listar contenedores en ejecución
+docker ps
+
+# 3. Inspeccionar logs del contenedor en tiempo real
+docker logs -f mi-servidor-web
+
+# 4. Entrar a la consola interactiva del contenedor
+docker exec -it mi-servidor-web /bin/sh
+
+# 5. Detener y eliminar el contenedor
+docker stop mi-servidor-web
+docker rm mi-servidor-web
+\`\`\`
+
+---
+
+#### 💡 Tabla de Comandos Principales de Docker
+
+| Comando | Propósito | Ejemplo |
+| --- | --- | --- |
+| \`docker build\` | Construye una imagen desde un Dockerfile | \`docker build -t mi-app:v1 .\` |
+| \`docker run\` | Crea y ejecuta un contenedor | \`docker run -d -p 3000:3000 mi-app:v1\` |
+| \`docker exec\` | Ejecuta un comando en un contenedor activo | \`docker exec -it mi-app sh\` |
+| \`docker system prune\` | Limpia espacio en disco (imágenes y contenedores muertos) | \`docker system prune -a --volumes\` |`,
+            resources: ['https://docs.docker.com/get-started/overview/']
+          },
+          {
+            id: 3002,
+            module: 301,
+            order: 2,
+            title: 'Lección 1.2: Creación de Dockerfiles Multietapa (Multi-Stage Builds) de Alto Rendimiento',
+            duration_seconds: 1050,
+            content_text: `### 🛠️ Manual de Estudio: Dockerfiles Multi-Etapa de Producción
+
+Aprende a construir imágenes Docker seguras y ultra ligeras reduciendo su tamaño de 1GB a menos de 30MB mediante la técnica de **Multi-Stage Builds**.
+
+---
+
+#### 1. Dockerfile Optimizado para Aplicaciones Web (Node.js / React)
+
+\`\`\`dockerfile
+# ----- ETAPA 1: Construcción (Builder) -----
+FROM node:20-alpine AS builder
+WORKDIR /app
+
+# Copiar manifiestos de dependencias primero para aprovechar la caché de Docker
+COPY package*.json ./
+RUN npm ci
+
+# Copiar el código fuente y construir el bundle estático de producción
+COPY . .
+RUN npm run build
+
+# ----- ETAPA 2: Servidor de Producción (Runner) -----
+FROM nginx:alpine AS runner
+WORKDIR /usr/share/nginx/html
+
+# Copiar únicamente los archivos estáticos compilados de la Etapa 1
+COPY --from=builder /app/dist .
+
+# Exponer el puerto estándar
+EXPOSE 80
+
+# Comando de inicio del servidor web Nginx
+CMD ["nginx", "-g", "daemon off;"]
+\`\`\``,
+            resources: ['https://docs.docker.com/build/building/multi-stage/']
+          },
+          {
+            id: 3003,
+            module: 301,
+            order: 3,
+            title: 'Lección 1.3: Redes en Docker y Orquestación Multicontenedor con Docker Compose',
+            duration_seconds: 960,
+            content_text: `### 🐙 Manual Práctico: Docker Compose y Entornos Multicontenedor
+
+Definición y ejecución de múltiples servicios (Aplicación Web + Base de Datos PostgreSQL) mediante **\`docker-compose.yml\`**.
+
+\`\`\`yaml
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "5173:80"
+    environment:
+      - DATABASE_URL=postgres://postgres:secret@db:5432/oncourses_db
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: oncourses_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
+\`\`\``,
+            resources: ['https://docs.docker.com/compose/']
+          }
+        ]
+      },
+      {
+        id: 302,
+        course: 3,
+        order: 2,
+        title: 'Módulo 2: Orquestación de Producción con Kubernetes (K8s)',
+        description: 'Arquitectura de clústeres K8s, despliegues (Deployments), servicios, ingress y almacenamiento persistente.',
+        lessons: [
+          {
+            id: 3004,
+            module: 302,
+            order: 1,
+            title: 'Lección 2.1: Arquitectura de Kubernetes: Control Plane, Worker Nodes, Pods y Deployments',
+            duration_seconds: 1100,
+            content_text: `### ☸️ Manual Avanzado: Manifiestos de Kubernetes (K8s)
+
+Kubernetes es la plataforma estándar de la industria para orquestar contenedores a gran escala con autorrecuperación (*self-healing*) y escalado automático.
+
+---
+
+#### 1. Manifiesto YAML de Deployment en Kubernetes
+
+\`\`\`yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oncourses-web-deployment
+  labels:
+    app: oncourses-web
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: oncourses-web
+  template:
+    metadata:
+      labels:
+        app: oncourses-web
+    spec:
+      containers:
+      - name: web
+        image: ghcr.io/alexlopezf04/oncourses-web:latest
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "128Mi"
+            cpu: "250m"
+\`\`\``,
+            resources: ['https://kubernetes.io/docs/concepts/workloads/controllers/deployment/']
+          },
+          {
+            id: 3005,
+            module: 302,
+            order: 2,
+            title: 'Lección 2.2: Servicios, Ingress Controllers y Gestión de Tráfico (Service, Ingress)',
+            duration_seconds: 1250,
+            content_text: `### 🌐 Manual de Estudio: Exposición de Servicios e Ingress Controllers en K8s
+
+Aprende a exponer tus Pods mediante servicios de balanceo de carga y enrutamiento por dominio HTTP con **Ingress NGINX**.`,
+            resources: ['https://kubernetes.io/docs/concepts/services-networking/service/']
+          },
+          {
+            id: 3006,
+            module: 302,
+            order: 3,
+            title: 'Lección 2.3: Configuración y Secretos (ConfigMaps & Secrets) con Almacenamiento Persistente (PVC)',
+            duration_seconds: 1020,
+            content_text: `### 🔒 Manual Práctico: ConfigMaps, Secrets y Volúmenes Persistentes en K8s
+
+Gestión segura de variables de entorno y llaves secretas cifradas en base64 en Kubernetes.`,
+            resources: ['https://kubernetes.io/docs/concepts/configuration/secret/']
+          }
+        ]
+      },
+      {
+        id: 303,
+        course: 3,
+        order: 3,
+        title: 'Módulo 3: Pipelines CI/CD Automatizados y Despliegue en la Nube',
+        description: 'Pipelines CI/CD automatizados en GitHub Actions, pruebas, despliegue continuo con GitOps y monitoreo.',
+        lessons: [
+          {
+            id: 3007,
+            module: 303,
+            order: 1,
+            title: 'Lección 3.1: Integración Continua con GitHub Actions (CI Pipelines & Linting/Testing)',
+            duration_seconds: 1150,
+            content_text: `### 🚀 Manual Teórico-Práctico: Pipelines de CI/CD con GitHub Actions
+
+Automatiza la construcción de imágenes Docker y la validación de linters en cada push a la rama \`main\`.
+
+\`\`\`yaml
+name: Docker CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Código Fuente
+      uses: actions/checkout@v4
+
+    - name: Iniciar Sesión en Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: \${{ secrets.DOCKERHUB_USERNAME }}
+        password: \${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Construir y Publicar Imagen Docker
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: alexlopez/oncourses-web:latest
+\`\`\``,
+            resources: ['https://docs.github.com/en/actions']
+          },
+          {
+            id: 3008,
+            module: 303,
+            order: 2,
+            title: 'Lección 3.2: Despliegue Continuo (CD) y GitOps con ArgoCD en Clusters Kubernetes',
+            duration_seconds: 1100,
+            content_text: `### 🔄 Manual Práctico: GitOps con ArgoCD y Sincronización Automática
+
+Implementa la filosofía GitOps donde el estado deseado del clúster se mantiene 100% sincronizado con tu repositorio Git.`,
+            resources: ['https://argo-cd.readthedocs.io/']
+          },
+          {
+            id: 3009,
+            module: 303,
+            order: 3,
+            title: 'Lección 3.3: Proyecto Integrador: Pipeline CI/CD Completo y Despliegue de App en Kubernetes',
+            duration_seconds: 1600,
+            content_text: `### 🚀 Proyecto Integrador: Despliegue DevOps Completo en la Nube
+
+Construcción y ejecución de una arquitectura completa contenerizada y desplegada en Kubernetes.
+
+#### 🏆 ¡Felicidades!
+Has completado con éxito el curso práctico de **Docker & Kubernetes / DevOps**.`,
+            resources: ['https://kubernetes.io/']
+          }
+        ]
+      }
+    ]
+  },
+
   // Course 5: PostgreSQL: Optimización de Consultas y Modelado (COMPLETO 100%)
   postgresql: {
     cover_image: 'https://images.unsplash.com/photo-1544383835-bda2bc66a55d?q=80&w=1200&auto=format&fit=crop',
@@ -1617,7 +1916,7 @@ Dart 3 introdujo nuevos modificadores de clase para mejorar la seguridad del dis
 // Definición de un Mixin para añadir capacidad de loggeo
 mixin LoggerMixin {
   void log(String mensaje) {
-    print('[LOG \${DateTime.now()}]: $mensaje');
+    print('[LOG \\\${DateTime.now()}]: $mensaje');
   }
 }
 
@@ -1805,6 +2104,8 @@ COURSE_SEED_DETAILS.sql = COURSE_SEED_DETAILS.postgresql;
 COURSE_SEED_DETAILS.ios = COURSE_SEED_DETAILS.swift;
 COURSE_SEED_DETAILS.nextjs = COURSE_SEED_DETAILS.react;
 COURSE_SEED_DETAILS.dart = COURSE_SEED_DETAILS.flutter;
+COURSE_SEED_DETAILS.k8s = COURSE_SEED_DETAILS.docker;
+COURSE_SEED_DETAILS.devops = COURSE_SEED_DETAILS.docker;
 
 /**
  * Utility function to enrich any course from backend or fallback
@@ -1814,7 +2115,9 @@ export function enrichCourseData(course: Course): Course {
   const slugLower = (course.slug || '').toLowerCase();
 
   let seedKey = 'python';
-  if (titleLower.includes('flutter') || titleLower.includes('dart') || slugLower.includes('flutter') || slugLower.includes('dart') || course.id === 8) {
+  if (titleLower.includes('docker') || titleLower.includes('devops') || titleLower.includes('kubernetes') || slugLower.includes('docker') || slugLower.includes('devops') || course.id === 3) {
+    seedKey = 'docker';
+  } else if (titleLower.includes('flutter') || titleLower.includes('dart') || slugLower.includes('flutter') || slugLower.includes('dart') || course.id === 8) {
     seedKey = 'flutter';
   } else if (titleLower.includes('react') || titleLower.includes('next') || slugLower.includes('react') || slugLower.includes('next') || course.id === 2) {
     seedKey = 'react';
@@ -1837,7 +2140,7 @@ export function enrichCourseData(course: Course): Course {
     seedKey = 'postgresql';
   }
 
-  const seed = COURSE_SEED_DETAILS[seedKey] || COURSE_SEED_DETAILS.flutter;
+  const seed = COURSE_SEED_DETAILS[seedKey] || COURSE_SEED_DETAILS.docker;
 
   // Prefer seed.modules if backend has fewer modules than seed (e.g. 1 module vs 3 modules)
   const sourceModules =
@@ -1867,7 +2170,7 @@ export function getFallbackCourse(id: number): Course {
   const titles: Record<number, string> = {
     1: 'Python 3: Desde Cero hasta Inteligencia Artificial',
     2: 'React 19 & Next.js 15: Guía Práctica Fullstack',
-    3: 'Terminal Bash & Consola Linux: Guía Profesional',
+    3: 'Docker & Kubernetes / DevOps: Contenedores y CI/CD',
     4: 'Git & GitHub: Control de Versiones en Equipo',
     5: 'PostgreSQL: Optimización de Consultas y Modelado',
     6: 'Fundamento de Bases de Datos - SQL',
@@ -1875,9 +2178,9 @@ export function getFallbackCourse(id: number): Course {
     8: 'Flutter 3.24 & Dart desde Cero: Desarrollo Móvil Multiplataforma',
   };
 
-  const title = titles[id] || (id === 8 ? 'Flutter 3.24 & Dart desde Cero: Desarrollo Móvil Multiplataforma' : `Curso #${id}: Desarrollo Web & Móvil`);
-  const seedKey = id === 1 ? 'python' : (id === 2 ? 'react' : (id === 7 ? 'swift' : (id === 8 ? 'flutter' : 'postgresql')));
-  const seed = COURSE_SEED_DETAILS[seedKey] || COURSE_SEED_DETAILS.flutter;
+  const title = titles[id] || (id === 3 ? 'Docker & Kubernetes / DevOps: Contenedores y CI/CD' : `Curso #${id}: Desarrollo Web & Infraestructura`);
+  const seedKey = id === 1 ? 'python' : (id === 2 ? 'react' : (id === 3 ? 'docker' : (id === 7 ? 'swift' : (id === 8 ? 'flutter' : 'postgresql'))));
+  const seed = COURSE_SEED_DETAILS[seedKey] || COURSE_SEED_DETAILS.docker;
 
   return {
     id: id,
@@ -1886,7 +2189,7 @@ export function getFallbackCourse(id: number): Course {
     price: id % 2 === 0 ? '19.99' : '9.99',
     cover_image: seed.cover_image,
     category: 1,
-    category_name: 'Desarrollo Móvil Multiplataforma',
+    category_name: 'DevOps & Infraestructura',
     professor_name: 'Prof. Alex López',
     is_active: true,
     modules_count: seed.modules.length,
