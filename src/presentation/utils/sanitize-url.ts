@@ -17,21 +17,21 @@ export function sanitizeUrl(url?: string): string {
 }
 
 /**
- * Convierte URLs estándar de YouTube, Vimeo y archivos de video en URLs de incrustación (embed) 100% funcionales.
- * Si la URL dada está rota, eliminada o no es un video válido, provee un video tutorial HD verificado sobre SQL / Bases de Datos.
+ * Convierte URLs de video en reproductores HTML5 directos (.mp4) o iFrames incrustados (YouTube/Vimeo).
+ * Soporta archivos de video locales (/videos/leccion.mp4), CDN o enlaces directos.
  */
 export function getEmbedVideoUrl(url?: string): { isEmbed: boolean; isDirectVideo: boolean; embedUrl: string } {
-  // Video oficial verificado y libre de incrustación en YouTube (Curso de SQL y Bases de Datos)
-  const VERIFIED_FALLBACK_EMBED = 'https://www.youtube.com/embed/7S_tz1z_5bA';
+  // Video HTML5 directo de alta definición (se reproduce nativamente con 1-clic y sin restricciones de iframe)
+  const FALLBACK_HTML5_VIDEO = 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4';
 
   if (!url || !url.trim()) {
-    return { isEmbed: true, isDirectVideo: false, embedUrl: VERIFIED_FALLBACK_EMBED };
+    return { isEmbed: false, isDirectVideo: true, embedUrl: FALLBACK_HTML5_VIDEO };
   }
 
   const trimmed = url.trim();
 
-  // Direct MP4 / WebM / OGG video file
-  if (/\.(mp4|webm|ogg)$/i.test(trimmed)) {
+  // Direct MP4 / WebM / OGG video file or local /videos/ relative path
+  if (/\.(mp4|webm|ogg)$/i.test(trimmed) || trimmed.startsWith('/videos/')) {
     return {
       isEmbed: false,
       isDirectVideo: true,
@@ -42,14 +42,10 @@ export function getEmbedVideoUrl(url?: string): { isEmbed: boolean; isDirectVide
   // YouTube watch?v=11chars
   const ytWatchMatch = trimmed.match(/(?:youtube\.com\/watch\?v=)([a-zA-Z0-9_-]{11})/i);
   if (ytWatchMatch && ytWatchMatch[1]) {
-    // Prevent known broken IDs
-    if (ytWatchMatch[1] === 'kUMe1FH4CHE') {
-      return { isEmbed: true, isDirectVideo: false, embedUrl: VERIFIED_FALLBACK_EMBED };
-    }
     return {
       isEmbed: true,
       isDirectVideo: false,
-      embedUrl: `https://www.youtube.com/embed/${ytWatchMatch[1]}`,
+      embedUrl: `https://www.youtube.com/embed/${ytWatchMatch[1]}?autoplay=0&rel=0`,
     };
   }
 
@@ -59,20 +55,17 @@ export function getEmbedVideoUrl(url?: string): { isEmbed: boolean; isDirectVide
     return {
       isEmbed: true,
       isDirectVideo: false,
-      embedUrl: `https://www.youtube.com/embed/${ytShortMatch[1]}`,
+      embedUrl: `https://www.youtube.com/embed/${ytShortMatch[1]}?autoplay=0&rel=0`,
     };
   }
 
   // Already YouTube embed
   const ytEmbedMatch = trimmed.match(/(?:youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/i);
   if (ytEmbedMatch && ytEmbedMatch[1]) {
-    if (ytEmbedMatch[1] === 'kUMe1FH4CHE') {
-      return { isEmbed: true, isDirectVideo: false, embedUrl: VERIFIED_FALLBACK_EMBED };
-    }
     return {
       isEmbed: true,
       isDirectVideo: false,
-      embedUrl: `https://www.youtube.com/embed/${ytEmbedMatch[1]}`,
+      embedUrl: `https://www.youtube.com/embed/${ytEmbedMatch[1]}?autoplay=0&rel=0`,
     };
   }
 
@@ -86,15 +79,6 @@ export function getEmbedVideoUrl(url?: string): { isEmbed: boolean; isDirectVide
     };
   }
 
-  // Generic iframe embed URL fallback if valid HTTP(S)
-  if (/^https?:\/\/(www\.)?(youtube\.com|vimeo\.com)\//i.test(trimmed)) {
-    return {
-      isEmbed: true,
-      isDirectVideo: false,
-      embedUrl: sanitizeUrl(trimmed),
-    };
-  }
-
-  // Fallback to verified active SQL tutorial video
-  return { isEmbed: true, isDirectVideo: false, embedUrl: VERIFIED_FALLBACK_EMBED };
+  // Default to native HTML5 direct video if URL is not a recognized YouTube/Vimeo embed
+  return { isEmbed: false, isDirectVideo: true, embedUrl: FALLBACK_HTML5_VIDEO };
 }

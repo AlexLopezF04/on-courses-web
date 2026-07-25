@@ -338,7 +338,7 @@ export const LessonPlayerPage: React.FC = () => {
               )}
             </div>
 
-            {/* Embedded Video Player */}
+            {/* HTML5 Native Video / Embedded Video Player */}
             {(() => {
               const { isDirectVideo, embedUrl } = getEmbedVideoUrl(currentLesson.video_url);
               return (
@@ -346,23 +346,28 @@ export const LessonPlayerPage: React.FC = () => {
                   <div className="flex items-center justify-between px-4 py-2 bg-slate-900 border-b-2 border-slate-950 text-xs font-mono font-bold text-brand-400">
                     <div className="flex items-center gap-2">
                       <Play className="h-4 w-4 fill-current text-brand-400" />
-                      <span>CLASE EN VIDEO · ONCOURSES PLAYER</span>
+                      <span>REPRODUCTOR DE VIDEO HTML5 · ONCOURSES</span>
                     </div>
-                    <span className="text-[10px] text-slate-400">HD 1080p</span>
+                    <span className="text-[10px] text-slate-400">REPRODUCCIÓN DIRECTA MP4 / HD</span>
                   </div>
-                  <div className="relative aspect-video bg-black">
+                  <div className="relative aspect-video bg-black flex items-center justify-center">
                     {isDirectVideo ? (
                       <video
+                        key={embedUrl}
                         src={embedUrl}
                         controls
-                        className="w-full h-full object-contain"
-                      />
+                        playsInline
+                        preload="metadata"
+                        className="w-full h-full object-contain focus:outline-none"
+                      >
+                        Tu navegador no soporta reproducción directa de video HTML5.
+                      </video>
                     ) : (
                       <iframe
                         src={embedUrl}
                         title={currentLesson.title}
                         className="w-full h-full border-0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         allowFullScreen
                       />
                     )}
