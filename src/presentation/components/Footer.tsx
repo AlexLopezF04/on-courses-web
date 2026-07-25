@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { BookOpen, Info, Mailbox, Database, Code, Terminal, GitBranch, Building2, MapPin, ShieldCheck } from 'lucide-react';
+import { BookOpen, Info, Mailbox, Database, Code, Terminal, GitBranch, Building2, MapPin, ShieldCheck, X } from 'lucide-react';
 import { Logo } from './Logo';
 import { LegalModal, PricingModal, AboutModal, NewsletterModal } from './FooterModals';
 
@@ -120,21 +120,38 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Giant Brand Banner with Soft Mint Green Retro Shadow Offset & Theme Toggle Support */}
-        <div className="group relative mt-16 py-10 px-4 border-2 border-slate-950 bg-white dark:bg-slate-950 text-slate-950 dark:text-white shadow-[6px_6px_0px_0px_#86efac] dark:shadow-[6px_6px_0px_0px_#7effa0] overflow-hidden flex items-center justify-center select-none transition-all duration-300 hover:translate-x-[-3px] hover:translate-y-[-3px] hover:shadow-[10px_10px_0px_0px_#86efac] dark:hover:shadow-[10px_10px_0px_0px_#7effa0] cursor-pointer">
-          {/* Light mode grid */}
-          <div className="block dark:hidden animate-grid transition-none absolute inset-0 bg-[linear-gradient(rgba(0,200,50,0.18)_1px,transparent_1px),linear-gradient(90deg,rgba(0,200,50,0.12)_1px,transparent_1px)] bg-[size:36px_36px] pointer-events-none" />
+        {/* Giant Brand Banner Window Frame with Soft Mint Green Retro Shadow Offset */}
+        <div className="group relative mt-16 border-2 border-slate-950 bg-white dark:bg-slate-950 text-slate-950 dark:text-white shadow-[6px_6px_0px_0px_#86efac] dark:shadow-[6px_6px_0px_0px_#7effa0] overflow-hidden flex flex-col select-none transition-all duration-300 hover:translate-x-[-3px] hover:translate-y-[-3px] hover:shadow-[10px_10px_0px_0px_#86efac] dark:hover:shadow-[10px_10px_0px_0px_#7effa0] cursor-pointer">
+          {/* Retro OS Window Chrome Header Bar */}
+          <div className="flex items-center justify-between px-4 py-1.5 bg-slate-100 dark:bg-slate-900 border-b-2 border-slate-950 transition-colors">
+            <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-300 font-mono" translate="no">
+              ONCOURSES.APP
+            </span>
+            <div className="flex items-center gap-1.5" translate="no">
+              <span className="w-5 h-5 flex items-center justify-center border-2 border-slate-950 text-[11px] font-black text-slate-950 dark:text-white bg-white dark:bg-slate-800 select-none shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">_</span>
+              <span className="w-5 h-5 flex items-center justify-center border-2 border-slate-950 text-[11px] font-black text-slate-950 dark:text-white bg-white dark:bg-slate-800 select-none shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">+</span>
+              <span className="w-5 h-5 flex items-center justify-center border-2 border-slate-950 text-[11px] font-black text-slate-950 dark:text-white bg-white dark:bg-slate-800 select-none shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]" aria-label="Cerrar">
+                <X className="h-3 w-3" />
+              </span>
+            </div>
+          </div>
 
-          {/* Dark mode grid */}
-          <div className="hidden dark:block animate-grid transition-none absolute inset-0 bg-[linear-gradient(rgba(0,255,65,0.25)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,65,0.16)_1px,transparent_1px)] bg-[size:36px_36px] pointer-events-none" />
-          
-          {/* Ambient Glow */}
-          <div className="absolute inset-0 bg-[#00cc33]/10 dark:bg-[#00ff41]/15 rounded-full blur-3xl pointer-events-none group-hover:scale-110 transition-transform duration-300" />
+          {/* Banner Body Container */}
+          <div className="relative py-10 px-4 overflow-hidden flex items-center justify-center">
+            {/* Light mode grid */}
+            <div className="block dark:hidden animate-grid transition-none absolute inset-0 bg-[linear-gradient(rgba(0,200,50,0.18)_1px,transparent_1px),linear-gradient(90deg,rgba(0,200,50,0.12)_1px,transparent_1px)] bg-[size:36px_36px] pointer-events-none" />
 
-          {/* Brand Logo Text with Hover Micro-Movement */}
-          <div className="relative z-10 font-display font-black text-5xl sm:text-7xl md:text-8xl lg:text-[9rem] tracking-tight uppercase leading-none text-center transition-transform duration-300 group-hover:scale-[1.02]">
-            <span className="text-slate-950 dark:text-white transition-colors duration-200">On</span>
-            <span className="text-[#00aa2e] dark:text-[#00ff41] drop-shadow-[0_4px_16px_rgba(0,204,51,0.3)] dark:drop-shadow-[0_4px_24px_rgba(0,255,65,0.5)] transition-colors duration-200">Courses</span>
+            {/* Dark mode grid */}
+            <div className="hidden dark:block animate-grid transition-none absolute inset-0 bg-[linear-gradient(rgba(0,255,65,0.25)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,65,0.16)_1px,transparent_1px)] bg-[size:36px_36px] pointer-events-none" />
+            
+            {/* Ambient Glow */}
+            <div className="absolute inset-0 bg-[#00cc33]/10 dark:bg-[#00ff41]/15 rounded-full blur-3xl pointer-events-none group-hover:scale-110 transition-transform duration-300" />
+
+            {/* Brand Logo Text with Hover Micro-Movement */}
+            <div className="relative z-10 font-display font-black text-5xl sm:text-7xl md:text-8xl lg:text-[9rem] tracking-tight uppercase leading-none text-center transition-transform duration-300 group-hover:scale-[1.02]">
+              <span className="text-slate-950 dark:text-white transition-colors duration-200">On</span>
+              <span className="text-[#00aa2e] dark:text-[#00ff41] drop-shadow-[0_4px_16px_rgba(0,204,51,0.3)] dark:drop-shadow-[0_4px_24px_rgba(0,255,65,0.5)] transition-colors duration-200">Courses</span>
+            </div>
           </div>
         </div>
 
