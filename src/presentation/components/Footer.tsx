@@ -84,7 +84,7 @@ export const Footer: React.FC = () => {
               Cursos Destacados
             </h3>
             <div className="flex flex-col gap-2.5 text-xs sm:text-sm font-sans font-semibold">
-              <Link to="/courses/3" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center gap-2 hover:text-[#00cc33] transition-colors">
+              <Link to="/courses/103" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center gap-2 hover:text-[#00cc33] transition-colors">
                 <Terminal className="h-4 w-4 text-emerald-500" />
                 <span>Bash y terminal</span>
               </Link>
@@ -92,11 +92,11 @@ export const Footer: React.FC = () => {
                 <Code className="h-4 w-4 text-blue-500" />
                 <span>Python</span>
               </Link>
-              <Link to="/courses/10" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center gap-2 hover:text-[#00cc33] transition-colors">
+              <Link to="/courses/110" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center gap-2 hover:text-[#00cc33] transition-colors">
                 <Code className="h-4 w-4 text-yellow-500" />
                 <span>JavaScript</span>
               </Link>
-              <Link to="/courses/4" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center gap-2 hover:text-[#00cc33] transition-colors">
+              <Link to="/courses/104" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center gap-2 hover:text-[#00cc33] transition-colors">
                 <GitBranch className="h-4 w-4 text-brand-500" />
                 <span>Git y GitHub</span>
               </Link>

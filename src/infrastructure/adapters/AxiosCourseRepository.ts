@@ -7,36 +7,96 @@ import { enrichCourseData, getFallbackCourse } from '../data/CourseSeedData';
 
 export class AxiosCourseRepository implements ICourseRepository {
   async getCourses(filters?: any): Promise<PaginatedResult<Course>> {
+    // Master list of seed course IDs representing all unique topics
+    const seedCatalogIds = [1, 2, 5, 6, 7, 8, 103, 104, 109, 110];
+
     try {
       const response = await axiosClient.get('/courses/', { params: filters });
+      let rawResults: Course[] = [];
       if (response.data && Array.isArray(response.data.results)) {
-        const enrichedResults = response.data.results.map(enrichCourseData);
-        return {
-          results: enrichedResults,
-          count: response.data.count || enrichedResults.length,
-          next: response.data.next || null,
-          previous: response.data.previous || null,
-        };
+        rawResults = response.data.results;
+      } else if (Array.isArray(response.data)) {
+        rawResults = response.data;
       }
-      if (Array.isArray(response.data)) {
-        const enrichedResults = response.data.map(enrichCourseData);
-        return {
-          results: enrichedResults,
-          count: enrichedResults.length,
-          next: null,
-          previous: null,
-        };
+
+      const enrichedBackend = rawResults.map(enrichCourseData);
+
+      // Build master catalog map
+      const masterCoursesMap = new Map<number, Course>();
+
+      // 1. Populate all seed topics
+      for (const id of seedCatalogIds) {
+        masterCoursesMap.set(id, getFallbackCourse(id));
       }
-      return { results: [], count: 0, next: null, previous: null };
+
+      // 2. Insert/Enrich backend courses
+      for (const bCourse of enrichedBackend) {
+        const fallback = getFallbackCourse(bCourse.id);
+        const fallbackModLen = fallback.modules?.length || 0;
+        const bModLen = bCourse.modules?.length || 0;
+        const merged: Course = {
+          ...bCourse,
+          modules: bModLen >= fallbackModLen ? bCourse.modules : fallback.modules,
+        };
+        masterCoursesMap.set(bCourse.id, merged);
+      }
+
+      let allCourses = Array.from(masterCoursesMap.values());
+
+      // Filter by search query if provided
+      if (filters?.search) {
+        const query = String(filters.search).toLowerCase();
+        allCourses = allCourses.filter(
+          (c) =>
+            c.title.toLowerCase().includes(query) ||
+            (c.description || '').toLowerCase().includes(query) ||
+            (c.slug || '').toLowerCase().includes(query) ||
+            (c.category_name || '').toLowerCase().includes(query)
+        );
+      }
+
+      return {
+        results: allCourses,
+        count: allCourses.length,
+        next: null,
+        previous: null,
+      };
     } catch (error) {
-      throw parseApiError(error);
+      console.warn('Backend getCourses failed, returning master seed catalog', error);
+      let fallbackCourses = seedCatalogIds.map((id) => getFallbackCourse(id));
+      if (filters?.search) {
+        const query = String(filters.search).toLowerCase();
+        fallbackCourses = fallbackCourses.filter(
+          (c) =>
+            c.title.toLowerCase().includes(query) ||
+            (c.description || '').toLowerCase().includes(query) ||
+            (c.slug || '').toLowerCase().includes(query)
+        );
+      }
+      return {
+        results: fallbackCourses,
+        count: fallbackCourses.length,
+        next: null,
+        previous: null,
+      };
     }
   }
 
   async getCourseById(id: number): Promise<Course> {
     try {
       const response = await axiosClient.get(`/courses/${id}/`);
-      return enrichCourseData(response.data);
+      const enriched = enrichCourseData(response.data);
+      const fallback = getFallbackCourse(id);
+      const enrichedModLen = enriched.modules?.length || 0;
+      const fallbackModLen = fallback.modules?.length || 0;
+
+      if (enrichedModLen >= fallbackModLen) {
+        return enriched;
+      }
+      return {
+        ...enriched,
+        modules: fallback.modules,
+      };
     } catch (error) {
       console.warn(`Backend failed for course ${id}, using fallback seed data`, error);
       return getFallbackCourse(id);
