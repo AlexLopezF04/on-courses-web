@@ -26,6 +26,28 @@ export function saveCustomCover(courseId: number, coverDataUrl: string): void {
   }
 }
 
+export function getSavedActiveState(courseId: number): boolean | null {
+  try {
+    const states = JSON.parse(localStorage.getItem('oncourses_custom_active_states') || '{}');
+    if (typeof states[courseId] === 'boolean') {
+      return states[courseId];
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+export function saveActiveState(courseId: number, isActive: boolean): void {
+  try {
+    const states = JSON.parse(localStorage.getItem('oncourses_custom_active_states') || '{}');
+    states[courseId] = isActive;
+    localStorage.setItem('oncourses_custom_active_states', JSON.stringify(states));
+  } catch (err) {
+    console.warn('Failed to save active state to localStorage', err);
+  }
+}
+
 export const COURSE_SEED_DETAILS: Record<string, RichCourseData> = {
   // Course 1: Python 3: Desde Cero hasta Inteligencia Artificial (COMPLETO 100%)
   python: {
@@ -432,6 +454,7 @@ export function enrichCourseData(course: Course): Course {
 
   const seed = COURSE_SEED_DETAILS[seedKey] || COURSE_SEED_DETAILS.python;
   const savedCover = getSavedCustomCover(canonicalId);
+  const savedActive = getSavedActiveState(canonicalId);
 
   const sourceModules =
     course.modules && course.modules.length >= seed.modules.length ? course.modules : seed.modules;
@@ -449,6 +472,7 @@ export function enrichCourseData(course: Course): Course {
     ...course,
     id: canonicalId,
     cover_image: savedCover || course.cover_image || seed.cover_image,
+    is_active: savedActive !== null ? savedActive : (course.is_active ?? true),
     description: course.description && course.description.length > 20 ? course.description : seed.description,
     modules: cleanedModules,
   };
@@ -487,6 +511,7 @@ export function getFallbackCourse(id: number): Course {
 
   const seed = COURSE_SEED_DETAILS[seedKey] || COURSE_SEED_DETAILS.python;
   const savedCover = getSavedCustomCover(canonicalId);
+  const savedActive = getSavedActiveState(canonicalId);
 
   return {
     id: canonicalId,
@@ -497,7 +522,7 @@ export function getFallbackCourse(id: number): Course {
     category: 1,
     category_name: 'Desarrollo de Software',
     professor_name: 'Prof. Alex López',
-    is_active: true,
+    is_active: savedActive !== null ? savedActive : true,
     modules_count: seed.modules.length,
     created_at: new Date().toISOString(),
     description: seed.description,
