@@ -622,18 +622,32 @@ export function enrichCourseData(course: Course): Course {
     titleLower.includes('postgres') ||
     titleLower.includes('base') ||
     slugLower.includes('sql') ||
-    slugLower.includes('postgres')
+    slugLower.includes('postgres') ||
+    course.id === 5
   ) {
     seedKey = 'postgresql';
   }
 
   const seed = COURSE_SEED_DETAILS[seedKey] || COURSE_SEED_DETAILS.postgresql;
 
+  // Prefer seed.modules if backend has fewer modules than seed (e.g. 1 module vs 3 modules)
+  const sourceModules =
+    course.modules && course.modules.length >= seed.modules.length ? course.modules : seed.modules;
+
+  const cleanedModules = sourceModules.map((mod) => ({
+    ...mod,
+    course: course.id,
+    lessons: (mod.lessons || []).map((les) => ({
+      ...les,
+      video_url: (les.video_url || '').includes('kUMe1FH4CHE') ? '' : les.video_url,
+    })),
+  }));
+
   return {
     ...course,
     cover_image: course.cover_image || seed.cover_image,
     description: course.description && course.description.length > 20 ? course.description : seed.description,
-    modules: course.modules && course.modules.length > 0 ? course.modules : seed.modules,
+    modules: cleanedModules,
   };
 }
 

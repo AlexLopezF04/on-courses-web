@@ -39,10 +39,10 @@ export const LessonPlayerPage: React.FC = () => {
       try {
         const courseData = await getCourseByIdUseCase.execute(idCourse);
 
-        // Enrich modules with lessons
+        // Enrich modules with lessons if backend has equal or more modules
         try {
           const modulesData = await getModulesUseCase.execute(idCourse);
-          if (modulesData && modulesData.length > 0) {
+          if (modulesData && modulesData.length >= (courseData.modules?.length || 0)) {
             const modulesWithLessons = await Promise.all(
               modulesData.map(async (mod) => {
                 try {
@@ -64,6 +64,17 @@ export const LessonPlayerPage: React.FC = () => {
           }
         } catch (modErr) {
           console.warn('Could not fetch modules/lessons in player', modErr);
+        }
+
+        // Clean any broken video_urls
+        if (courseData.modules) {
+          courseData.modules = courseData.modules.map((mod) => ({
+            ...mod,
+            lessons: (mod.lessons || []).map((les) => ({
+              ...les,
+              video_url: (les.video_url || '').includes('kUMe1FH4CHE') ? '' : les.video_url,
+            })),
+          }));
         }
 
         setCourse(courseData);
