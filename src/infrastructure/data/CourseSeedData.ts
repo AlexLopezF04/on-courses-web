@@ -7,6 +7,25 @@ export interface RichCourseData {
   modules: Module[];
 }
 
+export function getSavedCustomCover(courseId: number): string | null {
+  try {
+    const customCovers = JSON.parse(localStorage.getItem('oncourses_custom_covers') || '{}');
+    return customCovers[courseId] || null;
+  } catch {
+    return null;
+  }
+}
+
+export function saveCustomCover(courseId: number, coverDataUrl: string): void {
+  try {
+    const customCovers = JSON.parse(localStorage.getItem('oncourses_custom_covers') || '{}');
+    customCovers[courseId] = coverDataUrl;
+    localStorage.setItem('oncourses_custom_covers', JSON.stringify(customCovers));
+  } catch (err) {
+    console.warn('Failed to save custom cover to localStorage', err);
+  }
+}
+
 export const COURSE_SEED_DETAILS: Record<string, RichCourseData> = {
   // Course 1: Python 3: Desde Cero hasta Inteligencia Artificial (COMPLETO 100%)
   python: {
@@ -412,6 +431,7 @@ export function enrichCourseData(course: Course): Course {
   else if (canonicalId === 10) seedKey = 'javascript';
 
   const seed = COURSE_SEED_DETAILS[seedKey] || COURSE_SEED_DETAILS.python;
+  const savedCover = getSavedCustomCover(canonicalId);
 
   const sourceModules =
     course.modules && course.modules.length >= seed.modules.length ? course.modules : seed.modules;
@@ -428,7 +448,7 @@ export function enrichCourseData(course: Course): Course {
   return {
     ...course,
     id: canonicalId,
-    cover_image: course.cover_image || seed.cover_image,
+    cover_image: savedCover || course.cover_image || seed.cover_image,
     description: course.description && course.description.length > 20 ? course.description : seed.description,
     modules: cleanedModules,
   };
@@ -466,13 +486,14 @@ export function getFallbackCourse(id: number): Course {
   else if (canonicalId === 10) seedKey = 'javascript';
 
   const seed = COURSE_SEED_DETAILS[seedKey] || COURSE_SEED_DETAILS.python;
+  const savedCover = getSavedCustomCover(canonicalId);
 
   return {
     id: canonicalId,
     title: title,
     slug: `curso-${canonicalId}`,
     price: canonicalId % 2 === 0 ? '19.99' : '9.99',
-    cover_image: seed.cover_image,
+    cover_image: savedCover || seed.cover_image,
     category: 1,
     category_name: 'Desarrollo de Software',
     professor_name: 'Prof. Alex López',

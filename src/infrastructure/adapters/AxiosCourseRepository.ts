@@ -2,7 +2,22 @@ import { ICourseRepository } from '@domain/ports/ICourseRepository';
 import { Course } from '@domain/entities/Course';
 import { PaginatedResult } from '@domain/entities/PaginatedResult';
 import { axiosClient } from '../http/axios-client';
-import { enrichCourseData, getFallbackCourse, getCanonicalCourseId } from '../data/CourseSeedData';
+import {
+  enrichCourseData,
+  getFallbackCourse,
+  getCanonicalCourseId,
+  getSavedCustomCover,
+  saveCustomCover,
+} from '../data/CourseSeedData';
+
+function readFileAsDataUrl(file: File): Promise<string> {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = () => resolve(URL.createObjectURL(file));
+    reader.readAsDataURL(file);
+  });
+}
 
 export class AxiosCourseRepository implements ICourseRepository {
   async getCourses(filters?: any): Promise<PaginatedResult<Course>> {
@@ -35,12 +50,14 @@ export class AxiosCourseRepository implements ICourseRepository {
           const fallback = getFallbackCourse(canonicalId);
           const fallbackModLen = fallback.modules?.length || 0;
           const bModLen = bCourse.modules?.length || 0;
+          const savedCover = getSavedCustomCover(canonicalId);
 
           const merged: Course = {
             ...fallback,
             ...bCourse,
             id: canonicalId,
             title: fallback.title, // Enforce clean canonical title
+            cover_image: savedCover || bCourse.cover_image || fallback.cover_image,
             modules: bModLen >= fallbackModLen ? bCourse.modules : fallback.modules,
           };
           masterCoursesMap.set(canonicalId, merged);
@@ -101,16 +118,17 @@ export class AxiosCourseRepository implements ICourseRepository {
       // Verify if backend course title matches the canonical topic for targetId
       const targetTopicKeyword = fallback.title.split(' ')[0].toLowerCase();
       const backendTitleLower = (enriched.title || '').toLowerCase();
+      const savedCover = getSavedCustomCover(targetId);
 
       if (backendTitleLower.includes(targetTopicKeyword)) {
         return {
           ...enriched,
           id: targetId,
           title: fallback.title,
+          cover_image: savedCover || enriched.cover_image || fallback.cover_image,
           modules: enrichedModLen >= fallbackModLen ? enriched.modules : fallback.modules,
         };
       }
-      // If backend returned a different course topic at this ID, return canonical fallback
       return fallback;
     } catch (error) {
       console.warn(`Backend failed for course ${targetId}, using canonical fallback seed data`, error);
@@ -119,6 +137,22 @@ export class AxiosCourseRepository implements ICourseRepository {
   }
 
   async createCourse(course: any): Promise<Course> {
+    const newId = Date.now();
+    let localCoverUrl = '';
+    let fileObj: File | null = null;
+
+    if (course instanceof FormData) {
+      const f = course.get('cover_image');
+      if (f instanceof File) fileObj = f;
+    } else if (course && course.cover_image instanceof File) {
+      fileObj = course.cover_image;
+    }
+
+    if (fileObj) {
+      localCoverUrl = await readFileAsDataUrl(fileObj);
+      saveCustomCover(newId, localCoverUrl);
+    }
+
     try {
       let payload = course;
       let headers: Record<string, string> = {};
@@ -142,21 +176,14 @@ export class AxiosCourseRepository implements ICourseRepository {
       }
 
       const response = await axiosClient.post('/courses/', payload, { headers });
-      return enrichCourseData(response.data);
+      const enriched = enrichCourseData(response.data);
+      if (localCoverUrl) {
+        saveCustomCover(enriched.id, localCoverUrl);
+        enriched.cover_image = localCoverUrl;
+      }
+      return enriched;
     } catch (error) {
       console.warn('Backend createCourse failed, creating local course instance', error);
-      const newId = Date.now();
-      let localCoverUrl = '';
-
-      if (course instanceof FormData) {
-        const file = course.get('cover_image');
-        if (file instanceof File) {
-          localCoverUrl = URL.createObjectURL(file);
-        }
-      } else if (course && course.cover_image instanceof File) {
-        localCoverUrl = URL.createObjectURL(course.cover_image);
-      }
-
       const title = course instanceof FormData ? String(course.get('title') || '') : (course.title || 'Nuevo Curso');
       const fallback = getFallbackCourse(1);
 
@@ -170,6 +197,22 @@ export class AxiosCourseRepository implements ICourseRepository {
   }
 
   async updateCourse(id: number, course: any): Promise<Course> {
+    const targetId = getCanonicalCourseId({ id, title: '' });
+    let localCoverUrl = '';
+    let fileObj: File | null = null;
+
+    if (course instanceof FormData) {
+      const f = course.get('cover_image');
+      if (f instanceof File) fileObj = f;
+    } else if (course && course.cover_image instanceof File) {
+      fileObj = course.cover_image;
+    }
+
+    if (fileObj) {
+      localCoverUrl = await readFileAsDataUrl(fileObj);
+      saveCustomCover(targetId, localCoverUrl);
+    }
+
     try {
       let payload = course;
       let headers: Record<string, string> = {};
@@ -192,21 +235,17 @@ export class AxiosCourseRepository implements ICourseRepository {
         headers['Content-Type'] = 'multipart/form-data';
       }
 
-      const response = await axiosClient.patch(`/courses/${id}/`, payload, { headers });
-      return enrichCourseData(response.data);
-    } catch (error) {
-      console.warn(`Backend updateCourse failed for course ${id}, returning enriched local update`, error);
-      const fallback = getFallbackCourse(id);
-      let localCoverUrl = fallback.cover_image;
-
-      if (course instanceof FormData) {
-        const file = course.get('cover_image');
-        if (file instanceof File) {
-          localCoverUrl = URL.createObjectURL(file);
-        }
-      } else if (course && course.cover_image instanceof File) {
-        localCoverUrl = URL.createObjectURL(course.cover_image);
+      const response = await axiosClient.patch(`/courses/${targetId}/`, payload, { headers });
+      const enriched = enrichCourseData(response.data);
+      if (localCoverUrl) {
+        saveCustomCover(targetId, localCoverUrl);
+        enriched.cover_image = localCoverUrl;
       }
+      return enriched;
+    } catch (error) {
+      console.warn(`Backend updateCourse failed for course ${targetId}, returning enriched local update`, error);
+      const fallback = getFallbackCourse(targetId);
+      const savedCover = getSavedCustomCover(targetId);
 
       const plainFields: Record<string, any> = {};
       if (course instanceof FormData) {
@@ -224,8 +263,8 @@ export class AxiosCourseRepository implements ICourseRepository {
       return {
         ...fallback,
         ...plainFields,
-        id,
-        cover_image: localCoverUrl,
+        id: targetId,
+        cover_image: localCoverUrl || savedCover || fallback.cover_image,
       };
     }
   }
