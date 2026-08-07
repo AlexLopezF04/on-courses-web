@@ -6,6 +6,10 @@ Este proyecto se conecta a la API REST de Django en producción: `https://on-cou
 
 ---
 
+![OnCourses](./img/home-1.png)
+
+---
+
 ## 🛠️ Arquitectura del Proyecto
 
 El proyecto sigue una estructura desacoplada que separa la lógica del negocio de los detalles de infraestructura y presentación:
@@ -118,7 +122,17 @@ Para facilitar la evaluación docente, se encuentran creadas y configuradas en e
 
 ---
 
+![OnCourses](./img/login-1.png)
+
+--- 
+
 ## 🔗 Enlaces del Proyecto en Producción
 
 *   **Aplicación Frontend:** [https://on-courses.uaeftt-ute.site](https://on-courses.uaeftt-ute.site)
 *   **Servicio REST API (Backend):** [https://on-courses-api.uaeftt-ute.site/api/](https://on-courses-api.uaeftt-ute.site/api/)
+
+---
+
+![OnCourses](./img/home-2.png)
+
+--- 
