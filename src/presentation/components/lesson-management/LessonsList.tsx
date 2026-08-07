@@ -1,6 +1,6 @@
 import React from 'react';
 import { Lesson } from '@domain/entities/Lesson';
-import { FileText, Pencil, Trash2, Eye } from 'lucide-react';
+import { FileText, Pencil, Trash2, Eye, Plus } from 'lucide-react';
 
 interface LessonsListProps {
   lessons: Lesson[];
@@ -9,6 +9,7 @@ interface LessonsListProps {
   onEdit: (lesson: Lesson) => void;
   onPreview?: (lessonId: number) => void;
   onDelete: (id: number) => void;
+  onCreateLesson?: () => void;
 }
 
 export const LessonsList: React.FC<LessonsListProps> = ({
@@ -18,17 +19,34 @@ export const LessonsList: React.FC<LessonsListProps> = ({
   onEdit,
   onPreview,
   onDelete,
+  onCreateLesson,
 }) => {
   const filtered = lessons.filter((les) => les.module === selectedModuleId);
 
   return (
     <div className="lg:col-span-3 flex flex-col gap-4">
       <div className="border-2 border-slate-950 bg-white dark:bg-slate-900 p-6 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_#00b835]">
-        <h3 className="font-display font-black text-lg text-slate-950 dark:text-white mb-6 flex items-center justify-between border-b-2 border-slate-950 pb-3">
+        <h3 className="font-display font-black text-lg text-slate-950 dark:text-white mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b-2 border-slate-950 pb-3">
           <span>Temas del Módulo Seleccionado</span>
-          <span className="text-xs font-mono bg-brand-400 text-slate-950 px-2.5 py-0.5 border border-slate-950">
-            {filtered.length} Lecciones
-          </span>
+          <div className="flex items-center gap-2 shrink-0">
+            <span className="text-xs font-mono bg-[#00cc33] text-slate-950 font-extrabold px-2.5 py-1 border border-slate-950 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">
+              {filtered.length} {filtered.length === 1 ? 'Lección' : 'Lecciones'}
+            </span>
+            {onCreateLesson && (
+              <button
+                type="button"
+                onClick={onCreateLesson}
+                disabled={selectedModuleId === ''}
+                className={`px-3 py-1 bg-[#00cc33] hover:bg-[#00ff41] text-slate-950 font-mono font-black text-xs uppercase tracking-wider border-2 border-slate-950 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all flex items-center gap-1.5 cursor-pointer ${
+                  selectedModuleId === '' ? 'opacity-50 cursor-not-allowed bg-slate-200' : ''
+                }`}
+                title="Crear una nueva lección/tema para este módulo"
+              >
+                <Plus className="h-4 w-4" />
+                <span>Nueva Lección</span>
+              </button>
+            )}
+          </div>
         </h3>
 
         <div className="divide-y-2 divide-slate-100 dark:divide-slate-850">
@@ -85,8 +103,20 @@ export const LessonsList: React.FC<LessonsListProps> = ({
               </div>
             ))
           ) : (
-            <div className="py-12 text-center text-slate-400 italic text-xs font-medium">
-              No hay lecciones en este módulo todavía.
+            <div className="py-12 text-center flex flex-col items-center justify-center gap-3">
+              <p className="text-slate-400 italic text-xs font-medium">
+                No hay lecciones en este módulo todavía.
+              </p>
+              {onCreateLesson && selectedModuleId !== '' && (
+                <button
+                  type="button"
+                  onClick={onCreateLesson}
+                  className="px-4 py-2 bg-[#00cc33] hover:bg-[#00ff41] text-slate-950 font-mono font-black text-xs uppercase tracking-wider border-2 border-slate-950 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all flex items-center gap-2 cursor-pointer"
+                >
+                  <Plus className="h-4 w-4" />
+                  <span>Crear la Primera Lección de este Módulo</span>
+                </button>
+              )}
             </div>
           )}
         </div>

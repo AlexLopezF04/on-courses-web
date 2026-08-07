@@ -69,9 +69,12 @@ export const CourseTable: React.FC<CourseTableProps> = ({
                     </button>
                   </Link>
                   <Link to={`/admin/courses/${c.id}/lessons`}>
-                    <button className="px-2.5 py-1 bg-brand-400 text-slate-950 font-extrabold text-[10px] uppercase tracking-wider border border-slate-950 hover:bg-brand-300 flex items-center gap-1 cursor-pointer">
+                    <button 
+                      className="px-2.5 py-1 bg-[#00cc33] hover:bg-[#00ff41] text-slate-950 font-extrabold text-[10px] uppercase tracking-wider border border-slate-950 shadow-[1.5px_1.5px_0px_0px_rgba(0,0,0,1)] flex items-center gap-1 cursor-pointer"
+                      title="Agregar y Gestionar Módulos y Lecciones de este Curso"
+                    >
                       <ListPlus className="h-3.5 w-3.5" />
-                      <span>Temas</span>
+                      <span>Módulos & Lecciones</span>
                     </button>
                   </Link>
                   <button

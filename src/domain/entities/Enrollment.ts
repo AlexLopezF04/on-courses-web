@@ -7,4 +7,6 @@ export interface Enrollment {
   enrolled_at: string;
   is_active: boolean;
   total_progress: string;
+  last_lesson_title?: string;
+  last_module_title?: string;
 }

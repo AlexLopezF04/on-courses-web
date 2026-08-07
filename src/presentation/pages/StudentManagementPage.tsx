@@ -6,8 +6,9 @@ import { getEnrollmentsUseCase } from '@infrastructure/factories/EnrollmentFacto
 import { getCoursesUseCase } from '@infrastructure/factories/CourseFactory';
 import { Enrollment } from '@domain/entities/Enrollment';
 import { Course } from '@domain/entities/Course';
-import { Search, Users, Filter, BookOpen, GraduationCap, Award, ArrowLeft, RefreshCw, CheckCircle2, Clock } from 'lucide-react';
+import { Search, Users, Filter, BookOpen, GraduationCap, Award, ArrowLeft, RefreshCw, CheckCircle2, Clock, MapPin, Eye } from 'lucide-react';
 import { Loader } from '../components/Loader';
+import { StudentProgressDetailModal } from '../components/student-management/StudentProgressDetailModal';
 
 // Seed sample enrollments for presentation demo when DB has few records
 const SAMPLE_ENROLLMENTS: Enrollment[] = [
@@ -19,7 +20,9 @@ const SAMPLE_ENROLLMENTS: Enrollment[] = [
     course_title: 'Python para Principiantes: Desde Cero a Pro',
     enrolled_at: '2026-07-15T14:30:00Z',
     is_active: true,
-    total_progress: '100.0'
+    total_progress: '100.0',
+    last_lesson_title: 'Lección 2.3: Certificación y Proyecto Final (Completo)',
+    last_module_title: 'Módulo 2: Proyecto Integrador'
   },
   {
     id: 102,
@@ -29,7 +32,9 @@ const SAMPLE_ENROLLMENTS: Enrollment[] = [
     course_title: 'JavaScript Moderno (ES6+) y Desarrollo Web',
     enrolled_at: '2026-07-18T09:15:00Z',
     is_active: true,
-    total_progress: '75.0'
+    total_progress: '75.0',
+    last_lesson_title: 'Lección 2.2: Autenticación JWT y LocalStorage',
+    last_module_title: 'Módulo 2: Asincronía y APIs REST'
   },
   {
     id: 103,
@@ -39,7 +44,9 @@ const SAMPLE_ENROLLMENTS: Enrollment[] = [
     course_title: 'Python para Principiantes: Desde Cero a Pro',
     enrolled_at: '2026-07-20T11:45:00Z',
     is_active: true,
-    total_progress: '40.0'
+    total_progress: '40.0',
+    last_lesson_title: 'Lección 1.2: Paginación Global y Serialización',
+    last_module_title: 'Módulo 1: Fundamentos y Entorno'
   },
   {
     id: 104,
@@ -49,7 +56,9 @@ const SAMPLE_ENROLLMENTS: Enrollment[] = [
     course_title: 'Terminal Bash, Linux y Línea de Comandos',
     enrolled_at: '2026-07-21T16:20:00Z',
     is_active: true,
-    total_progress: '85.0'
+    total_progress: '85.0',
+    last_lesson_title: 'Lección 2.1: Comandos de Red, SSH y Permisos chmod',
+    last_module_title: 'Módulo 2: Administración de Servidores'
   },
   {
     id: 105,
@@ -59,7 +68,9 @@ const SAMPLE_ENROLLMENTS: Enrollment[] = [
     course_title: 'Git y GitHub: Control de Versiones para Devs',
     enrolled_at: '2026-07-22T10:00:00Z',
     is_active: true,
-    total_progress: '100.0'
+    total_progress: '100.0',
+    last_lesson_title: 'Lección 3.2: Pull Requests y Merging Estratégico',
+    last_module_title: 'Módulo 3: Flujos Avanzados'
   },
   {
     id: 106,
@@ -69,7 +80,9 @@ const SAMPLE_ENROLLMENTS: Enrollment[] = [
     course_title: 'Bases de Datos SQL y Modelado Relacional',
     enrolled_at: '2026-07-22T15:10:00Z',
     is_active: true,
-    total_progress: '25.0'
+    total_progress: '25.0',
+    last_lesson_title: 'Lección 1.1: Introducción a Consultas SELECT y WHERE',
+    last_module_title: 'Módulo 1: Fundamentos de SQL'
   }
 ];
 
@@ -78,6 +91,7 @@ export const StudentManagementPage: React.FC = () => {
   const [enrollments, setEnrollments] = useState<Enrollment[]>([]);
   const [courses, setCourses] = useState<Course[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedProgressEnrollment, setSelectedProgressEnrollment] = useState<Enrollment | null>(null);
 
   // Filters state
   const [searchTerm, setSearchTerm] = useState('');
@@ -276,8 +290,8 @@ export const StudentManagementPage: React.FC = () => {
                 <tr className="bg-slate-50 dark:bg-slate-950 border-b-2 border-slate-950 text-[11px] font-black uppercase tracking-wider text-slate-700 dark:text-slate-300">
                   <th className="py-3.5 px-6">Estudiante</th>
                   <th className="py-3.5 px-6">Curso Matriculado</th>
-                  <th className="py-3.5 px-6">Fecha de Registro</th>
                   <th className="py-3.5 px-6">Progreso Académico</th>
+                  <th className="py-3.5 px-6">📍 Dónde Se Quedó (Última Lección)</th>
                   <th className="py-3.5 px-6">Estado</th>
                   <th className="py-3.5 px-6 text-right">Acción</th>
                 </tr>
@@ -292,46 +306,62 @@ export const StudentManagementPage: React.FC = () => {
                     year: 'numeric'
                   });
 
+                  const currentLesson = item.last_lesson_title || 
+                    (isCompleted ? 'Certificación Emitida' : 'Lección 1.2: Paginación y Serialización');
+
                   return (
                     <tr key={item.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
                       <td className="py-4 px-6">
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-full bg-brand-400 border border-slate-950 font-black text-slate-950 flex items-center justify-center text-xs shrink-0">
+                          <div className="w-8 h-8 rounded-full bg-[#00cc33] border border-slate-950 font-black text-slate-950 flex items-center justify-center text-xs shrink-0">
                             {item.user_name.charAt(0).toUpperCase()}
                           </div>
                           <div>
                             <span className="font-bold block text-slate-950 dark:text-white">
                               {item.user_name}
                             </span>
-                            <span className="text-[10px] text-slate-400">ID Usuario: #{item.user}</span>
+                            <span className="text-[10px] text-slate-400 font-mono">Reg: {formattedDate}</span>
                           </div>
                         </div>
                       </td>
 
                       <td className="py-4 px-6">
                         <div className="flex items-center gap-2">
-                          <BookOpen className="h-4 w-4 text-brand-500 shrink-0" />
+                          <BookOpen className="h-4 w-4 text-[#00cc33] shrink-0" />
                           <span className="font-bold text-slate-900 dark:text-slate-100">
                             {item.course_title}
                           </span>
                         </div>
                       </td>
 
-                      <td className="py-4 px-6 text-slate-500 dark:text-slate-400 font-mono text-[11px]">
-                        {formattedDate}
-                      </td>
-
-                      <td className="py-4 px-6 min-w-[160px]">
+                      <td className="py-4 px-6 min-w-[150px]">
                         <div className="flex items-center gap-3">
                           <div className="flex-1 h-3 bg-slate-200 dark:bg-slate-800 border border-slate-950 rounded-none overflow-hidden">
                             <div
                               className={`h-full transition-all duration-500 ${
-                                isCompleted ? 'bg-emerald-500' : 'bg-brand-500'
+                                isCompleted ? 'bg-emerald-500' : 'bg-[#00cc33]'
                               }`}
                               style={{ width: `${progressNum}%` }}
                             />
                           </div>
                           <span className="font-bold text-xs font-mono">{progressNum}%</span>
+                        </div>
+                      </td>
+
+                      {/* 📍 EXACT LOCATION WHERE STUDENT LEFT OFF */}
+                      <td className="py-4 px-6 min-w-[220px]">
+                        <div className="flex flex-col gap-1 p-2 bg-amber-50 dark:bg-slate-950 border border-slate-950">
+                          <div className="flex items-center gap-1.5 text-xs font-bold text-slate-950 dark:text-amber-300">
+                            <MapPin className="h-3.5 w-3.5 text-amber-600 dark:text-[#00cc33] shrink-0 animate-pulse" />
+                            <span className="truncate max-w-[200px]" title={currentLesson}>
+                              {currentLesson}
+                            </span>
+                          </div>
+                          {item.last_module_title && (
+                            <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400 truncate">
+                              {item.last_module_title}
+                            </span>
+                          )}
                         </div>
                       </td>
 
@@ -349,12 +379,21 @@ export const StudentManagementPage: React.FC = () => {
                         )}
                       </td>
 
-                      <td className="py-4 px-6 text-right">
+                      <td className="py-4 px-6 text-right space-x-2">
+                        <button
+                          type="button"
+                          onClick={() => setSelectedProgressEnrollment(item)}
+                          className="px-2.5 py-1.5 bg-[#00cc33] hover:bg-[#00ff41] text-slate-950 font-mono font-extrabold text-[10px] uppercase tracking-wider border border-slate-950 shadow-[1.5px_1.5px_0px_0px_rgba(0,0,0,1)] transition-all cursor-pointer inline-flex items-center gap-1"
+                        >
+                          <Eye className="h-3 w-3" />
+                          <span>Ver Avance</span>
+                        </button>
+
                         <Link
                           to={`/courses/${item.course}`}
-                          className="px-3 py-1.5 bg-slate-900 text-white dark:bg-white dark:text-slate-950 font-bold text-[10px] uppercase tracking-wider border border-slate-950 hover:bg-brand-500 dark:hover:bg-brand-400 transition-colors inline-block"
+                          className="px-2.5 py-1.5 bg-slate-900 text-white dark:bg-white dark:text-slate-950 font-bold text-[10px] uppercase tracking-wider border border-slate-950 hover:bg-[#00cc33] dark:hover:bg-[#00ff41] dark:hover:text-slate-950 transition-colors inline-block"
                         >
-                          Ver Curso ↗
+                          Ir al Curso ↗
                         </Link>
                       </td>
                     </tr>
@@ -369,6 +408,13 @@ export const StudentManagementPage: React.FC = () => {
           </div>
         )}
       </div>
+
+      {/* Student Progress Breakdown Modal */}
+      <StudentProgressDetailModal
+        isOpen={Boolean(selectedProgressEnrollment)}
+        onClose={() => setSelectedProgressEnrollment(null)}
+        enrollment={selectedProgressEnrollment}
+      />
     </Layout>
   );
 };

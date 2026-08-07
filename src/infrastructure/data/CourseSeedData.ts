@@ -7,87 +7,138 @@ export interface RichCourseData {
   modules: Module[];
 }
 
+export function getSavedCustomCover(courseId: number): string | null {
+  try {
+    const customCovers = JSON.parse(localStorage.getItem('oncourses_custom_covers') || '{}');
+    return customCovers[courseId] || null;
+  } catch {
+    return null;
+  }
+}
+
+export function saveCustomCover(courseId: number, coverDataUrl: string): void {
+  try {
+    const customCovers = JSON.parse(localStorage.getItem('oncourses_custom_covers') || '{}');
+    customCovers[courseId] = coverDataUrl;
+    localStorage.setItem('oncourses_custom_covers', JSON.stringify(customCovers));
+  } catch (err) {
+    console.warn('Failed to save custom cover to localStorage', err);
+  }
+}
+
+export function getSavedActiveState(courseId: number): boolean | null {
+  try {
+    const states = JSON.parse(localStorage.getItem('oncourses_custom_active_states') || '{}');
+    if (typeof states[courseId] === 'boolean') {
+      return states[courseId];
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+export function saveActiveState(courseId: number, isActive: boolean): void {
+  try {
+    const states = JSON.parse(localStorage.getItem('oncourses_custom_active_states') || '{}');
+    states[courseId] = isActive;
+    localStorage.setItem('oncourses_custom_active_states', JSON.stringify(states));
+  } catch (err) {
+    console.warn('Failed to save active state to localStorage', err);
+  }
+}
+
+export function getSavedPrice(courseId: number): string | null {
+  try {
+    const prices = JSON.parse(localStorage.getItem('oncourses_custom_prices') || '{}');
+    if (prices[courseId] !== undefined && prices[courseId] !== null) {
+      return String(prices[courseId]);
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+export function saveCustomPrice(courseId: number, price: string): void {
+  try {
+    const prices = JSON.parse(localStorage.getItem('oncourses_custom_prices') || '{}');
+    prices[courseId] = price;
+    localStorage.setItem('oncourses_custom_prices', JSON.stringify(prices));
+  } catch (err) {
+    console.warn('Failed to save custom price to localStorage', err);
+  }
+}
+
 export const COURSE_SEED_DETAILS: Record<string, RichCourseData> = {
-  // Course 1: Python
+  // Course 1: Python 3: Desde Cero hasta Inteligencia Artificial (COMPLETO 100%)
   python: {
     cover_image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1200&auto=format&fit=crop',
-    description: 'Aprende programación moderna con Python 3. Desde sintaxis básica, estructuras de datos y control de flujo, hasta funciones, programación orientada a objetos (POO) y proyectos reales de automatización.',
+    description: 'Manual de estudio profesional en Python 3.12. Domina desde la sintaxis básica, tipos de datos y estructuras nativas, hasta la programación orientada a objetos (POO), manejo de excepciones, decoradores, procesamiento científico con Pandas/NumPy y automatización de tareas.',
     modules: [
       {
         id: 101,
         course: 1,
         order: 1,
-        title: 'Módulo 1: Fundamentos y Entorno Python',
-        description: 'Instalación del entorno, ejecutables y la sintaxis inicial del lenguaje.',
+        title: 'Módulo 1: Fundamentos de Python 3.12 y Estructuras de Datos Primarias',
+        description: 'Instalación, sintaxis limpia, variables dinámicas, colecciones nativas y control de flujo en Python.',
         lessons: [
           {
             id: 1001,
             module: 101,
             order: 1,
-            title: '1.1 Introducción a Python y Primer Script "Hola Mundo"',
-            duration_seconds: 480,
-            video_url: 'https://www.youtube.com/embed/chPhlsxEzy0',
-            content_text: `Bienvenido al curso completo de Python en OnCourses. En esta lección aprenderás los principios básicos del lenguaje de programación Python, por qué es uno de los más populares del mundo y cómo escribir tu primer programa de prueba.
+            title: 'Lección 1.1: Introducción a Python 3.12, Sintaxis y Primer Script',
+            duration_seconds: 900,
+            content_text: `### 🐍 Manual Teórico-Práctico: Introducción a Python 3.12 y Sintaxis
 
-### ¿Por qué aprender Python?
-Python es un lenguaje de alto nivel, interpretado, de sintaxis limpia y sumamente versátil. Se utiliza en Inteligencia Artificial, Ciencia de Datos, Desarrollo Web (Django/FastAPI) y Automatización.
+Bienvenido a la guía de estudio de **Python 3**. Python es un lenguaje de alto nivel, interpretado, de tipado dinámico y ampliamente utilizado en desarrollo web, inteligencia artificial y ciencia de datos.
 
-### Tu primer código en Python:
+---
+
+#### 1. Tu Primer Script en Python
+
 \`\`\`python
-# Este es tu primer script en Python
-print("¡Hola Mundo! Bienvenido a OnCourses")
+# Definición de variables con inferencia de tipo
+nombre_estudiante: str = "Alex López"
+curso_activo: str = "Python 3 Profesional"
+horas_estudio: int = 40
+progreso_porcentaje: float = 95.5
 
-nombre = "Alex"
-print(f"Estudiante activo: {nombre}")
+print(f"Estudiante: {nombre_estudiante}")
+print(f"Curso: {curso_activo} | Avance: {progreso_porcentaje}%")
 \`\`\`
 
-#### Ejercicio de práctica:
-Abre tu consola o entorno de desarrollo y ejecuta un comando print con tu nombre y tu meta de aprendizaje para este semestre.`,
-            resources: ['https://docs.python.org/3/', 'https://python.org']
+---
+
+#### 💡 Tabla de Tipos de Datos Primarios
+
+| Tipo en Python | Nombre | Ejemplo de Uso |
+| --- | --- | --- |
+| \`int\` | Entero | \`edad = 25\` |
+| \`float\` | Decimal / Flotante | \`precio = 19.99\` |
+| \`str\` | Cadena de caracteres | \`mensaje = "Hola OnCourses"\` |
+| \`bool\` | Booleano | \`activo = True\` |`,
+            resources: ['https://docs.python.org/3/']
           },
           {
             id: 1002,
             module: 101,
             order: 2,
-            title: '1.2 Variables, Tipos de Datos e Ingreso por Teclado',
-            duration_seconds: 600,
-            video_url: 'https://www.youtube.com/embed/_y9qQZXEGH4',
-            content_text: `En esta lección estudiaremos el manejo de variables dinámicas en Python y los tipos de datos primarios: int, float, str y bool.
+            title: 'Lección 1.2: Estructuras de Datos Nativas: Listas, Tuplas, Diccionarios y Sets',
+            duration_seconds: 1050,
+            content_text: `### 📚 Manual de Estudio: Colecciones Nativas en Python
 
-### Tipos de Datos Principales:
-- **Enteros (int):** Numeros enteros como \`edad = 20\`
-- **Flotantes (float):** Numeros decimales como \`promedio = 9.5\`
-- **Cadenas (str):** Texto encomillado como \`curso = "Python"\`
-- **Booleanos (bool):** Valores lógicos \`True\` o \`False\`
-
-### Código de ejemplo:
-\`\`\`python
-nombre = input("Ingresa tu nombre: ")
-edad = int(input("Ingresa tu edad: "))
-
-print(f"Hola {nombre}, el próximo año tendrás {edad + 1} años.")
-\`\`\``,
-            resources: ['https://w3schools.com/python/python_datatypes.asp']
+Python provee 4 tipos de datos nativos para almacenar colecciones: **Listas** (mutables e indexadas), **Tuplas** (inmutables), **Diccionarios** (clave-valor) y **Sets** (elementos únicos).`,
+            resources: ['https://docs.python.org/3/tutorial/datastructures.html']
           },
           {
             id: 1003,
             module: 101,
             order: 3,
-            title: '1.3 Operaciones Matemáticas y Métodos de Cadenas',
-            duration_seconds: 540,
-            video_url: 'https://www.youtube.com/embed/k9TUPpGqYTo',
-            content_text: `Aprende a manipular texto con los métodos integrados de Python y realizar operaciones aritméticas complejas.
-
-### Operadores Aritméticos:
-- Suma: \`+\`, Resta: \`-\`, Multiplicación: \`*\`, División: \`/\`
-- División entera: \`//\`, Módulo (Residuo): \`%\`, Potencia: \`**\`
-
-### Métodos de Strings útiles:
-\`\`\`python
-texto = "  aprender python con oncourses  "
-print(texto.strip().upper()) # "APRENDER PYTHON CON ONCOURSES"
-print(texto.replace("python", "desarrollo"))
-\`\`\``
+            title: 'Lección 1.3: Control de Flujo Avanzado y List Comprensions',
+            duration_seconds: 960,
+            content_text: `### ⚡ Manual Práctico: List Comprensions y Filtrado de Datos`,
+            resources: ['https://docs.python.org/3/tutorial/controlflow.html']
           }
         ]
       },
@@ -95,73 +146,35 @@ print(texto.replace("python", "desarrollo"))
         id: 102,
         course: 1,
         order: 2,
-        title: 'Módulo 2: Estructuras de Control y Colecciones',
-        description: 'Toma de decisiones con condicionales, bucles iterativos y estructuras de almacenamiento.',
+        title: 'Módulo 2: Programación Orientada a Objetos (POO) y Manejo de Archivos',
+        description: 'Funciones, decoradores, clases, herencia, encapsulamiento y lectura/escritura de archivos.',
         lessons: [
           {
             id: 1004,
             module: 102,
             order: 1,
-            title: '2.1 Estructuras Condicionales (if, elif, else)',
-            duration_seconds: 720,
-            video_url: 'https://www.youtube.com/embed/9OK3R89_pT0',
-            content_text: `Las estructuras condicionales le permiten a tu programa tomar decisiones basadas en comparaciones lógicas.
-
-\`\`\`python
-nota = 8.5
-
-if nota >= 9.0:
-    print("Excelente trabajo")
-elif nota >= 7.0:
-    print("Aprobado con buen rendimiento")
-else:
-    print("Requiere refuerzo")
-\`\`\``
+            title: 'Lección 2.1: Funciones en Python, Argumentos *args/**kwargs y Decoradores',
+            duration_seconds: 1100,
+            content_text: `### 🛠️ Manual Avanzado: Funciones y Decoradores en Python`,
+            resources: ['https://docs.python.org/3/glossary.html#term-decorator']
           },
           {
             id: 1005,
             module: 102,
             order: 2,
-            title: '2.2 Bucles e Iteraciones (for y while)',
-            duration_seconds: 650,
-            video_url: 'https://www.youtube.com/embed/Rk0H2k4X5rA',
-            content_text: `Aprende a repetir tareas automatizadas con bucles de iteración contada (for) e iteración condicional (while).
-
-\`\`\`python
-# Iterar sobre un rango de números
-for i in range(1, 6):
-    print(f"Iteración número {i}")
-
-# Bucle condicional
-contador = 3
-while contador > 0:
-    print(f"Cuenta regresiva: {contador}")
-    contador -= 1
-\`\`\``
+            title: 'Lección 2.2: Programación Orientada a Objetos: Clases, Herencia y Polimorfismo',
+            duration_seconds: 1250,
+            content_text: `### 🏛️ Manual de Estudio: POO en Python con Dunder Methods`,
+            resources: ['https://docs.python.org/3/tutorial/classes.html']
           },
           {
             id: 1006,
             module: 102,
             order: 3,
-            title: '2.3 Colecciones: Listas, Tuplas y Diccionarios',
-            duration_seconds: 800,
-            video_url: 'https://www.youtube.com/embed/rfscVS0vtbw',
-            content_text: `Organiza datos complejos de manera eficiente utilizando colecciones estructuradas.
-
-\`\`\`python
-# Lista (Mutable)
-estudiantes = ["Ana", "Carlos", "Beatriz"]
-estudiantes.append("David")
-
-# Diccionario (Clave: Valor)
-estudiante = {
-    "nombre": "Sofia",
-    "carrera": "Ingeniería de Software",
-    "promedio": 9.8
-}
-
-print(f"Nombre: {estudiante['nombre']}, Carrera: {estudiante['carrera']}")
-\`\`\``
+            title: 'Lección 2.3: Lectura/Escritura de Archivos (JSON, CSV) y Excepciones',
+            duration_seconds: 1020,
+            content_text: `### 📂 Manual Práctico: Manejo Seguro de Archivos con Context Managers`,
+            resources: ['https://docs.python.org/3/tutorial/inputoutput.html']
           }
         ]
       },
@@ -169,184 +182,90 @@ print(f"Nombre: {estudiante['nombre']}, Carrera: {estudiante['carrera']}")
         id: 103,
         course: 1,
         order: 3,
-        title: 'Módulo 3: Programación Orientada a Objetos y Proyecto Final',
-        description: 'Construcción de clases, métodos, objetos y desarrollo de un proyecto integrador.',
+        title: 'Módulo 3: Automatización, Data Science y Machine Learning con Python',
+        description: 'Procesamiento de datos con Pandas y NumPy, consumo de APIs y proyecto integrador.',
         lessons: [
           {
             id: 1007,
             module: 103,
             order: 1,
-            title: '3.1 Programación Orientada a Objetos (Clases y Métodos)',
-            duration_seconds: 900,
-            video_url: 'https://www.youtube.com/embed/J7x8Vv1zVbg',
-            content_text: `La POO es uno de los paradigmas de programación más importantes. Aprende a crear tus propias clases y objetos.
-
-\`\`\`python
-class Estudiante:
-    def __init__(self, nombre, carrera):
-        self.nombre = nombre
-        self.carrera = carrera
-        self.cursos = []
-
-    def inscribir_curso(self, curso):
-        self.cursos.append(curso)
-        print(f"{self.nombre} se inscribió en {curso}")
-
-alumno = Estudiante("Alex López", "Software")
-alumno.inscribir_curso("Python Pro")
-\`\`\``
+            title: 'Lección 3.1: Procesamiento Científico de Datos con NumPy y Pandas',
+            duration_seconds: 1150,
+            content_text: `### 📊 Manual Teórico-Práctico: Análisis de Datos con Pandas DataFrames`,
+            resources: ['https://pandas.pydata.org/docs/']
           },
           {
             id: 1008,
             module: 103,
             order: 2,
-            title: '3.2 Proyecto Final: Administrador de Tareas en Consola',
-            duration_seconds: 1200,
-            video_url: 'https://www.youtube.com/embed/T4qTzY1Bf0w',
-            content_text: `Desarrollaremos un sistema interactivo de consola para registrar, marcar como completadas y filtrar tareas académicas utilizando todo lo aprendido en el curso.`
+            title: 'Lección 3.2: Consumo de APIs REST con Requests y Servidores con FastAPI',
+            duration_seconds: 1100,
+            content_text: `### 🌐 Manual Práctico: APIs REST Asíncronas con FastAPI`,
+            resources: ['https://fastapi.tiangolo.com/']
+          },
+          {
+            id: 1009,
+            module: 103,
+            order: 3,
+            title: 'Lección 3.3: Proyecto Integrador: Pipeline de Automatización y Análisis de Datos',
+            duration_seconds: 1600,
+            content_text: `### 🚀 Proyecto Integrador: Script Completo de Automatización en Python
+
+#### 🏆 ¡Felicidades!
+Has completado con éxito el curso práctico de **Python 3: Desde Cero hasta Inteligencia Artificial**.`,
+            resources: ['https://docs.python.org/3/']
           }
         ]
       }
     ]
   },
 
-  // Course 2: JavaScript
-  javascript: {
-    cover_image: 'https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?q=80&w=1200&auto=format&fit=crop',
-    description: 'Domina el lenguaje de la web desde cero. Sintaxis moderna ES6+, Manipulación del DOM, Eventos, Asincronía con Promises, Async/Await y consumo de APIs REST.',
+  // Course 2: React 19 & Next.js 15
+  react: {
+    cover_image: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=1200&auto=format&fit=crop',
+    description: 'Manual de estudio profesional en desarrollo web moderno con React 19 y Next.js 15 App Router.',
     modules: [
       {
         id: 201,
         course: 2,
         order: 1,
-        title: 'Módulo 1: Fundamentos de JavaScript ES6+',
-        description: 'Sintaxis moderna de JavaScript, scope, const/let y funciones flecha.',
+        title: 'Módulo 1: Fundamentos de React 19, JSX, Hooks y Server Components',
+        description: 'Compilador de React 19, componentes de servidor, manejo de estado moderno e integración de hooks.',
         lessons: [
           {
             id: 2001,
             module: 201,
             order: 1,
-            title: '1.1 Introducción a JavaScript y Motor V8',
-            duration_seconds: 500,
-            video_url: 'https://www.youtube.com/embed/hdI2bqOjy3c',
-            content_text: `JavaScript es el lenguaje de programación estándar de la web. En esta lección aprenderás sobre la sintaxis moderna de ES6+ y cómo se ejecuta el código en el navegador.`
-          },
-          {
-            id: 2002,
-            module: 201,
-            order: 2,
-            title: '1.2 Variables, Constantes y Arrow Functions',
-            duration_seconds: 620,
-            video_url: 'https://www.youtube.com/embed/Q9swWClqCgg',
-            content_text: `Uso de const y let, alcance de bloque y declaración de funciones flecha.
-
-\`\`\`javascript
-const calcularTotal = (precio, impuesto = 0.12) => {
-  return precio + (precio * impuesto);
-};
-
-console.log(\`Total a pagar: $\${calcularTotal(100)}\`);
-\`\`\``
-          }
-        ]
-      },
-      {
-        id: 202,
-        course: 2,
-        order: 2,
-        title: 'Módulo 2: DOM, Eventos y Asincronía Fetch',
-        description: 'Interacción dinámica con páginas web y conexión a servidores web.',
-        lessons: [
-          {
-            id: 2003,
-            module: 202,
-            order: 1,
-            title: '2.1 Manipulación del DOM y Event Listeners',
-            duration_seconds: 700,
-            video_url: 'https://www.youtube.com/embed/17b2pL3KqY4',
-            content_text: `Cómo seleccionar elementos del HTML y escuchar interacciones de usuario.
-
-\`\`\`javascript
-const boton = document.querySelector('#btn-guardar');
-boton.addEventListener('click', () => {
-  alert('¡Datos guardados con éxito!');
-});
-\`\`\``
-          },
-          {
-            id: 2004,
-            module: 202,
-            order: 2,
-            title: '2.2 Asincronía con Async / Await y Fetch API',
-            duration_seconds: 850,
-            video_url: 'https://www.youtube.com/embed/vn3tm0quoqE',
-            content_text: `Consumo de servicios web REST con peticiones asíncronas.
-
-\`\`\`javascript
-async function obtenerCursos() {
-  try {
-    const respuesta = await fetch('/api/courses/');
-    const datos = await respuesta.json();
-    console.log(datos);
-  } catch (error) {
-    console.error('Error al conectar con la API:', error);
-  }
-}
-\`\`\``
+            title: 'Lección 1.1: Novedades de React 19, JSX y el Compilador de React (React Compiler)',
+            duration_seconds: 900,
+            content_text: `### ⚛️ Manual Teórico-Práctico: React 19 y la Era del React Compiler`,
+            resources: ['https://react.dev/blog/2024/04/25/react-19']
           }
         ]
       }
     ]
   },
 
-  // Course 3: Bash & Terminal
+  // Course 3: Terminal Bash
   terminal: {
     cover_image: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?q=80&w=1200&auto=format&fit=crop',
-    description: 'Domina la consola de comandos de Linux y macOS. Navegación en sistema de archivos, permisos, tuberías (pipes), scripts en Bash y productividad para desarrolladores.',
+    description: 'Manual de estudio profesional en la consola Linux y scripts en Bash.',
     modules: [
       {
         id: 301,
         course: 3,
         order: 1,
-        title: 'Módulo 1: Consola de Comandos y Gestión de Archivos',
-        description: 'Comandos fundamentales para la línea de comandos en UNIX / Linux.',
+        title: 'Módulo 1: Navegación, Sistema de Archivos y Permisos en GNU/Linux',
+        description: 'Estructura de directorios Linux, comandos esenciales de navegación, gestión de archivos y permisos de seguridad.',
         lessons: [
           {
             id: 3001,
             module: 301,
             order: 1,
-            title: '1.1 Navegación por el Sistema de Archivos (pwd, ls, cd)',
-            duration_seconds: 450,
-            video_url: 'https://www.youtube.com/embed/oxuRxtCjEA8',
-            content_text: `Aprende a navegar rápidamente por directorios utilizando la consola.
-
-\`\`\`bash
-# Mostrar directorio actual
-pwd
-
-# Listar archivos detalladamente
-ls -l -a
-
-# Cambiar de directorio
-cd /var/www/html
-\`\`\``
-          },
-          {
-            id: 3002,
-            module: 301,
-            order: 2,
-            title: '1.2 Creación, Edición y Permisos de Archivos',
-            duration_seconds: 600,
-            video_url: 'https://www.youtube.com/embed/2pgvy-4ZlYw',
-            content_text: `Administración de permisos de lectura, escritura y ejecución.
-
-\`\`\`bash
-# Dar permisos de ejecución a un script
-chmod +x deploy.sh
-
-# Cambiar propietario de un archivo
-sudo chown usuario:grupo script.sh
-\`\`\``
+            title: 'Lección 1.1: Estructura del Sistema de Archivos Linux (/bin, /etc, /var) y Comandos ls, cd, pwd',
+            duration_seconds: 900,
+            content_text: `### 💻 Manual Teórico-Práctico: Navegación en la Terminal Linux`,
+            resources: ['https://www.gnu.org/software/bash/manual/']
           }
         ]
       }
@@ -356,98 +275,153 @@ sudo chown usuario:grupo script.sh
   // Course 4: Git & GitHub
   git: {
     cover_image: 'https://images.unsplash.com/photo-1556075798-4825dfaaf498?q=80&w=1200&auto=format&fit=crop',
-    description: 'Domina el flujo de trabajo profesional con Git y GitHub. Control de cambios, ramas (branches), fusiones (merge, rebase), resolución de conflictos y GitHub Pull Requests.',
+    description: 'Manual de estudio profesional en control de versiones distribuido con Git y colaboración en GitHub.',
     modules: [
       {
         id: 401,
         course: 4,
         order: 1,
-        title: 'Módulo 1: Control de Versiones con Git',
-        description: 'Commits, ramas y trabajo colaborativo.',
+        title: 'Módulo 1: Fundamentos de Git, Arquitectura Local y Primeros Pasos',
+        description: 'Conceptos de control de versiones distribuido, los 3 estados de Git, comandos básicos e inspección de cambios.',
         lessons: [
           {
             id: 4001,
             module: 401,
             order: 1,
-            title: '1.1 Flujo de Trabajo Básico con Git',
-            duration_seconds: 520,
-            video_url: 'https://www.youtube.com/embed/3GymExBkKjE',
-            content_text: `Configura tu identidad en Git y realiza tu primer commit.
-
-\`\`\`bash
-git config --global user.name "Alex López"
-git config --global user.email "alex@ejemplo.com"
-
-git init
-git add .
-git commit -m "feat: mi primer commit profesional"
-\`\`\``
-          },
-          {
-            id: 4002,
-            module: 401,
-            order: 2,
-            title: '1.2 Ramas, Merges y Resolución de Conflictos',
-            duration_seconds: 680,
-            video_url: 'https://www.youtube.com/embed/e2IbNHi4uCI',
-            content_text: `Aprende a trabajar con ramas de características (feature branches) sin romper la rama principal.
-
-\`\`\`bash
-git checkout -b feature/login-page
-git push origin feature/login-page
-\`\`\``
+            title: 'Lección 1.1: Arquitectura de los 3 Estados de Git y Configuración Inicial',
+            duration_seconds: 900,
+            content_text: `### 🌿 Manual Teórico-Práctico: Arquitectura Local de Git`,
+            resources: ['https://git-scm.com/book/es/v2']
           }
         ]
       }
     ]
   },
 
-  // Course 5: SQL & Databases
-  sql: {
+  // Course 5: PostgreSQL
+  postgresql: {
     cover_image: 'https://images.unsplash.com/photo-1544383835-bda2bc66a55d?q=80&w=1200&auto=format&fit=crop',
-    description: 'Aprende el diseño relacional de bases de datos y el lenguaje SQL. Consultas complejas con JOINs, funciones de agregación, índices, llaves primarias y foráneas con PostgreSQL/MySQL.',
+    description: 'Manual de estudio profesional en PostgreSQL. Domina el diseño relacional avanzado, normalización (1FN-3FN), indexación B-Tree y GIN, análisis de planes de ejecución con EXPLAIN ANALYZE, control de concurrencia ACID/MVCC y mantenimiento preventivo.',
     modules: [
       {
         id: 501,
         course: 5,
         order: 1,
-        title: 'Módulo 1: Fundamentos de SQL y DDL',
-        description: 'Creación de tablas, llaves primarias y foráneas.',
+        title: 'Módulo 1: Diseños de Bases de Datos Relacionales y Normalización en PostgreSQL',
+        description: 'Construcción de esquemas relacionales robustos, claves primarias, claves foráneas y restricciones avanzadas.',
         lessons: [
           {
             id: 5001,
             module: 501,
             order: 1,
-            title: '1.1 Creación de Tablas y Relaciones SQL',
-            duration_seconds: 580,
-            video_url: 'https://www.youtube.com/embed/uUdKAYl-F7g',
-            content_text: `Diseña e implementa tablas relacionales con SQL.
+            title: 'Lección 1.1: Modelo Entidad-Relación y Normalización (1FN, 2FN, 3FN)',
+            duration_seconds: 900,
+            content_text: `### 📚 Manual Teórico-Práctico: Modelo Entidad-Relación y Normalización en PostgreSQL`,
+            resources: ['https://www.postgresql.org/docs/current/ddl.html']
+          }
+        ]
+      }
+    ]
+  },
 
-\`\`\`sql
-CREATE TABLE estudiantes (
-    id SERIAL PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    email VARCHAR(150) UNIQUE NOT NULL,
-    creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-\`\`\``
-          },
+  // Course 7: Swift
+  swift: {
+    cover_image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=1200&auto=format&fit=crop',
+    description: 'Manual de estudio profesional en desarrollo móvil iOS con Swift 5.10 y SwiftUI.',
+    modules: [
+      {
+        id: 701,
+        course: 7,
+        order: 1,
+        title: 'Módulo 1: Fundamentos de Swift 5.10+ y Programación Orientada a Protocolos',
+        description: 'Sintaxis del lenguaje Swift, tipado estático, desempaquetado seguro de optionals, structs, classes y arquitectura orientada a protocolos.',
+        lessons: [
           {
-            id: 5002,
-            module: 501,
-            order: 2,
-            title: '1.2 Consultas Avanzadas con JOINs y Agregaciones',
-            duration_seconds: 750,
-            video_url: 'https://www.youtube.com/embed/7Vtl22_kRmg',
-            content_text: `Unión de tablas con INNER JOIN y agregaciones.
+            id: 7001,
+            module: 701,
+            order: 1,
+            title: 'Lección 1.1: Sintaxis Básica de Swift, Optionals (Unwrapping) y Control de Flujo',
+            duration_seconds: 900,
+            content_text: `### 📱 Manual Teórico-Práctico: Sintaxis Swift, Optionals y Desempaquetado Seguro`,
+            resources: ['https://docs.swift.org/swift-book/']
+          }
+        ]
+      }
+    ]
+  },
 
-\`\`\`sql
-SELECT c.nombre AS curso, COUNT(e.id) AS total_estudiantes
-FROM cursos c
-INNER JOIN inscripciones e ON c.id = e.curso_id
-GROUP BY c.id, c.nombre
-ORDER BY total_estudiantes DESC;
-\`\`\``
+  // Course 8: Flutter
+  flutter: {
+    cover_image: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?q=80&w=1200&auto=format&fit=crop',
+    description: 'Manual de estudio profesional en desarrollo móvil multiplataforma para iOS y Android con Flutter 3.24 y Dart 3.5.',
+    modules: [
+      {
+        id: 801,
+        course: 8,
+        order: 1,
+        title: 'Módulo 1: Fundamentos del Lenguaje Dart 3.5+ y Programación Reactiva',
+        description: 'Sintaxis de Dart, Sound Null Safety, clases, mixins y programación asíncrona.',
+        lessons: [
+          {
+            id: 8001,
+            module: 801,
+            order: 1,
+            title: 'Lección 1.1: Sintaxis Moderna de Dart, Null Safety y Tipos Primarios',
+            duration_seconds: 900,
+            content_text: `### 🎯 Manual Teórico-Práctico: Sintaxis de Dart 3.5 y Sound Null Safety`,
+            resources: ['https://dart.dev/']
+          }
+        ]
+      }
+    ]
+  },
+
+  // Course 9: Golang
+  golang: {
+    cover_image: 'https://images.unsplash.com/photo-1618401471353-b98aedd04e11?q=80&w=1200&auto=format&fit=crop',
+    description: 'Manual de estudio profesional en el lenguaje Go (Golang 1.23+). Domina la sintaxis limpia de Go, concurrencia masiva con Goroutines y Canales, desarrollo de APIs REST de alta velocidad con Gin Framework, interacción con PostgreSQL mediante GORM.',
+    modules: [
+      {
+        id: 901,
+        course: 9,
+        order: 1,
+        title: 'Módulo 1: Fundamentos de Go (Golang 1.23+), Rutinas de Go (Goroutines) y Canales',
+        description: 'Sintaxis del lenguaje Go, punteros, estructuras, interfaces implícitas y concurrencia ligera.',
+        lessons: [
+          {
+            id: 9001,
+            module: 901,
+            order: 1,
+            title: 'Lección 1.1: Sintaxis Básica de Go, Tipos Primarios, Punteros y Estructuras (Structs)',
+            duration_seconds: 900,
+            content_text: `### 🐹 Manual Teórico-Práctico: Sintaxis de Go 1.23, Punteros y Structs`,
+            resources: ['https://go.dev/']
+          }
+        ]
+      }
+    ]
+  },
+
+  // Course 10: JavaScript
+  javascript: {
+    cover_image: 'https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?q=80&w=1200&auto=format&fit=crop',
+    description: 'Manual de estudio profesional en JavaScript moderno (ES2024) y TypeScript.',
+    modules: [
+      {
+        id: 1001,
+        course: 10,
+        order: 1,
+        title: 'Módulo 1: Fundamentos de JavaScript ES6+ (Variables, Funciones y Async/Await)',
+        description: 'Sintaxis moderna de JS, scope, arrow functions, desestructuración y programación asíncrona.',
+        lessons: [
+          {
+            id: 10001,
+            module: 1001,
+            order: 1,
+            title: 'Lección 1.1: Declaración de Variables (const, let), Scope Lexical y Arrow Functions',
+            duration_seconds: 900,
+            content_text: `### 🟨 Manual Teórico-Práctico: JavaScript Moderno ES6+`,
+            resources: ['https://developer.mozilla.org/es/docs/Web/JavaScript']
           }
         ]
       }
@@ -455,70 +429,131 @@ ORDER BY total_estudiantes DESC;
   }
 };
 
+// Aliases for seed lookup
+COURSE_SEED_DETAILS.sql = COURSE_SEED_DETAILS.postgresql;
+COURSE_SEED_DETAILS.ios = COURSE_SEED_DETAILS.swift;
+COURSE_SEED_DETAILS.nextjs = COURSE_SEED_DETAILS.react;
+COURSE_SEED_DETAILS.dart = COURSE_SEED_DETAILS.flutter;
+COURSE_SEED_DETAILS.k8s = COURSE_SEED_DETAILS.docker;
+COURSE_SEED_DETAILS.devops = COURSE_SEED_DETAILS.docker;
+COURSE_SEED_DETAILS.go = COURSE_SEED_DETAILS.golang;
+COURSE_SEED_DETAILS.bash = COURSE_SEED_DETAILS.terminal;
+
+export function getCanonicalCourseId(course: { id: number; title?: string; slug?: string }): number {
+  const titleLower = (course.title || '').toLowerCase();
+  const slugLower = (course.slug || '').toLowerCase();
+
+  if (course.id === 1 || titleLower.includes('python') || slugLower.includes('python')) return 1;
+  if (course.id === 2 || titleLower.includes('react') || titleLower.includes('next') || slugLower.includes('react') || slugLower.includes('next')) return 2;
+  if (course.id === 3 || titleLower.includes('bash') || titleLower.includes('terminal') || slugLower.includes('terminal') || slugLower.includes('bash')) return 3;
+  if (course.id === 4 || titleLower.includes('git') || slugLower.includes('git')) return 4;
+  if (course.id === 5 || titleLower.includes('postgres') || slugLower.includes('postgres')) return 5;
+  if (course.id === 6 || (titleLower.includes('fundamento') && titleLower.includes('base'))) return 6;
+  if (course.id === 7 || titleLower.includes('swift') || titleLower.includes('ios') || slugLower.includes('swift') || slugLower.includes('ios')) return 7;
+  if (course.id === 8 || titleLower.includes('flutter') || titleLower.includes('dart') || slugLower.includes('flutter')) return 8;
+  if (course.id === 9 || titleLower.includes('golang') || titleLower.includes('microservicio') || slugLower.includes('golang') || (titleLower.includes('go') && !titleLower.includes('algoritmo'))) return 9;
+  if (course.id === 10 || titleLower.includes('javascript') || titleLower.includes('js') || slugLower.includes('javascript') || slugLower.includes('js')) return 10;
+
+  return course.id >= 1 && course.id <= 10 ? course.id : 1;
+}
+
 /**
  * Utility function to enrich any course from backend or fallback
  */
 export function enrichCourseData(course: Course): Course {
-  const titleLower = course.title.toLowerCase();
-  const slugLower = (course.slug || '').toLowerCase();
-
+  const canonicalId = getCanonicalCourseId(course);
   let seedKey = 'python';
-  if (titleLower.includes('script') || titleLower.includes('js') || slugLower.includes('js')) {
-    seedKey = 'javascript';
-  } else if (titleLower.includes('bash') || titleLower.includes('terminal') || slugLower.includes('terminal')) {
-    seedKey = 'terminal';
-  } else if (titleLower.includes('git') || slugLower.includes('git')) {
-    seedKey = 'git';
-  } else if (titleLower.includes('sql') || titleLower.includes('base') || slugLower.includes('sql')) {
-    seedKey = 'sql';
-  }
 
-  const seed = COURSE_SEED_DETAILS[seedKey];
+  if (canonicalId === 1) seedKey = 'python';
+  else if (canonicalId === 2) seedKey = 'react';
+  else if (canonicalId === 3) seedKey = 'terminal';
+  else if (canonicalId === 4) seedKey = 'git';
+  else if (canonicalId === 5 || canonicalId === 6) seedKey = 'postgresql';
+  else if (canonicalId === 7) seedKey = 'swift';
+  else if (canonicalId === 8) seedKey = 'flutter';
+  else if (canonicalId === 9) seedKey = 'golang';
+  else if (canonicalId === 10) seedKey = 'javascript';
+
+  const seed = COURSE_SEED_DETAILS[seedKey] || COURSE_SEED_DETAILS.python;
+  const savedCover = getSavedCustomCover(canonicalId);
+  const savedActive = getSavedActiveState(canonicalId);
+  const savedPrice = getSavedPrice(canonicalId);
+
+  const sourceModules =
+    course.modules && course.modules.length >= seed.modules.length ? course.modules : seed.modules;
+
+  const cleanedModules = sourceModules.map((mod) => ({
+    ...mod,
+    course: canonicalId,
+    lessons: (mod.lessons || []).map((les) => ({
+      ...les,
+      video_url: (les.video_url || '').includes('kUMe1FH4CHE') ? '' : les.video_url,
+    })),
+  }));
 
   return {
     ...course,
-    cover_image: course.cover_image || seed.cover_image,
+    id: canonicalId,
+    price: savedPrice !== null ? savedPrice : (course.price || '9.99'),
+    cover_image: savedCover || course.cover_image || seed.cover_image,
+    is_active: savedActive !== null ? savedActive : (course.is_active ?? true),
     description: course.description && course.description.length > 20 ? course.description : seed.description,
-    modules: course.modules && course.modules.length > 0 ? course.modules : seed.modules
+    modules: cleanedModules,
   };
 }
 
 /**
- * Generate full seed course for any ID if backend returns 403 or 404
+ * Generate full seed course for any ID 1..10
  */
 export function getFallbackCourse(id: number): Course {
-  const seedKeys = Object.keys(COURSE_SEED_DETAILS);
-  const keyIndex = Math.abs(id - 1) % seedKeys.length;
-  const seedKey = seedKeys[keyIndex] || 'python';
-  const seed = COURSE_SEED_DETAILS[seedKey];
-
+  const canonicalId = id >= 1 && id <= 10 ? id : 1;
   const titles: Record<number, string> = {
     1: 'Python 3: Desde Cero hasta Inteligencia Artificial',
-    2: 'React 19 & TypeScript: Guía Práctica Fullstack',
-    3: 'Docker & DevOps: Contenedores y CI/CD',
-    4: 'Bases de Datos SQL: PostgreSQL y Consultas Avanzadas',
-    5: 'Git & GitHub: Control de Versiones y Trabajo en Equipo',
-    6: 'JavaScript Moderno ES6+: Asincronía y Promesas',
+    2: 'React 19 & Next.js 15: Guía Práctica Fullstack',
+    3: 'Terminal Bash & Consola Linux: Guía Profesional',
+    4: 'Git & GitHub: Control de Versiones en Equipo',
+    5: 'PostgreSQL: Optimización de Consultas y Modelado',
+    6: 'Fundamentos de Bases de Datos - SQL',
+    7: 'Desarrollo iOS con Swift y SwiftUI desde Cero',
+    8: 'Flutter 3.24 & Dart desde Cero: Desarrollo Móvil Multiplataforma',
+    9: 'Go (Golang): APIs REST de Alta Concurrencia y Microservicios',
+    10: 'JavaScript Moderno ES2024 & TypeScript desde Cero',
   };
 
-  const title = titles[id] || `Curso #${id}: Desarrollo de Software Avanzado`;
+  const title = titles[canonicalId] || `Curso #${canonicalId}: Desarrollo de Software Avanzado`;
+  
+  let seedKey = 'python';
+  if (canonicalId === 1) seedKey = 'python';
+  else if (canonicalId === 2) seedKey = 'react';
+  else if (canonicalId === 3) seedKey = 'terminal';
+  else if (canonicalId === 4) seedKey = 'git';
+  else if (canonicalId === 5 || canonicalId === 6) seedKey = 'postgresql';
+  else if (canonicalId === 7) seedKey = 'swift';
+  else if (canonicalId === 8) seedKey = 'flutter';
+  else if (canonicalId === 9) seedKey = 'golang';
+  else if (canonicalId === 10) seedKey = 'javascript';
+
+  const seed = COURSE_SEED_DETAILS[seedKey] || COURSE_SEED_DETAILS.python;
+  const savedCover = getSavedCustomCover(canonicalId);
+  const savedActive = getSavedActiveState(canonicalId);
+  const savedPrice = getSavedPrice(canonicalId);
 
   return {
-    id: id,
+    id: canonicalId,
     title: title,
-    slug: `curso-${id}`,
-    price: id % 2 === 0 ? '19.99' : '0.00',
-    cover_image: seed.cover_image,
+    slug: `curso-${canonicalId}`,
+    price: savedPrice !== null ? savedPrice : (canonicalId % 2 === 0 ? '19.99' : '9.99'),
+    cover_image: savedCover || seed.cover_image,
     category: 1,
-    category_name: 'Programación & DevOps',
+    category_name: 'Desarrollo de Software',
     professor_name: 'Prof. Alex López',
-    is_active: true,
+    is_active: savedActive !== null ? savedActive : true,
     modules_count: seed.modules.length,
     created_at: new Date().toISOString(),
     description: seed.description,
     modules: seed.modules.map((mod) => ({
       ...mod,
-      course: id,
+      course: canonicalId,
     })),
   };
 }

@@ -263,24 +263,37 @@ export const CartDrawer: React.FC = () => {
                 </form>
 
                 {/* Price Breakdown */}
-                <div className="space-y-1 text-xs pt-2 border-t border-slate-200 dark:border-slate-800">
-                  <div className="flex justify-between text-slate-600 dark:text-slate-400">
-                    <span>Subtotal ({items.length} cursos):</span>
-                    <span className="font-bold">${totalRaw.toFixed(2)} USD</span>
-                  </div>
+                {(() => {
+                  const subtotalBeforeTax = totalFinal / 1.15;
+                  const taxAmount = totalFinal - subtotalBeforeTax;
+                  return (
+                    <div className="space-y-1 text-xs pt-2 border-t border-slate-200 dark:border-slate-800">
+                      <div className="flex justify-between text-slate-600 dark:text-slate-400">
+                        <span>Subtotal (sin IVA):</span>
+                        <span className="font-bold font-mono">${subtotalBeforeTax.toFixed(2)} USD</span>
+                      </div>
 
-                  {discountPercent > 0 && (
-                    <div className="flex justify-between text-emerald-600 dark:text-emerald-400 font-bold">
-                      <span>Descuento aplicado:</span>
-                      <span>-${discountAmount.toFixed(2)} USD</span>
+                      {discountPercent > 0 && (
+                        <div className="flex justify-between text-emerald-600 dark:text-emerald-400 font-bold">
+                          <span>Descuento aplicado:</span>
+                          <span className="font-mono">-${discountAmount.toFixed(2)} USD</span>
+                        </div>
+                      )}
+
+                      {totalFinal > 0 && (
+                        <div className="flex justify-between text-slate-600 dark:text-slate-400">
+                          <span>IVA (15%):</span>
+                          <span className="font-bold font-mono">${taxAmount.toFixed(2)} USD</span>
+                        </div>
+                      )}
+
+                      <div className="flex justify-between text-sm font-black text-slate-950 dark:text-white pt-1.5 border-t border-slate-950 dark:border-slate-800">
+                        <span>TOTAL A PAGAR:</span>
+                        <span className="text-base text-[#00cc33] font-mono">${totalFinal.toFixed(2)} USD</span>
+                      </div>
                     </div>
-                  )}
-
-                  <div className="flex justify-between text-sm font-black text-slate-950 dark:text-white pt-1.5 border-t border-slate-950 dark:border-slate-800">
-                    <span>TOTAL A PAGAR:</span>
-                    <span className="text-base text-[#00cc33] font-mono">${totalFinal.toFixed(2)} USD</span>
-                  </div>
-                </div>
+                  );
+                })()}
 
                 {/* Checkout Button */}
                 <Button

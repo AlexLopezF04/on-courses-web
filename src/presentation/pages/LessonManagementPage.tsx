@@ -39,6 +39,8 @@ export const LessonManagementPage: React.FC = () => {
     setFormLessonContent,
     formLessonVideoUrl,
     setFormLessonVideoUrl,
+    formLessonDurationMinutes,
+    setFormLessonDurationMinutes,
     formLessonOrder,
     setFormLessonOrder,
     formLessonModule,
@@ -77,7 +79,7 @@ export const LessonManagementPage: React.FC = () => {
         </Link>
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-2">
           <div>
-            <span className="text-xs font-semibold uppercase tracking-wider text-brand-500 block">
+            <span className="text-xs font-semibold uppercase tracking-wider text-[#00cc33] block">
               Temario de Curso:
             </span>
             <h1 className="font-display text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mt-1">
@@ -85,9 +87,20 @@ export const LessonManagementPage: React.FC = () => {
             </h1>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2 shrink-0">
-            <Button
-              variant="outline"
+          <div className="flex flex-wrap items-center gap-2.5 shrink-0">
+            {/* Student View Action */}
+            <button
+              type="button"
+              onClick={() => navigate(`/courses/${courseId}`)}
+              className="px-3.5 py-2 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-950 dark:text-white font-sans font-bold text-xs uppercase tracking-wider border-2 border-slate-950 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_#00b835] hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all cursor-pointer inline-flex items-center gap-1.5"
+            >
+              <Eye className="h-4 w-4 text-emerald-500" />
+              <span>Vista Previa Estudiante</span>
+            </button>
+
+            {/* Module Addition Action */}
+            <button
+              type="button"
               onClick={() => {
                 if (showModuleForm) {
                   setShowModuleForm(false);
@@ -95,21 +108,26 @@ export const LessonManagementPage: React.FC = () => {
                   handleOpenCreateModule();
                 }
               }}
+              className="px-3.5 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-950 dark:text-white font-sans font-bold text-xs uppercase tracking-wider border-2 border-slate-950 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all cursor-pointer inline-flex items-center gap-1.5"
             >
-              + Nueva Sección (Módulo)
-            </Button>
-            <Button
-              onClick={() => navigate(`/courses/${courseId}`)}
-              variant="secondary"
-              className="flex items-center gap-1.5"
+              <Plus className="h-4 w-4" />
+              <span>Nueva Sección (Módulo)</span>
+            </button>
+
+            {/* Primary Lesson Creation Action */}
+            <button
+              type="button"
+              onClick={handleOpenCreateLesson}
+              disabled={modules.length === 0}
+              className={`px-4 py-2 font-sans font-black text-xs uppercase tracking-wider border-2 border-slate-950 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00b835] transition-all inline-flex items-center gap-2 ${
+                modules.length === 0
+                  ? 'bg-slate-200 text-slate-400 border-slate-400 cursor-not-allowed opacity-60'
+                  : 'bg-[#00cc33] hover:bg-[#00ff41] text-slate-950 hover:translate-x-[-1px] hover:translate-y-[-1px] cursor-pointer'
+              }`}
             >
-              <Eye className="h-4 w-4" />
-              <span>👁️ Vista Previa Estudiante</span>
-            </Button>
-            <Button onClick={handleOpenCreateLesson} disabled={modules.length === 0} className="flex items-center gap-2">
-              <Plus className="h-5 w-5" />
-              Crear Nuevo Tema
-            </Button>
+              <Plus className="h-4.5 w-4.5" />
+              <span>Crear Nuevo Tema</span>
+            </button>
           </div>
         </div>
       </div>
@@ -173,6 +191,7 @@ export const LessonManagementPage: React.FC = () => {
             selectedModuleId={selectedModuleId}
             isAdmin={isAdmin}
             onEdit={handleOpenEditLesson}
+            onCreateLesson={handleOpenCreateLesson}
             onPreview={(lesId) => {
               const target = lessons.find((l) => l.id === lesId) || null;
               setSelectedLessonForPreview(target);
@@ -207,6 +226,7 @@ export const LessonManagementPage: React.FC = () => {
         title={formLessonTitle}
         content={formLessonContent}
         videoUrl={formLessonVideoUrl}
+        durationMinutes={formLessonDurationMinutes}
         order={formLessonOrder}
         moduleId={formLessonModule}
         loading={formLoading}
@@ -214,6 +234,7 @@ export const LessonManagementPage: React.FC = () => {
         onTitleChange={setFormLessonTitle}
         onContentChange={setFormLessonContent}
         onVideoUrlChange={setFormLessonVideoUrl}
+        onDurationMinutesChange={setFormLessonDurationMinutes}
         onOrderChange={setFormLessonOrder}
         onModuleChange={setFormLessonModule}
         onClose={() => setShowLessonModal(false)}

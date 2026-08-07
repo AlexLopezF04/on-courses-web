@@ -3,6 +3,8 @@ import { Module } from '@domain/entities/Module';
 import { Input } from '../Input';
 import { Button } from '../Button';
 import { ShieldAlert, FileCode2, Terminal, BookOpen, Code2 } from 'lucide-react';
+import { MarkdownRenderer } from '../MarkdownRenderer';
+import { getEmbedVideoUrl } from '../../utils/sanitize-url';
 
 interface LessonModalProps {
   isOpen: boolean;
@@ -11,6 +13,7 @@ interface LessonModalProps {
   title: string;
   content: string;
   videoUrl: string;
+  durationMinutes?: string;
   order: string;
   moduleId: number | '';
   loading: boolean;
@@ -18,6 +21,7 @@ interface LessonModalProps {
   onTitleChange: (val: string) => void;
   onContentChange: (val: string) => void;
   onVideoUrlChange: (val: string) => void;
+  onDurationMinutesChange?: (val: string) => void;
   onOrderChange: (val: string) => void;
   onModuleChange: (val: number | '') => void;
   onClose: () => void;
@@ -31,6 +35,7 @@ export const LessonModal: React.FC<LessonModalProps> = ({
   title,
   content,
   videoUrl,
+  durationMinutes = '15',
   order,
   moduleId,
   loading,
@@ -38,6 +43,7 @@ export const LessonModal: React.FC<LessonModalProps> = ({
   onTitleChange,
   onContentChange,
   onVideoUrlChange,
+  onDurationMinutesChange,
   onOrderChange,
   onModuleChange,
   onClose,
@@ -47,9 +53,18 @@ export const LessonModal: React.FC<LessonModalProps> = ({
 
   if (!isOpen) return null;
 
-  const insertTemplate = (type: 'manual' | 'code' | 'theory' | 'sublesson') => {
+  const insertTemplate = (type: 'manual' | 'code' | 'theory' | 'sublesson' | 'table') => {
     let templateText = '';
-    if (type === 'sublesson') {
+    if (type === 'table') {
+      templateText = `### 📊 Tabla Comparativa de Conceptos
+
+| Comando / Palabra Clave | Descripción del Funcionamiento | Ejemplo de Uso |
+| --- | --- | --- |
+| \`SELECT\` | Recupera columnas específicas de una o más tablas | \`SELECT * FROM usuarios;\` |
+| \`WHERE\` | Filtra registros que cumplen una condición lógica | \`WHERE edad >= 18\` |
+| \`JOIN\` | Combina filas de dos o más tablas basándose en una clave | \`INNER JOIN pedidos ON ...\` |
+| \`GROUP BY\` | Agrupa filas con los mismos valores para agregación | \`GROUP BY categoria_id\` |`;
+    } else if (type === 'sublesson') {
       templateText = `#### 📌 Sub-lección 1.1: Titulo del Sub-paso Específico
 Explicación detallada de esta sub-lección secundaria dentro del tema.
 
@@ -194,68 +209,38 @@ Consulta los enlaces oficiales para profundizar en los conceptos avanzados.`;
               </span>
             </div>
 
-            {videoUrl && (
-              <div className="border-2 border-slate-950 bg-black overflow-hidden shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-                <div className="bg-slate-900 px-3 py-1 text-[10px] font-mono text-emerald-400 border-b border-slate-800">
-                  ▶ VIDEO DE LA CLASE
+            {videoUrl && (() => {
+              const { isDirectVideo, embedUrl } = getEmbedVideoUrl(videoUrl);
+              if (!embedUrl) return null;
+              return (
+                <div className="border-2 border-slate-950 bg-black overflow-hidden shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                  <div className="bg-slate-900 px-3 py-1 text-[10px] font-mono text-emerald-400 border-b border-slate-800">
+                    ▶ VIDEO DE LA CLASE (PREVIEW)
+                  </div>
+                  <div className="aspect-video relative flex items-center justify-center">
+                    {isDirectVideo ? (
+                      <video
+                        src={embedUrl}
+                        controls
+                        playsInline
+                        className="w-full h-full object-contain"
+                      />
+                    ) : (
+                      <iframe
+                        src={embedUrl}
+                        title={title}
+                        className="w-full h-full border-0"
+                        allowFullScreen
+                      />
+                    )}
+                  </div>
                 </div>
-                <div className="aspect-video">
-                  <iframe
-                    src={videoUrl.replace('watch?v=', 'embed/')}
-                    title={title}
-                    className="w-full h-full border-0"
-                    allowFullScreen
-                  />
-                </div>
-              </div>
-            )}
+              );
+            })()}
 
-            <article className="prose dark:prose-invert max-w-none space-y-4 text-xs sm:text-sm">
+            <article className="prose dark:prose-invert max-w-none text-xs sm:text-sm">
               {content ? (
-                content.split('```').map((block, i) => {
-                  if (i % 2 === 1) {
-                    const lines = block.trim().split('\n');
-                    const lang = lines[0].match(/^[a-z]+/i) ? lines[0] : 'code';
-                    const codeContent = lines[0].match(/^[a-z]+/i) ? lines.slice(1).join('\n') : block;
-
-                    return (
-                      <div key={i} className="my-4 border-2 border-slate-950 bg-slate-950 text-emerald-400 p-4 font-mono text-xs shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00b835] overflow-x-auto">
-                        <div className="flex justify-between items-center pb-2 mb-2 border-b border-slate-800 text-[10px] text-slate-400 uppercase font-bold">
-                          <span>{lang}</span>
-                          <span>Console Output</span>
-                        </div>
-                        <pre className="whitespace-pre-wrap">{codeContent.trim()}</pre>
-                      </div>
-                    );
-                  }
-
-                  return (
-                    <div key={i} className="space-y-3">
-                      {block.split('\n\n').map((para, j) => {
-                        if (para.startsWith('### ')) {
-                          return <h3 key={j} className="text-base font-black text-slate-950 dark:text-white mt-4 mb-1">{para.replace('### ', '')}</h3>;
-                        }
-                        if (para.startsWith('#### ')) {
-                          return (
-                            <div key={j} className="my-2 p-2 bg-amber-50 dark:bg-amber-950/40 border-l-4 border-amber-500 text-xs font-bold text-slate-900 dark:text-amber-200">
-                              {para.replace('#### ', '')}
-                            </div>
-                          );
-                        }
-                        if (para.split('\n').every(line => line.trim().startsWith('- ') || line.trim().startsWith('* '))) {
-                          return (
-                            <ul key={j} className="list-disc list-inside space-y-1 text-xs text-slate-800 dark:text-slate-200 font-medium pl-2">
-                              {para.split('\n').map((item, k) => (
-                                <li key={k}>{item.replace(/^[-*]\s+/, '')}</li>
-                              ))}
-                            </ul>
-                          );
-                        }
-                        return <p key={j} className="text-xs sm:text-sm leading-relaxed font-medium">{para}</p>;
-                      })}
-                    </div>
-                  );
-                })
+                <MarkdownRenderer content={content} />
               ) : (
                 <div className="p-6 border border-dashed border-slate-400 text-center text-slate-400 text-xs italic">
                   Escribe contenido en el editor para previsualizarlo aquí.
@@ -272,7 +257,7 @@ Consulta los enlaces oficiales para profundizar en los conceptos avanzados.`;
         ) : (
           /* Editor Form */
           <form onSubmit={onSubmit} className="flex flex-col gap-4">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
               <div className="sm:col-span-2 flex flex-col gap-1.5">
                 <label className="text-xs font-extrabold uppercase tracking-wider text-slate-800 dark:text-slate-200">
                   Sección Asociada (Módulo) *
@@ -292,6 +277,16 @@ Consulta los enlaces oficiales para profundizar en los conceptos avanzados.`;
                   ))}
                 </select>
               </div>
+
+              <Input
+                label="Duración (Min) *"
+                type="number"
+                placeholder="15"
+                value={durationMinutes}
+                onChange={(e) => onDurationMinutesChange?.(e.target.value)}
+                disabled={loading}
+                required
+              />
 
               <Input
                 label="Orden *"
@@ -315,15 +310,14 @@ Consulta los enlaces oficiales para profundizar en los conceptos avanzados.`;
 
             <div className="flex flex-col gap-1">
               <Input
-                label="Enlace de Video (Opcional si es Manual o Guía escrita)"
-                placeholder="https://www.youtube.com/watch?v=... (Dejar vacío si no requiere video)"
-                type="url"
+                label="Enlace de Video o Ruta MP4 (Opcional)"
+                placeholder="Ej: https://www.youtube.com/watch?v=... ó /videos/mi_clase.mp4"
                 value={videoUrl}
                 onChange={(e) => onVideoUrlChange(e.target.value)}
                 disabled={loading}
               />
               <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
-                💡 Para manuales paso a paso o tutoriales teóricos sin video, puedes dejar este campo en blanco.
+                💡 <strong>Configuración de Videos:</strong> Puedes pegar un enlace de YouTube, Vimeo, o la ruta de tu archivo de video subido (ej: <code className="bg-slate-200 dark:bg-slate-800 px-1 py-0.5 font-mono text-slate-900 dark:text-slate-100 font-bold">/videos/leccion_1.mp4</code>). Si aún no has grabado el video, déjalo en blanco para presentar la clase limpia como manual de estudio.
               </span>
             </div>
 
@@ -370,6 +364,13 @@ Consulta los enlaces oficiales para profundizar en los conceptos avanzados.`;
                 >
                   <BookOpen className="h-3.5 w-3.5 text-blue-600" />
                   <span>📖 Guía Teórica</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => insertTemplate('table')}
+                  className="inline-flex items-center gap-1 px-2 py-1 bg-white dark:bg-slate-900 border border-slate-950 text-[11px] font-bold text-slate-950 dark:text-white hover:bg-[#00cc33] hover:text-slate-950 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] cursor-pointer"
+                >
+                  <span>📊 Tabla Markdown</span>
                 </button>
               </div>
 

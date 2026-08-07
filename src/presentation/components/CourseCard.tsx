@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { BookOpen, ShoppingBag, Pencil } from 'lucide-react';
+import { BookOpen, ShoppingBag, Pencil, X } from 'lucide-react';
 import { Course } from '../../domain/entities/Course';
 import { useCartStore } from '../store/useCartStore';
 import { useAuthStore } from '../store/useAuthStore';
+import { calculateCourseStats } from '../utils/course-stats';
 
 interface CourseCardProps {
   course: Course;
@@ -29,7 +30,7 @@ const getCategoryColor = (categoryName?: string) => {
 export const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
   const { user } = useAuthStore();
   const { addItem } = useCartStore();
-  const videoHours = ((course.modules_count || 0) * 1.5 + 2).toFixed(0);
+  const stats = calculateCourseStats(course);
   const isAdminOrProfessor = user?.role === 'admin' || user?.role === 'professor';
 
   const handleAddToCart = (e: React.MouseEvent) => {
@@ -46,10 +47,12 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
         <span className="text-[10px] font-bold uppercase tracking-wider text-slate-700 dark:text-slate-700 truncate max-w-[150px]">
           {course.category_name || 'Desarrollo'}
         </span>
-        <div className="flex items-center gap-1.5 shrink-0">
+        <div className="flex items-center gap-1.5 shrink-0" translate="no">
           <span className="w-3.5 h-3.5 flex items-center justify-center border border-slate-950 text-[10px] font-bold select-none cursor-pointer bg-white text-slate-900 dark:text-slate-900">_</span>
           <span className="w-3.5 h-3.5 flex items-center justify-center border border-slate-950 text-[10px] font-bold select-none cursor-pointer bg-white text-slate-900 dark:text-slate-900">+</span>
-          <span className="w-3.5 h-3.5 flex items-center justify-center border border-slate-950 text-[10px] font-bold select-none cursor-pointer bg-white text-slate-900 dark:text-slate-900">X</span>
+          <span className="w-3.5 h-3.5 flex items-center justify-center border border-slate-950 text-[10px] font-bold select-none cursor-pointer bg-white text-slate-900 dark:text-slate-900" aria-label="Cerrar">
+            <X className="h-2 w-2" />
+          </span>
         </div>
       </div>
 
@@ -93,14 +96,18 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
         </h3>
         
         {/* Dynamic statistics */}
-        <div className="flex flex-col gap-1.5 text-xs text-slate-700 dark:text-slate-700 py-3">
-          <div className="flex items-center gap-2">
-            <span>📄</span>
-            <span className="font-medium text-slate-700 dark:text-slate-700">{(course.modules_count || 0) * 8} lecciones</span>
+        <div className="grid grid-cols-2 gap-1 text-[11px] text-slate-700 font-mono py-2.5 border-b border-slate-100 mb-2">
+          <div className="flex items-center gap-1 font-bold text-slate-900">
+            <span>📚</span>
+            <span>{stats.modulesCount} Módulos</span>
           </div>
-          <div className="flex items-center gap-2">
-            <span>🎬</span>
-            <span className="font-medium text-slate-700 dark:text-slate-700">{videoHours} horas en vídeo</span>
+          <div className="flex items-center gap-1 font-bold text-slate-900">
+            <span>📄</span>
+            <span>{stats.totalLessons} Lecciones</span>
+          </div>
+          <div className="col-span-2 flex items-center gap-1 text-slate-600 font-semibold mt-0.5">
+            <span>⏱️</span>
+            <span>Duración estimada: {stats.totalDurationText}</span>
           </div>
         </div>
 

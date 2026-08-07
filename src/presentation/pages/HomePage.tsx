@@ -6,7 +6,7 @@ import { Course } from '@domain/entities/Course';
 import {
   ArrowRight, BookOpen, ChevronLeft, ChevronRight,
   Clock, Users, ShieldCheck, GraduationCap, Star,
-  FolderOpen, Sparkles, Code2, Layers
+  FolderOpen, Sparkles, Code2, Layers, X
 } from 'lucide-react';
 import { Loader } from '../components/Loader';
 import { CourseCard } from '../components/CourseCard';
@@ -136,11 +136,7 @@ export const HomePage: React.FC = () => {
 
             {/* Left column */}
             <div className="flex-1 text-center lg:text-left">
-              {/* Badge */}
-              <div className="inline-flex items-center gap-2 bg-brand-100 dark:bg-brand-600/20 border border-brand-200 dark:border-brand-500/30 text-brand-700 dark:text-brand-400 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-6">
-                <Sparkles className="h-3.5 w-3.5" />
-                Plataforma de Aprendizaje Tecnológico
-              </div>
+
 
               {/* Headline */}
               <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.05] mb-4">
@@ -187,10 +183,12 @@ export const HomePage: React.FC = () => {
                 {/* window chrome — retro _ + X style */}
                 <div className="flex items-center justify-between px-3.5 py-1.5 bg-slate-100 dark:bg-slate-100 border-b-2 border-slate-950">
                   <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-700 font-mono">ONCOURSES.APP</span>
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-1.5" translate="no">
                     <span className="w-5 h-5 flex items-center justify-center border-2 border-slate-950 text-[11px] font-black text-slate-950 dark:text-slate-950 bg-white dark:bg-white select-none shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">_</span>
                     <span className="w-5 h-5 flex items-center justify-center border-2 border-slate-950 text-[11px] font-black text-slate-950 dark:text-slate-950 bg-white dark:bg-white select-none shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">+</span>
-                    <span className="w-5 h-5 flex items-center justify-center border-2 border-slate-950 text-[11px] font-black text-slate-950 dark:text-slate-950 bg-white dark:bg-white select-none shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">X</span>
+                    <span className="w-5 h-5 flex items-center justify-center border-2 border-slate-950 text-[11px] font-black text-slate-950 dark:text-slate-950 bg-white dark:bg-white select-none shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]" aria-label="Cerrar">
+                      <X className="h-3 w-3" />
+                    </span>
                   </div>
                 </div>
                 {/* content */}

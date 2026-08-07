@@ -94,10 +94,16 @@ export const useCourseManagement = () => {
   const handleOpenEdit = (course: Course) => {
     setIsEditing(true);
     setEditingCourseId(course.id);
-    const catVal = typeof course.category === 'object' && course.category !== null
-      ? course.category.id
-      : course.category;
-    setFormCategory(catVal || '');
+    let catVal: number | '' = '';
+    if (typeof course.category === 'object' && course.category !== null) {
+      catVal = course.category.id;
+    } else if (typeof course.category === 'number') {
+      catVal = course.category;
+    } else if (course.category) {
+      const parsed = Number(course.category);
+      catVal = Number.isNaN(parsed) ? '' : parsed;
+    }
+    setFormCategory(catVal);
     setFormTitle(course.title);
     setFormDescription(course.description || '');
     setFormPrice(course.price);

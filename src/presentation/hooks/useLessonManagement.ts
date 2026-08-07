@@ -36,6 +36,7 @@ export const useLessonManagement = (courseIdStr?: string) => {
   const [formLessonTitle, setFormLessonTitle] = useState('');
   const [formLessonContent, setFormLessonContent] = useState('');
   const [formLessonVideoUrl, setFormLessonVideoUrl] = useState('');
+  const [formLessonDurationMinutes, setFormLessonDurationMinutes] = useState('15');
   const [formLessonOrder, setFormLessonOrder] = useState('0');
   const [formLessonModule, setFormLessonModule] = useState<number | ''>('');
 
@@ -58,21 +59,53 @@ export const useLessonManagement = (courseIdStr?: string) => {
       const courseData = await getCourseByIdUseCase.execute(idCourse);
       setCourse(courseData);
 
-      const modulesData = await getModulesUseCase.execute(idCourse);
-      setModules(modulesData);
+      let activeModules: Module[] = courseData.modules || [];
 
-      // Fetch all lessons for these modules
-      const allLessons: Lesson[] = [];
-      for (const mod of modulesData) {
-        const moduleLessons = await getLessonsUseCase.execute(mod.id);
-        allLessons.push(...moduleLessons);
+      try {
+        const apiModules = await getModulesUseCase.execute(idCourse);
+        if (apiModules && apiModules.length >= (courseData.modules?.length || 0)) {
+          activeModules = apiModules;
+        }
+      } catch (modErr) {
+        console.warn('API getModules failed, using enriched course modules', modErr);
       }
-      // Sort lessons by order
+
+      setModules(activeModules);
+
+      // Extract all lessons for activeModules
+      const allLessons: Lesson[] = [];
+      let hasEmbeddedLessons = false;
+
+      for (const mod of activeModules) {
+        if (mod.lessons && mod.lessons.length > 0) {
+          allLessons.push(...mod.lessons);
+          hasEmbeddedLessons = true;
+        }
+      }
+
+      if (!hasEmbeddedLessons) {
+        for (const mod of activeModules) {
+          try {
+            const moduleLessons = await getLessonsUseCase.execute(mod.id);
+            allLessons.push(...moduleLessons);
+          } catch {
+            if (mod.lessons) allLessons.push(...mod.lessons);
+          }
+        }
+      }
+
+      // Clean broken video URLs
+      allLessons.forEach((les) => {
+        if ((les.video_url || '').includes('kUMe1FH4CHE')) {
+          les.video_url = '';
+        }
+      });
+
       allLessons.sort((a, b) => a.order - b.order);
       setLessons(allLessons);
 
-      if (modulesData.length > 0 && selectedModuleId === '') {
-        setSelectedModuleId(modulesData[0].id);
+      if (activeModules.length > 0 && selectedModuleId === '') {
+        setSelectedModuleId(activeModules[0].id);
       }
     } catch (err) {
       console.error('Failed to load course details', err);
@@ -164,6 +197,7 @@ export const useLessonManagement = (courseIdStr?: string) => {
     setFormLessonTitle('');
     setFormLessonContent('');
     setFormLessonVideoUrl('');
+    setFormLessonDurationMinutes('15');
     setFormLessonOrder('0');
     setFormLessonModule(selectedModuleId || '');
     setFormError(null);
@@ -176,6 +210,7 @@ export const useLessonManagement = (courseIdStr?: string) => {
     setFormLessonTitle(lesson.title);
     setFormLessonContent(lesson.content_text || '');
     setFormLessonVideoUrl(lesson.video_url || '');
+    setFormLessonDurationMinutes(String(lesson.duration_seconds ? Math.round(lesson.duration_seconds / 60) : 15));
     setFormLessonOrder(String(lesson.order));
     setFormLessonModule(lesson.module);
     setFormError(null);
@@ -196,6 +231,7 @@ export const useLessonManagement = (courseIdStr?: string) => {
       title: formLessonTitle,
       content_text: formLessonContent,
       video_url: formLessonVideoUrl || undefined,
+      duration_seconds: (Number(formLessonDurationMinutes) || 15) * 60,
       order: Number(formLessonOrder),
       module: Number(formLessonModule),
     };
@@ -251,6 +287,8 @@ export const useLessonManagement = (courseIdStr?: string) => {
     setFormLessonContent,
     formLessonVideoUrl,
     setFormLessonVideoUrl,
+    formLessonDurationMinutes,
+    setFormLessonDurationMinutes,
     formLessonOrder,
     setFormLessonOrder,
     formLessonModule,

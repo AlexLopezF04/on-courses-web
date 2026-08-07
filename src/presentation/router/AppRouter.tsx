@@ -112,7 +112,7 @@ export const AppRouter: React.FC = () => {
         <Route
           path="/learn/:courseId/lesson/:lessonId"
           element={
-            <RequireAuth allowedRoles={['student']}>
+            <RequireAuth allowedRoles={['student', 'professor', 'admin']}>
               <LessonPlayerPage />
             </RequireAuth>
           }

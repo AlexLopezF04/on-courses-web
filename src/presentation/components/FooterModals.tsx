@@ -1,129 +1,86 @@
 import React, { useState } from 'react';
-import { ShieldCheck, FileText, Cookie, Award, Check, Users, Send, Mail } from 'lucide-react';
+import { ShieldCheck, FileText, Cookie, Award, Check, Mail, Info, Building2, Code2, GraduationCap, X } from 'lucide-react';
 
-/* ─── 1. Modal Legal / Privacidad / Cookies ────────────────────── */
+/* ─── 1. Modal Información Legal Unificada ────────────────────── */
 export const LegalModal: React.FC<{
   isOpen: boolean;
   onClose: () => void;
-  tab: 'terms' | 'privacy' | 'cookies';
-}> = ({ isOpen, onClose, tab: initialTab }) => {
-  const [activeTab, setActiveTab] = useState<'terms' | 'privacy' | 'cookies'>(initialTab);
-
+}> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm animate-fade-in">
-      <div className="w-full max-w-2xl border-2 border-slate-950 bg-white dark:bg-slate-900 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_#00b835] overflow-hidden">
+      <div className="w-full max-w-2xl border-2 border-slate-950 bg-white dark:bg-slate-900 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_#00b835] overflow-hidden text-slate-950 dark:text-white">
         {/* OS Header */}
         <div className="flex items-center justify-between px-4 py-2 bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-950">
-          <div className="flex items-center gap-2">
-            <ShieldCheck className="h-4 w-4 text-emerald-500" />
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200">
+          <div className="flex items-center gap-2" translate="no">
+            <ShieldCheck className="h-4 w-4 text-[#00cc33]" />
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 font-mono">
               oncourses.app/legal-terms
             </span>
           </div>
           <button
+            type="button"
             onClick={onClose}
-            className="w-5 h-5 flex items-center justify-center border border-slate-950 text-xs font-bold bg-rose-500 text-white hover:bg-rose-600 cursor-pointer"
+            aria-label="Cerrar modal"
+            className="w-6 h-6 flex items-center justify-center border border-slate-950 text-xs font-bold bg-rose-500 text-white hover:bg-rose-600 cursor-pointer shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]"
           >
-            X
+            <X className="h-3.5 w-3.5" />
           </button>
         </div>
 
-        {/* Tabs */}
-        <div className="flex border-b-2 border-slate-950 bg-slate-50 dark:bg-slate-950">
-          <button
-            onClick={() => setActiveTab('terms')}
-            className={`flex-1 flex items-center justify-center gap-2 py-3 text-xs font-bold uppercase tracking-wider border-r-2 border-slate-950 transition-colors ${
-              activeTab === 'terms'
-                ? 'bg-white dark:bg-slate-900 text-slate-950 dark:text-white border-b-2 border-b-transparent -mb-[2px]'
-                : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800'
-            }`}
-          >
-            <FileText className="h-4 w-4" />
-            <span>Términos</span>
-          </button>
-          <button
-            onClick={() => setActiveTab('privacy')}
-            className={`flex-1 flex items-center justify-center gap-2 py-3 text-xs font-bold uppercase tracking-wider border-r-2 border-slate-950 transition-colors ${
-              activeTab === 'privacy'
-                ? 'bg-white dark:bg-slate-900 text-slate-950 dark:text-white border-b-2 border-b-transparent -mb-[2px]'
-                : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800'
-            }`}
-          >
-            <ShieldCheck className="h-4 w-4" />
-            <span>Privacidad</span>
-          </button>
-          <button
-            onClick={() => setActiveTab('cookies')}
-            className={`flex-1 flex items-center justify-center gap-2 py-3 text-xs font-bold uppercase tracking-wider transition-colors ${
-              activeTab === 'cookies'
-                ? 'bg-white dark:bg-slate-900 text-slate-950 dark:text-white border-b-2 border-b-transparent -mb-[2px]'
-                : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800'
-            }`}
-          >
-            <Cookie className="h-4 w-4" />
-            <span>Cookies</span>
-          </button>
+        {/* Header Ribbon */}
+        <div className="p-4 bg-slate-50 dark:bg-slate-950 border-b-2 border-slate-950 flex items-center gap-3">
+          <FileText className="h-6 w-6 text-[#00cc33] shrink-0" />
+          <div>
+            <h2 className="font-display text-lg font-black leading-none">Información Legal Completa & Términos</h2>
+            <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mt-1">
+              Términos de Servicio, Política de Privacidad y Cookies de OnCourses
+            </p>
+          </div>
         </div>
 
-        {/* Modal Content */}
-        <div className="p-6 max-h-[400px] overflow-y-auto text-sm text-slate-700 dark:text-slate-300 leading-relaxed space-y-4 font-medium scrollbar-thin">
-          {activeTab === 'terms' && (
-            <>
-              <h3 className="text-lg font-bold text-slate-950 dark:text-white">Términos y Condiciones de Uso</h3>
-              <p>
-                Al acceder y utilizar OnCourses, aceptas cumplir con los presentes términos. Nuestra plataforma ofrece cursos interactivos de programación, bases de datos y desarrollo de software.
-              </p>
-              <p className="font-bold text-slate-900 dark:text-white">1. Propiedad Intelectual</p>
-              <p>
-                Todo el contenido, código de lecciones y material educativo es propiedad de OnCourses y sus creadores. Queda prohibida la reproducción no autorizada.
-              </p>
-              <p className="font-bold text-slate-900 dark:text-white">2. Certificaciones</p>
-              <p>
-                Los certificados entregados al completar módulos validan tu avance en la plataforma.
-              </p>
-            </>
-          )}
+        {/* Complete Unified Legal Document */}
+        <div className="p-6 max-h-[420px] overflow-y-auto text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed space-y-5 font-medium scrollbar-thin">
+          <section className="space-y-2">
+            <h3 className="text-base font-black text-slate-950 dark:text-white flex items-center gap-2 border-b-2 border-slate-950 pb-1">
+              <FileText className="h-4 w-4 text-[#00cc33]" />
+              1. Términos y Condiciones de Uso
+            </h3>
+            <p>
+              Al utilizar la plataforma <strong>OnCourses</strong>, el usuario acepta cumplir con las normas de acceso, inscripción y convivencia académica. Todo el material didáctico, guías interactivas, código de lecciones y videoclases son propiedad exclusiva de OnCourses y sus autores. Queda estrictamente prohibida la redistribución o copia no autorizada.
+            </p>
+          </section>
 
-          {activeTab === 'privacy' && (
-            <>
-              <h3 className="text-lg font-bold text-slate-950 dark:text-white">Política de Privacidad</h3>
-              <p>
-                En OnCourses valoramos y protegemos la privacidad de tus datos personales según los estándares internacionales.
-              </p>
-              <p className="font-bold text-slate-900 dark:text-white">1. Información Recopilada</p>
-              <p>
-                Recopilamos únicamente la información necesaria para gestionar tu cuenta (nombre, correo electrónico, progreso académico).
-              </p>
-              <p className="font-bold text-slate-900 dark:text-white">2. Uso de la Información</p>
-              <p>
-                Tus datos no serán vendidos ni compartidos con terceros con fines comerciales.
-              </p>
-            </>
-          )}
+          <section className="space-y-2">
+            <h3 className="text-base font-black text-slate-950 dark:text-white flex items-center gap-2 border-b-2 border-slate-950 pb-1">
+              <ShieldCheck className="h-4 w-4 text-[#00cc33]" />
+              2. Política de Privacidad y Datos Personales
+            </h3>
+            <p>
+              Garantizamos la protección de tus datos personales conforme a la normativa vigente. La información recopilada (nombre, correo electrónico, perfil académico y avance de cursos) se utiliza únicamente para el funcionamiento técnico de tu Campus Estudiantil. Tus datos nunca serán comercializados ni transferidos a terceros.
+            </p>
+          </section>
 
-          {activeTab === 'cookies' && (
-            <>
-              <h3 className="text-lg font-bold text-slate-950 dark:text-white">Política de Cookies</h3>
-              <p>
-                Utilizamos cookies esenciales para mantener tu sesión activa y recordar tus preferencias de tema (Modo Claro / Modo Oscuro).
-              </p>
-              <p className="font-bold text-slate-900 dark:text-white">Cookies de Sesión</p>
-              <p>
-                Permiten autenticar tus solicitudes de manera segura en el backend y guardar tu token de acceso.
-              </p>
-            </>
-          )}
+          <section className="space-y-2">
+            <h3 className="text-base font-black text-slate-950 dark:text-white flex items-center gap-2 border-b-2 border-slate-950 pb-1">
+              <Cookie className="h-4 w-4 text-[#00cc33]" />
+              3. Cookies y Almacenamiento de Sesión
+            </h3>
+            <p>
+              OnCourses utiliza cookies estrictamente necesarias y almacenamiento local de navegador (<em>localStorage</em>) para mantener activa tu sesión segura, guardar tus credenciales de acceso JWT y recordar tus preferencias de interfaz (Modo Claro / Oscuro y temas seleccionados).
+            </p>
+          </section>
         </div>
 
-        {/* Footer buttons */}
+        {/* Footer button */}
         <div className="p-4 bg-slate-50 dark:bg-slate-950 border-t-2 border-slate-950 flex justify-end">
           <button
+            type="button"
             onClick={onClose}
-            className="px-5 py-2 bg-brand-400 text-slate-950 font-bold text-xs uppercase tracking-wider border-2 border-slate-950 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-brand-300 transition-all cursor-pointer"
+            className="px-6 py-2.5 bg-[#00cc33] text-slate-950 font-black text-xs uppercase tracking-wider border-2 border-slate-950 shadow-[2.5px_2.5px_0px_0px_rgba(0,0,0,1)] hover:bg-[#00ff41] transition-all cursor-pointer"
           >
-            Entendido
+            Entendido y Acepto
           </button>
         </div>
       </div>
@@ -131,7 +88,92 @@ export const LegalModal: React.FC<{
   );
 };
 
-/* ─── 2. Modal de Precios y Planes ─────────────────────────────── */
+/* ─── 2. Modal "Nosotros" (About OnCourses) ─────────────────────── */
+export const AboutModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm animate-fade-in">
+      <div className="w-full max-w-2xl border-2 border-slate-950 bg-white dark:bg-slate-900 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_#00b835] overflow-hidden text-slate-950 dark:text-white">
+        {/* OS Header */}
+        <div className="flex items-center justify-between px-4 py-2 bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-950">
+          <div className="flex items-center gap-2" translate="no">
+            <Info className="h-4 w-4 text-[#00cc33]" />
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 font-mono">
+              oncourses.app/nosotros
+            </span>
+          </div>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Cerrar modal"
+            className="w-6 h-6 flex items-center justify-center border border-slate-950 text-xs font-bold bg-rose-500 text-white hover:bg-rose-600 cursor-pointer shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]"
+          >
+            <X className="h-3.5 w-3.5" />
+          </button>
+        </div>
+
+        <div className="p-6 sm:p-8 space-y-6">
+          <div className="text-center">
+            <div className="w-14 h-14 bg-[#00cc33] text-slate-950 border-2 border-slate-950 flex items-center justify-center mx-auto mb-3 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
+              <Code2 className="h-8 w-8" />
+            </div>
+            <h2 className="font-display text-2xl font-black text-slate-950 dark:text-white">
+              Sobre OnCourses
+            </h2>
+            <p className="text-xs font-bold text-emerald-600 dark:text-[#00cc33] uppercase tracking-wider mt-1">
+              Plataforma de Educación Interactiva en Ingeniería de Software
+            </p>
+          </div>
+
+          <div className="space-y-4 text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed font-medium">
+            <p>
+              <strong>OnCourses</strong> es una plataforma web de aprendizaje práctico diseñada para estudiantes, desarrolladores e investigadores que buscan dominar lenguajes de programación, estructura de datos, arquitecturas de software y gestión de bases de datos de forma estructurada.
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+              <div className="border-2 border-slate-950 bg-slate-50 dark:bg-slate-950 p-4 space-y-1">
+                <div className="flex items-center gap-2 font-bold text-slate-950 dark:text-white">
+                  <GraduationCap className="h-4 w-4 text-[#00cc33]" />
+                  <span>Enfoque Práctico</span>
+                </div>
+                <p className="text-[11px] text-slate-600 dark:text-slate-400">
+                  Manuales paso a paso con bloques de código ejecutables, ejemplos de terminal y videoclases integradas.
+                </p>
+              </div>
+
+              <div className="border-2 border-slate-950 bg-slate-50 dark:bg-slate-950 p-4 space-y-1">
+                <div className="flex items-center gap-2 font-bold text-slate-950 dark:text-white">
+                  <Building2 className="h-4 w-4 text-[#00cc33]" />
+                  <span>Universidad UTE</span>
+                </div>
+                <p className="text-[11px] text-slate-600 dark:text-slate-400">
+                  Proyecto de desarrollo tecnológico gestado en la Sede Tulcán, Ecuador.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="p-3 border-2 border-slate-950 bg-slate-100 dark:bg-slate-950 text-center text-xs font-mono font-bold text-slate-600 dark:text-slate-400">
+            📍 Tulcán, Carchi, Ecuador • Versión Web v2.4
+          </div>
+        </div>
+
+        <div className="p-4 bg-slate-50 dark:bg-slate-950 border-t-2 border-slate-950 flex justify-end">
+          <button
+            type="button"
+            onClick={onClose}
+            className="px-6 py-2 bg-slate-950 text-white dark:bg-white dark:text-slate-950 font-bold text-xs uppercase tracking-wider border-2 border-slate-950 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-brand-500 hover:text-slate-950 transition-all cursor-pointer"
+          >
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* ─── 3. Modal de Precios y Planes ─────────────────────────────── */
 export const PricingModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
@@ -140,17 +182,19 @@ export const PricingModal: React.FC<{ isOpen: boolean; onClose: () => void }> = 
       <div className="w-full max-w-3xl border-2 border-slate-950 bg-white dark:bg-slate-900 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_#00b835] overflow-hidden">
         {/* OS Header */}
         <div className="flex items-center justify-between px-4 py-2 bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-950">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2" translate="no">
             <Award className="h-4 w-4 text-blue-500" />
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200">
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 font-mono">
               oncourses.app/pricing-plans
             </span>
           </div>
           <button
+            type="button"
             onClick={onClose}
-            className="w-5 h-5 flex items-center justify-center border border-slate-950 text-xs font-bold bg-rose-500 text-white hover:bg-rose-600 cursor-pointer"
+            aria-label="Cerrar modal"
+            className="w-6 h-6 flex items-center justify-center border border-slate-950 text-xs font-bold bg-rose-500 text-white hover:bg-rose-600 cursor-pointer shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]"
           >
-            X
+            <X className="h-3.5 w-3.5" />
           </button>
         </div>
 
@@ -183,6 +227,7 @@ export const PricingModal: React.FC<{ isOpen: boolean; onClose: () => void }> = 
                 </ul>
               </div>
               <button
+                type="button"
                 onClick={onClose}
                 className="w-full py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 border-2 border-slate-950 text-slate-950 dark:text-white font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer"
               >
@@ -208,6 +253,7 @@ export const PricingModal: React.FC<{ isOpen: boolean; onClose: () => void }> = 
                 </ul>
               </div>
               <button
+                type="button"
                 onClick={() => {
                   alert('¡Gracias por tu interés en OnCourses PRO! La integración de pagos está lista para sincronizarse con Stripe.');
                   onClose();
@@ -217,63 +263,6 @@ export const PricingModal: React.FC<{ isOpen: boolean; onClose: () => void }> = 
                 Suscribirme Ahora
               </button>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-/* ─── 3. Modal de Comunidad ────────────────────────────────────── */
-export const CommunityModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
-  if (!isOpen) return null;
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm animate-fade-in">
-      <div className="w-full max-w-lg border-2 border-slate-950 bg-white dark:bg-slate-900 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_#00b835] overflow-hidden">
-        <div className="flex items-center justify-between px-4 py-2 bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-950">
-          <div className="flex items-center gap-2">
-            <Users className="h-4 w-4 text-orange-500" />
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200">
-              oncourses.app/community
-            </span>
-          </div>
-          <button onClick={onClose} className="w-5 h-5 flex items-center justify-center border border-slate-950 text-xs font-bold bg-rose-500 text-white cursor-pointer">X</button>
-        </div>
-
-        <div className="p-6 text-center">
-          <div className="w-16 h-16 bg-orange-100 dark:bg-orange-950/40 border-2 border-slate-950 mx-auto flex items-center justify-center mb-4 text-orange-500 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
-            <Users className="h-8 w-8" />
-          </div>
-          <h2 className="font-display text-2xl font-extrabold text-slate-950 dark:text-white mb-2">Comunidad de Estudiantes DEV</h2>
-          <p className="text-slate-600 dark:text-slate-400 text-sm mb-6 leading-relaxed">
-            Conéctate con otros programadores, comparte dudas de tus ejercicios y participa en salas de estudio en vivo.
-          </p>
-
-          <div className="space-y-3">
-            <a
-              href="https://github.com/AlexLopezF04"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-between p-3.5 border-2 border-slate-950 bg-slate-900 text-white font-bold text-xs uppercase tracking-wider shadow-[3px_3px_0px_0px_#00b835] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
-            >
-              <div className="flex items-center gap-3">
-                <Send className="h-4 w-4 text-brand-400" />
-                <span>Comunidad GitHub & Discusiones</span>
-              </div>
-              <span>ÚNETE ↗</span>
-            </a>
-
-            <a
-              href="mailto:j.alexander.lopez.f@gmail.com"
-              className="flex items-center justify-between p-3.5 border-2 border-slate-950 bg-white dark:bg-slate-800 text-slate-950 dark:text-white font-bold text-xs uppercase tracking-wider shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
-            >
-              <div className="flex items-center gap-3">
-                <Mail className="h-4 w-4 text-emerald-500" />
-                <span>Contacto Directo con Mentores</span>
-              </div>
-              <span>CONTACTAR ↗</span>
-            </a>
           </div>
         </div>
       </div>
@@ -298,13 +287,20 @@ export const NewsletterModal: React.FC<{ isOpen: boolean; onClose: () => void }>
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm animate-fade-in">
       <div className="w-full max-w-md border-2 border-slate-950 bg-white dark:bg-slate-900 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_#00b835] overflow-hidden">
         <div className="flex items-center justify-between px-4 py-2 bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-950">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2" translate="no">
             <Mail className="h-4 w-4 text-pink-500" />
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200">
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 font-mono">
               oncourses.app/newsletter
             </span>
           </div>
-          <button onClick={onClose} className="w-5 h-5 flex items-center justify-center border border-slate-950 text-xs font-bold bg-rose-500 text-white cursor-pointer">X</button>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Cerrar modal"
+            className="w-6 h-6 flex items-center justify-center border border-slate-950 text-xs font-bold bg-rose-500 text-white cursor-pointer shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]"
+          >
+            <X className="h-3.5 w-3.5" />
+          </button>
         </div>
 
         <div className="p-6">
@@ -318,6 +314,7 @@ export const NewsletterModal: React.FC<{ isOpen: boolean; onClose: () => void }>
                 Te enviaremos los mejores tutoriales, noticias y recursos de programación a <span className="font-bold text-slate-900 dark:text-white">{email}</span>.
               </p>
               <button
+                type="button"
                 onClick={() => { setSubscribed(false); onClose(); }}
                 className="mt-6 px-6 py-2.5 bg-brand-400 border-2 border-slate-950 font-bold text-xs uppercase text-slate-950 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
               >

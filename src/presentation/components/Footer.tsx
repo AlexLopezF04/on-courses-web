@@ -1,122 +1,106 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, BookOpen, Users, Info, Mailbox, Database, Code, Terminal, GitBranch, Building2, MapPin } from 'lucide-react';
+import { BookOpen, Info, Mailbox, Database, Code, Terminal, GitBranch, Building2, MapPin, ShieldCheck, ArrowRight, X } from 'lucide-react';
 import { Logo } from './Logo';
-import { LegalModal, PricingModal, CommunityModal, NewsletterModal } from './FooterModals';
+import { LegalModal, PricingModal, AboutModal, NewsletterModal } from './FooterModals';
 
 export const Footer: React.FC = () => {
-  const [legalModalTab, setLegalModalTab] = useState<'terms' | 'privacy' | 'cookies' | null>(null);
+  const [showLegalModal, setShowLegalModal] = useState(false);
   const [showPricingModal, setShowPricingModal] = useState(false);
-  const [showCommunityModal, setShowCommunityModal] = useState(false);
+  const [showAboutModal, setShowAboutModal] = useState(false);
   const [showNewsletterModal, setShowNewsletterModal] = useState(false);
 
   return (
-    <footer className="border-t border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-950 py-16 text-slate-600 dark:text-slate-400">
+    <footer className="border-t-2 border-slate-950 bg-slate-50 dark:border-slate-800 dark:bg-slate-950 py-16 text-slate-600 dark:text-slate-400 font-sans">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Col 1: Logo & Brand Info */}
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-2.5">
               <Logo className="h-9 w-9" />
-              <span className="font-display font-bold tracking-tight text-slate-900 dark:text-white text-xl">
+              <span className="font-display font-black tracking-tight text-slate-900 dark:text-white text-xl">
                 OnCourses
               </span>
             </div>
-            <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+            <p className="text-xs sm:text-sm font-sans text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
               Estudia desarrollo de software, algoritmos y bases de datos de manera premium y estructurada en OnCourses.
             </p>
-            <div className="flex flex-col gap-2.5 text-xs text-slate-500 dark:text-slate-400">
+            <div className="flex flex-col gap-2.5 text-xs font-sans font-bold text-slate-600 dark:text-slate-400">
               <div className="flex items-center gap-2">
-                <Building2 className="h-4 w-4 text-slate-400 shrink-0" />
+                <Building2 className="h-4 w-4 text-[#00cc33] shrink-0" />
                 <span>Universidad UTE</span>
               </div>
               <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-slate-400 shrink-0" />
+                <MapPin className="h-4 w-4 text-[#00cc33] shrink-0" />
                 <span>Tulcán, Ecuador</span>
               </div>
-              <a href="mailto:j.alexander.lopez.f@gmail.com" className="flex items-center gap-2 hover:text-brand-500 transition-colors">
-                <Mail className="h-4 w-4 text-slate-400 shrink-0" />
-                <span>j.alexander.lopez.f@gmail.com</span>
-              </a>
-              <a href="https://instagram.com/alexlopez_f04" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-brand-500 transition-colors">
-                <svg className="h-4 w-4 fill-current text-slate-400 shrink-0" viewBox="0 0 24 24">
-                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                </svg>
-                <span>alexlopez_f04</span>
-              </a>
-            </div>
-            <div className="flex items-center gap-3 text-slate-400 dark:text-slate-500 mt-1">
-              <a href="https://github.com/AlexLopezF04" target="_blank" rel="noopener noreferrer" className="hover:text-brand-500 transition-colors">
-                <svg className="h-5 w-5 fill-current" viewBox="0 0 24 24">
-                  <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
-                </svg>
-              </a>
-              <a href="mailto:j.alexander.lopez.f@gmail.com" className="hover:text-brand-500 transition-colors">
-                <Mail className="h-5 w-5" />
-              </a>
             </div>
             <Link 
               to="/courses" 
-              className="mt-4 inline-flex items-center justify-center h-[42px] px-5 w-fit rounded-xl border border-slate-350 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-850 transition-colors text-sm font-semibold shadow-sm"
+              onClick={() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="mt-4 inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#00cc33] hover:bg-[#00ff41] text-slate-950 font-sans font-bold text-xs uppercase tracking-wider border-2 border-slate-950 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00b835] hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all cursor-pointer w-fit"
             >
-              Ir al catálogo
+              <span>Ir al catálogo</span>
+              <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
 
           {/* Col 2: Plataforma */}
           <div className="flex flex-col gap-4">
-            <h3 className="font-display font-semibold text-slate-900 dark:text-white text-sm uppercase tracking-wider">
+            <h3 className="font-display font-extrabold text-slate-900 dark:text-white text-sm uppercase tracking-wider">
               Plataforma
             </h3>
-            <div className="flex flex-col gap-2.5 text-sm">
-              <Link to="/courses" className="flex items-center gap-2 hover:text-brand-500 transition-colors">
+            <div className="flex flex-col gap-2.5 text-xs sm:text-sm font-sans font-semibold">
+              <Link to="/courses" className="flex items-center gap-2 hover:text-[#00cc33] transition-colors">
                 <BookOpen className="h-4 w-4 text-emerald-500" />
                 <span>Cursos</span>
               </Link>
-              <Link to="/courses?max_price=0" className="flex items-center gap-2 hover:text-brand-500 transition-colors">
+              <Link to="/courses?max_price=0" className="flex items-center gap-2 hover:text-[#00cc33] transition-colors">
                 <Info className="h-4 w-4 text-brand-500" />
                 <span>Recursos Gratis</span>
               </Link>
               <button
-                onClick={() => setShowCommunityModal(true)}
-                className="flex items-center gap-2 text-left hover:text-brand-500 transition-colors cursor-pointer"
-              >
-                <Users className="h-4 w-4 text-orange-500" />
-                <span>Comunidad</span>
-              </button>
-              <button
                 onClick={() => setShowNewsletterModal(true)}
-                className="flex items-center gap-2 text-left hover:text-brand-500 transition-colors cursor-pointer"
+                className="flex items-center gap-2 text-left hover:text-[#00cc33] transition-colors cursor-pointer"
               >
                 <Mailbox className="h-4 w-4 text-pink-500" />
                 <span>Newsletter</span>
+              </button>
+              <button
+                onClick={() => setShowAboutModal(true)}
+                className="flex items-center gap-2 text-left hover:text-[#00cc33] transition-colors cursor-pointer"
+              >
+                <Info className="h-4 w-4 text-emerald-500" />
+                <span>Nosotros</span>
               </button>
             </div>
           </div>
 
           {/* Col 3: Cursos Temas */}
           <div className="flex flex-col gap-4">
-            <h3 className="font-display font-semibold text-slate-900 dark:text-white text-sm uppercase tracking-wider">
+            <h3 className="font-display font-extrabold text-slate-900 dark:text-white text-sm uppercase tracking-wider">
               Cursos Destacados
             </h3>
-            <div className="flex flex-col gap-2.5 text-sm">
-              <Link to="/courses?search=terminal" className="flex items-center gap-2 hover:text-brand-500 transition-colors">
+            <div className="flex flex-col gap-2.5 text-xs sm:text-sm font-sans font-semibold">
+              <Link to="/courses/3" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center gap-2 hover:text-[#00cc33] transition-colors">
                 <Terminal className="h-4 w-4 text-emerald-500" />
                 <span>Bash y terminal</span>
               </Link>
-              <Link to="/courses?search=python" className="flex items-center gap-2 hover:text-brand-500 transition-colors">
+              <Link to="/courses/1" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center gap-2 hover:text-[#00cc33] transition-colors">
                 <Code className="h-4 w-4 text-blue-500" />
                 <span>Python</span>
               </Link>
-              <Link to="/courses?search=javascript" className="flex items-center gap-2 hover:text-brand-500 transition-colors">
+              <Link to="/courses/10" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center gap-2 hover:text-[#00cc33] transition-colors">
                 <Code className="h-4 w-4 text-yellow-500" />
                 <span>JavaScript</span>
               </Link>
-              <Link to="/courses?search=git" className="flex items-center gap-2 hover:text-brand-500 transition-colors">
+              <Link to="/courses/4" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center gap-2 hover:text-[#00cc33] transition-colors">
                 <GitBranch className="h-4 w-4 text-brand-500" />
                 <span>Git y GitHub</span>
               </Link>
-              <Link to="/courses?search=sql" className="flex items-center gap-2 hover:text-brand-500 transition-colors">
+              <Link to="/courses/5" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center gap-2 hover:text-[#00cc33] transition-colors">
                 <Database className="h-4 w-4 text-orange-500" />
                 <span>SQL y bases de datos</span>
               </Link>
@@ -125,51 +109,79 @@ export const Footer: React.FC = () => {
 
           {/* Col 4: Información Legal */}
           <div className="flex flex-col gap-4">
-            <h3 className="font-display font-semibold text-slate-900 dark:text-white text-sm uppercase tracking-wider">
+            <h3 className="font-display font-extrabold text-slate-900 dark:text-white text-sm uppercase tracking-wider">
               Información Legal
             </h3>
-            <div className="flex flex-col gap-2.5 text-sm">
+            <div className="flex flex-col gap-2.5 text-xs sm:text-sm font-sans font-semibold">
               <button
-                onClick={() => setLegalModalTab('terms')}
-                className="text-left hover:text-brand-500 transition-colors cursor-pointer"
+                onClick={() => setShowLegalModal(true)}
+                className="flex items-center gap-2 text-left hover:text-[#00cc33] transition-colors cursor-pointer"
               >
-                Legal
-              </button>
-              <button
-                onClick={() => setLegalModalTab('privacy')}
-                className="text-left hover:text-brand-500 transition-colors cursor-pointer"
-              >
-                Privacidad
-              </button>
-              <button
-                onClick={() => setLegalModalTab('cookies')}
-                className="text-left hover:text-brand-500 transition-colors cursor-pointer"
-              >
-                Cookies
+                <ShieldCheck className="h-4 w-4 text-[#00cc33]" />
+                <span>Información Legal & Términos</span>
               </button>
             </div>
           </div>
         </div>
 
+        {/* Giant Brand Banner Window Frame with Soft Mint Green Retro Shadow Offset */}
+        <div className="group relative mt-16 border-2 border-slate-950 bg-white dark:bg-slate-950 text-slate-950 dark:text-white shadow-[6px_6px_0px_0px_#86efac] dark:shadow-[6px_6px_0px_0px_#7effa0] overflow-hidden flex flex-col select-none transition-all duration-300 hover:translate-x-[-3px] hover:translate-y-[-3px] hover:shadow-[10px_10px_0px_0px_#86efac] dark:hover:shadow-[10px_10px_0px_0px_#7effa0] cursor-pointer">
+          {/* Retro OS Window Chrome Header Bar */}
+          <div className="flex items-center justify-between px-4 py-1.5 bg-slate-100 dark:bg-slate-900 border-b-2 border-slate-950 transition-colors">
+            <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-300 font-mono" translate="no">
+              ONCOURSES.APP
+            </span>
+            <div className="flex items-center gap-1.5" translate="no">
+              <span className="w-5 h-5 flex items-center justify-center border-2 border-slate-950 text-[11px] font-black text-slate-950 dark:text-white bg-white dark:bg-slate-800 select-none shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">_</span>
+              <span className="w-5 h-5 flex items-center justify-center border-2 border-slate-950 text-[11px] font-black text-slate-950 dark:text-white bg-white dark:bg-slate-800 select-none shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">+</span>
+              <span className="w-5 h-5 flex items-center justify-center border-2 border-slate-950 text-[11px] font-black text-slate-950 dark:text-white bg-white dark:bg-slate-800 select-none shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]" aria-label="Cerrar">
+                <X className="h-3 w-3" />
+              </span>
+            </div>
+          </div>
+
+          {/* Banner Body Container */}
+          <div className="relative py-10 px-4 overflow-hidden flex items-center justify-center">
+            {/* Light mode grid */}
+            <div className="block dark:hidden animate-grid transition-none absolute inset-0 bg-[linear-gradient(rgba(0,200,50,0.18)_1px,transparent_1px),linear-gradient(90deg,rgba(0,200,50,0.12)_1px,transparent_1px)] bg-[size:36px_36px] pointer-events-none" />
+
+            {/* Dark mode grid */}
+            <div className="hidden dark:block animate-grid transition-none absolute inset-0 bg-[linear-gradient(rgba(0,255,65,0.25)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,65,0.16)_1px,transparent_1px)] bg-[size:36px_36px] pointer-events-none" />
+            
+            {/* Ambient Glow */}
+            <div className="absolute inset-0 bg-[#00cc33]/10 dark:bg-[#00ff41]/15 rounded-full blur-3xl pointer-events-none group-hover:scale-110 transition-transform duration-300" />
+
+            {/* Brand Logo Text with Hover Micro-Movement */}
+            <div className="relative z-10 font-display font-black text-5xl sm:text-7xl md:text-8xl lg:text-[9rem] tracking-tight uppercase leading-none text-center transition-transform duration-300 group-hover:scale-[1.02]">
+              <span className="text-slate-950 dark:text-white transition-colors duration-200">On</span>
+              <span className="text-[#00aa2e] dark:text-[#00ff41] drop-shadow-[0_4px_16px_rgba(0,204,51,0.3)] dark:drop-shadow-[0_4px_24px_rgba(0,255,65,0.5)] transition-colors duration-200">Courses</span>
+            </div>
+          </div>
+        </div>
+
         {/* Bottom copyright line */}
-        <div className="mt-12 border-t border-slate-200 dark:border-slate-800 pt-8 text-center text-xs text-slate-400 dark:text-slate-600">
-          Desarrollado con ♡ [y gracias a ti] desde Ecuador para el mundo. v1.0 &copy; 2024-{new Date().getFullYear()} OnCourses by Alex López.
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-2 text-xs font-bold text-slate-800 dark:text-slate-200 text-center">
+          <div className="p-1 rounded-md bg-white dark:bg-slate-900 border border-slate-950 dark:border-slate-800 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_#00b835] flex items-center justify-center shrink-0">
+            <Logo className="h-4 w-4 drop-shadow" />
+          </div>
+          <span>
+            Desarrollado con ❤️ para todos mis Estudiantes. v1.0 &copy; 2024-{new Date().getFullYear()} OnCourses.
+          </span>
         </div>
       </div>
 
       {/* Modals Rendering */}
       <LegalModal
-        isOpen={legalModalTab !== null}
-        onClose={() => setLegalModalTab(null)}
-        tab={legalModalTab || 'terms'}
+        isOpen={showLegalModal}
+        onClose={() => setShowLegalModal(false)}
       />
       <PricingModal
         isOpen={showPricingModal}
         onClose={() => setShowPricingModal(false)}
       />
-      <CommunityModal
-        isOpen={showCommunityModal}
-        onClose={() => setShowCommunityModal(false)}
+      <AboutModal
+        isOpen={showAboutModal}
+        onClose={() => setShowAboutModal(false)}
       />
       <NewsletterModal
         isOpen={showNewsletterModal}

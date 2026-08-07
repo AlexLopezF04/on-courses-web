@@ -9,16 +9,20 @@ import {
 } from '@infrastructure/factories/LessonProgressFactory';
 import { Course } from '@domain/entities/Course';
 import { Lesson } from '@domain/entities/Lesson';
-import { GraduationCap, ArrowLeft, CheckCircle, ChevronRight, Play, BookOpen, FileText, CheckSquare, Sparkles } from 'lucide-react';
+import { GraduationCap, ArrowLeft, CheckCircle, ChevronRight, Play, BookOpen, CheckSquare } from 'lucide-react';
 import { Loader } from '../components/Loader';
 import { Button } from '../components/Button';
-import { useThemeStore } from '../store/useThemeStore';
-import { sanitizeUrl } from '../utils/sanitize-url';
+import { useAuthStore } from '../store/useAuthStore';
+import { getEmbedVideoUrl } from '../utils/sanitize-url';
+import { MarkdownRenderer } from '../components/MarkdownRenderer';
 
 export const LessonPlayerPage: React.FC = () => {
   const { courseId, lessonId } = useParams<{ courseId: string; lessonId: string }>();
   const navigate = useNavigate();
-  const { theme, toggleTheme } = useThemeStore();
+  const { user } = useAuthStore();
+
+  const isAdminOrProfessor = user?.role === 'admin' || user?.role === 'professor';
+  const backTarget = isAdminOrProfessor ? `/admin/courses/${courseId}/lessons` : '/dashboard';
 
   const [course, setCourse] = useState<Course | null>(null);
   const [currentLesson, setCurrentLesson] = useState<Lesson | null>(null);
@@ -35,10 +39,10 @@ export const LessonPlayerPage: React.FC = () => {
       try {
         const courseData = await getCourseByIdUseCase.execute(idCourse);
 
-        // Enrich modules with lessons
+        // Enrich modules with lessons if backend has equal or more modules
         try {
           const modulesData = await getModulesUseCase.execute(idCourse);
-          if (modulesData && modulesData.length > 0) {
+          if (modulesData && modulesData.length >= (courseData.modules?.length || 0)) {
             const modulesWithLessons = await Promise.all(
               modulesData.map(async (mod) => {
                 try {
@@ -62,6 +66,17 @@ export const LessonPlayerPage: React.FC = () => {
           console.warn('Could not fetch modules/lessons in player', modErr);
         }
 
+        // Clean any broken video_urls
+        if (courseData.modules) {
+          courseData.modules = courseData.modules.map((mod) => ({
+            ...mod,
+            lessons: (mod.lessons || []).map((les) => ({
+              ...les,
+              video_url: (les.video_url || '').includes('kUMe1FH4CHE') ? '' : les.video_url,
+            })),
+          }));
+        }
+
         setCourse(courseData);
 
         // Find active lesson or default to first lesson
@@ -80,9 +95,9 @@ export const LessonPlayerPage: React.FC = () => {
         setCurrentLesson(foundLesson);
 
         // Load lesson progress for the student
+        const completedMap: Record<number, boolean> = {};
         try {
           const progressList = await getLessonProgressUseCase.execute(idCourse);
-          const completedMap: Record<number, boolean> = {};
           if (Array.isArray(progressList)) {
             progressList.forEach((prog: any) => {
               if (prog.is_completed) {
@@ -90,10 +105,26 @@ export const LessonPlayerPage: React.FC = () => {
               }
             });
           }
-          setCompletedLessons(completedMap);
         } catch {
-          setCompletedLessons({});
+          // ignore API error
         }
+
+        // Merge local storage cached completed lessons for current user
+        try {
+          const userKey = user?.username?.toLowerCase() || String(user?.id);
+          const cachedCompleted = JSON.parse(
+            localStorage.getItem(`oncourses_completed_lessons_${userKey}_${idCourse}`) || '{}'
+          );
+          Object.keys(cachedCompleted).forEach((lesId) => {
+            if (cachedCompleted[Number(lesId)]) {
+              completedMap[Number(lesId)] = true;
+            }
+          });
+        } catch {
+          // ignore cache error
+        }
+
+        setCompletedLessons(completedMap);
       } catch (err) {
         console.error('Failed to load course detail or progress', err);
       } finally {
@@ -102,16 +133,71 @@ export const LessonPlayerPage: React.FC = () => {
     };
 
     loadCourseData();
-  }, [idCourse, idLesson]);
+  }, [idCourse, idLesson, user]);
 
   const handleMarkAsCompleted = async () => {
     if (!currentLesson) return;
     setIsCompleting(true);
     try {
-      await markLessonAsCompletedUseCase.execute(currentLesson.id);
+      try {
+        await markLessonAsCompletedUseCase.execute(currentLesson.id);
+      } catch (apiErr) {
+        console.warn('API mark as completed error, updating local cache', apiErr);
+      }
 
       // Update local state
-      setCompletedLessons((prev) => ({ ...prev, [currentLesson.id]: true }));
+      const updatedCompletedMap = { ...completedLessons, [currentLesson.id]: true };
+      setCompletedLessons(updatedCompletedMap);
+
+      // Calculate total course progress percentage
+      const allLessons: Lesson[] = [];
+      course?.modules?.forEach((m) => {
+        if (m.lessons) {
+          allLessons.push(...m.lessons);
+        }
+      });
+
+      const totalLessonsCount = allLessons.length;
+      const completedCount = Object.keys(updatedCompletedMap).filter((k) => updatedCompletedMap[Number(k)]).length;
+      const calculatedProgress = totalLessonsCount > 0 ? Math.round((completedCount / totalLessonsCount) * 100) : 100;
+
+      // Save updated progress locally for instant dashboard reactivity
+      try {
+        const userKey = user?.username?.toLowerCase() || String(user?.id);
+        
+        // 1. Save completed lessons map
+        localStorage.setItem(
+          `oncourses_completed_lessons_${userKey}_${idCourse}`,
+          JSON.stringify(updatedCompletedMap)
+        );
+
+        // 2. Update user enrollment list in cache
+        const storedCache = JSON.parse(localStorage.getItem('oncourses_user_enrollments') || '{}');
+        const userEnrollments = storedCache[userKey] || [];
+        
+        const existingEnr = userEnrollments.find(
+          (e: any) => Number(e.course) === Number(idCourse) || Number(e.course_data?.id) === Number(idCourse)
+        );
+
+        if (existingEnr) {
+          existingEnr.total_progress = String(calculatedProgress);
+        } else {
+          userEnrollments.push({
+            id: Date.now(),
+            student: user?.id,
+            course: idCourse,
+            course_title: course?.title,
+            enrolled_at: new Date().toISOString(),
+            total_progress: String(calculatedProgress),
+            course_data: course,
+          });
+        }
+
+        storedCache[userKey] = userEnrollments;
+        localStorage.setItem('oncourses_user_enrollments', JSON.stringify(storedCache));
+      } catch (saveErr) {
+        console.warn('Could not save progress cache', saveErr);
+      }
 
       // Find next lesson to auto-navigate
       let nextLesson: Lesson | null = null;
@@ -137,7 +223,7 @@ export const LessonPlayerPage: React.FC = () => {
       if (nextLesson) {
         navigate(`/learn/${idCourse}/lesson/${nextLesson.id}`);
       } else {
-        alert('¡Has completado todas las lecciones de este curso! ¡Felicidades!');
+        alert('🎉 ¡Has completado todas las lecciones de este curso! ¡Felicidades!');
         navigate('/dashboard');
       }
     } catch (err: any) {
@@ -172,9 +258,9 @@ export const LessonPlayerPage: React.FC = () => {
       <aside className="w-80 border-r border-slate-200 dark:border-slate-850 bg-white dark:bg-slate-900 flex flex-col h-full shrink-0">
         <div className="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center gap-3">
           <Link
-            to="/dashboard"
+            to={backTarget}
             className="p-2 border-2 border-slate-950 bg-white dark:bg-slate-950 text-slate-950 dark:text-white font-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-brand-400 hover:text-slate-950 transition-all cursor-pointer shrink-0"
-            title="Volver a Mi Panel"
+            title={isAdminOrProfessor ? 'Volver a Gestión del Temario' : 'Volver a Mi Panel'}
           >
             <ArrowLeft className="h-4 w-4" />
           </Link>
@@ -236,14 +322,8 @@ export const LessonPlayerPage: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-4">
-            <button
-              onClick={toggleTheme}
-              className="rounded-xl p-2.5 text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
-            >
-              {theme === 'dark' ? <FileText className="h-5 w-5" /> : <Sparkles className="h-5 w-5" />}
-            </button>
-            <Link to="/dashboard">
-              <Button size="sm" variant="secondary">Cerrar</Button>
+            <Link to={backTarget}>
+              <Button size="sm" variant="secondary">Cerrar Reproductor</Button>
             </Link>
           </div>
         </header>
@@ -269,88 +349,56 @@ export const LessonPlayerPage: React.FC = () => {
               )}
             </div>
 
-            {/* Practical instructions / theoretical text */}
-            {/* Embedded Video Player */}
-            {currentLesson.video_url && (
-              <div className="mb-8 overflow-hidden border-2 border-slate-950 bg-slate-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00b835]">
-                <div className="flex items-center justify-between px-4 py-2 bg-slate-900 border-b-2 border-slate-950 text-xs font-mono font-bold text-brand-400">
-                  <div className="flex items-center gap-2">
-                    <Play className="h-4 w-4 fill-current text-brand-400" />
-                    <span>CLASE EN VIDEO · ONCOURSES PLAYER</span>
+            {/* HTML5 Native Video / Embedded Video Player */}
+            {(() => {
+              const { isDirectVideo, embedUrl } = getEmbedVideoUrl(currentLesson.video_url);
+              if (!embedUrl) {
+                return (
+                  <div className="mb-8 p-6 border-2 border-slate-950 bg-slate-100 dark:bg-slate-900 text-center shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                    <Play className="h-10 w-10 text-slate-400 mx-auto mb-2" />
+                    <h4 className="font-extrabold text-sm text-slate-800 dark:text-slate-200">Video no asignado</h4>
+                    <p className="text-xs text-slate-500 mt-1">Esta lección no contiene un video asociado. Revisa el manual y guía teórica a continuación.</p>
                   </div>
-                  <span className="text-[10px] text-slate-400">HD 1080p</span>
-                </div>
-                <div className="relative aspect-video bg-black">
-                  {currentLesson.video_url.includes('youtube') || currentLesson.video_url.includes('embed') ? (
-                    <iframe
-                      src={sanitizeUrl(currentLesson.video_url)}
-                      title={currentLesson.title}
-                      className="w-full h-full border-0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    />
-                  ) : (
-                    <div className="flex flex-col items-center justify-center h-full p-6 text-center text-slate-300">
-                      <Play className="h-12 w-12 text-brand-400 mb-3" />
-                      <p className="text-sm font-bold">Video de la clase disponible</p>
-                      <a
-                        href={sanitizeUrl(currentLesson.video_url)}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="mt-2 text-xs text-brand-400 underline font-mono"
+                );
+              }
+              return (
+                <div className="mb-8 overflow-hidden border-2 border-slate-950 bg-slate-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#00b835]">
+                  <div className="flex items-center justify-between px-4 py-2 bg-slate-900 border-b-2 border-slate-950 text-xs font-mono font-bold text-brand-400">
+                    <div className="flex items-center gap-2">
+                      <Play className="h-4 w-4 fill-current text-brand-400" />
+                      <span>REPRODUCTOR DE VIDEO · ONCOURSES PLAYER</span>
+                    </div>
+                    <span className="text-[10px] text-slate-400">HD 1080p</span>
+                  </div>
+                  <div className="relative aspect-video bg-black flex items-center justify-center">
+                    {isDirectVideo ? (
+                      <video
+                        key={embedUrl}
+                        src={embedUrl}
+                        controls
+                        playsInline
+                        preload="metadata"
+                        className="w-full h-full object-contain focus:outline-none"
                       >
-                        Abrir video en nueva pestaña ↗
-                      </a>
-                    </div>
-                  )}
+                        Tu navegador no soporta reproducción directa de video HTML5.
+                      </video>
+                    ) : (
+                      <iframe
+                        src={embedUrl}
+                        title={currentLesson.title}
+                        className="w-full h-full border-0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
+                      />
+                    )}
+                  </div>
                 </div>
-              </div>
-            )}
-
+              );
+            })()}
             {/* Practical instructions / theoretical text */}
-            <article className="prose dark:prose-invert max-w-none text-slate-700 dark:text-slate-300 leading-relaxed mb-8 space-y-6">
+            <article className="prose dark:prose-invert max-w-none text-slate-700 dark:text-slate-300 leading-relaxed mb-8">
               {currentLesson.content_text ? (
-                currentLesson.content_text.split('```').map((block, i) => {
-                  if (i % 2 === 1) {
-                    // Code block
-                    const lines = block.trim().split('\n');
-                    const lang = lines[0].match(/^[a-z]+/i) ? lines[0] : 'code';
-                    const codeContent = lines[0].match(/^[a-z]+/i) ? lines.slice(1).join('\n') : block;
-
-                    return (
-                      <div key={i} className="my-6 border-2 border-slate-950 bg-slate-950 text-emerald-400 p-4 font-mono text-xs shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_#00b835] overflow-x-auto">
-                        <div className="flex justify-between items-center pb-2 mb-2 border-b border-slate-800 text-[10px] text-slate-400 uppercase font-bold">
-                          <span>{lang}</span>
-                          <span>OnCourses Console</span>
-                        </div>
-                        <pre className="whitespace-pre-wrap">{codeContent.trim()}</pre>
-                      </div>
-                    );
-                  }
-
-                  return (
-                    <div key={i} className="space-y-4">
-                      {block.split('\n\n').map((para, j) => {
-                        if (para.startsWith('### ')) {
-                          return <h3 key={j} className="text-lg font-black text-slate-950 dark:text-white mt-6 mb-2 flex items-center gap-2">{para.replace('### ', '')}</h3>;
-                        }
-                        if (para.startsWith('#### ')) {
-                          return <h4 key={j} className="text-sm font-extrabold text-slate-900 dark:text-slate-200 mt-4 mb-2">{para.replace('#### ', '')}</h4>;
-                        }
-                        if (para.split('\n').every(line => line.trim().startsWith('- ') || line.trim().startsWith('* '))) {
-                          return (
-                            <ul key={j} className="list-disc list-inside space-y-1.5 text-xs sm:text-sm text-slate-800 dark:text-slate-200 font-medium pl-2 my-3">
-                              {para.split('\n').map((item, k) => (
-                                <li key={k}>{item.replace(/^[-*]\s+/, '')}</li>
-                              ))}
-                            </ul>
-                          );
-                        }
-                        return <p key={j} className="text-xs sm:text-sm leading-relaxed text-slate-800 dark:text-slate-200 font-medium">{para}</p>;
-                      })}
-                    </div>
-                  );
-                })
+                <MarkdownRenderer content={currentLesson.content_text} />
               ) : (
                 <div className="p-8 border border-dashed border-slate-300 dark:border-slate-800 rounded-2xl text-center text-slate-400 text-sm">
                   Este tema no incluye material de lectura estático. Por favor consulta las referencias externas.
